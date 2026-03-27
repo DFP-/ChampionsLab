@@ -10456,8 +10456,8 @@ export const POKEMON_SEED: ChampionsPokemon[] = [
         "description": "A move that leaves the target badly poisoned. Its poison damage worsens every turn."
       }
     ],
-    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10103.png",
-    "officialArt": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10103.png",
+    "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10104.png",
+    "officialArt": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10104.png",
     "generation": 7,
     "forms": [],
     "hasMega": false,
