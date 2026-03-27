@@ -395,10 +395,10 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   {
     id: "pre-22", name: "Archaludon Stamina", archetype: "Body Press",
     description: "Archaludon Stamina + Screens for infinite Body Press scaling",
-    pokemonIds: [1018, 861, 445, 727, 887, 547],
+    pokemonIds: [1018, 302, 445, 727, 887, 547],
     sets: [
       { name: "Stamina Wall", nature: "Bold", ability: "Stamina", item: "Leftovers", moves: ["Body Press", "Flash Cannon", "Electro Shot", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 2, spDef: 0, speed: 0 } },
-      { name: "Screen Setter", nature: "Careful", ability: "Prankster", item: "Light Clay", moves: ["Reflect", "Light Screen", "Fake Out", "Thunder Wave"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
+      { name: "Screen Setter", nature: "Careful", ability: "Prankster", item: "Light Clay", moves: ["Reflect", "Light Screen", "Will-O-Wisp", "Recover"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
       { name: "EQ Pivot", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
       { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
       { name: "Fast Ghost", nature: "Timid", ability: "Clear Body", item: "Choice Specs", moves: ["Shadow Ball", "Draco Meteor", "Thunderbolt", "Flamethrower"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
