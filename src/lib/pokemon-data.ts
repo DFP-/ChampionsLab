@@ -11742,7 +11742,7 @@ export const POKEMON_SEED: ChampionsPokemon[] = [
     "hasMega": false,
     "recruitmentCost": null,
     "homeCompatible": true,
-    "homeSource": ["Legends: Arceus","Pokémon GO"],
+    "homeSource": ["Scarlet/Violet","Legends: Arceus","Pokémon GO"],
     "season": 1,
     "tier": "B",
     "usageRate": null
