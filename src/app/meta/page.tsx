@@ -12,6 +12,7 @@ import {
 import { POKEMON_SEED } from "@/lib/pokemon-data";
 import { TYPE_COLORS, type PokemonType } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { getMegaIdFromArchetype, getMegaSprite, getMegaName } from "@/lib/mega-utils";
 import { LastUpdated } from "@/components/last-updated";
 import { USAGE_DATA } from "@/lib/usage-data";
@@ -186,10 +187,13 @@ type ModalType =
   | { kind: "prebuilt"; id: string };
 
 export default function MetaPage() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
+  const [activeTab, setActiveTabRaw] = useState<ActiveTab>("overview");
   const [expandedTeam, setExpandedTeam] = useState<string | null>(null);
   const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
-  const [modal, setModal] = useState<ModalType | null>(null);
+  const [modal, setModalRaw] = useState<ModalType | null>(null);
+
+  const setActiveTab = (tab: ActiveTab) => { trackEvent("tab_switch", "meta", tab); setActiveTabRaw(tab); };
+  const setModal = (m: ModalType | null) => { if (m) trackEvent("open_modal", "meta", m.kind + ("name" in m ? `_${m.name}` : "pair" in m ? `_${m.pair}` : "")); setModalRaw(m); };
 
   const metaTeams = useMemo(() => predictMetaTeams(), []);
   const topUsage = useMemo(() => getTopUsagePokemon(40), []);

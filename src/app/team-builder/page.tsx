@@ -16,6 +16,7 @@ import {
 } from "@/lib/types";
 import { PokemonDetailModal } from "@/components/pokemon-detail-modal";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { USAGE_DATA } from "@/lib/usage-data";
 import { SearchSelect, type SearchSelectOption } from "@/components/search-select";
 import {
@@ -262,6 +263,7 @@ export default function TeamBuilderPage() {
   }, [slots, teamName]);
 
   const handleSaveTeam = () => {
+    trackEvent("save_team", "team_builder", teamName, filledSlots.length);
     const team = saveTeam(teamName, slots, currentTeamId);
     setCurrentTeamId(team.id);
     setSavedTeams(getSavedTeams());
@@ -270,6 +272,7 @@ export default function TeamBuilderPage() {
   };
 
   const handleLoadSavedTeam = (team: SavedTeam) => {
+    trackEvent("load_saved_team", "team_builder", team.name);
     const restoredSlots = deserializeTeam(team.slots);
     setSlots(restoredSlots);
     setTeamName(team.name);
@@ -278,12 +281,14 @@ export default function TeamBuilderPage() {
   };
 
   const handleDeleteSavedTeam = (id: string) => {
+    trackEvent("delete_saved_team", "team_builder");
     deleteTeam(id);
     setSavedTeams(getSavedTeams());
     if (currentTeamId === id) setCurrentTeamId(undefined);
   };
 
   const generateShareImage = async () => {
+    trackEvent("share_team", "team_builder", teamName, filledSlots.length);
     const filled = slots.filter(s => s.pokemon);
     if (filled.length === 0) return;
 
@@ -468,6 +473,7 @@ export default function TeamBuilderPage() {
   };
 
   const downloadShareImage = () => {
+    trackEvent("download_share_image", "team_builder", teamName);
     if (!shareImageUrl) return;
     const a = document.createElement("a");
     a.href = shareImageUrl;
@@ -479,6 +485,7 @@ export default function TeamBuilderPage() {
   const [urlCopied, setUrlCopied] = useState(false);
 
   const copyShareUrl = async () => {
+    trackEvent("copy_share_url", "team_builder", teamName);
     if (!shareUrl) return;
     await navigator.clipboard.writeText(shareUrl);
     setUrlCopied(true);
@@ -522,6 +529,7 @@ export default function TeamBuilderPage() {
   if (megaCount > 1) validationErrors.push("Only 1 Mega Evolution allowed per team");
 
   const addPokemon = (pokemon: ChampionsPokemon) => {
+    trackEvent("add_pokemon", "team_builder", pokemon.name);
     if (activeSlot !== null) {
       const sets = suggestSets(pokemon, teamPokemon);
       const bestSet = sets.length > 0 ? sets[0].set : null;
@@ -542,6 +550,7 @@ export default function TeamBuilderPage() {
   };
 
   const removeSlot = (index: number) => {
+    trackEvent("remove_pokemon", "team_builder", slots[index]?.pokemon?.name);
     const newSlots = [...slots];
     newSlots[index] = createEmptySlot();
     setSlots(newSlots);
@@ -549,6 +558,7 @@ export default function TeamBuilderPage() {
   };
 
   const loadPrebuiltTeam = (team: PrebuiltTeam) => {
+    trackEvent("load_prebuilt_team", "team_builder", team.name);
     const isMegaItem = (item: string) => item.endsWith("ite") || item.endsWith("ite X") || item.endsWith("ite Y") || item.endsWith("ite Z");
     let teamHasMega = false;
     const newSlots = team.pokemonIds.map((id, i) => {
@@ -582,6 +592,7 @@ export default function TeamBuilderPage() {
   };
 
   const loadMetaTeam = (meta: MetaTeamPrediction) => {
+    trackEvent("load_meta_team", "team_builder", meta.name);
     const isMegaItem = (item: string) => item.endsWith("ite") || item.endsWith("ite X") || item.endsWith("ite Y") || item.endsWith("ite Z");
     let teamHasMega = false;
     const newSlots = meta.pokemonIds.map((id) => {
@@ -632,6 +643,7 @@ export default function TeamBuilderPage() {
   };
 
   const addSuggestedTeammate = (pokemon: ChampionsPokemon) => {
+    trackEvent("add_suggested_teammate", "team_builder", pokemon.name);
     const emptyIndex = slots.findIndex(s => !s.pokemon);
     if (emptyIndex === -1) return;
     const sets = suggestSets(pokemon, teamPokemon);
@@ -663,6 +675,7 @@ export default function TeamBuilderPage() {
   };
 
   const applySet = (slotIndex: number, set: { ability?: string; moves?: string[]; sp?: StatPoints; nature?: string; item?: string }) => {
+    trackEvent("apply_set", "team_builder", slots[slotIndex]?.pokemon?.name);
     const newSlots = [...slots];
     const slot = { ...newSlots[slotIndex] };
     if (set.ability) slot.ability = set.ability;
@@ -745,6 +758,7 @@ export default function TeamBuilderPage() {
 
   // Import from Pokepaste format
   const importPokepaste = (text: string) => {
+    trackEvent("import_pokepaste", "team_builder");
     const isMegaItem = (item: string) => item.endsWith("ite") || item.endsWith("ite X") || item.endsWith("ite Y") || item.endsWith("ite Z");
     const blocks = text.trim().split(/\n\n+/).filter(Boolean);
     if (blocks.length === 0) { setImportError("No Pokémon found in the paste."); return; }
@@ -909,6 +923,7 @@ export default function TeamBuilderPage() {
   };
 
   const copyToClipboard = () => {
+    trackEvent("export_pokepaste", "team_builder");
     navigator.clipboard.writeText(exportPokepaste());
   };
 
@@ -999,7 +1014,7 @@ export default function TeamBuilderPage() {
               Share
             </button>
             <button
-              onClick={() => { setSlots(Array.from({ length: 6 }, createEmptySlot)); setCurrentTeamId(undefined); setSelectedSlotIndex(null); setTeamName("My Team"); }}
+              onClick={() => { trackEvent("clear_team", "team_builder"); setSlots(Array.from({ length: 6 }, createEmptySlot)); setCurrentTeamId(undefined); setSelectedSlotIndex(null); setTeamName("My Team"); }}
               className="px-4 py-2 text-sm rounded-xl glass glass-hover flex items-center gap-2 text-red-400 hover:text-red-300 transition-colors shrink-0"
             >
               <Trash2 className="w-4 h-4" />

@@ -8,6 +8,7 @@ import { USAGE_DATA } from "@/lib/usage-data";
 import { getTeamsForPokemon } from "@/lib/winning-teams";
 import { POKEMON_SEED } from "@/lib/pokemon-data";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { X, Sparkles, Zap, Trophy, Coins, Star, Shield, Sword, Target, Gauge, Timer, TrendingUp, Users, Wrench, BarChart3 } from "lucide-react";
 import { useState, useMemo, useCallback } from "react";
 import { deflateRaw } from "pako";
@@ -195,6 +196,7 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
   }
 
   const handleFormChange = (form: number) => {
+    trackEvent("form_switch", "pokemon_modal", pokemon?.name);
     if (form === activeForm) return;
     setFormKey((k) => k + 1);
     setActiveForm(form);
@@ -356,7 +358,7 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
               {(["stats", "moves", "abilities", "usage", "teams"] as const).map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => { trackEvent("tab_switch", "pokemon_modal", tab); setActiveTab(tab); }}
                   className={cn(
                     "relative px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg capitalize transition-colors tracking-tight whitespace-nowrap",
                     activeTab === tab

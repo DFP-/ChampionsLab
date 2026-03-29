@@ -11,6 +11,7 @@ import { POKEMON_SEED } from "@/lib/pokemon-data";
 import type { ChampionsPokemon, CommonSet, StatPoints, PokemonType } from "@/lib/types";
 import { TYPE_COLORS } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import {
   calculateDamage,
   calculateStats,
@@ -199,6 +200,7 @@ export default function DamageCalculator() {
   }, [pickerTarget]);
 
   const swapPokemon = () => {
+    trackEvent("swap_pokemon", "damage_calc");
     const tmp = { ...attacker };
     setAttacker({ ...defender });
     setDefender(tmp);

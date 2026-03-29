@@ -11,6 +11,7 @@ import { PokemonCard } from "@/components/pokemon-card";
 import { PokemonDetailModal } from "@/components/pokemon-detail-modal";
 import { SeasonInfo } from "@/components/season-tabs";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 
 const ALL_TYPES: PokemonType[] = [
   "normal", "fire", "water", "electric", "grass", "ice",
@@ -83,12 +84,14 @@ export default function HomePage() {
   }, [activeSeason, searchQuery, selectedTypes, selectedGens, showMegaOnly, sortBy]);
 
   const toggleType = (type: PokemonType) => {
+    trackEvent("filter_type", "pokedex", type);
     setSelectedTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
   };
 
   const toggleGen = (gen: number) => {
+    trackEvent("filter_gen", "pokedex", `gen_${gen}`);
     setSelectedGens((prev) =>
       prev.includes(gen) ? prev.filter((g) => g !== gen) : [...prev, gen]
     );
@@ -303,7 +306,7 @@ export default function HomePage() {
           <PokemonCard
             key={pokemon.id}
             pokemon={pokemon}
-            onClick={setSelectedPokemon}
+            onClick={(p) => { trackEvent("pokemon_click", "pokedex", p.name); setSelectedPokemon(p); }}
             index={i}
           />
         ))}

@@ -17,6 +17,7 @@ import { POKEMON_SEED } from "@/lib/pokemon-data";
 import type { ChampionsPokemon, CommonSet, StatPoints, PokemonType } from "@/lib/types";
 import { TYPE_COLORS } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import {
   runSimulation as engineRunSimulation,
   PREBUILT_TEAMS,
@@ -394,6 +395,7 @@ export default function BattleBotPage() {
   }, [replayPlaying, result?.sampleBattle]);
 
   const addPokemon = (pokemon: ChampionsPokemon) => {
+    trackEvent("add_pokemon", "battle_bot", pokemon.name);
     if (selectedPokemon.length < 6 && !selectedPokemon.find((p) => p.id === pokemon.id)) {
       setSelectedPokemon([...selectedPokemon, pokemon]);
       setSelectedSets([...selectedSets, bestAvailableSet(pokemon)]);
@@ -401,6 +403,7 @@ export default function BattleBotPage() {
   };
 
   const removePokemon = (id: number) => {
+    trackEvent("remove_pokemon", "battle_bot");
     const idx = selectedPokemon.findIndex(p => p.id === id);
     if (idx >= 0) {
       setSelectedPokemon(selectedPokemon.filter((_, i) => i !== idx));
@@ -409,6 +412,7 @@ export default function BattleBotPage() {
   };
 
   const loadSavedTeam = (team: SavedTeam) => {
+    trackEvent("load_saved_team", "battle_bot", team.name);
     const slots = deserializeTeam(team.slots);
     const pokemon = slots.filter(s => s.pokemon).map(s => s.pokemon!);
     const sets = slots.filter(s => s.pokemon).map(s => {
@@ -433,6 +437,7 @@ export default function BattleBotPage() {
   };
 
   const loadPrebuiltTeam = (team: PrebuiltTeam) => {
+    trackEvent("load_prebuilt_team", "battle_bot", team.name);
     const pokemon = team.pokemonIds
       .map(id => POKEMON_SEED.find(p => p.id === id))
       .filter(Boolean) as ChampionsPokemon[];
@@ -442,6 +447,7 @@ export default function BattleBotPage() {
   };
 
   const handleRunSimulation = useCallback(async () => {
+    trackEvent("run_simulation", "battle_bot", `${selectedPokemon.length}_pokemon`, iterations);
     if (selectedPokemon.length < 4) return;
     setIsSimulating(true);
     setResult(null);
@@ -547,7 +553,7 @@ export default function BattleBotPage() {
         ]).map(tab => (
           <button
             key={tab.id}
-            onClick={() => setMainTab(tab.id)}
+            onClick={() => { trackEvent("tab_switch", "battle_bot", tab.label); setMainTab(tab.id); }}
             className={cn(
               "flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-semibold transition-all",
               mainTab === tab.id
@@ -928,7 +934,7 @@ export default function BattleBotPage() {
                   ]).map(tab => (
                     <button
                       key={tab.id}
-                      onClick={() => setResultTab(tab.id)}
+                      onClick={() => { trackEvent("result_tab_switch", "battle_bot", tab.label); setResultTab(tab.id); }}
                       className={cn(
                         "flex-1 min-w-0 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg text-xs font-medium transition-all whitespace-nowrap",
                         resultTab === tab.id

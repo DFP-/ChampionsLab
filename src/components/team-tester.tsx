@@ -12,6 +12,7 @@ import { POKEMON_SEED } from "@/lib/pokemon-data";
 import type { ChampionsPokemon, CommonSet, PokemonType } from "@/lib/types";
 import { TYPE_COLORS } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import {
   runSimulation,
   PREBUILT_TEAMS,
@@ -174,6 +175,7 @@ export default function TeamTester() {
   const canRun = team1Pokemon.length >= 4 && team2Pokemon.length >= 4 && !isRunning;
 
   const handleRun = useCallback(async () => {
+    trackEvent("run_test", "team_tester", `${team1Pokemon.length}v${team2Pokemon.length}`, iterations);
     if (!canRun) return;
     setIsRunning(true);
     setResult(null);

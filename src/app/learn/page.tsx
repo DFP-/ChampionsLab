@@ -8,6 +8,7 @@ import {
   Award, Sparkles, Flame, Droplets, Wind, Star,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import { LastUpdated } from "@/components/last-updated";
 import { AlertTriangle, Lightbulb, Trophy, Info } from "lucide-react";
 
@@ -403,6 +404,7 @@ export default function LearnPage() {
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set());
 
   const toggleSection = (id: string) => {
+    trackEvent("toggle_section", "pokeschool", id);
     setExpandedSections(prev => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
@@ -412,6 +414,7 @@ export default function LearnPage() {
   };
 
   const toggleSub = (key: string) => {
+    trackEvent("toggle_subsection", "pokeschool", key);
     setExpandedSubs(prev => {
       const next = new Set(prev);
       if (next.has(key)) next.delete(key);
@@ -421,6 +424,7 @@ export default function LearnPage() {
   };
 
   const expandAll = () => {
+    trackEvent("expand_all", "pokeschool");
     setExpandedSections(new Set(SECTIONS.map(s => s.id)));
     const allSubs = new Set<string>();
     SECTIONS.forEach(s => s.subsections.forEach((_, i) => allSubs.add(`${s.id}-${i}`)));
@@ -428,6 +432,7 @@ export default function LearnPage() {
   };
 
   const collapseAll = () => {
+    trackEvent("collapse_all", "pokeschool");
     setExpandedSections(new Set());
     setExpandedSubs(new Set());
   };

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 
 const NAV_ITEMS = [
   { href: "/", label: "Pokédex", icon: Grid3X3 },
@@ -68,6 +69,7 @@ export function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => trackEvent("nav_click", "navigation", item.label)}
                     className={cn(
                       "relative px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2",
                       isActive
@@ -96,6 +98,7 @@ export function Navbar() {
                 href="https://buymeacoffee.com/championslab"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("support_click", "engagement", "desktop")}
                 className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white hover:from-yellow-500 hover:to-orange-600 shadow-sm shadow-orange-500/20 flex items-center gap-2 transition-all hover:scale-105"
               >
                 <Heart className="w-4 h-4 fill-white" />
@@ -106,7 +109,7 @@ export function Navbar() {
             {/* Mobile Menu Button */}
             <button
               className="md:hidden p-2 rounded-lg glass-hover"
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={() => { trackEvent("mobile_menu_toggle", "navigation", mobileOpen ? "close" : "open"); setMobileOpen(!mobileOpen); }}
             >
               {mobileOpen ? (
                 <X className="w-5 h-5" />
@@ -133,7 +136,7 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => { trackEvent("nav_click", "navigation", `mobile_${item.label}`); setMobileOpen(false); }}
                   className={cn(
                     "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                     isActive
@@ -150,7 +153,7 @@ export function Navbar() {
               href="https://buymeacoffee.com/championslab"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setMobileOpen(false)}
+              onClick={() => { trackEvent("support_click", "engagement", "mobile"); setMobileOpen(false); }}
               className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white"
             >
               <Heart className="w-5 h-5 fill-white" />
