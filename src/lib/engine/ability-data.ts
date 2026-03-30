@@ -543,6 +543,26 @@ export const ABILITY_DATA: Record<string, AbilityEffect> = {
     description: "Immune to wind moves. Attack rises by 1 stage when hit by wind or Tailwind is set.",
     vgcRelevance: 7,
   },
+  "Illusion": {
+    name: "Illusion", category: "form-change",
+    description: "Enters battle disguised as the last Pokémon in the party. Breaks when hit by a damaging move.",
+    vgcRelevance: 8,
+  },
+  "Imposter": {
+    name: "Imposter", category: "form-change",
+    description: "Transforms into the opposing Pokémon on switch-in, copying stats, moves, types, and ability.",
+    vgcRelevance: 9,
+  },
+  "Stance Change": {
+    name: "Stance Change", category: "form-change",
+    description: "Changes to Blade Forme before using a damaging move, or Shield Forme before using King's Shield.",
+    vgcRelevance: 10,
+  },
+  "Disguise": {
+    name: "Disguise", category: "form-change",
+    description: "Blocks the first hit of battle damage, then takes 1/8 max HP recoil when the disguise breaks.",
+    vgcRelevance: 10,
+  },
 };
 
 /** Lookup ability effect */
