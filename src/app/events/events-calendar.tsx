@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { motion } from '@/lib/motion';
+import { cn } from '@/lib/utils';
 import {
-  VGC_EVENTS_2025_2026,
   TIER_LABEL,
   REGION_LABEL,
   type EventTier,
@@ -19,6 +20,7 @@ const TIER_COLOR: Record<EventTier, string> = {
   special:       '#f08030', // fire
   national:      '#78c850', // grass
   online:        '#b8b8d0', // steel
+  community:     '#a78bfa', // ghost
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -62,7 +64,7 @@ function safeUrl(url: string): string {
 
 // ── Event card ────────────────────────────────────────────────────────────────
 
-function EventCard({ event, todayISO }: { event: VGCEvent; todayISO: string }) {
+function EventCard({ event, todayISO, index }: { event: VGCEvent; todayISO: string; index: number }) {
   const color   = TIER_COLOR[event.tier];
   const past    = isPast(event, todayISO);
   const ongoing = isOngoing(event, todayISO);
@@ -76,7 +78,11 @@ function EventCard({ event, todayISO }: { event: VGCEvent; todayISO: string }) {
 
   return (
     <div
-      className="glass flex items-start gap-4 p-4 rounded-xl transition-all duration-200"
+      className={cn(
+        "glass flex items-start gap-4 p-4 rounded-xl transition-all duration-200 hover:scale-[1.01]",
+        ongoing && "ring-2 ring-green-500/30",
+        past && "hover:scale-100"
+      )}
       style={{ border: '1px solid var(--border)', borderLeft: `3px solid ${color}`, opacity: past ? 0.45 : 1 }}
     >
       {/* Date block */}
@@ -124,9 +130,11 @@ function EventCard({ event, todayISO }: { event: VGCEvent; todayISO: string }) {
           <span className="text-xs text-muted-foreground">
             {formatDateRange(event.startDate, event.endDate)}
           </span>
-          <span className="text-xs text-muted-foreground">
-            {event.cpPoints.toLocaleString()} CP
-          </span>
+          {event.cpPoints > 0 && (
+            <span className="text-xs text-muted-foreground">
+              {event.cpPoints.toLocaleString()} CP
+            </span>
+          )}
           {note && !soldOut && (
             <span
               className="text-xs px-1.5 py-0.5 rounded"
@@ -163,9 +171,11 @@ function FilterPill({
   children: React.ReactNode;
 }) {
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="text-xs px-3 py-1.5 rounded-full font-medium transition-all"
+      className="text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer"
       style={{
         background: active ? (color ? `${color}22` : 'rgba(255,255,255,0.1)') : 'var(--card)',
         color:      active ? (color ?? 'var(--foreground)') : 'var(--muted-foreground)',
@@ -174,7 +184,7 @@ function FilterPill({
       }}
     >
       {children}
-    </button>
+    </motion.button>
   );
 }
 
@@ -184,23 +194,23 @@ type TimeFilter   = 'upcoming' | 'past' | 'all';
 type TierFilter   = EventTier | 'all';
 type RegionFilter = EventRegion | 'all';
 
-const TIER_FILTERS: EventTier[]     = ['regional', 'international', 'worlds', 'special', 'national', 'online'];
+const TIER_FILTERS: EventTier[]     = ['regional', 'international', 'worlds', 'special', 'national', 'online', 'community'];
 const REGION_FILTERS: EventRegion[] = ['NA', 'EU', 'LA', 'OC', 'APAC', 'ONLINE'];
 
-export function EventsCalendar({ todayISO }: { todayISO: string }) {
+export function EventsCalendar({ events, todayISO }: { events: VGCEvent[]; todayISO: string }) {
   const [time,   setTime]   = useState<TimeFilter>('upcoming');
   const [tier,   setTier]   = useState<TierFilter>('all');
   const [region, setRegion] = useState<RegionFilter>('all');
 
   const filtered = useMemo(() => {
-    return VGC_EVENTS_2025_2026.filter(ev => {
+    return events.filter(ev => {
       if (time === 'upcoming' && isPast(ev, todayISO))  return false;
       if (time === 'past'     && !isPast(ev, todayISO)) return false;
       if (tier   !== 'all' && ev.tier   !== tier)       return false;
       if (region !== 'all' && ev.region !== region)     return false;
       return true;
     });
-  }, [time, tier, region, todayISO]);
+  }, [events, time, tier, region, todayISO]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, VGCEvent[]>();
@@ -213,20 +223,25 @@ export function EventsCalendar({ todayISO }: { todayISO: string }) {
   }, [filtered]);
 
   const upcomingCount = useMemo(
-    () => VGC_EVENTS_2025_2026.filter(ev => !isPast(ev, todayISO)).length,
-    [todayISO],
+    () => events.filter(ev => !isPast(ev, todayISO)).length,
+    [events, todayISO],
   );
 
   return (
     <div className="space-y-6">
 
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 flex-wrap">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-start justify-between gap-4 flex-wrap"
+      >
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-yellow-500">
+          <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-emerald-500">
             Season 2025-2026
           </p>
-          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-br from-foreground via-foreground to-yellow-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold tracking-tight font-heading bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
             VGC Calendar
           </h1>
           <p className="text-sm mt-1 text-muted-foreground">
@@ -240,10 +255,15 @@ export function EventsCalendar({ todayISO }: { todayISO: string }) {
             </FilterPill>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Tier filters */}
-      <div className="space-y-2">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+        className="space-y-2"
+      >
         <div className="flex gap-2 flex-wrap">
           <FilterPill active={tier === 'all'} onClick={() => setTier('all')}>All tiers</FilterPill>
           {TIER_FILTERS.map(t => (
@@ -260,17 +280,22 @@ export function EventsCalendar({ todayISO }: { todayISO: string }) {
             </FilterPill>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Legend */}
-      <div className="flex gap-x-5 gap-y-1 flex-wrap">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        className="flex gap-x-5 gap-y-1 flex-wrap"
+      >
         {TIER_FILTERS.map(t => (
           <div key={t} className="flex items-center gap-1.5">
             <span className="inline-block w-2 h-2 rounded-full" style={{ background: TIER_COLOR[t] }} />
             <span className="text-xs text-muted-foreground">{TIER_LABEL[t]}</span>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Events grouped by month */}
       {grouped.length === 0 ? (
@@ -278,33 +303,24 @@ export function EventsCalendar({ todayISO }: { todayISO: string }) {
           No events match the current filters.
         </div>
       ) : (
-        grouped.map(([key, events]) => (
-          <div key={key} className="space-y-2">
-            <div className="flex items-center gap-2 px-1">
-              <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
-                {monthLabel(key)}
-              </h2>
-              <span className="flex-1 h-px bg-border" />
+        <div>
+          {grouped.map(([key, groupEvents]) => (
+            <div key={key} className="space-y-2 mb-6">
+              <div className="flex items-center gap-2 px-1">
+                <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
+                  {monthLabel(key)}
+                </h2>
+                <span className="flex-1 h-px bg-border" />
+              </div>
+              {groupEvents.map((ev) => (
+                <EventCard key={ev.id} event={ev} todayISO={todayISO} index={0} />
+              ))}
             </div>
-            {events.map(ev => (
-              <EventCard key={ev.id} event={ev} todayISO={todayISO} />
-            ))}
-          </div>
-        ))
+          ))}
+        </div>
       )}
 
-      <p className="text-xs text-center pb-4 text-muted-foreground">
-        Source:{' '}
-        <a
-          href="https://victoryroad.pro/2026-season-calendar/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:opacity-80"
-        >
-          victoryroad.pro/2026-season-calendar
-        </a>
-      </p>
-
+    
     </div>
   );
 }

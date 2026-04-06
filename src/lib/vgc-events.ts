@@ -1,4 +1,4 @@
-export type EventTier = 'regional' | 'international' | 'worlds' | 'special' | 'national' | 'online';
+export type EventTier = 'regional' | 'international' | 'worlds' | 'special' | 'national' | 'online' | 'community';
 export type EventRegion = 'NA' | 'EU' | 'LA' | 'OC' | 'APAC' | 'ONLINE';
 
 export interface VGCEvent {
@@ -23,6 +23,7 @@ export const TIER_LABEL: Record<EventTier, string> = {
   special:       'Special',
   national:      'National',
   online:        'Online',
+  community:     'Community',
 };
 
 export const REGION_LABEL: Record<EventRegion, string> = {
@@ -34,8 +35,10 @@ export const REGION_LABEL: Record<EventRegion, string> = {
   ONLINE: 'Online',
 };
 
-// Source: https://victoryroad.pro/2026-season-calendar/
-export const VGC_EVENTS_2025_2026: VGCEvent[] = [
+// Events NOT covered by the official championships.pokemon.com CrafterCMS API.
+// The main Championship Series events (regionals, internationals, worlds) are
+// fetched dynamically via src/lib/fetch-events.ts.
+export const SUPPLEMENTARY_EVENTS: VGCEvent[] = [
 
   // ── Online: Grand Challenges ───────────────────────────────────────────────
   {
@@ -44,7 +47,7 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     city: 'Online', country: 'Global',
     startDate: '2025-09-05', endDate: '2025-09-07',
     tier: 'online', format: 'VGC 2026', region: 'ONLINE',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
+    registrationUrl: 'https://champions.pokemon.com/en-us/',
     cpPoints: 100,
   },
   {
@@ -53,7 +56,7 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     city: 'Online', country: 'Global',
     startDate: '2025-10-03', endDate: '2025-10-05',
     tier: 'online', format: 'VGC 2026', region: 'ONLINE',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
+    registrationUrl: 'https://champions.pokemon.com/en-us/',
     cpPoints: 100,
   },
   {
@@ -62,7 +65,7 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     city: 'Online', country: 'Global',
     startDate: '2025-11-07', endDate: '2025-11-09',
     tier: 'online', format: 'VGC 2026', region: 'ONLINE',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
+    registrationUrl: 'https://champions.pokemon.com/en-us/',
     cpPoints: 100,
   },
   {
@@ -71,7 +74,7 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     city: 'Online', country: 'Global',
     startDate: '2026-01-09', endDate: '2026-01-11',
     tier: 'online', format: 'VGC 2026', region: 'ONLINE',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
+    registrationUrl: 'https://champions.pokemon.com/en-us/',
     cpPoints: 100,
   },
   {
@@ -80,7 +83,7 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     city: 'Online', country: 'Global',
     startDate: '2026-02-20', endDate: '2026-02-22',
     tier: 'online', format: 'VGC 2026', region: 'ONLINE',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
+    registrationUrl: 'https://champions.pokemon.com/en-us/',
     cpPoints: 100,
   },
   {
@@ -89,7 +92,7 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     city: 'Online', country: 'Global',
     startDate: '2026-05-01', endDate: '2026-05-04',
     tier: 'online', format: 'VGC 2026', region: 'ONLINE',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
+    registrationUrl: 'https://champions.pokemon.com/en-us/',
     cpPoints: 100,
   },
   {
@@ -98,277 +101,11 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     city: 'Online', country: 'Japan',
     startDate: '2026-05-10', endDate: '2026-05-10',
     tier: 'online', format: 'VGC 2026', region: 'ONLINE',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
+    registrationUrl: 'https://www.pokemon.co.jp/ex/pjcs/2026/game/',
     cpPoints: 100,
   },
 
-  // ── September 2025 ──────────────────────────────────────────────────────────
-  {
-    id: 'reg-frankfurt-sep25',
-    name: 'Frankfurt Regional Championships',
-    city: 'Frankfurt', country: 'Germany',
-    startDate: '2025-09-13', endDate: '2025-09-14',
-    tier: 'regional', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-monterrey-sep25',
-    name: 'Monterrey Regional Championships',
-    city: 'Monterrey', country: 'Mexico',
-    startDate: '2025-09-13', endDate: '2025-09-14',
-    tier: 'regional', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-pittsburgh-sep25',
-    name: 'Pittsburgh Regional Championships',
-    city: 'Pittsburgh', country: 'USA',
-    startDate: '2025-09-20', endDate: '2025-09-21',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-
-  // ── October 2025 ────────────────────────────────────────────────────────────
-  {
-    id: 'reg-milwaukee-oct25',
-    name: 'Milwaukee Regional Championships',
-    city: 'Milwaukee', country: 'USA',
-    startDate: '2025-10-11', endDate: '2025-10-12',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-belo-horizonte-oct25',
-    name: 'Belo Horizonte Regional Championships',
-    city: 'Belo Horizonte', country: 'Brazil',
-    startDate: '2025-10-11', endDate: '2025-10-12',
-    tier: 'regional', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-lille-oct25',
-    name: 'Lille Regional Championships',
-    city: 'Lille', country: 'France',
-    startDate: '2025-10-25', endDate: '2025-10-26',
-    tier: 'regional', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-
-  // ── November 2025 ───────────────────────────────────────────────────────────
-  {
-    id: 'reg-gdansk-nov25',
-    name: 'Gdansk Regional Championships',
-    city: 'Gdansk', country: 'Poland',
-    startDate: '2025-11-01', endDate: '2025-11-02',
-    tier: 'regional', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-brisbane-nov25',
-    name: 'Brisbane Regional Championships',
-    city: 'Brisbane', country: 'Australia',
-    startDate: '2025-11-01', endDate: '2025-11-02',
-    tier: 'regional', format: 'VGC 2026', region: 'OC',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-las-vegas-nov25',
-    name: 'Las Vegas Regional Championships',
-    city: 'Las Vegas', country: 'USA',
-    startDate: '2025-11-15', endDate: '2025-11-16',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'sc-buenos-aires-nov25',
-    name: 'Buenos Aires Special Championships',
-    city: 'Buenos Aires', country: 'Argentina',
-    startDate: '2025-11-15', endDate: '2025-11-16',
-    tier: 'special', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 250,
-  },
-  {
-    id: 'ic-laic-nov25',
-    name: 'Latin America International Championships',
-    city: 'Sao Paulo', country: 'Brazil',
-    startDate: '2025-11-21', endDate: '2025-11-23',
-    tier: 'international', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 1000,
-  },
-  {
-    id: 'reg-stuttgart-nov25',
-    name: 'Stuttgart Regional Championships',
-    city: 'Stuttgart', country: 'Germany',
-    startDate: '2025-11-29', endDate: '2025-11-30',
-    tier: 'regional', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-
-  // ── January 2026 ────────────────────────────────────────────────────────────
-  {
-    id: 'reg-toronto-jan26',
-    name: 'Toronto Regional Championships',
-    city: 'Toronto', country: 'Canada',
-    startDate: '2026-01-17', endDate: '2026-01-18',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-merida-jan26',
-    name: 'Merida Regional Championships',
-    city: 'Merida', country: 'Mexico',
-    startDate: '2026-01-24', endDate: '2026-01-25',
-    tier: 'regional', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-birmingham-jan26',
-    name: 'Birmingham Regional Championships',
-    city: 'Birmingham', country: 'UK',
-    startDate: '2026-01-24', endDate: '2026-01-25',
-    tier: 'regional', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'sc-auckland-jan26',
-    name: 'Auckland Special Championships',
-    city: 'Auckland', country: 'New Zealand',
-    startDate: '2026-01-25', endDate: '2026-01-25',
-    tier: 'special', format: 'VGC 2026', region: 'OC',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 250,
-  },
-
-  // ── February 2026 ───────────────────────────────────────────────────────────
-  {
-    id: 'reg-santiago-feb26',
-    name: 'Santiago Regional Championships',
-    city: 'Santiago', country: 'Chile',
-    startDate: '2026-02-07', endDate: '2026-02-08',
-    tier: 'regional', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-sydney-feb26',
-    name: 'Sydney Regional Championships',
-    city: 'Sydney', country: 'Australia',
-    startDate: '2026-02-07', endDate: '2026-02-08',
-    tier: 'regional', format: 'VGC 2026', region: 'OC',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'ic-euic-feb26',
-    name: 'European International Championships',
-    city: 'London', country: 'UK',
-    startDate: '2026-02-13', endDate: '2026-02-15',
-    tier: 'international', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-euic/',
-    cpPoints: 1000,
-  },
-  {
-    id: 'reg-seattle-feb26',
-    name: 'Seattle Regional Championships',
-    city: 'Seattle', country: 'USA',
-    startDate: '2026-02-28', endDate: '2026-03-01',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-
-  // ── March 2026 ──────────────────────────────────────────────────────────────
-  {
-    id: 'sc-san-juan-mar26',
-    name: 'San Juan Special Championships',
-    city: 'San Juan', country: 'Puerto Rico',
-    startDate: '2026-03-07', endDate: '2026-03-08',
-    tier: 'special', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 250,
-  },
-  {
-    id: 'reg-curitiba-mar26',
-    name: 'Curitiba Regional Championships',
-    city: 'Curitiba', country: 'Brazil',
-    startDate: '2026-03-14', endDate: '2026-03-15',
-    tier: 'regional', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-houston-mar26',
-    name: 'Houston Regional Championships',
-    city: 'Houston', country: 'USA',
-    startDate: '2026-03-21', endDate: '2026-03-22',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 500,
-  },
-  {
-    id: 'sc-seville-mar26',
-    name: 'Seville Special Championships',
-    city: 'Seville', country: 'Spain',
-    startDate: '2026-03-28', endDate: '2026-03-29',
-    tier: 'special', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 250,
-  },
-  {
-    id: 'sc-cape-town-mar26',
-    name: 'Cape Town Special Championships',
-    city: 'Cape Town', country: 'South Africa',
-    startDate: '2026-03-29', endDate: '2026-03-29',
-    tier: 'special', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    cpPoints: 250,
-  },
-
-  // ── April 2026 ──────────────────────────────────────────────────────────────
-  {
-    id: 'reg-orlando-apr26',
-    name: 'Orlando Regional Championships',
-    city: 'Orlando', country: 'USA',
-    startDate: '2026-04-04', endDate: '2026-04-05',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://regionals.gaminggen.gg/regionals/orlando/',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-queretaro-apr26',
-    name: 'Queretaro Regional Championships',
-    city: 'Queretaro', country: 'Mexico',
-    startDate: '2026-04-04', endDate: '2026-04-05',
-    tier: 'regional', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://victoryroad.pro/2026-season-calendar/',
-    registrationNote: 'Sold Out',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-prague-apr26',
-    name: 'Prague Regional Championships',
-    city: 'Prague', country: 'Czech Republic',
-    startDate: '2026-04-25', endDate: '2026-04-26',
-    tier: 'regional', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://rk9.gg/tournament/PR02wayEt6qQBnpFi6cp',
-    registrationNote: 'Open',
-    cpPoints: 500,
-  },
+  // ── APAC Master Ball Leagues & Nationals (not in CMS) ────────────────────
   {
     id: 'nat-philippines-apr26',
     name: 'Philippines Master Ball League',
@@ -378,8 +115,6 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     registrationUrl: 'https://forms.gle/uevCvDZ3HK7Rsjxe9',
     cpPoints: 500,
   },
-
-  // ── May 2026 ────────────────────────────────────────────────────────────────
   {
     id: 'nat-hk-may26',
     name: 'Hong Kong Master Ball League',
@@ -387,16 +122,6 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     startDate: '2026-05-02', endDate: '2026-05-03',
     tier: 'national', format: 'VGC 2026', region: 'APAC',
     registrationUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSe8tIHTqPxdReNA250Xs7s_-m2Hld6tGRIln8lG8h77TO0bcg/viewform',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-la-may26',
-    name: 'Los Angeles Regional Championships',
-    city: 'Los Angeles', country: 'USA',
-    startDate: '2026-05-09', endDate: '2026-05-10',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://rk9.gg/tournament/LS02w5lpCOiMwPPo7QWD',
-    registrationNote: 'Sold Out',
     cpPoints: 500,
   },
   {
@@ -409,32 +134,12 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     cpPoints: 500,
   },
   {
-    id: 'reg-utrecht-may26',
-    name: 'Utrecht Regional Championships',
-    city: 'Utrecht', country: 'Netherlands',
-    startDate: '2026-05-16', endDate: '2026-05-17',
-    tier: 'regional', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://rk9.gg/tournament/UT02wFHDCjnKgZ9Gscu7',
-    registrationNote: 'Sold Out',
-    cpPoints: 500,
-  },
-  {
     id: 'nat-thailand-may26',
     name: 'Thailand Master Ball League',
     city: 'Bangkok', country: 'Thailand',
     startDate: '2026-05-16', endDate: '2026-05-17',
     tier: 'national', format: 'VGC 2026', region: 'APAC',
     registrationUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScHIFt4AeyPBKXR6lxGmKvt7thxtPleQ4vEnjZkDBCCdi_hEQ/viewform',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-campinas-may26',
-    name: 'Campinas Regional Championships',
-    city: 'Campinas', country: 'Brazil',
-    startDate: '2026-05-16', endDate: '2026-05-17',
-    tier: 'regional', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://rk9.gg/tournament/CA02wLAJ2mRyQI5kryVw',
-    registrationNote: 'Sold Out',
     cpPoints: 500,
   },
   {
@@ -456,48 +161,6 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     cpPoints: 500,
   },
   {
-    id: 'sc-lima-may26',
-    name: 'Lima Special Championships',
-    city: 'Lima', country: 'Peru',
-    startDate: '2026-05-23', endDate: '2026-05-24',
-    tier: 'special', format: 'VGC 2026', region: 'LA',
-    registrationUrl: 'https://playlatam.net/tournaments/LIM26-VG',
-    registrationNote: 'Sold Out',
-    cpPoints: 250,
-  },
-  {
-    id: 'reg-melbourne-may26',
-    name: 'Melbourne Regional Championships',
-    city: 'Melbourne', country: 'Australia',
-    startDate: '2026-05-23', endDate: '2026-05-24',
-    tier: 'regional', format: 'VGC 2026', region: 'OC',
-    registrationUrl: 'https://rk9.gg/tournament/MB02w71HQZzTvTOYLtXb',
-    registrationNote: 'Open',
-    cpPoints: 500,
-  },
-  {
-    id: 'reg-indianapolis-may26',
-    name: 'Indianapolis Regional Championships',
-    city: 'Indianapolis', country: 'USA',
-    startDate: '2026-05-30', endDate: '2026-05-31',
-    tier: 'regional', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://rk9.gg/tournament/IN02wbUMQOt2eNv12cgC',
-    registrationNote: 'Sold Out',
-    cpPoints: 500,
-  },
-
-  // ── June 2026 ───────────────────────────────────────────────────────────────
-  {
-    id: 'sc-turin-jun26',
-    name: 'Turin Special Championships',
-    city: 'Turin', country: 'Italy',
-    startDate: '2026-06-06', endDate: '2026-06-07',
-    tier: 'special', format: 'VGC 2026', region: 'EU',
-    registrationUrl: 'https://www.fanfinity.gg/event/pokemon-special-championships-2026-turin/',
-    registrationNote: 'Sign-ups open Apr 8',
-    cpPoints: 250,
-  },
-  {
     id: 'nat-japan-jun26',
     name: 'Japan Championships (JCS)',
     city: 'Yokohama', country: 'Japan',
@@ -507,16 +170,6 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     cpPoints: 500,
   },
   {
-    id: 'ic-naic-jun26',
-    name: 'North America International Championships',
-    city: 'New Orleans', country: 'USA',
-    startDate: '2026-06-12', endDate: '2026-06-14',
-    tier: 'international', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://registration.pokemon.com/flow/pokemon/2026naic/landing/page/main',
-    registrationNote: 'Open',
-    cpPoints: 1000,
-  },
-  {
     id: 'nat-taiwan-jun26',
     name: 'Taiwan Master Ball League',
     city: 'Taichung', country: 'Taiwan',
@@ -524,16 +177,5 @@ export const VGC_EVENTS_2025_2026: VGCEvent[] = [
     tier: 'national', format: 'VGC 2026', region: 'APAC',
     registrationUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfuy8z2eDOZyQTuq6dwESxDTgWY_zYoFevuqZfymPie_zOhnQ/viewform',
     cpPoints: 500,
-  },
-
-  // ── August 2026 ─────────────────────────────────────────────────────────────
-  {
-    id: 'worlds-aug26',
-    name: 'Pokemon World Championships 2026',
-    city: 'San Francisco', country: 'USA',
-    startDate: '2026-08-28', endDate: '2026-08-30',
-    tier: 'worlds', format: 'VGC 2026', region: 'NA',
-    registrationUrl: 'https://www.pokemon.com/us/play-pokemon/pokemon-events/pokemon-world-championships/',
-    cpPoints: 3000,
   },
 ];

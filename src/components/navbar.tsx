@@ -21,7 +21,7 @@ const NAV_ITEMS = [
   { href: "/team-builder", label: "Team Builder", icon: Users },
   { href: "/meta", label: "Meta", icon: TrendingUp },
   { href: "/battle-bot", label: "Battle Bot", icon: Swords },
-  { href: "/events", label: "Events", icon: CalendarDays },
+  { href: "/events", label: "Tournaments", icon: CalendarDays },
   { href: "/learn", label: "PokéSchool", icon: GraduationCap },
   { href: "/about", label: "About", icon: Heart },
 ];
@@ -37,7 +37,7 @@ export function Navbar() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-gray-200/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
@@ -62,7 +62,7 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden desktop:flex items-center gap-1">
               {NAV_ITEMS.map((item) => {
                 const isActive = pathname === item.href;
                 return (
@@ -71,7 +71,7 @@ export function Navbar() {
                     href={item.href}
                     onClick={() => trackEvent("nav_click", "navigation", item.label)}
                     className={cn(
-                      "relative px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2",
+                      "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 whitespace-nowrap",
                       isActive
                         ? "text-foreground bg-gray-900/[0.05] border border-gray-900/[0.08]"
                         : "text-muted-foreground hover:text-foreground"
@@ -87,7 +87,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent("support_click", "engagement", "desktop")}
-                className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white hover:from-yellow-500 hover:to-orange-600 shadow-sm shadow-orange-500/20 flex items-center gap-2 transition-all hover:scale-105"
+                className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white hover:from-yellow-500 hover:to-orange-600 shadow-sm shadow-orange-500/20 flex items-center gap-2 transition-all hover:scale-105 whitespace-nowrap"
               >
                 <Heart className="w-4 h-4 fill-white" />
                 <span>Support Us</span>
@@ -97,7 +97,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile nav panel — visibility controlled by body.mobile-open class (set by inline script in layout) */}
-        <nav className="mobile-nav-panel md:hidden border-t border-gray-200/60 px-4 py-3 space-y-1">
+        <nav className="mobile-nav-panel border-t border-gray-200/60 px-4 py-3 space-y-1">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href;
             return (
