@@ -21,7 +21,8 @@ git commit -m "Run 2M simulation: update tiers, simulation data, and winning tea
 git push
 
 echo "=== Step 4: Deploy to VPS ==="
-sshpass -p "***REDACTED***" ssh -o StrictHostKeyChecking=no andre@167.235.57.190 \
-  "cd /srv/championslab && git checkout -- . && git pull && npm run build && echo ***REDACTED*** | sudo -S systemctl restart championslab"
+VPS_PASS=$(cat ~/Downloads/vps.txt)
+sshpass -p "$VPS_PASS" ssh -o StrictHostKeyChecking=no andre@167.235.57.190 \
+  "cd /srv/championslab && git checkout -- . && git pull && npm run build && echo $VPS_PASS | sudo -S systemctl restart championslab"
 
 echo "=== DONE! Full simulation pipeline complete ==="
