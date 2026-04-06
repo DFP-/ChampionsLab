@@ -2014,15 +2014,7 @@ export default function TeamBuilderPage() {
                 </button>
                 <button
                   onClick={() => {
-                    const exportableSlots = slots
-                      .filter((s) => s.pokemon)
-                      .map((s) => ({
-                        ...s,
-                        pokemon: s.pokemon
-                          ? { ...s.pokemon, name: s.pokemon.showdownName ?? s.pokemon.name }
-                          : s.pokemon,
-                      }));
-                    const blob = new Blob([JSON.stringify({ name: teamName, slots: exportableSlots }, null, 2)], { type: "application/json" });
+                    const blob = new Blob([JSON.stringify({ name: teamName, slots: slots.filter(s => s.pokemon) }, null, 2)], { type: "application/json" });
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement("a");
                     a.href = url;
