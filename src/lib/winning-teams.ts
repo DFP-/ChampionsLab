@@ -1,5 +1,9 @@
 import { WinningTeam } from "./types";
 
+export function getTeamsForPokemon(pokemonId: number): WinningTeam[] {
+  return WINNING_TEAMS.filter(t => t.pokemon.some(m => m.pokemonId === pokemonId));
+}
+
 export const WINNING_TEAMS: WinningTeam[] = [
   {
     id: "t1",
@@ -2210,13 +2214,94 @@ export const WINNING_TEAMS: WinningTeam[] = [
       { pokemonId: 36, name: "Clefable" },
     ],
   },
+  {
+    id: "t41",
+    name: "Mega Manectric Offense",
+    player: "Nils Dunlop",
+    placement: "Top 4",
+    event: "Champions Warm-Up Challenge",
+    pokemon: [
+      { pokemonId: 310, name: "Manectric", isMega: true },
+      { pokemonId: 407, name: "Roserade" },
+      { pokemonId: 445, name: "Garchomp" },
+      { pokemonId: 727, name: "Incineroar" },
+      { pokemonId: 858, name: "Hatterene" },
+      { pokemonId: 454, name: "Toxicroak" },
+    ],
+  },
+  {
+    id: "t42",
+    name: "Mega Medicham Rush",
+    player: "Ryota Otsubo",
+    placement: "Top 8",
+    event: "Champions Warm-Up Challenge",
+    pokemon: [
+      { pokemonId: 308, name: "Medicham", isMega: true },
+      { pokemonId: 547, name: "Whimsicott" },
+      { pokemonId: 887, name: "Dragapult" },
+      { pokemonId: 405, name: "Luxray" },
+      { pokemonId: 695, name: "Heliolisk" },
+      { pokemonId: 911, name: "Skeledirge" },
+    ],
+  },
+  {
+    id: "t43",
+    name: "Trick Room Cofagrigus",
+    player: "Alessio Yuri Boschetto",
+    placement: "1st Place",
+    event: "Champions Warm-Up Challenge",
+    pokemon: [
+      { pokemonId: 563, name: "Cofagrigus" },
+      { pokemonId: 579, name: "Reuniclus" },
+      { pokemonId: 68, name: "Machamp" },
+      { pokemonId: 683, name: "Aromatisse" },
+      { pokemonId: 713, name: "Avalugg" },
+      { pokemonId: 323, name: "Camerupt", isMega: true },
+    ],
+  },
+  {
+    id: "t44",
+    name: "Mega Pidgeot HO",
+    player: "Paul Ruiz",
+    placement: "2nd Place",
+    event: "Champions Warm-Up Challenge",
+    pokemon: [
+      { pokemonId: 18, name: "Pidgeot", isMega: true },
+      { pokemonId: 758, name: "Salazzle" },
+      { pokemonId: 766, name: "Passimian" },
+      { pokemonId: 956, name: "Espathra" },
+      { pokemonId: 130, name: "Gyarados" },
+      { pokemonId: 547, name: "Whimsicott" },
+    ],
+  },
+  {
+    id: "t45",
+    name: "Rain Beartic",
+    player: "Davide Carrer",
+    placement: "Top 4",
+    event: "Champions Warm-Up Challenge",
+    pokemon: [
+      { pokemonId: 186, name: "Politoed" },
+      { pokemonId: 614, name: "Beartic" },
+      { pokemonId: 675, name: "Pangoro" },
+      { pokemonId: 671, name: "Florges" },
+      { pokemonId: 899, name: "Wyrdeer" },
+      { pokemonId: 939, name: "Bellibolt" },
+    ],
+  },
+  {
+    id: "t46",
+    name: "Mega Sharpedo Offense",
+    player: "Javier Señorena",
+    placement: "Top 8",
+    event: "Champions Warm-Up Challenge",
+    pokemon: [
+      { pokemonId: 319, name: "Sharpedo", isMega: true },
+      { pokemonId: 354, name: "Banette", isMega: true },
+      { pokemonId: 510, name: "Liepard" },
+      { pokemonId: 841, name: "Flapple" },
+      { pokemonId: 362, name: "Glalie" },
+      { pokemonId: 205, name: "Forretress" },
+    ],
+  },
 ];
-
-/**
- * Lookup: returns all winning teams that include a given Pokémon ID.
- */
-export function getTeamsForPokemon(pokemonId: number): WinningTeam[] {
-  return WINNING_TEAMS.filter((team) =>
-    team.pokemon.some((p) => p.pokemonId === pokemonId)
-  );
-}

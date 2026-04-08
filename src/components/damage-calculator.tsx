@@ -146,6 +146,7 @@ export default function DamageCalculator() {
   const [friendGuard, setFriendGuard] = useState(false);
   const [pickerTarget, setPickerTarget] = useState<"attacker" | "defender" | null>(null);
   const [pickerSearch, setPickerSearch] = useState("");
+  const [pickerTypeFilter, setPickerTypeFilter] = useState<PokemonType | null>(null);
 
   // Calculate stats for display (resolving mega forms)
   const attackerStats = useMemo(() => {
@@ -210,10 +211,19 @@ export default function DamageCalculator() {
 
   // Pokemon picker
   const filteredPokemon = useMemo(() => {
-    return POKEMON_SEED.filter(p =>
-      pickerSearch === "" || p.name.toLowerCase().includes(pickerSearch.toLowerCase())
-    );
-  }, [pickerSearch]);
+    return POKEMON_SEED.filter(p => {
+      if (p.hidden) return false;
+      if (pickerTypeFilter && !p.types.includes(pickerTypeFilter)) return false;
+      if (pickerSearch === "") return true;
+      const q = pickerSearch.toLowerCase();
+      return (
+        p.name.toLowerCase().includes(q) ||
+        p.types.some(t => t.includes(q)) ||
+        p.abilities.some(a => a.name.toLowerCase().includes(q)) ||
+        p.moves.some(m => m.name.toLowerCase().includes(q))
+      );
+    });
+  }, [pickerSearch, pickerTypeFilter]);
 
   const selectPokemon = useCallback((p: ChampionsPokemon) => {
     const set = getDefaultSet(p);
@@ -226,6 +236,7 @@ export default function DamageCalculator() {
     }
     setPickerTarget(null);
     setPickerSearch("");
+    setPickerTypeFilter(null);
   }, [pickerTarget]);
 
   const swapPokemon = () => {
@@ -561,22 +572,43 @@ export default function DamageCalculator() {
         <>
           <div
             className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm"
-            onClick={() => { setPickerTarget(null); setPickerSearch(""); }}
+            onClick={() => { setPickerTarget(null); setPickerSearch(""); setPickerTypeFilter(null); }}
           />
           <div className="fixed inset-4 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-50 sm:w-full sm:max-w-lg sm:max-h-[70vh] glass rounded-2xl border border-gray-200/60 flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-gray-200/60 flex items-center gap-3">
-              <Search className="w-4 h-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder={`Search ${pickerTarget}...`}
-                value={pickerSearch}
-                onChange={(e) => setPickerSearch(e.target.value)}
-                className="flex-1 bg-transparent focus:outline-none text-sm"
-                autoFocus
-              />
-              <button onClick={() => { setPickerTarget(null); setPickerSearch(""); }}>
-                <X className="w-4 h-4 text-muted-foreground" />
-              </button>
+            <div className="p-4 border-b border-gray-200/60">
+              <div className="flex items-center gap-3">
+                <Search className="w-4 h-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search by name, type, ability or move..."
+                  value={pickerSearch}
+                  onChange={(e) => setPickerSearch(e.target.value)}
+                  className="flex-1 bg-transparent focus:outline-none text-sm"
+                  autoFocus
+                />
+                <button onClick={() => { setPickerTarget(null); setPickerSearch(""); setPickerTypeFilter(null); }}>
+                  <X className="w-4 h-4 text-muted-foreground" />
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-1.5 mt-3">
+                {(Object.keys(TYPE_COLORS) as PokemonType[]).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setPickerTypeFilter(pickerTypeFilter === t ? null : t)}
+                    className="px-2 py-1 rounded-full text-[10px] font-semibold capitalize transition-all"
+                    style={{
+                      backgroundColor: pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}18`,
+                      color: pickerTypeFilter === t ? "#fff" : TYPE_COLORS[t],
+                      border: `1px solid ${pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}40`}`,
+                    }}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+              {(pickerSearch || pickerTypeFilter) && (
+                <p className="text-[10px] text-muted-foreground mt-2">{filteredPokemon.length} Pokémon found</p>
+              )}
             </div>
             <div className="flex-1 overflow-y-auto p-3">
               <div className="grid grid-cols-2 gap-2">

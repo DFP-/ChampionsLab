@@ -69,6 +69,7 @@ export interface ChampionsPokemon {
   season: number; // Season when first available
   tier?: "S" | "A" | "B" | "C" | "D";
   usageRate?: number | null; // Meta usage percentage
+  hidden?: boolean; // Hide from all UI/engine (not available in game)
 }
 
 export interface TeamSlot {

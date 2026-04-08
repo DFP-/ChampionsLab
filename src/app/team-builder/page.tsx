@@ -41,6 +41,7 @@ import {
   type MetaTeamPrediction,
   getTypeImmunity,
   calculateStats,
+  isItemAvailable,
 } from "@/lib/engine";
 import {
   getSavedTeams, saveTeam, deleteTeam, deserializeTeam, saveLastTeam, getLastTeam,
@@ -135,6 +136,7 @@ export default function TeamBuilderPage() {
   const [activeSlot, setActiveSlot] = useState<number | null>(null);
   const [showPokemonPicker, setShowPokemonPicker] = useState(false);
   const [pickerSearch, setPickerSearch] = useState("");
+  const [pickerTypeFilter, setPickerTypeFilter] = useState<PokemonType | null>(null);
   const [showExport, setShowExport] = useState(false);
   const [showImport, setShowImport] = useState(false);
   const [importText, setImportText] = useState("");
@@ -569,7 +571,7 @@ export default function TeamBuilderPage() {
         nature: bestSet?.nature ?? "Adamant",
         moves: bestSet?.moves ?? pokemon.moves.slice(0, 4).map((m) => m.name),
         statPoints: bestSet?.sp ?? { ...EMPTY_STAT_POINTS },
-        item: bestSet?.item,
+        item: bestSet?.item && isItemAvailable(bestSet.item) ? bestSet.item : undefined,
       };
       setSlots(newSlots);
       setShowPokemonPicker(false);
@@ -606,7 +608,7 @@ export default function TeamBuilderPage() {
         ability: set?.ability ?? pokemon.abilities[0]?.name,
         moves: set?.moves ?? pokemon.moves.slice(0, 4).map(m => m.name),
         statPoints: set?.sp ?? { ...EMPTY_STAT_POINTS },
-        item: set?.item,
+        item: set?.item && isItemAvailable(set.item) ? set.item : undefined,
         isMega,
         megaFormIndex,
       } as TeamSlot;
@@ -657,7 +659,7 @@ export default function TeamBuilderPage() {
         nature: bestSet?.nature ?? "Adamant",
         moves: bestSet?.moves ?? pokemon.moves.slice(0, 4).map(m => m.name),
         statPoints: bestSet?.sp ?? { ...EMPTY_STAT_POINTS },
-        item: bestSet?.item,
+        item: bestSet?.item && isItemAvailable(bestSet.item) ? bestSet.item : undefined,
         isMega,
         megaFormIndex,
       } as TeamSlot;
@@ -692,7 +694,7 @@ export default function TeamBuilderPage() {
       nature: bestSet?.nature ?? "Adamant",
       moves: bestSet?.moves ?? pokemon.moves.slice(0, 4).map(m => m.name),
       statPoints: bestSet?.sp ?? { ...EMPTY_STAT_POINTS },
-      item: bestSet?.item,
+      item: bestSet?.item && isItemAvailable(bestSet.item) ? bestSet.item : undefined,
       isMega,
       megaFormIndex,
     };
@@ -707,7 +709,7 @@ export default function TeamBuilderPage() {
     if (set.ability) slot.ability = set.ability;
     if (set.moves) slot.moves = set.moves;
     if (set.sp) slot.statPoints = { ...set.sp };
-    if (set.item) slot.item = set.item;
+    if (set.item && isItemAvailable(set.item)) slot.item = set.item;
     if (set.nature) slot.nature = set.nature;
     // Auto-detect mega form from item
     const isMegaItem = (item: string) => item.endsWith("ite") || item.endsWith("ite X") || item.endsWith("ite Y") || item.endsWith("ite Z");
@@ -764,6 +766,7 @@ export default function TeamBuilderPage() {
   const openPicker = (index: number) => {
     setActiveSlot(index);
     setPickerSearch("");
+    setPickerTypeFilter(null);
     setShowPokemonPicker(true);
   };
 
@@ -1031,11 +1034,19 @@ export default function TeamBuilderPage() {
   };
 
   const filteredPicker = POKEMON_SEED.filter(
-    (p) =>
-      !usedPokemonIds.includes(p.id) &&
-      (pickerSearch === "" ||
-        p.name.toLowerCase().includes(pickerSearch.toLowerCase()) ||
-        p.types.some((t) => t.includes(pickerSearch.toLowerCase())))
+    (p) => {
+      if (p.hidden) return false;
+      if (usedPokemonIds.includes(p.id)) return false;
+      if (pickerTypeFilter && !p.types.includes(pickerTypeFilter)) return false;
+      if (pickerSearch === "") return true;
+      const q = pickerSearch.toLowerCase();
+      return (
+        p.name.toLowerCase().includes(q) ||
+        p.types.some((t) => t.includes(q)) ||
+        p.abilities.some((a) => a.name.toLowerCase().includes(q)) ||
+        p.moves.some((m) => m.name.toLowerCase().includes(q))
+      );
+    }
   );
 
   return (
@@ -1458,7 +1469,7 @@ export default function TeamBuilderPage() {
                                 <span key={type} className="px-1 py-0.5 text-[8px] font-bold uppercase rounded text-white/80" style={{ backgroundColor: `${TYPE_COLORS[type]}AA` }}>{type.slice(0, 3)}</span>
                               ))}
                             </div>
-                            {slot.item && <div className="text-[8px] text-amber-700 bg-amber-50 rounded px-1 py-0.5 truncate font-medium">{slot.item}</div>}
+                            {slot.item && isItemAvailable(slot.item) && <div className="text-[8px] text-amber-700 bg-amber-50 rounded px-1 py-0.5 truncate font-medium">{slot.item}</div>}
                             {slot.nature && <div className="text-[8px] text-emerald-600 truncate">{slot.nature}</div>}
                             <div className="space-y-0">
                               {slot.moves.slice(0, 4).filter(Boolean).map((m) => (
@@ -2130,12 +2141,32 @@ export default function TeamBuilderPage() {
                 </div>
                 <input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search by name, type, ability or move..."
                   value={pickerSearch}
                   onChange={(e) => setPickerSearch(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-xl glass border border-gray-200 focus:border-emerald-500/50 focus:outline-none text-sm"
                   autoFocus
                 />
+                {/* Type filter pills */}
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {(Object.keys(TYPE_COLORS) as PokemonType[]).map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setPickerTypeFilter(pickerTypeFilter === t ? null : t)}
+                      className="px-2 py-1 rounded-full text-[10px] font-semibold capitalize transition-all"
+                      style={{
+                        backgroundColor: pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}18`,
+                        color: pickerTypeFilter === t ? "#fff" : TYPE_COLORS[t],
+                        border: `1px solid ${pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}40`}`,
+                      }}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+                {(pickerSearch || pickerTypeFilter) && (
+                  <p className="text-[10px] text-muted-foreground mt-2">{filteredPicker.length} Pokémon found</p>
+                )}
               </div>
 
               {/* Picker Grid */}

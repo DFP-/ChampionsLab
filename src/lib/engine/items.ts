@@ -359,7 +359,128 @@ export const ITEMS: Record<string, ItemEffect> = {
     description: "Halves Speed and grounds Flying-type holders. Removes Ground immunity.",
     speedMultiplier: 0.5,
   },
+
+  // ── Items added for Champions launch ─────────────────────────────────────
+  "BrightPowder": {
+    name: "BrightPowder",
+    description: "Lowers opponents' accuracy by casting a tricky glare.",
+  },
+  "Focus Band": {
+    name: "Focus Band",
+    description: "May let the holder endure a knockout hit at 1 HP (10% chance).",
+  },
+  "King's Rock": {
+    name: "King's Rock",
+    description: "May cause the target to flinch when the holder lands a hit.",
+  },
+  "Quick Claw": {
+    name: "Quick Claw",
+    description: "Occasionally lets the holder move first in its priority bracket.",
+  },
+  "Shell Bell": {
+    name: "Shell Bell",
+    description: "Restores 1/8 of the damage dealt to the opponent as HP.",
+  },
+  "Aspear Berry": {
+    name: "Aspear Berry",
+    description: "Cures the holder's freeze status once.",
+    statusImmunity: ["freeze"],
+  },
+  "Babiri Berry": {
+    name: "Babiri Berry",
+    description: "Halves super-effective Steel damage once.",
+    resistBerry: "steel",
+  },
+  "Charti Berry": {
+    name: "Charti Berry",
+    description: "Halves super-effective Rock damage once.",
+    resistBerry: "rock",
+  },
+  "Cheri Berry": {
+    name: "Cheri Berry",
+    description: "Cures the holder's paralysis once.",
+    statusImmunity: ["paralysis"],
+  },
+  "Chesto Berry": {
+    name: "Chesto Berry",
+    description: "Cures the holder's sleep once.",
+    statusImmunity: ["sleep"],
+  },
+  "Chilan Berry": {
+    name: "Chilan Berry",
+    description: "Halves Normal-type damage once.",
+    resistBerry: "normal",
+  },
+  "Colbur Berry": {
+    name: "Colbur Berry",
+    description: "Halves super-effective Dark damage once.",
+    resistBerry: "dark",
+  },
+  "Kebia Berry": {
+    name: "Kebia Berry",
+    description: "Halves super-effective Poison damage once.",
+    resistBerry: "poison",
+  },
+  "Leppa Berry": {
+    name: "Leppa Berry",
+    description: "Restores 10 PP to a depleted move once.",
+  },
+  "Oran Berry": {
+    name: "Oran Berry",
+    description: "Restores 10 HP when HP is low.",
+    berryHealThreshold: 50,
+    berryHealAmount: 5,
+  },
+  "Payapa Berry": {
+    name: "Payapa Berry",
+    description: "Halves super-effective Psychic damage once.",
+    resistBerry: "psychic",
+  },
+  "Pecha Berry": {
+    name: "Pecha Berry",
+    description: "Cures the holder's poison once.",
+    statusImmunity: ["poison"],
+  },
+  "Persim Berry": {
+    name: "Persim Berry",
+    description: "Cures the holder's confusion once.",
+    statusImmunity: ["confusion"],
+  },
+  "Rawst Berry": {
+    name: "Rawst Berry",
+    description: "Cures the holder's burn once.",
+    statusImmunity: ["burn"],
+  },
+  "Tanga Berry": {
+    name: "Tanga Berry",
+    description: "Halves super-effective Bug damage once.",
+    resistBerry: "bug",
+  },
+  "Passho Berry": {
+    name: "Passho Berry",
+    description: "Halves super-effective Water damage once.",
+    resistBerry: "water",
+  },
 };
+
+// ── Champions-available items (Serebii confirmed) ─────────────────────────────
+// Only these items appear in UI dropdowns. All mega stones are added dynamically.
+const CHAMPIONS_ITEMS = new Set([
+  // Hold Items
+  "Black Belt", "Black Glasses", "BrightPowder", "Charcoal", "Choice Scarf",
+  "Dragon Fang", "Fairy Feather", "Focus Band", "Focus Sash", "Hard Stone",
+  "King's Rock", "Leftovers", "Light Ball", "Magnet", "Mental Herb",
+  "Metal Coat", "Miracle Seed", "Mystic Water", "Never-Melt Ice", "Poison Barb",
+  "Quick Claw", "Scope Lens", "Sharp Beak", "Shell Bell", "Silk Scarf",
+  "Silver Powder", "Soft Sand", "Spell Tag", "Twisted Spoon", "White Herb",
+  // Berries
+  "Aspear Berry", "Babiri Berry", "Charti Berry", "Cheri Berry", "Chesto Berry",
+  "Chilan Berry", "Chople Berry", "Coba Berry", "Colbur Berry", "Haban Berry",
+  "Kasib Berry", "Kebia Berry", "Leppa Berry", "Lum Berry", "Occa Berry",
+  "Oran Berry", "Passho Berry", "Payapa Berry", "Pecha Berry", "Persim Berry",
+  "Rawst Berry", "Rindo Berry", "Roseli Berry", "Shuca Berry", "Sitrus Berry",
+  "Tanga Berry", "Wacan Berry", "Yache Berry",
+]);
 
 /** Get item damage multiplier for a move */
 export function getItemDamageMultiplier(
@@ -397,23 +518,30 @@ export function getItemSpeedMultiplier(itemName: string): number {
   return ITEMS[itemName]?.speedMultiplier ?? 1;
 }
 
-/** All available item names */
+/** All available item names (Champions-confirmed + mega stones) */
 export function getAllItems(): string[] {
-  return Object.keys(ITEMS);
+  return Object.keys(ITEMS).filter(name =>
+    CHAMPIONS_ITEMS.has(name) || ITEMS[name].isMegaStone
+  );
+}
+
+/** Check if an item is available in Champions */
+export function isItemAvailable(itemName: string): boolean {
+  return CHAMPIONS_ITEMS.has(itemName) || !!ITEMS[itemName]?.isMegaStone;
 }
 
 /** Suggest best items for a given role */
 export function suggestItems(role: "physical-attacker" | "special-attacker" | "support" | "tank" | "sweeper"): string[] {
   switch (role) {
     case "physical-attacker":
-      return ["Choice Band", "Life Orb", "Assault Vest", "Lum Berry"];
+      return ["Choice Scarf", "Focus Sash", "Sitrus Berry", "Lum Berry"];
     case "special-attacker":
-      return ["Choice Specs", "Life Orb", "Assault Vest", "Focus Sash"];
+      return ["Choice Scarf", "Focus Sash", "Sitrus Berry", "Charcoal"];
     case "support":
-      return ["Sitrus Berry", "Mental Herb", "Safety Goggles", "Light Clay", "Focus Sash"];
+      return ["Sitrus Berry", "Mental Herb", "Focus Sash", "Lum Berry"];
     case "tank":
-      return ["Assault Vest", "Sitrus Berry", "Leftovers", "Rocky Helmet"];
+      return ["Sitrus Berry", "Leftovers", "Lum Berry", "Focus Sash"];
     case "sweeper":
-      return ["Life Orb", "Focus Sash", "Choice Scarf", "Weakness Policy"];
+      return ["Focus Sash", "Choice Scarf", "White Herb", "Sitrus Berry"];
   }
 }

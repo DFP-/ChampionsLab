@@ -360,7 +360,7 @@ function buildTeamPool(): TeamEntry[] {
 
   // 4. Generate MEGA VARIANT teams - for every mega-capable Pokémon, 
   //    create teams per mega form (X, Y, Z variants get separate teams)
-  const megaPokemon = POKEMON_SEED.filter(p => p.hasMega && p.forms?.some(f => f.isMega));
+  const megaPokemon = POKEMON_SEED.filter(p => !p.hidden && p.hasMega && p.forms?.some(f => f.isMega));
   for (const mp of megaPokemon) {
     const allMegaSets = USAGE_DATA[mp.id]?.filter(s => isMegaItem(s.item));
     if (!allMegaSets || allMegaSets.length === 0) continue;

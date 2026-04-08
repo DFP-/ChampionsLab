@@ -181,7 +181,7 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
 
 const pokemonById = new Map<number, ChampionsPokemon>();
 for (const p of POKEMON_SEED) {
-  pokemonById.set(p.id, p);
+  if (!p.hidden) pokemonById.set(p.id, p);
 }
 
 function getPokemon(id: number): ChampionsPokemon | undefined {
@@ -303,7 +303,7 @@ function generateFromTemplate(template: ArchetypeTemplate): GeneratedTeam | null
   if (team.length < 6) {
     const usedIds = new Set(team.map(p => p.id));
     const candidates = POKEMON_SEED
-      .filter(p => !usedIds.has(p.id) && USAGE_DATA[p.id]?.length)
+      .filter(p => !p.hidden && !usedIds.has(p.id) && USAGE_DATA[p.id]?.length)
       .map(p => ({ pokemon: p, fit: scorePokemonFit(p, team) }))
       .sort((a, b) => b.fit.score - a.fit.score);
     
@@ -349,6 +349,7 @@ function generateAroundStarter(starterId: number): GeneratedTeam | null {
     let bestFit: { pokemon: ChampionsPokemon; score: number } | null = null;
     
     for (const candidate of POKEMON_SEED) {
+      if (candidate.hidden) continue;
       if (usedIds.has(candidate.id)) continue;
       if (!USAGE_DATA[candidate.id]?.length) continue;
       
@@ -399,7 +400,7 @@ export function generateTeams(count: number = 50): GeneratedTeam[] {
   
   // Generate teams around top-tier starters
   const topTierIds = POKEMON_SEED
-    .filter(p => (p.tier === "S" || p.tier === "A") && USAGE_DATA[p.id]?.length)
+    .filter(p => !p.hidden && (p.tier === "S" || p.tier === "A") && USAGE_DATA[p.id]?.length)
     .map(p => p.id);
   
   for (const id of topTierIds) {

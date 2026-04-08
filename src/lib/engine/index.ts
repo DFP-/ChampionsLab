@@ -32,6 +32,7 @@ export {
   getItemSpeedMultiplier,
   suggestItems,
   getAllItems,
+  isItemAvailable,
 } from "./items";
 
 // Move Data

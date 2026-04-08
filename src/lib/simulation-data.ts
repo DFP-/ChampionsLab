@@ -8638,6 +8638,1755 @@ export const SIM_POKEMON: Record<string, SimPokemonData> = {
     ],
     "bestSets": []
   }
+,
+  "18": {
+    "id": 18,
+    "name": "Pidgeot",
+    "isMega": false,
+    "elo": 8700,
+    "winRate": 45.4,
+    "appearances": 76078,
+    "wins": 34539,
+    "losses": 41539,
+    "bestPartners": [
+      {
+        "name": "Galarian Slowbro",
+        "winRate": 61.9,
+        "games": 4927
+      },
+      {
+        "name": "Incineroar",
+        "winRate": 58.8,
+        "games": 4614
+      },
+      {
+        "name": "Reuniclus",
+        "winRate": 55.1,
+        "games": 653
+      },
+      {
+        "name": "Lycanroc",
+        "winRate": 55,
+        "games": 1378
+      },
+      {
+        "name": "Raichu",
+        "winRate": 50.2,
+        "games": 730
+      }
+    ],
+    "bestSets": []
+  },
+  "18-mega": {
+    "id": 18,
+    "name": "Mega Pidgeot",
+    "isMega": true,
+    "elo": 8417,
+    "winRate": 46.1,
+    "appearances": 43625,
+    "wins": 20111,
+    "losses": 23514,
+    "bestPartners": [
+      {
+        "name": "Palafin",
+        "winRate": 64,
+        "games": 1880
+      },
+      {
+        "name": "Kingambit",
+        "winRate": 64,
+        "games": 732
+      },
+      {
+        "name": "Bellibolt",
+        "winRate": 63.7,
+        "games": 1573
+      },
+      {
+        "name": "Hisuian Zoroark",
+        "winRate": 57.7,
+        "games": 1390
+      },
+      {
+        "name": "Ceruledge",
+        "winRate": 55,
+        "games": 4920
+      }
+    ],
+    "bestSets": []
+  },
+  "24": {
+    "id": 24,
+    "name": "Arbok",
+    "isMega": false,
+    "elo": 8210,
+    "winRate": 46.6,
+    "appearances": 31739,
+    "wins": 14790,
+    "losses": 16949,
+    "bestPartners": [
+      {
+        "name": "Bastiodon",
+        "winRate": 60.4,
+        "games": 3125
+      },
+      {
+        "name": "Vaporeon",
+        "winRate": 58,
+        "games": 3693
+      },
+      {
+        "name": "Conkeldurr",
+        "winRate": 57.5,
+        "games": 2201
+      },
+      {
+        "name": "Audino",
+        "winRate": 54.9,
+        "games": 3762
+      },
+      {
+        "name": "Arcanine",
+        "winRate": 52.7,
+        "games": 4986
+      }
+    ],
+    "bestSets": []
+  },
+  "68": {
+    "id": 68,
+    "name": "Machamp",
+    "isMega": false,
+    "elo": 8966,
+    "winRate": 47.5,
+    "appearances": 9282,
+    "wins": 4409,
+    "losses": 4873,
+    "bestPartners": [
+      {
+        "name": "Farigiraf",
+        "winRate": 55,
+        "games": 3309
+      },
+      {
+        "name": "Sableye",
+        "winRate": 53.4,
+        "games": 1557
+      },
+      {
+        "name": "Fan Rotom",
+        "winRate": 52.6,
+        "games": 3500
+      },
+      {
+        "name": "Absol",
+        "winRate": 51.5,
+        "games": 1140
+      },
+      {
+        "name": "Wash Rotom",
+        "winRate": 51.5,
+        "games": 1173
+      }
+    ],
+    "bestSets": []
+  },
+  "168": {
+    "id": 168,
+    "name": "Ariados",
+    "isMega": false,
+    "elo": 7561,
+    "winRate": 44.9,
+    "appearances": 59868,
+    "wins": 26881,
+    "losses": 32987,
+    "bestPartners": [
+      {
+        "name": "Vanilluxe",
+        "winRate": 63.3,
+        "games": 4913
+      },
+      {
+        "name": "Weavile",
+        "winRate": 60.7,
+        "games": 3612
+      },
+      {
+        "name": "Samurott",
+        "winRate": 56,
+        "games": 1791
+      },
+      {
+        "name": "Bellibolt",
+        "winRate": 54.6,
+        "games": 2408
+      },
+      {
+        "name": "Quaquaval",
+        "winRate": 52.6,
+        "games": 2321
+      }
+    ],
+    "bestSets": []
+  },
+  "205": {
+    "id": 205,
+    "name": "Forretress",
+    "isMega": false,
+    "elo": 8526,
+    "winRate": 48.2,
+    "appearances": 26243,
+    "wins": 12649,
+    "losses": 13594,
+    "bestPartners": [
+      {
+        "name": "Banette",
+        "winRate": 60.5,
+        "games": 719
+      },
+      {
+        "name": "Vanilluxe",
+        "winRate": 56.8,
+        "games": 3529
+      },
+      {
+        "name": "Simipour",
+        "winRate": 56.7,
+        "games": 3748
+      },
+      {
+        "name": "Politoed",
+        "winRate": 54.5,
+        "games": 3391
+      },
+      {
+        "name": "Ariados",
+        "winRate": 50.3,
+        "games": 2480
+      }
+    ],
+    "bestSets": []
+  },
+  "308": {
+    "id": 308,
+    "name": "Medicham",
+    "isMega": false,
+    "elo": 9069,
+    "winRate": 50.1,
+    "appearances": 74644,
+    "wins": 37397,
+    "losses": 37247,
+    "bestPartners": [
+      {
+        "name": "Incineroar",
+        "winRate": 64.7,
+        "games": 1985
+      },
+      {
+        "name": "Kangaskhan",
+        "winRate": 61.9,
+        "games": 635
+      },
+      {
+        "name": "Milotic",
+        "winRate": 61.8,
+        "games": 3753
+      },
+      {
+        "name": "Delphox",
+        "winRate": 55.1,
+        "games": 1194
+      },
+      {
+        "name": "Tyranitar",
+        "winRate": 51.4,
+        "games": 1060
+      }
+    ],
+    "bestSets": []
+  },
+  "308-mega": {
+    "id": 308,
+    "name": "Mega Medicham",
+    "isMega": true,
+    "elo": 9219,
+    "winRate": 48.4,
+    "appearances": 10520,
+    "wins": 5092,
+    "losses": 5428,
+    "bestPartners": [
+      {
+        "name": "Arbok",
+        "winRate": 63.5,
+        "games": 3490
+      },
+      {
+        "name": "Drampa",
+        "winRate": 59.5,
+        "games": 4509
+      },
+      {
+        "name": "Leafeon",
+        "winRate": 59.4,
+        "games": 4690
+      },
+      {
+        "name": "Infernape",
+        "winRate": 54.5,
+        "games": 1827
+      },
+      {
+        "name": "Meowscarada",
+        "winRate": 53.3,
+        "games": 4471
+      }
+    ],
+    "bestSets": []
+  },
+  "310": {
+    "id": 310,
+    "name": "Manectric",
+    "isMega": false,
+    "elo": 8812,
+    "winRate": 50.6,
+    "appearances": 62381,
+    "wins": 31565,
+    "losses": 30816,
+    "bestPartners": [
+      {
+        "name": "Slowbro",
+        "winRate": 60.9,
+        "games": 824
+      },
+      {
+        "name": "Castform",
+        "winRate": 60.8,
+        "games": 4326
+      },
+      {
+        "name": "Glimmora",
+        "winRate": 59.1,
+        "games": 2978
+      },
+      {
+        "name": "Delphox",
+        "winRate": 57.5,
+        "games": 3705
+      },
+      {
+        "name": "Venusaur",
+        "winRate": 52.1,
+        "games": 1975
+      }
+    ],
+    "bestSets": []
+  },
+  "310-mega": {
+    "id": 310,
+    "name": "Mega Manectric",
+    "isMega": true,
+    "elo": 8875,
+    "winRate": 47.3,
+    "appearances": 16706,
+    "wins": 7902,
+    "losses": 8804,
+    "bestPartners": [
+      {
+        "name": "Dragonite",
+        "winRate": 63.3,
+        "games": 2035
+      },
+      {
+        "name": "Aurorus",
+        "winRate": 54.7,
+        "games": 2851
+      },
+      {
+        "name": "Pangoro",
+        "winRate": 51.7,
+        "games": 1623
+      },
+      {
+        "name": "Starmie",
+        "winRate": 51.7,
+        "games": 4969
+      },
+      {
+        "name": "Tinkaton",
+        "winRate": 50.4,
+        "games": 3958
+      }
+    ],
+    "bestSets": []
+  },
+  "319": {
+    "id": 319,
+    "name": "Sharpedo",
+    "isMega": false,
+    "elo": 8587,
+    "winRate": 48.5,
+    "appearances": 36570,
+    "wins": 17736,
+    "losses": 18834,
+    "bestPartners": [
+      {
+        "name": "Morpeko",
+        "winRate": 61.9,
+        "games": 4498
+      },
+      {
+        "name": "Flareon",
+        "winRate": 61,
+        "games": 614
+      },
+      {
+        "name": "Mow Rotom",
+        "winRate": 59.6,
+        "games": 4102
+      },
+      {
+        "name": "Tyranitar",
+        "winRate": 59.5,
+        "games": 1217
+      },
+      {
+        "name": "Leafeon",
+        "winRate": 58.6,
+        "games": 1586
+      }
+    ],
+    "bestSets": []
+  },
+  "319-mega": {
+    "id": 319,
+    "name": "Mega Sharpedo",
+    "isMega": true,
+    "elo": 8922,
+    "winRate": 47.1,
+    "appearances": 25061,
+    "wins": 11804,
+    "losses": 13257,
+    "bestPartners": [
+      {
+        "name": "Vivillon",
+        "winRate": 63.4,
+        "games": 1317
+      },
+      {
+        "name": "Tinkaton",
+        "winRate": 59.1,
+        "games": 2843
+      },
+      {
+        "name": "Klefki",
+        "winRate": 54.7,
+        "games": 1634
+      },
+      {
+        "name": "Fan Rotom",
+        "winRate": 53.1,
+        "games": 1748
+      },
+      {
+        "name": "Hawlucha",
+        "winRate": 50.9,
+        "games": 3221
+      }
+    ],
+    "bestSets": []
+  },
+  "323": {
+    "id": 323,
+    "name": "Camerupt",
+    "isMega": false,
+    "elo": 8308,
+    "winRate": 48.6,
+    "appearances": 41207,
+    "wins": 20027,
+    "losses": 21180,
+    "bestPartners": [
+      {
+        "name": "Abomasnow",
+        "winRate": 62.7,
+        "games": 1947
+      },
+      {
+        "name": "Tyrantrum",
+        "winRate": 62.3,
+        "games": 1393
+      },
+      {
+        "name": "Venusaur",
+        "winRate": 57.5,
+        "games": 4534
+      },
+      {
+        "name": "Vivillon",
+        "winRate": 50.8,
+        "games": 4863
+      },
+      {
+        "name": "Starmie",
+        "winRate": 50.6,
+        "games": 2130
+      }
+    ],
+    "bestSets": []
+  },
+  "323-mega": {
+    "id": 323,
+    "name": "Mega Camerupt",
+    "isMega": true,
+    "elo": 8776,
+    "winRate": 47.2,
+    "appearances": 37889,
+    "wins": 17884,
+    "losses": 20005,
+    "bestPartners": [
+      {
+        "name": "Luxray",
+        "winRate": 63.1,
+        "games": 1407
+      },
+      {
+        "name": "Florges",
+        "winRate": 60.7,
+        "games": 2620
+      },
+      {
+        "name": "Aromatisse",
+        "winRate": 56.2,
+        "games": 3559
+      },
+      {
+        "name": "Hatterene",
+        "winRate": 55.2,
+        "games": 4331
+      },
+      {
+        "name": "Roserade",
+        "winRate": 53.7,
+        "games": 2200
+      }
+    ],
+    "bestSets": []
+  },
+  "354": {
+    "id": 354,
+    "name": "Banette",
+    "isMega": false,
+    "elo": 8770,
+    "winRate": 45.1,
+    "appearances": 23549,
+    "wins": 10621,
+    "losses": 12928,
+    "bestPartners": [
+      {
+        "name": "Alolan Ninetales",
+        "winRate": 60.4,
+        "games": 603
+      },
+      {
+        "name": "Archaludon",
+        "winRate": 59.1,
+        "games": 3312
+      },
+      {
+        "name": "Araquanid",
+        "winRate": 55.9,
+        "games": 2920
+      },
+      {
+        "name": "Heracross",
+        "winRate": 53.1,
+        "games": 729
+      },
+      {
+        "name": "Emolga",
+        "winRate": 51,
+        "games": 523
+      }
+    ],
+    "bestSets": []
+  },
+  "354-mega": {
+    "id": 354,
+    "name": "Mega Banette",
+    "isMega": true,
+    "elo": 8611,
+    "winRate": 46.6,
+    "appearances": 37898,
+    "wins": 17660,
+    "losses": 20238,
+    "bestPartners": [
+      {
+        "name": "Castform",
+        "winRate": 62.4,
+        "games": 2356
+      },
+      {
+        "name": "Houndoom",
+        "winRate": 62.2,
+        "games": 1699
+      },
+      {
+        "name": "Leafeon",
+        "winRate": 58,
+        "games": 877
+      },
+      {
+        "name": "Espathra",
+        "winRate": 57.9,
+        "games": 3645
+      },
+      {
+        "name": "Sharpedo",
+        "winRate": 50.7,
+        "games": 4324
+      }
+    ],
+    "bestSets": []
+  },
+  "358": {
+    "id": 358,
+    "name": "Chimecho",
+    "isMega": false,
+    "elo": 8553,
+    "winRate": 46.9,
+    "appearances": 7924,
+    "wins": 3716,
+    "losses": 4208,
+    "bestPartners": [
+      {
+        "name": "Vivillon",
+        "winRate": 61.4,
+        "games": 4930
+      },
+      {
+        "name": "Lycanroc",
+        "winRate": 60.7,
+        "games": 3310
+      },
+      {
+        "name": "Samurott",
+        "winRate": 53.2,
+        "games": 2450
+      },
+      {
+        "name": "Salazzle",
+        "winRate": 51.2,
+        "games": 3862
+      },
+      {
+        "name": "Patrat",
+        "winRate": 50.7,
+        "games": 1545
+      }
+    ],
+    "bestSets": []
+  },
+  "358-mega": {
+    "id": 358,
+    "name": "Mega Chimecho",
+    "isMega": true,
+    "elo": 8519,
+    "winRate": 46.6,
+    "appearances": 24440,
+    "wins": 11389,
+    "losses": 13051,
+    "bestPartners": [
+      {
+        "name": "Hisuian Decidueye",
+        "winRate": 64,
+        "games": 4963
+      },
+      {
+        "name": "Simipour",
+        "winRate": 63.7,
+        "games": 998
+      },
+      {
+        "name": "Skarmory",
+        "winRate": 63.4,
+        "games": 656
+      },
+      {
+        "name": "Raichu",
+        "winRate": 60.8,
+        "games": 3792
+      },
+      {
+        "name": "Typhlosion",
+        "winRate": 57.3,
+        "games": 3944
+      }
+    ],
+    "bestSets": []
+  },
+  "362": {
+    "id": 362,
+    "name": "Glalie",
+    "isMega": false,
+    "elo": 8757,
+    "winRate": 47.7,
+    "appearances": 10347,
+    "wins": 4936,
+    "losses": 5411,
+    "bestPartners": [
+      {
+        "name": "Frost Rotom",
+        "winRate": 64.1,
+        "games": 3994
+      },
+      {
+        "name": "Dragonite",
+        "winRate": 61.1,
+        "games": 4172
+      },
+      {
+        "name": "Tyranitar",
+        "winRate": 56.7,
+        "games": 4110
+      },
+      {
+        "name": "Chesnaught",
+        "winRate": 52.6,
+        "games": 1152
+      },
+      {
+        "name": "Kleavor",
+        "winRate": 52.4,
+        "games": 2593
+      }
+    ],
+    "bestSets": []
+  },
+  "362-mega": {
+    "id": 362,
+    "name": "Mega Glalie",
+    "isMega": true,
+    "elo": 8769,
+    "winRate": 47.2,
+    "appearances": 44301,
+    "wins": 20910,
+    "losses": 23391,
+    "bestPartners": [
+      {
+        "name": "Aggron",
+        "winRate": 59.4,
+        "games": 3300
+      },
+      {
+        "name": "Umbreon",
+        "winRate": 59.2,
+        "games": 2141
+      },
+      {
+        "name": "Gardevoir",
+        "winRate": 56.2,
+        "games": 775
+      },
+      {
+        "name": "Chandelure",
+        "winRate": 54.6,
+        "games": 1912
+      },
+      {
+        "name": "Hydreigon",
+        "winRate": 50.9,
+        "games": 1215
+      }
+    ],
+    "bestSets": []
+  },
+  "405": {
+    "id": 405,
+    "name": "Luxray",
+    "isMega": false,
+    "elo": 8539,
+    "winRate": 48.8,
+    "appearances": 13936,
+    "wins": 6801,
+    "losses": 7135,
+    "bestPartners": [
+      {
+        "name": "Typhlosion",
+        "winRate": 60.8,
+        "games": 4643
+      },
+      {
+        "name": "Basculegion",
+        "winRate": 60.8,
+        "games": 1641
+      },
+      {
+        "name": "Patrat",
+        "winRate": 59.3,
+        "games": 2504
+      },
+      {
+        "name": "Gyarados",
+        "winRate": 51.7,
+        "games": 1857
+      },
+      {
+        "name": "Serperior",
+        "winRate": 50.8,
+        "games": 4235
+      }
+    ],
+    "bestSets": []
+  },
+  "407": {
+    "id": 407,
+    "name": "Roserade",
+    "isMega": false,
+    "elo": 9131,
+    "winRate": 51,
+    "appearances": 40647,
+    "wins": 20730,
+    "losses": 19917,
+    "bestPartners": [
+      {
+        "name": "Raichu",
+        "winRate": 61.3,
+        "games": 3537
+      },
+      {
+        "name": "Florges",
+        "winRate": 58.6,
+        "games": 2460
+      },
+      {
+        "name": "Flapple",
+        "winRate": 57.7,
+        "games": 1879
+      },
+      {
+        "name": "Serperior",
+        "winRate": 53.5,
+        "games": 1639
+      },
+      {
+        "name": "Pinsir",
+        "winRate": 53,
+        "games": 3273
+      }
+    ],
+    "bestSets": []
+  },
+  "409": {
+    "id": 409,
+    "name": "Rampardos",
+    "isMega": false,
+    "elo": 8776,
+    "winRate": 46,
+    "appearances": 22570,
+    "wins": 10382,
+    "losses": 12188,
+    "bestPartners": [
+      {
+        "name": "Aromatisse",
+        "winRate": 60.2,
+        "games": 1513
+      },
+      {
+        "name": "Blastoise",
+        "winRate": 58.3,
+        "games": 3981
+      },
+      {
+        "name": "Espeon",
+        "winRate": 54.9,
+        "games": 3216
+      },
+      {
+        "name": "Umbreon",
+        "winRate": 53.8,
+        "games": 1592
+      },
+      {
+        "name": "Tinkaton",
+        "winRate": 50.5,
+        "games": 2278
+      }
+    ],
+    "bestSets": []
+  },
+  "411": {
+    "id": 411,
+    "name": "Bastiodon",
+    "isMega": false,
+    "elo": 8450,
+    "winRate": 46.4,
+    "appearances": 79061,
+    "wins": 36684,
+    "losses": 42377,
+    "bestPartners": [
+      {
+        "name": "Stunfisk",
+        "winRate": 64.6,
+        "games": 2097
+      },
+      {
+        "name": "Victreebel",
+        "winRate": 63.7,
+        "games": 3181
+      },
+      {
+        "name": "Emboar",
+        "winRate": 62.9,
+        "games": 3821
+      },
+      {
+        "name": "Archaludon",
+        "winRate": 62.1,
+        "games": 3397
+      },
+      {
+        "name": "Talonflame",
+        "winRate": 57.4,
+        "games": 3486
+      }
+    ],
+    "bestSets": []
+  },
+  "454": {
+    "id": 454,
+    "name": "Toxicroak",
+    "isMega": false,
+    "elo": 8242,
+    "winRate": 47.1,
+    "appearances": 68257,
+    "wins": 32149,
+    "losses": 36108,
+    "bestPartners": [
+      {
+        "name": "Alcremie",
+        "winRate": 61.3,
+        "games": 4348
+      },
+      {
+        "name": "Absol",
+        "winRate": 60.5,
+        "games": 2270
+      },
+      {
+        "name": "Altaria",
+        "winRate": 55.3,
+        "games": 1460
+      },
+      {
+        "name": "Dragonite",
+        "winRate": 55.2,
+        "games": 839
+      },
+      {
+        "name": "Galarian Slowbro",
+        "winRate": 50.4,
+        "games": 2208
+      }
+    ],
+    "bestSets": []
+  },
+  "504": {
+    "id": 504,
+    "name": "Patrat",
+    "isMega": false,
+    "elo": 8013,
+    "winRate": 46.8,
+    "appearances": 11236,
+    "wins": 5258,
+    "losses": 5978,
+    "bestPartners": [
+      {
+        "name": "Tyranitar",
+        "winRate": 62.3,
+        "games": 511
+      },
+      {
+        "name": "Reuniclus",
+        "winRate": 58,
+        "games": 987
+      },
+      {
+        "name": "Rampardos",
+        "winRate": 55.9,
+        "games": 3381
+      },
+      {
+        "name": "Lopunny",
+        "winRate": 53.6,
+        "games": 2141
+      },
+      {
+        "name": "Gardevoir",
+        "winRate": 51.2,
+        "games": 3881
+      }
+    ],
+    "bestSets": []
+  },
+  "510": {
+    "id": 510,
+    "name": "Liepard",
+    "isMega": false,
+    "elo": 7537,
+    "winRate": 42.3,
+    "appearances": 29460,
+    "wins": 12462,
+    "losses": 16998,
+    "bestPartners": [
+      {
+        "name": "Ditto",
+        "winRate": 64.4,
+        "games": 4315
+      },
+      {
+        "name": "Luxray",
+        "winRate": 63.6,
+        "games": 2945
+      },
+      {
+        "name": "Archaludon",
+        "winRate": 56.7,
+        "games": 3670
+      },
+      {
+        "name": "Simisear",
+        "winRate": 53,
+        "games": 4865
+      },
+      {
+        "name": "Skarmory",
+        "winRate": 50.7,
+        "games": 2310
+      }
+    ],
+    "bestSets": []
+  },
+  "512": {
+    "id": 512,
+    "name": "Simisage",
+    "isMega": false,
+    "elo": 7633,
+    "winRate": 45,
+    "appearances": 78191,
+    "wins": 35186,
+    "losses": 43005,
+    "bestPartners": [
+      {
+        "name": "Clawitzer",
+        "winRate": 64.2,
+        "games": 2800
+      },
+      {
+        "name": "Aerodactyl",
+        "winRate": 59.3,
+        "games": 751
+      },
+      {
+        "name": "Archaludon",
+        "winRate": 56.1,
+        "games": 2674
+      },
+      {
+        "name": "Gourgeist",
+        "winRate": 52.6,
+        "games": 4647
+      },
+      {
+        "name": "Galarian Stunfisk",
+        "winRate": 52.5,
+        "games": 1975
+      }
+    ],
+    "bestSets": []
+  },
+  "514": {
+    "id": 514,
+    "name": "Simisear",
+    "isMega": false,
+    "elo": 7800,
+    "winRate": 44.1,
+    "appearances": 77502,
+    "wins": 34178,
+    "losses": 43324,
+    "bestPartners": [
+      {
+        "name": "Alcremie",
+        "winRate": 64.3,
+        "games": 1462
+      },
+      {
+        "name": "Oranguru",
+        "winRate": 59.6,
+        "games": 2863
+      },
+      {
+        "name": "Aerodactyl",
+        "winRate": 57.6,
+        "games": 1872
+      },
+      {
+        "name": "Altaria",
+        "winRate": 55.2,
+        "games": 1435
+      },
+      {
+        "name": "Wyrdeer",
+        "winRate": 51.5,
+        "games": 1895
+      }
+    ],
+    "bestSets": []
+  },
+  "516": {
+    "id": 516,
+    "name": "Simipour",
+    "isMega": false,
+    "elo": 8158,
+    "winRate": 45.3,
+    "appearances": 23503,
+    "wins": 10647,
+    "losses": 12856,
+    "bestPartners": [
+      {
+        "name": "Greninja",
+        "winRate": 61.3,
+        "games": 4595
+      },
+      {
+        "name": "Venusaur",
+        "winRate": 60.8,
+        "games": 4723
+      },
+      {
+        "name": "Ceruledge",
+        "winRate": 59.6,
+        "games": 1520
+      },
+      {
+        "name": "Glalie",
+        "winRate": 56.8,
+        "games": 1797
+      },
+      {
+        "name": "Tauros",
+        "winRate": 54,
+        "games": 1389
+      }
+    ],
+    "bestSets": []
+  },
+  "563": {
+    "id": 563,
+    "name": "Cofagrigus",
+    "isMega": false,
+    "elo": 8504,
+    "winRate": 45.4,
+    "appearances": 24219,
+    "wins": 10995,
+    "losses": 13224,
+    "bestPartners": [
+      {
+        "name": "Maushold",
+        "winRate": 63.9,
+        "games": 3309
+      },
+      {
+        "name": "Rotom",
+        "winRate": 62,
+        "games": 4645
+      },
+      {
+        "name": "Kingambit",
+        "winRate": 58.4,
+        "games": 1236
+      },
+      {
+        "name": "Hawlucha",
+        "winRate": 54.5,
+        "games": 2349
+      },
+      {
+        "name": "Tinkaton",
+        "winRate": 52.8,
+        "games": 4409
+      }
+    ],
+    "bestSets": []
+  },
+  "579": {
+    "id": 579,
+    "name": "Reuniclus",
+    "isMega": false,
+    "elo": 8819,
+    "winRate": 50.6,
+    "appearances": 56985,
+    "wins": 28834,
+    "losses": 28151,
+    "bestPartners": [
+      {
+        "name": "Alolan Ninetales",
+        "winRate": 58.8,
+        "games": 3514
+      },
+      {
+        "name": "Steelix",
+        "winRate": 58,
+        "games": 1252
+      },
+      {
+        "name": "Hatterene",
+        "winRate": 54.3,
+        "games": 4641
+      },
+      {
+        "name": "Roserade",
+        "winRate": 53.9,
+        "games": 4635
+      },
+      {
+        "name": "Orthworm",
+        "winRate": 50.2,
+        "games": 3971
+      }
+    ],
+    "bestSets": []
+  },
+  "614": {
+    "id": 614,
+    "name": "Beartic",
+    "isMega": false,
+    "elo": 8002,
+    "winRate": 45.7,
+    "appearances": 52279,
+    "wins": 23892,
+    "losses": 28387,
+    "bestPartners": [
+      {
+        "name": "Clawitzer",
+        "winRate": 62.6,
+        "games": 4641
+      },
+      {
+        "name": "Lycanroc",
+        "winRate": 57.8,
+        "games": 3789
+      },
+      {
+        "name": "Goodra",
+        "winRate": 55.3,
+        "games": 977
+      },
+      {
+        "name": "Alcremie",
+        "winRate": 53.6,
+        "games": 3126
+      },
+      {
+        "name": "Ceruledge",
+        "winRate": 51.3,
+        "games": 3451
+      }
+    ],
+    "bestSets": []
+  },
+  "671": {
+    "id": 671,
+    "name": "Florges",
+    "isMega": false,
+    "elo": 8745,
+    "winRate": 48.8,
+    "appearances": 75519,
+    "wins": 36853,
+    "losses": 38666,
+    "bestPartners": [
+      {
+        "name": "Dragapult",
+        "winRate": 61,
+        "games": 1029
+      },
+      {
+        "name": "Krookodile",
+        "winRate": 60.3,
+        "games": 1690
+      },
+      {
+        "name": "Sylveon",
+        "winRate": 55,
+        "games": 3538
+      },
+      {
+        "name": "Ampharos",
+        "winRate": 54,
+        "games": 1982
+      },
+      {
+        "name": "Tyranitar",
+        "winRate": 51.1,
+        "games": 4092
+      }
+    ],
+    "bestSets": []
+  },
+  "675": {
+    "id": 675,
+    "name": "Pangoro",
+    "isMega": false,
+    "elo": 8593,
+    "winRate": 45.9,
+    "appearances": 31051,
+    "wins": 14252,
+    "losses": 16799,
+    "bestPartners": [
+      {
+        "name": "Orthworm",
+        "winRate": 64.4,
+        "games": 2934
+      },
+      {
+        "name": "Whimsicott",
+        "winRate": 64.4,
+        "games": 2115
+      },
+      {
+        "name": "Charizard",
+        "winRate": 58.8,
+        "games": 3790
+      },
+      {
+        "name": "Florges",
+        "winRate": 58.8,
+        "games": 3430
+      },
+      {
+        "name": "Hydrapple",
+        "winRate": 58.7,
+        "games": 4686
+      }
+    ],
+    "bestSets": []
+  },
+  "683": {
+    "id": 683,
+    "name": "Aromatisse",
+    "isMega": false,
+    "elo": 8465,
+    "winRate": 45,
+    "appearances": 78818,
+    "wins": 35468,
+    "losses": 43350,
+    "bestPartners": [
+      {
+        "name": "Wyrdeer",
+        "winRate": 57.9,
+        "games": 2748
+      },
+      {
+        "name": "Slowking",
+        "winRate": 57.3,
+        "games": 3146
+      },
+      {
+        "name": "Araquanid",
+        "winRate": 56.9,
+        "games": 3947
+      },
+      {
+        "name": "Basculegion",
+        "winRate": 55.3,
+        "games": 4618
+      },
+      {
+        "name": "Passimian",
+        "winRate": 53.7,
+        "games": 1834
+      }
+    ],
+    "bestSets": []
+  },
+  "685": {
+    "id": 685,
+    "name": "Slurpuff",
+    "isMega": false,
+    "elo": 7592,
+    "winRate": 44.6,
+    "appearances": 32335,
+    "wins": 14421,
+    "losses": 17914,
+    "bestPartners": [
+      {
+        "name": "Salazzle",
+        "winRate": 61.5,
+        "games": 1652
+      },
+      {
+        "name": "Hisuian Samurott",
+        "winRate": 57.7,
+        "games": 1111
+      },
+      {
+        "name": "Lucario",
+        "winRate": 56.9,
+        "games": 678
+      },
+      {
+        "name": "Samurott",
+        "winRate": 51,
+        "games": 4582
+      },
+      {
+        "name": "Ninetales",
+        "winRate": 50.1,
+        "games": 2408
+      }
+    ],
+    "bestSets": []
+  },
+  "695": {
+    "id": 695,
+    "name": "Heliolisk",
+    "isMega": false,
+    "elo": 8672,
+    "winRate": 46.5,
+    "appearances": 31512,
+    "wins": 14653,
+    "losses": 16859,
+    "bestPartners": [
+      {
+        "name": "Pangoro",
+        "winRate": 64.3,
+        "games": 1109
+      },
+      {
+        "name": "Mow Rotom",
+        "winRate": 58.5,
+        "games": 1383
+      },
+      {
+        "name": "Rhyperior",
+        "winRate": 55.5,
+        "games": 2645
+      },
+      {
+        "name": "Camerupt",
+        "winRate": 52.9,
+        "games": 2070
+      },
+      {
+        "name": "Meganium",
+        "winRate": 51.8,
+        "games": 4352
+      }
+    ],
+    "bestSets": []
+  },
+  "702": {
+    "id": 702,
+    "name": "Dedenne",
+    "isMega": false,
+    "elo": 8184,
+    "winRate": 43,
+    "appearances": 77752,
+    "wins": 33433,
+    "losses": 44319,
+    "bestPartners": [
+      {
+        "name": "Espathra",
+        "winRate": 61.4,
+        "games": 1448
+      },
+      {
+        "name": "Furfrou",
+        "winRate": 60.9,
+        "games": 4121
+      },
+      {
+        "name": "Simipour",
+        "winRate": 60.8,
+        "games": 1160
+      },
+      {
+        "name": "Beartic",
+        "winRate": 58.3,
+        "games": 650
+      },
+      {
+        "name": "Lopunny",
+        "winRate": 54.3,
+        "games": 2615
+      }
+    ],
+    "bestSets": []
+  },
+  "713": {
+    "id": 713,
+    "name": "Avalugg",
+    "isMega": false,
+    "elo": 8312,
+    "winRate": 46.3,
+    "appearances": 66715,
+    "wins": 30889,
+    "losses": 35826,
+    "bestPartners": [
+      {
+        "name": "Diggersby",
+        "winRate": 62,
+        "games": 1437
+      },
+      {
+        "name": "Blastoise",
+        "winRate": 61.6,
+        "games": 3117
+      },
+      {
+        "name": "Kleavor",
+        "winRate": 54.9,
+        "games": 4143
+      },
+      {
+        "name": "Starmie",
+        "winRate": 52.2,
+        "games": 3858
+      },
+      {
+        "name": "Meganium",
+        "winRate": 50.7,
+        "games": 1220
+      }
+    ],
+    "bestSets": []
+  },
+  "758": {
+    "id": 758,
+    "name": "Salazzle",
+    "isMega": false,
+    "elo": 8628,
+    "winRate": 47.7,
+    "appearances": 66359,
+    "wins": 31653,
+    "losses": 34706,
+    "bestPartners": [
+      {
+        "name": "Espeon",
+        "winRate": 63.2,
+        "games": 932
+      },
+      {
+        "name": "Banette",
+        "winRate": 62.4,
+        "games": 2356
+      },
+      {
+        "name": "Quaquaval",
+        "winRate": 61.2,
+        "games": 710
+      },
+      {
+        "name": "Abomasnow",
+        "winRate": 60.2,
+        "games": 1431
+      },
+      {
+        "name": "Forretress",
+        "winRate": 52.4,
+        "games": 4637
+      }
+    ],
+    "bestSets": []
+  },
+  "766": {
+    "id": 766,
+    "name": "Passimian",
+    "isMega": false,
+    "elo": 8706,
+    "winRate": 47.3,
+    "appearances": 17287,
+    "wins": 8177,
+    "losses": 9110,
+    "bestPartners": [
+      {
+        "name": "Hisuian Samurott",
+        "winRate": 62.1,
+        "games": 4761
+      },
+      {
+        "name": "Ceruledge",
+        "winRate": 60.2,
+        "games": 4014
+      },
+      {
+        "name": "Torterra",
+        "winRate": 55.6,
+        "games": 3920
+      },
+      {
+        "name": "Milotic",
+        "winRate": 51.9,
+        "games": 1550
+      },
+      {
+        "name": "Rhyperior",
+        "winRate": 50.1,
+        "games": 2454
+      }
+    ],
+    "bestSets": []
+  },
+  "841": {
+    "id": 841,
+    "name": "Flapple",
+    "isMega": false,
+    "elo": 8689,
+    "winRate": 47.8,
+    "appearances": 34184,
+    "wins": 16340,
+    "losses": 17844,
+    "bestPartners": [
+      {
+        "name": "Farigiraf",
+        "winRate": 62.8,
+        "games": 3380
+      },
+      {
+        "name": "Sableye",
+        "winRate": 62.6,
+        "games": 2386
+      },
+      {
+        "name": "Charizard",
+        "winRate": 57.3,
+        "games": 660
+      },
+      {
+        "name": "Araquanid",
+        "winRate": 53.9,
+        "games": 4248
+      },
+      {
+        "name": "Garganacl",
+        "winRate": 53.2,
+        "games": 2563
+      }
+    ],
+    "bestSets": []
+  },
+  "899": {
+    "id": 899,
+    "name": "Wyrdeer",
+    "isMega": false,
+    "elo": 8862,
+    "winRate": 47.8,
+    "appearances": 50319,
+    "wins": 24052,
+    "losses": 26267,
+    "bestPartners": [
+      {
+        "name": "Meganium",
+        "winRate": 63.9,
+        "games": 1404
+      },
+      {
+        "name": "Weavile",
+        "winRate": 60.7,
+        "games": 3243
+      },
+      {
+        "name": "Toucannon",
+        "winRate": 57.3,
+        "games": 3394
+      },
+      {
+        "name": "Ninetales",
+        "winRate": 54.5,
+        "games": 2564
+      },
+      {
+        "name": "Skarmory",
+        "winRate": 50.2,
+        "games": 3153
+      }
+    ],
+    "bestSets": []
+  },
+  "939": {
+    "id": 939,
+    "name": "Bellibolt",
+    "isMega": false,
+    "elo": 8545,
+    "winRate": 48.9,
+    "appearances": 14610,
+    "wins": 7144,
+    "losses": 7466,
+    "bestPartners": [
+      {
+        "name": "Garganacl",
+        "winRate": 62.2,
+        "games": 1971
+      },
+      {
+        "name": "Klefki",
+        "winRate": 60.8,
+        "games": 551
+      },
+      {
+        "name": "Mudsdale",
+        "winRate": 60.2,
+        "games": 2035
+      },
+      {
+        "name": "Mr. Rime",
+        "winRate": 56,
+        "games": 3711
+      },
+      {
+        "name": "Gallade",
+        "winRate": 53.4,
+        "games": 2658
+      }
+    ],
+    "bestSets": []
+  },
+  "956": {
+    "id": 956,
+    "name": "Espathra",
+    "isMega": false,
+    "elo": 8442,
+    "winRate": 46.5,
+    "appearances": 19669,
+    "wins": 9146,
+    "losses": 10523,
+    "bestPartners": [
+      {
+        "name": "Starmie",
+        "winRate": 59.8,
+        "games": 4898
+      },
+      {
+        "name": "Feraligatr",
+        "winRate": 56.2,
+        "games": 874
+      },
+      {
+        "name": "Mow Rotom",
+        "winRate": 55.3,
+        "games": 4974
+      },
+      {
+        "name": "Froslass",
+        "winRate": 53.5,
+        "games": 4571
+      },
+      {
+        "name": "Quaquaval",
+        "winRate": 50.9,
+        "games": 1638
+      }
+    ],
+    "bestSets": []
+  }
 };
 
 /** Best core pairs from simulation */

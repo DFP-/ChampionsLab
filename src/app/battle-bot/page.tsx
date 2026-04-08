@@ -376,6 +376,7 @@ export default function BattleBotPage() {
   const [opponentPool, setOpponentPool] = useState("prebuilt");
   const [pickerOpen, setPickerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [pickerTypeFilter, setPickerTypeFilter] = useState<PokemonType | null>(null);
   const [savedTeams, setSavedTeams] = useState<SavedTeam[]>([]);
   const [showSavedTeams, setShowSavedTeams] = useState(false);
   const [simHistory, setSimHistory] = useState<ReturnType<typeof getSavedSimResults>>([]);
@@ -416,6 +417,7 @@ export default function BattleBotPage() {
       setSelectedSets([...selectedSets, bestAvailableSet(pokemon)]);
       setPickerOpen(false);
       setSearchQuery("");
+      setPickerTypeFilter(null);
       // Open edit modal for the newly added Pokémon
       setTimeout(() => setEditingSlotIndex(newIndex), 50);
     }
@@ -551,10 +553,19 @@ export default function BattleBotPage() {
   }, [selectedPokemon, iterations, opponentPool]);
 
   const filtered = POKEMON_SEED.filter(
-    (p) =>
-      !selectedPokemon.find((s) => s.id === p.id) &&
-      (searchQuery === "" ||
-        p.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    (p) => {
+      if (p.hidden) return false;
+      if (selectedPokemon.find((s) => s.id === p.id)) return false;
+      if (pickerTypeFilter && !p.types.includes(pickerTypeFilter)) return false;
+      if (searchQuery === "") return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        p.name.toLowerCase().includes(q) ||
+        p.types.some((t) => t.includes(q)) ||
+        p.abilities.some((a) => a.name.toLowerCase().includes(q)) ||
+        p.moves.some((m) => m.name.toLowerCase().includes(q))
+      );
+    }
   );
 
   const totalBattleEstimate = iterations;
@@ -1474,14 +1485,40 @@ export default function BattleBotPage() {
               className="fixed inset-4 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-50 sm:w-full sm:max-w-lg sm:max-h-[70vh] glass rounded-2xl border border-gray-200/60 flex flex-col overflow-hidden"
             >
               <div className="p-4 border-b border-gray-200/60">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold">Choose Pokémon</h3>
+                  <button onClick={() => setPickerOpen(false)} className="p-1 rounded-lg hover:bg-gray-100">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
                 <input
                   type="text"
-                  placeholder="Search Pokémon..."
+                  placeholder="Search by name, type, ability or move..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-xl glass border border-gray-200 dark:border-gray-200/10 focus:border-violet-500/50 focus:outline-none text-sm"
                   autoFocus
                 />
+                {/* Type filter pills */}
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {(Object.keys(TYPE_COLORS) as PokemonType[]).map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setPickerTypeFilter(pickerTypeFilter === t ? null : t)}
+                      className="px-2 py-1 rounded-full text-[10px] font-semibold capitalize transition-all"
+                      style={{
+                        backgroundColor: pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}18`,
+                        color: pickerTypeFilter === t ? "#fff" : TYPE_COLORS[t],
+                        border: `1px solid ${pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}40`}`,
+                      }}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+                {(searchQuery || pickerTypeFilter) && (
+                  <p className="text-[10px] text-muted-foreground mt-2">{filtered.length} Pokémon found</p>
+                )}
               </div>
               <div className="flex-1 overflow-y-auto p-3">
                 <div className="grid grid-cols-2 gap-2">

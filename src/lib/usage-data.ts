@@ -1307,4 +1307,286 @@ export const USAGE_DATA: Record<number, CommonSet[]> = {
     {"name":"TR Tank","nature":"Quiet","ability":"Unaware","item":"Sitrus Berry","moves":["Torch Song","Shadow Ball","Earth Power","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
     {"name":"Snarl Support","nature":"Calm","ability":"Unaware","item":"Leftovers","moves":["Torch Song","Snarl","Will-O-Wisp","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":0,"spDef":32,"speed":0}},
   ],
+
+
+  // Pidgeot (id: 18)
+  18: [
+    {"name":"Mega No Guard","nature":"Timid","ability":"No Guard","item":"Pidgeotite","moves":["Hurricane","Heat Wave","U-turn","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Mega Tailwind","nature":"Modest","ability":"No Guard","item":"Pidgeotite","moves":["Hurricane","Heat Wave","Tailwind","Protect"],"sp":{"hp":20,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":12}},
+    {"name":"Fast Support","nature":"Timid","ability":"Keen Eye","item":"Focus Sash","moves":["Air Slash","Tailwind","U-turn","Protect"],"sp":{"hp":4,"attack":0,"defense":0,"spAtk":30,"spDef":0,"speed":32}},
+  ],
+
+  // Arbok (id: 24)
+  24: [
+    {"name":"Physical Attacker","nature":"Jolly","ability":"Intimidate","item":"Life Orb","moves":["Gunk Shot","Sucker Punch","Earthquake","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Intimidate Support","nature":"Adamant","ability":"Intimidate","item":"Sitrus Berry","moves":["Poison Jab","Sucker Punch","Glare","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+    {"name":"Coil Sweeper","nature":"Jolly","ability":"Shed Skin","item":"Sitrus Berry","moves":["Coil","Gunk Shot","Earthquake","Protect"],"sp":{"hp":4,"attack":30,"defense":0,"spAtk":0,"spDef":0,"speed":32}},
+  ],
+
+  // Machamp (id: 68)
+  68: [
+    {"name":"Guts Attacker","nature":"Brave","ability":"Guts","item":"Flame Orb","moves":["Close Combat","Knock Off","Rock Slide","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"No Guard","nature":"Brave","ability":"No Guard","item":"Assault Vest","moves":["Dynamic Punch","Stone Edge","Knock Off","Bullet Punch"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Trick Room Sweeper","nature":"Brave","ability":"No Guard","item":"Life Orb","moves":["Dynamic Punch","Knock Off","Rock Slide","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Bulky Attacker","nature":"Adamant","ability":"Guts","item":"Sitrus Berry","moves":["Close Combat","Knock Off","Bullet Punch","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+  ],
+
+  // Ariados (id: 168)
+  168: [
+    {"name":"Sticky Web Lead","nature":"Brave","ability":"Insomnia","item":"Focus Sash","moves":["Sticky Web","Poison Jab","Sucker Punch","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"TR Attacker","nature":"Brave","ability":"Sniper","item":"Life Orb","moves":["Poison Jab","Megahorn","Sucker Punch","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Toxic Thread Support","nature":"Brave","ability":"Insomnia","item":"Sitrus Berry","moves":["Toxic Thread","Poison Jab","Sticky Web","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":0,"spDef":32,"speed":0}},
+  ],
+
+  // Forretress (id: 205)
+  205: [
+    {"name":"Hazard Setter","nature":"Relaxed","ability":"Sturdy","item":"Mental Herb","moves":["Stealth Rock","Gyro Ball","Rapid Spin","Protect"],"sp":{"hp":32,"attack":0,"defense":32,"spAtk":0,"spDef":2,"speed":0}},
+    {"name":"TR Physical","nature":"Brave","ability":"Sturdy","item":"Assault Vest","moves":["Gyro Ball","Earthquake","Volt Switch","Rapid Spin"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Body Press Wall","nature":"Relaxed","ability":"Sturdy","item":"Sitrus Berry","moves":["Body Press","Iron Defense","Stealth Rock","Protect"],"sp":{"hp":32,"attack":0,"defense":32,"spAtk":0,"spDef":2,"speed":0}},
+  ],
+
+  // Medicham (id: 308)
+  308: [
+    {"name":"Mega Pure Power","nature":"Jolly","ability":"Pure Power","item":"Medichamite","moves":["High Jump Kick","Zen Headbutt","Ice Punch","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Mega Fake Out","nature":"Jolly","ability":"Pure Power","item":"Medichamite","moves":["Fake Out","High Jump Kick","Ice Punch","Protect"],"sp":{"hp":4,"attack":30,"defense":0,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Choice Scarf","nature":"Jolly","ability":"Pure Power","item":"Choice Scarf","moves":["High Jump Kick","Zen Headbutt","Ice Punch","Bullet Punch"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Bulky Mega","nature":"Adamant","ability":"Pure Power","item":"Medichamite","moves":["Drain Punch","Zen Headbutt","Fake Out","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+  ],
+
+  // Manectric (id: 310)
+  310: [
+    {"name":"Mega Intimidate","nature":"Timid","ability":"Intimidate","item":"Manectite","moves":["Thunderbolt","Overheat","Volt Switch","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Mega Snarl Support","nature":"Timid","ability":"Intimidate","item":"Manectite","moves":["Thunderbolt","Snarl","Overheat","Protect"],"sp":{"hp":20,"attack":0,"defense":14,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Life Orb Attacker","nature":"Timid","ability":"Lightning Rod","item":"Life Orb","moves":["Thunderbolt","Overheat","Volt Switch","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Choice Specs","nature":"Timid","ability":"Lightning Rod","item":"Choice Specs","moves":["Thunderbolt","Overheat","Volt Switch","Hidden Power Ice"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+  ],
+
+  // Sharpedo (id: 319)
+  319: [
+    {"name":"Mega Speed Boost","nature":"Adamant","ability":"Strong Jaw","item":"Sharpedonite","moves":["Crunch","Waterfall","Ice Fang","Protect"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Speed Boost Attacker","nature":"Adamant","ability":"Speed Boost","item":"Life Orb","moves":["Waterfall","Crunch","Ice Fang","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Mega Bulky","nature":"Adamant","ability":"Strong Jaw","item":"Sharpedonite","moves":["Crunch","Waterfall","Psychic Fangs","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+  ],
+
+  // Camerupt (id: 323)
+  323: [
+    {"name":"Mega Sheer Force","nature":"Quiet","ability":"Sheer Force","item":"Cameruptite","moves":["Heat Wave","Earth Power","Flash Cannon","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"TR Mega Attacker","nature":"Quiet","ability":"Sheer Force","item":"Cameruptite","moves":["Eruption","Earth Power","Heat Wave","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Trick Room Special","nature":"Quiet","ability":"Solid Rock","item":"Life Orb","moves":["Heat Wave","Earth Power","Ancient Power","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Physical TR","nature":"Brave","ability":"Solid Rock","item":"Assault Vest","moves":["Flare Blitz","Earthquake","Rock Slide","Yawn"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+  ],
+
+  // Banette (id: 354)
+  354: [
+    {"name":"Mega Prankster","nature":"Adamant","ability":"Prankster","item":"Banettite","moves":["Shadow Claw","Shadow Sneak","Will-O-Wisp","Protect"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Mega Destiny Bond","nature":"Jolly","ability":"Prankster","item":"Banettite","moves":["Shadow Claw","Destiny Bond","Will-O-Wisp","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Mega Taunt Support","nature":"Jolly","ability":"Prankster","item":"Banettite","moves":["Taunt","Shadow Claw","Will-O-Wisp","Protect"],"sp":{"hp":20,"attack":12,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Choice Band","nature":"Adamant","ability":"Insomnia","item":"Choice Band","moves":["Shadow Claw","Sucker Punch","Knock Off","Shadow Sneak"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+  ],
+
+  // Chimecho (id: 358)
+  358: [
+    {"name":"Mega TR Support","nature":"Quiet","ability":"Levitate","item":"Chimechite","moves":["Psychic","Dazzling Gleam","Trick Room","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Mega Attacker","nature":"Modest","ability":"Levitate","item":"Chimechite","moves":["Psychic","Shadow Ball","Energy Ball","Protect"],"sp":{"hp":20,"attack":0,"defense":2,"spAtk":32,"spDef":12,"speed":0}},
+    {"name":"Support","nature":"Bold","ability":"Levitate","item":"Sitrus Berry","moves":["Psychic","Trick Room","Heal Pulse","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":0,"spDef":14,"speed":0}},
+  ],
+
+  // Glalie (id: 362)
+  362: [
+    {"name":"Mega Refrigerate","nature":"Jolly","ability":"Refrigerate","item":"Glalitite","moves":["Return","Earthquake","Explosion","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Mega Special","nature":"Timid","ability":"Refrigerate","item":"Glalitite","moves":["Hyper Voice","Freeze-Dry","Dark Pulse","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Focus Sash Lead","nature":"Timid","ability":"Inner Focus","item":"Focus Sash","moves":["Ice Beam","Freeze-Dry","Dark Pulse","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+  ],
+
+  // Luxray (id: 405)
+  405: [
+    {"name":"Physical Attacker","nature":"Adamant","ability":"Intimidate","item":"Life Orb","moves":["Wild Charge","Crunch","Ice Fang","Protect"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Intimidate Support","nature":"Adamant","ability":"Intimidate","item":"Sitrus Berry","moves":["Wild Charge","Crunch","Volt Switch","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+    {"name":"Guts Attacker","nature":"Adamant","ability":"Guts","item":"Flame Orb","moves":["Facade","Wild Charge","Crunch","Protect"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Choice Band","nature":"Jolly","ability":"Intimidate","item":"Choice Band","moves":["Wild Charge","Crunch","Ice Fang","Volt Switch"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+  ],
+
+  // Roserade (id: 407)
+  407: [
+    {"name":"Special Attacker","nature":"Timid","ability":"Technician","item":"Life Orb","moves":["Leaf Storm","Sludge Bomb","Shadow Ball","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Focus Sash Lead","nature":"Timid","ability":"Natural Cure","item":"Focus Sash","moves":["Leaf Storm","Sludge Bomb","Sleep Powder","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Choice Specs","nature":"Modest","ability":"Technician","item":"Choice Specs","moves":["Leaf Storm","Sludge Bomb","Shadow Ball","Dazzling Gleam"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Bulky Support","nature":"Calm","ability":"Natural Cure","item":"Sitrus Berry","moves":["Giga Drain","Sludge Bomb","Sleep Powder","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":0,"spDef":32,"speed":0}},
+  ],
+
+  // Rampardos (id: 409)
+  409: [
+    {"name":"TR Attacker","nature":"Brave","ability":"Mold Breaker","item":"Life Orb","moves":["Head Smash","Earthquake","Rock Slide","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Choice Band","nature":"Brave","ability":"Mold Breaker","item":"Choice Band","moves":["Head Smash","Earthquake","Rock Slide","Zen Headbutt"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Focus Sash","nature":"Adamant","ability":"Mold Breaker","item":"Focus Sash","moves":["Head Smash","Earthquake","Rock Slide","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+  ],
+
+  // Bastiodon (id: 411)
+  411: [
+    {"name":"TR Wall","nature":"Relaxed","ability":"Sturdy","item":"Sitrus Berry","moves":["Wide Guard","Body Press","Metal Burst","Protect"],"sp":{"hp":32,"attack":0,"defense":32,"spAtk":0,"spDef":2,"speed":0}},
+    {"name":"Stealth Rock Support","nature":"Relaxed","ability":"Sturdy","item":"Mental Herb","moves":["Stealth Rock","Body Press","Toxic","Protect"],"sp":{"hp":32,"attack":0,"defense":32,"spAtk":0,"spDef":2,"speed":0}},
+    {"name":"Iron Defense","nature":"Relaxed","ability":"Sturdy","item":"Leftovers","moves":["Iron Defense","Body Press","Stealth Rock","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":0,"spDef":14,"speed":0}},
+  ],
+
+  // Toxicroak (id: 454)
+  454: [
+    {"name":"Rain Attacker","nature":"Adamant","ability":"Dry Skin","item":"Life Orb","moves":["Drain Punch","Poison Jab","Sucker Punch","Protect"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Swords Dance","nature":"Jolly","ability":"Dry Skin","item":"Focus Sash","moves":["Swords Dance","Drain Punch","Poison Jab","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Fake Out Lead","nature":"Jolly","ability":"Dry Skin","item":"Sitrus Berry","moves":["Fake Out","Drain Punch","Poison Jab","Protect"],"sp":{"hp":4,"attack":30,"defense":0,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Assault Vest","nature":"Adamant","ability":"Dry Skin","item":"Assault Vest","moves":["Drain Punch","Poison Jab","Sucker Punch","Ice Punch"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+  ],
+
+  // Patrat (id: 504)
+  504: [
+    {"name":"Focus Sash Lead","nature":"Jolly","ability":"Analytic","item":"Focus Sash","moves":["Hypnosis","Super Fang","Crunch","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"After You Support","nature":"Jolly","ability":"Analytic","item":"Focus Sash","moves":["After You","Hypnosis","Super Fang","Protect"],"sp":{"hp":4,"attack":0,"defense":0,"spAtk":0,"spDef":30,"speed":32}},
+    {"name":"Trick Room","nature":"Brave","ability":"Analytic","item":"Sitrus Berry","moves":["Super Fang","Crunch","Helping Hand","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+  ],
+
+  // Liepard (id: 510)
+  510: [
+    {"name":"Prankster Support","nature":"Jolly","ability":"Prankster","item":"Focus Sash","moves":["Fake Out","Encore","Thunder Wave","Protect"],"sp":{"hp":4,"attack":0,"defense":0,"spAtk":0,"spDef":30,"speed":32}},
+    {"name":"Prankster Taunt","nature":"Jolly","ability":"Prankster","item":"Focus Sash","moves":["Fake Out","Taunt","Foul Play","Protect"],"sp":{"hp":4,"attack":0,"defense":30,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Nasty Plot","nature":"Timid","ability":"Prankster","item":"Life Orb","moves":["Nasty Plot","Dark Pulse","Encore","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+  ],
+
+  // Simisage (id: 512)
+  512: [
+    {"name":"Physical Attacker","nature":"Jolly","ability":"Overgrow","item":"Life Orb","moves":["Seed Bomb","Knock Off","Superpower","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Nasty Plot","nature":"Timid","ability":"Overgrow","item":"Focus Sash","moves":["Nasty Plot","Leaf Storm","Focus Blast","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Choice Scarf","nature":"Jolly","ability":"Overgrow","item":"Choice Scarf","moves":["Seed Bomb","Knock Off","Superpower","Rock Slide"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+  ],
+
+  // Simisear (id: 514)
+  514: [
+    {"name":"Physical Attacker","nature":"Jolly","ability":"Blaze","item":"Life Orb","moves":["Flare Blitz","Knock Off","Superpower","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Nasty Plot","nature":"Timid","ability":"Blaze","item":"Focus Sash","moves":["Nasty Plot","Fire Blast","Focus Blast","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Choice Scarf","nature":"Jolly","ability":"Blaze","item":"Choice Scarf","moves":["Flare Blitz","Knock Off","Superpower","U-turn"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+  ],
+
+  // Simipour (id: 516)
+  516: [
+    {"name":"Physical Attacker","nature":"Jolly","ability":"Torrent","item":"Life Orb","moves":["Waterfall","Knock Off","Superpower","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Nasty Plot","nature":"Timid","ability":"Torrent","item":"Focus Sash","moves":["Nasty Plot","Hydro Pump","Ice Beam","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Choice Specs","nature":"Timid","ability":"Torrent","item":"Choice Specs","moves":["Hydro Pump","Ice Beam","Focus Blast","Surf"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+  ],
+
+  // Cofagrigus (id: 563)
+  563: [
+    {"name":"TR Setter","nature":"Quiet","ability":"Mummy","item":"Sitrus Berry","moves":["Trick Room","Shadow Ball","Will-O-Wisp","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Nasty Plot TR","nature":"Quiet","ability":"Mummy","item":"Life Orb","moves":["Nasty Plot","Shadow Ball","Dark Pulse","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Defensive Wall","nature":"Bold","ability":"Mummy","item":"Leftovers","moves":["Will-O-Wisp","Shadow Ball","Body Press","Protect"],"sp":{"hp":32,"attack":0,"defense":32,"spAtk":0,"spDef":2,"speed":0}},
+    {"name":"Ally Switch","nature":"Quiet","ability":"Mummy","item":"Mental Herb","moves":["Trick Room","Shadow Ball","Ally Switch","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":14,"spDef":0,"speed":0}},
+  ],
+
+  // Reuniclus (id: 579)
+  579: [
+    {"name":"TR Attacker","nature":"Quiet","ability":"Magic Guard","item":"Life Orb","moves":["Trick Room","Psychic","Focus Blast","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Calm Mind TR","nature":"Quiet","ability":"Magic Guard","item":"Sitrus Berry","moves":["Calm Mind","Psychic","Focus Blast","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Assault Vest","nature":"Quiet","ability":"Overcoat","item":"Assault Vest","moves":["Psychic","Focus Blast","Shadow Ball","Energy Ball"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Recovery Tank","nature":"Quiet","ability":"Magic Guard","item":"Life Orb","moves":["Psychic","Focus Blast","Recover","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":14,"spDef":0,"speed":0}},
+  ],
+
+  // Beartic (id: 614)
+  614: [
+    {"name":"TR Attacker","nature":"Brave","ability":"Swift Swim","item":"Life Orb","moves":["Icicle Crash","Close Combat","Rock Slide","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Rain Sweeper","nature":"Adamant","ability":"Swift Swim","item":"Life Orb","moves":["Icicle Crash","Liquidation","Close Combat","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Choice Band","nature":"Brave","ability":"Swift Swim","item":"Choice Band","moves":["Icicle Crash","Close Combat","Rock Slide","Superpower"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+  ],
+
+  // Florges (id: 671)
+  671: [
+    {"name":"Special Tank","nature":"Calm","ability":"Flower Veil","item":"Sitrus Berry","moves":["Moonblast","Calm Mind","Synthesis","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":0,"spDef":32,"speed":0}},
+    {"name":"Trick Room","nature":"Quiet","ability":"Flower Veil","item":"Life Orb","moves":["Trick Room","Moonblast","Psychic","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Offensive","nature":"Modest","ability":"Flower Veil","item":"Choice Specs","moves":["Moonblast","Psychic","Dazzling Gleam","Energy Ball"],"sp":{"hp":4,"attack":0,"defense":0,"spAtk":32,"spDef":0,"speed":30}},
+    {"name":"Support","nature":"Bold","ability":"Flower Veil","item":"Sitrus Berry","moves":["Moonblast","Helping Hand","Aromatherapy","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":0,"spDef":14,"speed":0}},
+  ],
+
+  // Pangoro (id: 675)
+  675: [
+    {"name":"TR Attacker","nature":"Brave","ability":"Iron Fist","item":"Life Orb","moves":["Drain Punch","Knock Off","Ice Punch","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Assault Vest","nature":"Brave","ability":"Scrappy","item":"Assault Vest","moves":["Close Combat","Knock Off","Ice Punch","Bullet Punch"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Choice Band","nature":"Brave","ability":"Iron Fist","item":"Choice Band","moves":["Close Combat","Knock Off","Ice Punch","Drain Punch"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+  ],
+
+  // Aromatisse (id: 683)
+  683: [
+    {"name":"TR Setter","nature":"Quiet","ability":"Aroma Veil","item":"Sitrus Berry","moves":["Trick Room","Moonblast","Helping Hand","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Bulky Support","nature":"Relaxed","ability":"Aroma Veil","item":"Sitrus Berry","moves":["Trick Room","Moonblast","Heal Pulse","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":0,"spDef":14,"speed":0}},
+    {"name":"Calm Mind","nature":"Quiet","ability":"Aroma Veil","item":"Leftovers","moves":["Calm Mind","Moonblast","Psychic","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+  ],
+
+  // Slurpuff (id: 685)
+  685: [
+    {"name":"Belly Drum","nature":"Adamant","ability":"Unburden","item":"Sitrus Berry","moves":["Belly Drum","Play Rough","Drain Punch","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":12}},
+    {"name":"Support","nature":"Bold","ability":"Sweet Veil","item":"Sitrus Berry","moves":["Dazzling Gleam","Fake Tears","Helping Hand","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":0,"spDef":14,"speed":0}},
+    {"name":"Unburden Attacker","nature":"Jolly","ability":"Unburden","item":"Sitrus Berry","moves":["Play Rough","Drain Punch","Fake Out","Protect"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+  ],
+
+  // Heliolisk (id: 695)
+  695: [
+    {"name":"Sun Attacker","nature":"Timid","ability":"Solar Power","item":"Life Orb","moves":["Thunderbolt","Hyper Voice","Dark Pulse","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Choice Specs","nature":"Timid","ability":"Dry Skin","item":"Choice Specs","moves":["Thunderbolt","Hyper Voice","Surf","Volt Switch"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Focus Sash","nature":"Timid","ability":"Dry Skin","item":"Focus Sash","moves":["Thunderbolt","Hyper Voice","Electroweb","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Rain Attacker","nature":"Modest","ability":"Dry Skin","item":"Life Orb","moves":["Thunder","Hyper Voice","Surf","Protect"],"sp":{"hp":4,"attack":0,"defense":0,"spAtk":32,"spDef":0,"speed":30}},
+  ],
+
+  // Dedenne (id: 702)
+  702: [
+    {"name":"Support","nature":"Timid","ability":"Cheek Pouch","item":"Sitrus Berry","moves":["Nuzzle","Dazzling Gleam","Helping Hand","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Encore Lead","nature":"Timid","ability":"Plus","item":"Focus Sash","moves":["Thunderbolt","Dazzling Gleam","Encore","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Nasty Plot","nature":"Timid","ability":"Plus","item":"Life Orb","moves":["Nasty Plot","Thunderbolt","Dazzling Gleam","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+  ],
+
+  // Avalugg (id: 713)
+  713: [
+    {"name":"TR Wall","nature":"Brave","ability":"Sturdy","item":"Assault Vest","moves":["Avalanche","Body Press","Heavy Slam","Earthquake"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+    {"name":"Body Press Tank","nature":"Relaxed","ability":"Sturdy","item":"Sitrus Berry","moves":["Iron Defense","Body Press","Avalanche","Protect"],"sp":{"hp":32,"attack":0,"defense":32,"spAtk":0,"spDef":2,"speed":0}},
+    {"name":"Physical TR","nature":"Brave","ability":"Ice Body","item":"Life Orb","moves":["Avalanche","Earthquake","Rock Slide","Protect"],"sp":{"hp":32,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":0}},
+  ],
+
+  // Salazzle (id: 758)
+  758: [
+    {"name":"Fast Attacker","nature":"Timid","ability":"Corrosion","item":"Life Orb","moves":["Sludge Bomb","Flamethrower","Dragon Pulse","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Focus Sash","nature":"Timid","ability":"Corrosion","item":"Focus Sash","moves":["Fake Out","Sludge Bomb","Flamethrower","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Nasty Plot","nature":"Timid","ability":"Corrosion","item":"Focus Sash","moves":["Nasty Plot","Sludge Bomb","Flamethrower","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Choice Specs","nature":"Modest","ability":"Corrosion","item":"Choice Specs","moves":["Sludge Bomb","Heat Wave","Dragon Pulse","Overheat"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+  ],
+
+  // Passimian (id: 766)
+  766: [
+    {"name":"Physical Attacker","nature":"Adamant","ability":"Defiant","item":"Life Orb","moves":["Close Combat","Knock Off","Rock Slide","Protect"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Choice Scarf","nature":"Jolly","ability":"Defiant","item":"Choice Scarf","moves":["Close Combat","Knock Off","Rock Slide","U-turn"],"sp":{"hp":0,"attack":32,"defense":2,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Bulky Attacker","nature":"Adamant","ability":"Defiant","item":"Sitrus Berry","moves":["Close Combat","Knock Off","Coaching","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+  ],
+
+  // Flapple (id: 841)
+  841: [
+    {"name":"Physical Attacker","nature":"Adamant","ability":"Hustle","item":"Life Orb","moves":["Grav Apple","Dragon Rush","Sucker Punch","Protect"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Choice Band","nature":"Adamant","ability":"Hustle","item":"Choice Band","moves":["Grav Apple","Outrage","Sucker Punch","U-turn"],"sp":{"hp":4,"attack":32,"defense":0,"spAtk":0,"spDef":0,"speed":30}},
+    {"name":"Special Attacker","nature":"Modest","ability":"Ripen","item":"Sitrus Berry","moves":["Draco Meteor","Leaf Storm","Dragon Pulse","Protect"],"sp":{"hp":4,"attack":0,"defense":0,"spAtk":32,"spDef":0,"speed":30}},
+  ],
+
+  // Wyrdeer (id: 899)
+  899: [
+    {"name":"TR Attacker","nature":"Quiet","ability":"Intimidate","item":"Life Orb","moves":["Psyshock","Hyper Voice","Shadow Ball","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Intimidate Support","nature":"Adamant","ability":"Intimidate","item":"Sitrus Berry","moves":["Zen Headbutt","Double-Edge","Megahorn","Protect"],"sp":{"hp":20,"attack":32,"defense":2,"spAtk":0,"spDef":12,"speed":0}},
+    {"name":"Calm Mind","nature":"Modest","ability":"Frisk","item":"Sitrus Berry","moves":["Calm Mind","Psychic","Shadow Ball","Protect"],"sp":{"hp":20,"attack":0,"defense":14,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Choice Specs","nature":"Modest","ability":"Intimidate","item":"Choice Specs","moves":["Psychic","Hyper Voice","Shadow Ball","Energy Ball"],"sp":{"hp":4,"attack":0,"defense":0,"spAtk":32,"spDef":0,"speed":30}},
+  ],
+
+  // Bellibolt (id: 939)
+  939: [
+    {"name":"TR Attacker","nature":"Quiet","ability":"Electromorphosis","item":"Life Orb","moves":["Thunderbolt","Muddy Water","Volt Switch","Protect"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+    {"name":"Bulky Support","nature":"Modest","ability":"Static","item":"Sitrus Berry","moves":["Thunderbolt","Muddy Water","Electroweb","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":14,"spDef":0,"speed":0}},
+    {"name":"Assault Vest","nature":"Quiet","ability":"Electromorphosis","item":"Assault Vest","moves":["Thunderbolt","Muddy Water","Weather Ball","Volt Switch"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":0}},
+  ],
+
+  // Espathra (id: 956)
+  956: [
+    {"name":"Speed Boost Sweeper","nature":"Timid","ability":"Speed Boost","item":"Life Orb","moves":["Lumina Crash","Dazzling Gleam","Shadow Ball","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Calm Mind","nature":"Timid","ability":"Speed Boost","item":"Focus Sash","moves":["Calm Mind","Lumina Crash","Dazzling Gleam","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
+    {"name":"Stored Power","nature":"Timid","ability":"Speed Boost","item":"Sitrus Berry","moves":["Calm Mind","Stored Power","Dazzling Gleam","Protect"],"sp":{"hp":20,"attack":0,"defense":14,"spAtk":0,"spDef":0,"speed":32}},
+    {"name":"Bulky Pivot","nature":"Bold","ability":"Opportunist","item":"Sitrus Berry","moves":["Lumina Crash","Helping Hand","Quick Guard","Protect"],"sp":{"hp":32,"attack":0,"defense":20,"spAtk":0,"spDef":14,"speed":0}},
+  ],
 };

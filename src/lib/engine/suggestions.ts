@@ -36,7 +36,7 @@ export function suggestTeammates(
   const usedIds = new Set(existingTeam.map(p => p.id));
   
   const suggestions = POKEMON_SEED
-    .filter(p => !usedIds.has(p.id) && USAGE_DATA[p.id]?.length)
+    .filter(p => !p.hidden && !usedIds.has(p.id) && USAGE_DATA[p.id]?.length)
     .map(p => {
       const fit = scorePokemonFit(p, existingTeam);
       return {

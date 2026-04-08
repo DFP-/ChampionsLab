@@ -11,6 +11,25 @@ interface ChangelogEntry {
 
 const SHARED_ENTRIES: ChangelogEntry[] = [
   {
+    date: "08/04/2026",
+    items: [
+      "🎮 LAUNCH DAY UPDATE — Pokémon Champions is live!",
+      "Roster updated to 207 Pokémon — 38 new species added (Pidgeot, Machamp, Medicham, Manectric, Sharpedo, Chimecho, Cofagrigus, Beartic, Florges, Espathra, and more)",
+      "6 Pokémon hidden from roster (Metagross, Ursaluna, Pawmot, Dondozo, Tatsugiri, Grimmsnarl) — not in the game",
+      "60 Mega Evolutions now available — all mega abilities confirmed and updated",
+      "Mega ability badges changed from 'Speculative' to 'Champions' — all abilities officially confirmed",
+      "New Mega Chimecho and Mega Golurk sprites from official renders",
+      "Items audit: filtered item pool to match in-game availability — Life Orb, Choice Specs, Choice Band, Assault Vest, Flame Orb and others correctly excluded",
+      "Team Builder no longer auto-assigns unavailable items from competitive sets",
+      "Full competitive data for all 207 Pokémon — usage rates, 3-4 sets per Pokémon with proper SP spreads",
+      "Battle simulation data added for 46 entries (38 base + 8 mega forms) with ELO, win rates, and partner data",
+      "6 new winning teams from Champions Warm-Up Challenge",
+      "Season M-1 info card now shows season end date (May 13), regulation end (June 17), roster count (201), and mega count (60)",
+      "Pokémon picker upgraded across all pages — filter by type, ability, or move in Team Builder, Battle Bot, Team Tester, and Damage Calculator",
+      "Online competitions added: Warm-Up Challenge (Apr 8–13) and Global Challenge 2026 I (Apr 23–May 4)",
+    ],
+  },
+  {
     date: "07/04/2026",
     items: [
       "Fixed Intimidate affecting immune abilities — Clear Body, White Smoke, Hyper Cutter, Full Metal Body now correctly block Intimidate",

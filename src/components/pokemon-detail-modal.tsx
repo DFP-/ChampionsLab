@@ -590,8 +590,8 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
                           </div>
                           <span className="text-sm font-bold tracking-tight text-gray-900">{ability.name}</span>
                           {ability.isChampions && (
-                            <span className="px-2 py-0.5 text-[9px] font-bold bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 rounded-lg border border-amber-300" title="This ability has not been officially revealed yet - it is a speculative guess for Champions Lab.">
-                              SPECULATIVE
+                            <span className="px-2 py-0.5 text-[9px] font-bold bg-gradient-to-r from-violet-50 to-indigo-50 text-violet-700 rounded-lg border border-violet-300" title="This is a new ability introduced in Pokémon Champions.">
+                              CHAMPIONS
                             </span>
                           )}
                           {ability.isHidden && (

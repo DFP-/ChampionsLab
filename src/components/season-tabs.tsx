@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "@/lib/motion";
-import { SEASONS } from "@/lib/pokemon-data";
+import { SEASONS, POKEMON_SEED } from "@/lib/pokemon-data";
 import { cn } from "@/lib/utils";
-import { Shield, Swords, Users, Timer, Sparkles, Ban, Gauge, ListChecks } from "lucide-react";
+import { Shield, Swords, Users, Timer, Sparkles, Ban, Gauge, ListChecks, Calendar, Dna, Package } from "lucide-react";
 
 interface SeasonTabsProps {
   activeSeason: number;
@@ -177,6 +177,14 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
   const season = SEASONS.find((s) => s.id === seasonId);
   if (!season) return null;
 
+  const rosterCount = POKEMON_SEED.filter(p => !(p as any).hidden).length;
+  const megaCount = POKEMON_SEED.filter(p => p.hasMega && !(p as any).hidden).length;
+
+  const formatDate = (d: string) =>
+    new Date(d + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
+  const regulationEnd = "2026-06-17";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -191,7 +199,7 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
           <div>
             <h3 className="text-sm font-semibold text-gray-900">{season.name}</h3>
             <p className="text-xs text-gray-400">
-              {new Date(season.startDate).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+              {formatDate(season.startDate)}
             </p>
           </div>
         </div>
@@ -200,6 +208,38 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
             Active Season
           </span>
         )}
+      </div>
+
+      {/* Season details grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
+          <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+          <div>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Season Ends</p>
+            <p className="text-xs font-semibold text-gray-700">{season.endDate ? formatDate(season.endDate) : "TBD"}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
+          <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+          <div>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Regulation Until</p>
+            <p className="text-xs font-semibold text-gray-700">{formatDate(regulationEnd)}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
+          <Users className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+          <div>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Pokémon</p>
+            <p className="text-xs font-semibold text-gray-700">{rosterCount} in roster</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
+          <Dna className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+          <div>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Mega Evolutions</p>
+            <p className="text-xs font-semibold text-gray-700">{megaCount} available</p>
+          </div>
+        </div>
       </div>
 
       <p className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">Rules - hover for details</p>
