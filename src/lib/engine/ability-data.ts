@@ -152,6 +152,11 @@ export const ABILITY_DATA: Record<string, AbilityEffect> = {
     description: "Immune to Electric moves. Raises Speed by 1 when hit.",
     typeImmunity: "electric", vgcRelevance: 7,
   },
+  "Earth Eater": {
+    name: "Earth Eater", category: "immunity",
+    description: "Immune to Ground-type moves. Restores HP when hit by one.",
+    typeImmunity: "ground", vgcRelevance: 8,
+  },
 
   // ── OFFENSIVE ABILITIES ────────────────────────────────────────────────────
   "Adaptability": {

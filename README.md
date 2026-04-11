@@ -112,7 +112,7 @@ Educational hub covering:
 ```bash
 # Clone the repository
 git clone https://github.com/Andrew21P/ChampionsLab.git
-cd ChampionsLab/champions-lab
+cd ChampionsLab
 
 # Install dependencies
 npm install
@@ -135,7 +135,7 @@ npm start
 ## Project Structure
 
 ```
-champions-lab/
+ChampionsLab/
 ├── src/
 │   ├── app/                # Next.js App Router pages
 │   │   ├── page.tsx        # Pokédex

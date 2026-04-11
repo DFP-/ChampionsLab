@@ -2437,6 +2437,7 @@ export function simulateBattleWithLog(
 
       // Track status before move for status-move logging
       const statusBefore = new Map(logTargets.map(m => [m, m.status]));
+      const userAtkBefore = action.mon.boosts.attack;
 
       executeMove(action.mon, action.moveName, target, allies.filter((a): a is BattlePokemon => a !== null && a !== action.mon), opponents.filter((a): a is BattlePokemon => a !== null), state, action.sideIndex);
 
@@ -2494,6 +2495,10 @@ export function simulateBattleWithLog(
           if (wasProtected && dmg <= 0 && opponents.includes(mon)) {
             if (mon === target || isSpread) {
               turnEvents.push(`${action.mon.pokemon.name} used ${action.moveName} on ${mon.pokemon.name} - blocked by Protect!`);
+              // King's Shield: log Attack drop on contact
+              if (mon.protectMoveName === "King's Shield" && action.mon.boosts.attack < userAtkBefore) {
+                turnEvents.push(`${mon.pokemon.name}'s King's Shield lowered ${action.mon.pokemon.name}'s Attack!`);
+              }
               hitAnything = true;
             }
           } else if (mon.isFainted && dmg > 0) {
