@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { cookies } from "next/headers";
 import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { LazyParticles } from "@/components/lazy-particles";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { I18nProvider } from "@/lib/i18n";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -71,20 +73,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const initialLocale = cookieStore.get("cl-lang")?.value ?? "en";
+
   return (
     <html
-      lang="en"
+      lang={initialLocale.split("-")[0]}
       className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('championslab-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
+            __html: `try{if(localStorage.getItem('championslab-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}
+try{var l=localStorage.getItem('championslab-lang');if(l){document.cookie='cl-lang='+l+';path=/;max-age=31536000;SameSite=Lax'}}catch(e){}`,
           }}
         />
 
@@ -102,6 +108,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <I18nProvider initialLocale={initialLocale}>
         <LazyParticles />
         {/* Pure HTML hamburger  -  works instantly, no React hydration needed */}
         <button
@@ -127,6 +134,7 @@ export default function RootLayout({
           <main className="flex-1 relative z-10">{children}</main>
         </Suspense>
         <ThemeToggle />
+        </I18nProvider>
       </body>
     </html>
   );

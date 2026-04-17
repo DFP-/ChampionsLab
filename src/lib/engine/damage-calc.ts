@@ -47,17 +47,103 @@ export interface DamageCalcOptions {
   reflect?: boolean;
   auroraVeil?: boolean;
   friendGuard?: boolean;
+  computeKOChance?: boolean; // expensive - only enable for UI damage calc
+}
+
+export interface KOChance {
+  n: number;        // number of hits (1 = OHKO, 2 = 2HKO, etc.)
+  chance: number;   // probability 0-1 (1.0 = guaranteed)
+  text: string;     // e.g. "guaranteed OHKO", "43.8% chance to OHKO"
 }
 
 export interface DamageResult {
   damage: [number, number];     // [min, max] damage values
+  rolls: number[];              // all 16 damage rolls
   percentHP: [number, number];  // [min%, max%] of target's HP
   numHits: number;              // hits to KO (fractional for ranges)
   isOHKO: boolean;
   is2HKO: boolean;
+  koChance: KOChance;           // precise KO probability
   effectiveness: number;        // type effectiveness multiplier
   moveName: string;
   effectiveType: PokemonType;    // resolved move type (after Weather Ball, -ate, etc.)
+}
+
+/**
+ * Compute precise KO chance from 16 damage rolls.
+ * OHKO: count rolls >= HP / 16
+ * 2HKO: sum over all 16×16 pairs where r1+r2 >= HP / 256
+ * nHKO: iteratively convolve roll distributions
+ */
+function computeKOChance(rolls: number[], targetHP: number): KOChance {
+  if (rolls.length === 0 || rolls[rolls.length - 1] === 0) {
+    return { n: Infinity, chance: 0, text: "--" };
+  }
+
+  const n = rolls.length; // 16
+
+  // OHKO check
+  const ohkoCount = rolls.filter(r => r >= targetHP).length;
+  if (ohkoCount > 0) {
+    const chance = ohkoCount / n;
+    return {
+      n: 1,
+      chance,
+      text: chance === 1
+        ? "guaranteed OHKO"
+        : `${formatChance(chance)} chance to OHKO`,
+    };
+  }
+
+  // nHKO (n=2,3,4,...): iterative convolution
+  // prev[d] = number of ways to reach exactly total damage d after k hits
+  // We use a Map for sparse representation
+  let prev = new Map<number, number>();
+  for (const r of rolls) {
+    prev.set(r, (prev.get(r) ?? 0) + 1);
+  }
+
+  for (let hits = 2; hits <= 6; hits++) {
+    const next = new Map<number, number>();
+    for (const [prevDmg, prevCount] of prev) {
+      for (const r of rolls) {
+        const total = prevDmg + r;
+        next.set(total, (next.get(total) ?? 0) + prevCount);
+      }
+    }
+    prev = next;
+
+    // Count outcomes that KO
+    const totalOutcomes = Math.pow(n, hits);
+    let koOutcomes = 0;
+    for (const [dmg, count] of prev) {
+      if (dmg >= targetHP) koOutcomes += count;
+    }
+
+    if (koOutcomes > 0) {
+      const chance = koOutcomes / totalOutcomes;
+      const label = hits === 2 ? "2HKO" : hits === 3 ? "3HKO" : `${hits}HKO`;
+      return {
+        n: hits,
+        chance,
+        text: chance === 1
+          ? `guaranteed ${label}`
+          : `${formatChance(chance)} chance to ${label}`,
+      };
+    }
+  }
+
+  // Fallback: estimate from average
+  const avg = rolls.reduce((a, b) => a + b, 0) / n;
+  const estHits = Math.ceil(targetHP / avg);
+  return { n: estHits, chance: 1, text: `${estHits}HKO` };
+}
+
+function formatChance(chance: number): string {
+  const pct = chance * 100;
+  // Show clean fractions for common roll counts
+  if (pct === Math.round(pct)) return `${Math.round(pct)}%`;
+  return `${Math.round(pct * 10) / 10}%`;
 }
 
 /** Full Gen 9 damage formula */
@@ -70,8 +156,9 @@ export function calculateDamage(
   const moveOriginal = getMove(moveName);
   if (!moveOriginal || moveOriginal.category === "status") {
     return {
-      damage: [0, 0], percentHP: [0, 0], numHits: Infinity,
-      isOHKO: false, is2HKO: false, effectiveness: 1, moveName,
+      damage: [0, 0], rolls: [], percentHP: [0, 0], numHits: Infinity,
+      isOHKO: false, is2HKO: false, koChance: { n: Infinity, chance: 0, text: "--" },
+      effectiveness: 1, moveName,
       effectiveType: moveOriginal?.type as PokemonType ?? "normal",
     };
   }
@@ -158,8 +245,9 @@ export function calculateDamage(
   // Bulletproof: immune to ball/bomb moves
   if (defender.ability === "Bulletproof" && moveCalc.flags.bullet) {
     return {
-      damage: [0, 0], percentHP: [0, 0], numHits: Infinity,
-      isOHKO: false, is2HKO: false, effectiveness: 0, moveName,
+      damage: [0, 0], rolls: [], percentHP: [0, 0], numHits: Infinity,
+      isOHKO: false, is2HKO: false, koChance: { n: Infinity, chance: 0, text: "--" },
+      effectiveness: 0, moveName,
       effectiveType: moveCalc.type as PokemonType,
     };
   }
@@ -175,9 +263,10 @@ export function calculateDamage(
       const currentHP = Math.floor(defStats.hp * ((defender.currentHPPercent ?? 100) / 100));
       const fixedDmg = Math.max(1, Math.floor(currentHP / 2));
       return {
-        damage: [fixedDmg, fixedDmg],
+        damage: [fixedDmg, fixedDmg], rolls: [fixedDmg],
         percentHP: [Math.round((fixedDmg / defStats.hp) * 100), Math.round((fixedDmg / defStats.hp) * 100)], numHits: 2,
-        isOHKO: false, is2HKO: fixedDmg * 2 >= currentHP, effectiveness: 1, moveName, effectiveType: moveCalc.type as PokemonType,
+        isOHKO: false, is2HKO: fixedDmg * 2 >= currentHP, koChance: { n: 2, chance: 1, text: "guaranteed 2HKO" },
+        effectiveness: 1, moveName, effectiveType: moveCalc.type as PokemonType,
       };
     }
   }
@@ -321,8 +410,9 @@ export function calculateDamage(
 
   if (effectiveness === 0) {
     return {
-      damage: [0, 0], percentHP: [0, 0], numHits: Infinity,
-      isOHKO: false, is2HKO: false, effectiveness: 0, moveName,
+      damage: [0, 0], rolls: [], percentHP: [0, 0], numHits: Infinity,
+      isOHKO: false, is2HKO: false, koChance: { n: Infinity, chance: 0, text: "--" },
+      effectiveness: 0, moveName,
       effectiveType: moveCalc.type as PokemonType,
     };
   }
@@ -383,8 +473,12 @@ export function calculateDamage(
     spreadMult * critMult * burnMult * itemMult * helpingHandMult * friendGuardMult;
 
   // Random roll is 0.85 to 1.00 (16 possible values)
-  const minDamage = Math.max(1, Math.floor(baseDamage * modifiers * 0.85));
-  const maxDamage = Math.max(1, Math.floor(baseDamage * modifiers));
+  const rolls: number[] = [];
+  for (let i = 0; i < 16; i++) {
+    rolls.push(Math.max(1, Math.floor(baseDamage * modifiers * (85 + i) / 100)));
+  }
+  const minDamage = rolls[0];
+  const maxDamage = rolls[15];
 
   const targetHP = defStats.hp;
   const minPct = Math.round((minDamage / targetHP) * 1000) / 10;
@@ -394,12 +488,19 @@ export function calculateDamage(
   const avgDamage = (minDamage + maxDamage) / 2;
   const numHits = Math.ceil(targetHP / avgDamage);
 
+  // Calculate precise KO probability (expensive - only for UI)
+  const koChance = options.computeKOChance
+    ? computeKOChance(rolls, targetHP)
+    : { n: numHits, chance: minDamage >= targetHP ? 1 : 0, text: numHits === 1 ? (minDamage >= targetHP ? "guaranteed OHKO" : `${numHits}HKO`) : `${numHits}HKO` };
+
   return {
     damage: [minDamage, maxDamage],
+    rolls: options.computeKOChance ? rolls : [],
     percentHP: [minPct, maxPct],
     numHits,
     isOHKO: minDamage >= targetHP,
     is2HKO: minDamage * 2 >= targetHP,
+    koChance,
     effectiveness,
     moveName,
     effectiveType: moveCalc.type as PokemonType,
@@ -441,6 +542,6 @@ export function estimateDamage(
 export function formatDamageResult(result: DamageResult): string {
   if (result.effectiveness === 0) return "Immune";
   const pct = `${result.percentHP[0]}% - ${result.percentHP[1]}%`;
-  const hits = result.isOHKO ? "OHKO" : result.is2HKO ? "2HKO" : `${result.numHits}HKO`;
+  const hits = result.koChance?.text ?? (result.isOHKO ? "OHKO" : result.is2HKO ? "2HKO" : `${result.numHits}HKO`);
   return `${result.damage[0]}-${result.damage[1]} (${pct}) - ${hits}`;
 }

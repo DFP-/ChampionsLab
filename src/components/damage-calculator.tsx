@@ -25,7 +25,9 @@ import {
   NATURES,
 } from "@/lib/engine";
 import { USAGE_DATA } from "@/lib/usage-data";
+import { getAllItems, ITEMS } from "@/lib/engine/items";
 import { SearchSelect, type SearchSelectOption } from "@/components/search-select";
+import { useI18n } from "@/lib/i18n";
 
 // ── Types ────────────────────────────────────────────────────────────────
 
@@ -150,24 +152,127 @@ function emptySlot(): PokemonSlot {
   return { pokemon: null, set: null, stages: { atk: 0, def: 0, spAtk: 0, spDef: 0, speed: 0 }, isBurned: false, currentHP: 100 };
 }
 
-function getKOChanceText(result: DamageResult): string {
-  if (result.isOHKO && result.percentHP[0] >= 100) return "Guaranteed OHKO";
-  if (result.isOHKO) return "OHKO (87.5% - 100%)";
-  if (result.is2HKO && result.percentHP[0] >= 50) return "Guaranteed 2HKO";
-  if (result.is2HKO) return "2HKO possible";
-  const hitsNeeded = Math.ceil(100 / ((result.percentHP[0] + result.percentHP[1]) / 2));
-  return `${hitsNeeded}HKO`;
+interface DamageCalcL {
+  ohko: string;
+  nHko: (n: number) => string;
+  guaranteed: string;
+  chanceTo: (pct: string) => string;
+  descVs: string;
+  descAtk: string;
+  descSpA: string;
+  descDef: string;
+  descSpD: string;
+  descHP: string;
+  descHelpingHand: string;
+  descCrit: string;
+  descWeather: (w: string) => string;
+  descTerrain: (t: string) => string;
+  tm: (name: string) => string;
+  tp: (name: string) => string;
+  ti: (name: string) => string;
+}
+
+function koLabel(n: number, L: DamageCalcL): string {
+  return n === 1 ? L.ohko : L.nHko(n);
+}
+
+function getKOChanceText(result: DamageResult, L: DamageCalcL): string {
+  if (result.damage[1] === 0) return "--";
+  if (!result.koChance || result.koChance.n === Infinity) {
+    if (result.percentHP[0] + result.percentHP[1] === 0) return "--";
+    const hitsNeeded = Math.ceil(100 / ((result.percentHP[0] + result.percentHP[1]) / 2));
+    return L.nHko(hitsNeeded);
+  }
+  const { n, chance } = result.koChance;
+  const label = koLabel(n, L);
+  if (chance === 1) return `${L.guaranteed} ${label}`;
+  const pct = chance * 100;
+  const pctStr = pct === Math.round(pct) ? `${Math.round(pct)}` : `${Math.round(pct * 10) / 10}`;
+  return `${L.chanceTo(pctStr)} ${label}`;
+}
+
+function getKOChanceShort(result: DamageResult, L: DamageCalcL): string {
+  if (result.damage[1] === 0) return "--";
+  if (!result.koChance || result.koChance.n === Infinity) {
+    if (result.percentHP[0] + result.percentHP[1] === 0) return "--";
+    const hitsNeeded = Math.ceil(100 / ((result.percentHP[0] + result.percentHP[1]) / 2));
+    return L.nHko(hitsNeeded);
+  }
+  return koLabel(result.koChance.n, L);
+}
+
+/** Build a Showdown-style damage calc description string */
+function buildCalcDescription(
+  result: DamageResult,
+  atk: PokemonSlot,
+  def: PokemonSlot,
+  options: { weather: string; terrain: string; isCrit: boolean; helpingHand: boolean },
+  L: DamageCalcL,
+): string {
+  const move = getMove(result.moveName);
+  if (!move || !atk.pokemon || !atk.set || !def.pokemon || !def.set) return "";
+  const isPhysical = move.category === "physical";
+  const atkStatKey = isPhysical ? "attack" : "spAtk";
+  const defStatKey = isPhysical ? "defense" : "spDef";
+  const atkLabel = isPhysical ? L.descAtk : L.descSpA;
+  const defLabel = isPhysical ? L.descDef : L.descSpD;
+  const atkSP = atk.set.sp[atkStatKey as keyof typeof atk.set.sp];
+  const defSPHP = def.set.sp.hp;
+  const defSPDef = def.set.sp[defStatKey as keyof typeof def.set.sp];
+
+  // Build attacker description
+  const atkParts: string[] = [];
+  if (atkSP > 0) atkParts.push(`${atkSP} ${atkLabel}`);
+  if (atk.set.item) atkParts.push(L.ti(atk.set.item));
+  atkParts.push(L.tp(atk.pokemon.name));
+  if (options.helpingHand) atkParts.push(L.descHelpingHand);
+
+  // Build defender description
+  const defParts: string[] = [];
+  const defSpParts: string[] = [];
+  if (defSPHP > 0) defSpParts.push(`${defSPHP} ${L.descHP}`);
+  if (defSPDef > 0) defSpParts.push(`${defSPDef} ${defLabel}`);
+  if (defSpParts.length > 0) defParts.push(defSpParts.join(" / "));
+  defParts.push(L.tp(def.pokemon.name));
+
+  // Modifiers
+  const modifiers: string[] = [];
+  if (options.isCrit) modifiers.push(L.descCrit);
+  if (options.weather && options.weather !== "none") modifiers.push(L.descWeather(options.weather));
+  if (options.terrain && options.terrain !== "none") modifiers.push(L.descTerrain(options.terrain));
+
+  const desc = `${atkParts.join(" ")} ${L.tm(result.moveName)} ${L.descVs} ${defParts.join(" ")}`;
+  const mods = modifiers.length > 0 ? ` ${modifiers.join(", ")}` : "";
+  return `${desc}${mods}: ${result.damage[0]}-${result.damage[1]} (${result.percentHP[0].toFixed(1)}% - ${result.percentHP[1].toFixed(1)}%) — ${getKOChanceText(result, L)}`;
 }
 
 function getNatureDisplay(nature: string): { plus: string | null; minus: string | null } {
   const n = NATURES[nature as NatureName];
   if (!n || !n.plus || !n.minus) return { plus: null, minus: null };
-  return { plus: STAT_LABELS[n.plus] ?? n.plus, minus: STAT_LABELS[n.minus] ?? n.minus };
+  return { plus: n.plus, minus: n.minus };
 }
 
 // ── Component ────────────────────────────────────────────────────────────
 
 export default function DamageCalculator() {
+  const { t, tp, tm, ta, ti, ts, tt } = useI18n();
+  const L: DamageCalcL = useMemo(() => ({
+    ohko: t('damageCalc.ohko'),
+    nHko: (n: number) => t('damageCalc.nHko', { n }),
+    guaranteed: t('damageCalc.guaranteed'),
+    chanceTo: (pct: string) => t('damageCalc.chanceTo', { pct }),
+    descVs: t('damageCalc.descVs'),
+    descAtk: t('damageCalc.descAtk'),
+    descSpA: t('damageCalc.descSpA'),
+    descDef: t('damageCalc.descDef'),
+    descSpD: t('damageCalc.descSpD'),
+    descHP: t('damageCalc.descHP'),
+    descHelpingHand: t('damageCalc.descHelpingHand'),
+    descCrit: t('damageCalc.descCrit'),
+    descWeather: (w: string) => t('damageCalc.descWeather', { weather: w }),
+    descTerrain: (tr: string) => t('damageCalc.descTerrain', { terrain: tr }),
+    tm, tp, ti,
+  }), [t, tm, tp, ti]);
   const [attacker, setAttacker] = useState<PokemonSlot>(emptySlot());
   const [defender, setDefender] = useState<PokemonSlot>(emptySlot());
   const [selectedMove, setSelectedMove] = useState<string | null>(null);
@@ -203,6 +308,7 @@ export default function DamageCalculator() {
     const options: DamageCalcOptions = {
       weather, terrain, isDoubles, isCrit, helpingHand,
       lightScreen, reflect, auroraVeil, friendGuard,
+      computeKOChance: true,
     };
     const atkResolved = resolveMegaForCalc(attacker.pokemon, attacker.set);
     const defResolved = resolveDefenderForCalc(defender.pokemon, defender.set);
@@ -254,12 +360,13 @@ export default function DamageCalculator() {
       const q = pickerSearch.toLowerCase();
       return (
         p.name.toLowerCase().includes(q) ||
-        p.types.some(t => t.includes(q)) ||
-        p.abilities.some(a => a.name.toLowerCase().includes(q)) ||
-        p.moves.some(m => m.name.toLowerCase().includes(q))
+        tp(p.name).toLowerCase().includes(q) ||
+        p.types.some(ty => ty.includes(q) || t(`common.types.${ty}`).toLowerCase().includes(q)) ||
+        p.abilities.some(a => a.name.toLowerCase().includes(q) || ta(a.name).toLowerCase().includes(q)) ||
+        p.moves.some(m => m.name.toLowerCase().includes(q) || tm(m.name).toLowerCase().includes(q))
       );
     });
-  }, [pickerSearch, pickerTypeFilter]);
+  }, [pickerSearch, pickerTypeFilter, tp, tm, ta, t]);
 
   const selectPokemon = useCallback((p: ChampionsPokemon) => {
     const set = getDefaultSet(p);
@@ -310,6 +417,7 @@ export default function DamageCalculator() {
   // Generate 16 damage rolls
   const damageRolls = useMemo(() => {
     if (!selectedResult) return [];
+    if (selectedResult.rolls && selectedResult.rolls.length > 0) return selectedResult.rolls;
     const min = selectedResult.damage[0];
     const max = selectedResult.damage[1];
     if (min === max) return [min];
@@ -329,7 +437,7 @@ export default function DamageCalculator() {
         <div className="flex flex-wrap gap-3 items-center">
           {/* Weather */}
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase text-muted-foreground">Weather</span>
+            <span className="text-[10px] font-semibold uppercase text-muted-foreground">{t('damageCalc.weather')}</span>
             <div className="flex gap-1">
               {WEATHER_OPTIONS.map(w => (
                 <button
@@ -342,7 +450,7 @@ export default function DamageCalculator() {
                       : "glass glass-hover text-muted-foreground"
                   )}
                 >
-                  {w.label}
+                  {t(`common.weather.${w.value}`)}
                 </button>
               ))}
             </div>
@@ -352,22 +460,22 @@ export default function DamageCalculator() {
 
           {/* Terrain */}
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase text-muted-foreground">Terrain</span>
+            <span className="text-[10px] font-semibold uppercase text-muted-foreground">{t('damageCalc.terrain')}</span>
             <div className="flex gap-1">
-              {TERRAIN_OPTIONS.map(t => (
+              {TERRAIN_OPTIONS.map(tr => (
                 <button
-                  key={t.value}
-                  onClick={() => setTerrain(t.value as DamageCalcOptions["terrain"])}
+                  key={tr.value}
+                  onClick={() => setTerrain(tr.value as DamageCalcOptions["terrain"])}
                   className={cn(
                     "px-2 py-1 rounded-lg text-[10px] font-medium transition-all",
-                    terrain === t.value
-                      ? t.value !== "none"
-                        ? `${TERRAIN_COLORS[t.value]} border`
+                    terrain === tr.value
+                      ? tr.value !== "none"
+                        ? `${TERRAIN_COLORS[tr.value]} border`
                         : "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-sm"
                       : "glass glass-hover text-muted-foreground"
                   )}
                 >
-                  {t.label}
+                  {t(`common.terrain.${tr.value}`)}
                 </button>
               ))}
             </div>
@@ -378,25 +486,25 @@ export default function DamageCalculator() {
           {/* Toggles */}
           <div className="flex gap-1.5 flex-wrap">
             {[
-              { label: "Doubles", active: isDoubles, toggle: () => setIsDoubles(!isDoubles) },
-              { label: "Crit", active: isCrit, toggle: () => setIsCrit(!isCrit) },
-              { label: "Helping Hand", active: helpingHand, toggle: () => setHelpingHand(!helpingHand) },
-              { label: "Light Screen", active: lightScreen, toggle: () => setLightScreen(!lightScreen) },
-              { label: "Reflect", active: reflect, toggle: () => setReflect(!reflect) },
-              { label: "Aurora Veil", active: auroraVeil, toggle: () => setAuroraVeil(!auroraVeil) },
-              { label: "Friend Guard", active: friendGuard, toggle: () => setFriendGuard(!friendGuard) },
-            ].map(t => (
+              { label: t('damageCalc.doubles'), active: isDoubles, toggle: () => setIsDoubles(!isDoubles) },
+              { label: t('damageCalc.crit'), active: isCrit, toggle: () => setIsCrit(!isCrit) },
+              { label: t('damageCalc.helpingHand'), active: helpingHand, toggle: () => setHelpingHand(!helpingHand) },
+              { label: t('damageCalc.lightScreen'), active: lightScreen, toggle: () => setLightScreen(!lightScreen) },
+              { label: t('damageCalc.reflect'), active: reflect, toggle: () => setReflect(!reflect) },
+              { label: t('damageCalc.auroraVeil'), active: auroraVeil, toggle: () => setAuroraVeil(!auroraVeil) },
+              { label: t('damageCalc.friendGuard'), active: friendGuard, toggle: () => setFriendGuard(!friendGuard) },
+            ].map(tgl => (
               <button
-                key={t.label}
-                onClick={t.toggle}
+                key={tgl.label}
+                onClick={tgl.toggle}
                 className={cn(
                   "px-2 py-1 rounded-lg text-[10px] font-medium transition-all border",
-                  t.active
+                  tgl.active
                     ? "bg-violet-100 text-violet-700 border-violet-300"
                     : "glass glass-hover text-muted-foreground border-transparent"
                 )}
               >
-                {t.label}
+                {tgl.label}
               </button>
             ))}
           </div>
@@ -407,7 +515,7 @@ export default function DamageCalculator() {
       <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-4 items-start">
         {/* ── ATTACKER PANEL ────────────────────────────────────────── */}
         <PokemonPanel
-          label="Attacker"
+          label={t('damageCalc.attacker')}
           slot={attacker}
           stats={attackerStats}
           color="blue"
@@ -429,7 +537,7 @@ export default function DamageCalculator() {
           <button
             onClick={swapPokemon}
             className="p-3 rounded-xl glass glass-hover border border-gray-200/60 hover:border-violet-300 transition-all"
-            title="Swap attacker and defender"
+            title={t('damageCalc.swap')}
           >
             <ArrowRightLeft className="w-5 h-5 text-muted-foreground" />
           </button>
@@ -438,7 +546,7 @@ export default function DamageCalculator() {
           {selectedResult && (
             <div className="glass rounded-2xl p-4 border border-gray-200/60 w-56 text-center">
               <p className="text-[10px] font-semibold uppercase text-muted-foreground mb-1">
-                {selectedResult.moveName}
+                {tm(selectedResult.moveName)}
               </p>
               <p className={cn(
                 "text-3xl font-black font-heading",
@@ -449,21 +557,21 @@ export default function DamageCalculator() {
                 {selectedResult.percentHP[0].toFixed(1)}–{selectedResult.percentHP[1].toFixed(1)}%
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                {selectedResult.damage[0]}–{selectedResult.damage[1]} HP
+                {selectedResult.damage[0]}–{selectedResult.damage[1]} {t('damageCalc.descHP')}
               </p>
               <div className={cn(
                 "mt-2 px-3 py-1 rounded-lg text-[11px] font-bold inline-block",
-                selectedResult.isOHKO ? "bg-red-100 text-red-700" :
-                selectedResult.is2HKO ? "bg-orange-100 text-orange-700" :
+                selectedResult.koChance?.n === 1 ? "bg-red-100 text-red-700" :
+                selectedResult.koChance?.n === 2 ? "bg-orange-100 text-orange-700" :
                 "bg-green-100 text-green-700"
               )}>
-                {getKOChanceText(selectedResult)}
+                {getKOChanceText(selectedResult, L)}
               </div>
               <div className="mt-2 text-[10px] text-muted-foreground">
-                {selectedResult.effectiveness === 0 ? "Immune" :
-                 selectedResult.effectiveness < 1 ? `Not very effective (×${selectedResult.effectiveness})` :
-                 selectedResult.effectiveness > 1 ? `Super effective (×${selectedResult.effectiveness})` :
-                 "Neutral"}
+                {selectedResult.effectiveness === 0 ? t('damageCalc.immune') :
+                 selectedResult.effectiveness < 1 ? `${t('damageCalc.notVeryEffective')} (×${selectedResult.effectiveness})` :
+                 selectedResult.effectiveness > 1 ? `${t('damageCalc.superEffective')} (×${selectedResult.effectiveness})` :
+                 t('damageCalc.neutralEffect')}
               </div>
             </div>
           )}
@@ -471,7 +579,7 @@ export default function DamageCalculator() {
 
         {/* ── DEFENDER PANEL ────────────────────────────────────────── */}
         <PokemonPanel
-          label="Defender"
+          label={t('damageCalc.defender')}
           slot={defender}
           stats={defenderStats}
           color="red"
@@ -489,74 +597,93 @@ export default function DamageCalculator() {
       {/* ── MOVE COMPARISON TABLE ────────────────────────────────────── */}
       {allMoveResults.length > 0 && attacker.set && (
         <div className="glass rounded-2xl p-5 border border-gray-200/60">
-          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-2">
             <Swords className="w-4 h-4" />
-            All Moves vs {defender.pokemon?.name ?? "Defender"}
+            {t('damageCalc.allMovesVs', { name: tp(defender.pokemon?.name ?? '') || t('damageCalc.defender') })}
           </h3>
-          <div className="space-y-2">
+          {selectedResult && (
+            <button
+              onClick={() => navigator.clipboard.writeText(buildCalcDescription(selectedResult, attacker, defender, { weather: weather ?? "none", terrain: terrain ?? "none", isCrit, helpingHand }, L))}
+              className="w-full text-left mb-4 px-3 py-2 rounded-lg bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors group cursor-pointer"
+              title={t('damageCalc.clickToCopy')}
+            >
+              <p className="text-[11px] font-mono text-muted-foreground leading-relaxed break-words">
+                {buildCalcDescription(selectedResult, attacker, defender, { weather: weather ?? "none", terrain: terrain ?? "none", isCrit, helpingHand }, L)}
+              </p>
+              <p className="text-[9px] text-muted-foreground/50 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">{t('damageCalc.clickToCopy')}</p>
+            </button>
+          )}
+          <div className="space-y-1.5">
             {allMoveResults.map((r, i) => {
               const move = getMove(r.moveName);
               const isSelected = (selectedMove ?? attacker.set!.moves[0]) === r.moveName;
+              const koText = (() => {
+                const kc = r.koChance;
+                if (!kc || kc.n === Infinity || r.damage[1] === 0) return "--";
+                const label = koLabel(kc.n, L);
+                if (kc.chance === 1) return label;
+                return `${Math.round(kc.chance * 100)}% ${label}`;
+              })();
               return (
                 <button
                   key={r.moveName}
                   onClick={() => setSelectedMove(r.moveName)}
                   className={cn(
-                    "w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left",
+                    "w-full grid grid-cols-[auto_1fr_auto] items-center gap-x-2.5 px-3 py-2.5 rounded-xl transition-all text-left",
                     isSelected ? "bg-violet-50 border border-violet-200 shadow-sm" : "hover:bg-gray-50"
                   )}
                 >
-                  {/* Move type badge */}
-                  {move && (
+                  {/* Col 1: Type dot */}
+                  {move ? (
                     <span
-                      className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                      className="w-2.5 h-2.5 rounded-full row-span-2 self-center"
                       style={{ backgroundColor: TYPE_COLORS[r.effectiveType ?? move.type] }}
                     />
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold">{r.moveName}</span>
-                      {move && (
-                        <>
-                          <span className="text-[9px] text-muted-foreground uppercase">{move.category}</span>
-                          <span className="text-[9px] text-muted-foreground">BP {move.basePower || "-"}</span>
-                        </>
-                      )}
-                    </div>
+                  ) : <span className="w-2.5" />}
+
+                  {/* Col 2: Move name + meta */}
+                  <div className="flex items-baseline gap-1.5 min-w-0">
+                    <span className="text-sm font-semibold truncate">{tm(r.moveName)}</span>
+                    {move && (
+                      <span className="text-[10px] text-muted-foreground uppercase flex-shrink-0">
+                        {move.category === "Physical" ? t('damageCalc.catPhysical') : move.category === "Special" ? t('damageCalc.catSpecial') : t('damageCalc.catStatus')}
+                      </span>
+                    )}
+                    {move && (
+                      <span className="text-[10px] text-muted-foreground flex-shrink-0">
+                        {move.name === "Acrobatics" && !attacker.set?.item ? "110" : (move.basePower || "—")}
+                      </span>
+                    )}
                   </div>
 
-                  {/* Damage range */}
-                  <div className="text-right flex-shrink-0 w-36">
+                  {/* Col 3: Stats — damage %, KO, effectiveness */}
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
                     <span className={cn(
-                      "text-sm font-bold",
+                      "text-sm font-bold tabular-nums",
                       r.percentHP[1] >= 100 ? "text-red-600" :
                       r.percentHP[1] >= 50 ? "text-orange-500" :
                       "text-green-600"
                     )}>
                       {r.percentHP[0].toFixed(1)}–{r.percentHP[1].toFixed(1)}%
                     </span>
+                    <span className={cn(
+                      "text-[11px] font-bold px-1.5 py-0.5 rounded whitespace-nowrap min-w-[3rem] text-center",
+                      r.koChance?.n === 1 ? "bg-red-100 text-red-700" :
+                      r.koChance?.n === 2 ? "bg-orange-100 text-orange-700" :
+                      "bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-white/50"
+                    )}>
+                      {koText}
+                    </span>
+                    <span className={cn(
+                      "text-[11px] font-semibold w-6 text-center",
+                      r.effectiveness > 1 ? "text-green-600" :
+                      r.effectiveness < 1 && r.effectiveness > 0 ? "text-red-500" :
+                      r.effectiveness === 0 ? "text-gray-400" :
+                      "text-gray-500"
+                    )}>
+                      ×{r.effectiveness}
+                    </span>
                   </div>
-
-                  {/* KO badge */}
-                  <span className={cn(
-                    "text-[9px] font-bold px-2 py-0.5 rounded-md flex-shrink-0 w-16 text-center",
-                    r.isOHKO ? "bg-red-100 text-red-700" :
-                    r.is2HKO ? "bg-orange-100 text-orange-700" :
-                    "bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-white/50"
-                  )}>
-                    {r.isOHKO ? "OHKO" : r.is2HKO ? "2HKO" : `${Math.ceil(100 / ((r.percentHP[0] + r.percentHP[1]) / 2))}HKO`}
-                  </span>
-
-                  {/* Effectiveness */}
-                  <span className={cn(
-                    "text-[9px] font-medium w-8 text-center flex-shrink-0",
-                    r.effectiveness > 1 ? "text-green-600" :
-                    r.effectiveness < 1 && r.effectiveness > 0 ? "text-red-500" :
-                    r.effectiveness === 0 ? "text-gray-400" :
-                    "text-gray-500"
-                  )}>
-                    ×{r.effectiveness}
-                  </span>
                 </button>
               );
             })}
@@ -565,10 +692,17 @@ export default function DamageCalculator() {
           {/* Damage Rolls */}
           {selectedResult && damageRolls.length > 1 && (
             <div className="mt-4 pt-4 border-t border-gray-200">
-              <p className="text-[10px] font-semibold uppercase text-muted-foreground mb-2">
-                Damage Rolls ({selectedResult.moveName})
+              <p className="text-[10px] font-semibold uppercase text-muted-foreground mb-1">
+                {t('damageCalc.damageRolls', { move: tm(selectedResult.moveName) })}
               </p>
-              <div className="flex gap-1 flex-wrap">
+              <p className="text-[11px] text-muted-foreground mb-2 font-mono overflow-x-auto whitespace-nowrap">
+                ({damageRolls.map((roll) => {
+                  const hpTotal = defenderStats?.hp ?? 1;
+                  const pct = (roll / hpTotal) * 100;
+                  return `${pct.toFixed(1)}%`;
+                }).join(", ")})
+              </p>
+              <div className="flex gap-1 flex-wrap pb-1">
                 {damageRolls.map((roll, i) => {
                   const hpTotal = defenderStats?.hp ?? 1;
                   const pct = (roll / hpTotal) * 100;
@@ -598,10 +732,9 @@ export default function DamageCalculator() {
           <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/5 dark:to-white/10 flex items-center justify-center mx-auto mb-4">
             <Swords className="w-10 h-10 text-muted-foreground/20" />
           </div>
-          <p className="text-muted-foreground text-sm mb-1 font-medium">Select Pokémon to Calculate Damage</p>
+          <p className="text-muted-foreground text-sm mb-1 font-medium">{t('damageCalc.emptyTitle')}</p>
           <p className="text-xs text-muted-foreground/60 max-w-sm mx-auto">
-            Pick an attacker and defender from the Champions Lab roster. Fully accurate VGC doubles damage calc
-            using the 66 SP system, abilities, items, weather, terrain, screens, and all Gen 9 mechanics.
+            {t('damageCalc.emptyDesc')}
           </p>
         </div>
       )}
@@ -619,7 +752,7 @@ export default function DamageCalculator() {
                 <Search className="w-4 h-4 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Search by name, type, ability or move..."
+                  placeholder={t('damageCalc.searchPlaceholder')}
                   value={pickerSearch}
                   onChange={(e) => setPickerSearch(e.target.value)}
                   className="flex-1 bg-transparent focus:outline-none text-sm"
@@ -630,23 +763,23 @@ export default function DamageCalculator() {
                 </button>
               </div>
               <div className="flex flex-wrap gap-1.5 mt-3">
-                {(Object.keys(TYPE_COLORS) as PokemonType[]).map((t) => (
+                {(Object.keys(TYPE_COLORS) as PokemonType[]).map((ty) => (
                   <button
-                    key={t}
-                    onClick={() => setPickerTypeFilter(pickerTypeFilter === t ? null : t)}
+                    key={ty}
+                    onClick={() => setPickerTypeFilter(pickerTypeFilter === ty ? null : ty)}
                     className="px-2 py-1 rounded-full text-[10px] font-semibold capitalize transition-all"
                     style={{
-                      backgroundColor: pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}18`,
-                      color: pickerTypeFilter === t ? "#fff" : TYPE_COLORS[t],
-                      border: `1px solid ${pickerTypeFilter === t ? TYPE_COLORS[t] : `${TYPE_COLORS[t]}40`}`,
+                      backgroundColor: pickerTypeFilter === ty ? TYPE_COLORS[ty] : `${TYPE_COLORS[ty]}18`,
+                      color: pickerTypeFilter === ty ? "#fff" : TYPE_COLORS[ty],
+                      border: `1px solid ${pickerTypeFilter === ty ? TYPE_COLORS[ty] : `${TYPE_COLORS[ty]}40`}`,
                     }}
                   >
-                    {t}
+                    {t(`common.types.${ty}`)}
                   </button>
                 ))}
               </div>
               {(pickerSearch || pickerTypeFilter) && (
-                <p className="text-[10px] text-muted-foreground mt-2">{filteredPokemon.length} Pokémon found</p>
+                <p className="text-[10px] text-muted-foreground mt-2">{t('damageCalc.pokemonFound', { count: filteredPokemon.length })}</p>
               )}
             </div>
             <div className="flex-1 overflow-y-auto p-3">
@@ -657,9 +790,9 @@ export default function DamageCalculator() {
                     onClick={() => selectPokemon(p)}
                     className="flex items-center gap-2 p-3 rounded-xl glass glass-hover text-left"
                   >
-                    <Image src={p.sprite} alt={p.name} width={36} height={36} unoptimized />
+                    <Image src={p.sprite} alt={tp(p.name)} width={36} height={36} unoptimized />
                     <div>
-                      <p className="text-xs font-medium">{p.name}</p>
+                      <p className="text-xs font-medium">{tp(p.name)}</p>
                       <div className="flex gap-1 mt-0.5">
                         {p.types.map(t => (
                           <span key={t} className="w-2 h-2 rounded-full" style={{ backgroundColor: TYPE_COLORS[t] }} />
@@ -705,6 +838,7 @@ function PokemonPanel({
   isDefender?: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const { t, tp, tm, ta, ti, tn, ts, tt, tad, tid } = useI18n();
   const p = slot.pokemon;
   const set = slot.set;
   const borderColor = color === "blue" ? "border-blue-200" : "border-red-200";
@@ -724,9 +858,9 @@ function PokemonPanel({
         <p className={cn("text-[10px] font-bold uppercase tracking-widest mb-2", headerText)}>{label}</p>
         {p ? (
           <div className="flex items-center gap-3">
-            <Image src={resolvedStats?.sprite ?? p.sprite} alt={resolvedStats?.name ?? p.name} width={56} height={56} unoptimized />
+            <Image src={resolvedStats?.sprite ?? p.sprite} alt={tp(resolvedStats?.name ?? p.name)} width={56} height={56} unoptimized />
             <div className="flex-1 min-w-0">
-              <p className="text-lg font-bold truncate">{resolvedStats?.name ?? p.name}</p>
+              <p className="text-lg font-bold truncate">{tp(resolvedStats?.name ?? p.name)}</p>
               <div className="flex gap-1 mt-1">
                 {(resolvedStats?.types ?? p.types).map(t => (
                   <span
@@ -749,7 +883,7 @@ function PokemonPanel({
             className="w-full py-8 rounded-xl border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-violet-400 text-muted-foreground hover:text-foreground transition-colors flex flex-col items-center gap-2"
           >
             <Search className="w-6 h-6" />
-            <span className="text-sm font-medium">Select {label}</span>
+            <span className="text-sm font-medium">{t('damageCalc.select', { label })}</span>
           </button>
         )}
       </div>
@@ -760,7 +894,7 @@ function PokemonPanel({
           {/* Set selector */}
           {usageSets.length > 1 && (
             <div>
-              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">Set</label>
+              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">{t('damageCalc.set')}</label>
               <select
                 value={set.nature + "|" + set.ability + "|" + set.item}
                 onChange={(e) => {
@@ -771,7 +905,7 @@ function PokemonPanel({
               >
                 {usageSets.map((s, i) => (
                   <option key={i} value={s.nature + "|" + s.ability + "|" + s.item}>
-                    {s.nature} / {s.ability} / {s.item}
+                    {tn(s.nature)} / {ta(s.ability)} / {ti(s.item)}
                   </option>
                 ))}
               </select>
@@ -781,7 +915,7 @@ function PokemonPanel({
           {/* Nature / Ability / Item row */}
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">Nature</label>
+              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">{t('damageCalc.nature')}</label>
               <SearchSelect
                 value={set.nature}
                 onChange={(v) => onSetUpdate({ nature: v })}
@@ -791,21 +925,21 @@ function PokemonPanel({
                   const nd = getNatureDisplay(n);
                   return {
                     value: n,
-                    label: n,
-                    sub: nd.plus ? `+${nd.plus} / −${nd.minus}` : "Neutral",
+                    label: tn(n),
+                    sub: nd.plus ? `+${ts(nd.plus)} / −${ts(nd.minus!)}` : "Neutral",
                   };
                 })}
               />
               {natureDisplay.plus && (
                 <p className="text-[9px] text-muted-foreground mt-0.5">
-                  <span className="text-green-600">+{natureDisplay.plus}</span>
+                  <span className="text-green-600">+{ts(natureDisplay.plus)}</span>
                   {" / "}
-                  <span className="text-red-500">−{natureDisplay.minus}</span>
+                  <span className="text-red-500">−{ts(natureDisplay.minus!)}</span>
                 </p>
               )}
             </div>
             <div>
-              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">Ability</label>
+              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">{t('damageCalc.ability')}</label>
               <SearchSelect
                 value={set.ability}
                 onChange={(v) => onSetUpdate({ ability: v })}
@@ -823,33 +957,28 @@ function PokemonPanel({
                       }
                     }
                   }
-                  return abilities.map(a => ({ value: a.name, label: a.name, sub: a.description }));
+                  return abilities.map(a => ({ value: a.name, label: ta(a.name), sub: tad(a.name, a.description) }));
                 })()}
               />
             </div>
             <div>
-              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">Item</label>
+              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">{t('damageCalc.item')}</label>
               <SearchSelect
-                value={set.item}
-                onChange={(v) => onSetUpdate({ item: v })}
+                value={set.item || "(none)"}
+                onChange={(v) => onSetUpdate({ item: v === "(none)" ? "" : v })}
                 placeholder="Item…"
                 preferUp={preferUp}
                 options={[
-                  set.item,
-                  ...usageSets.map(s => s.item),
-                  "Life Orb","Choice Band","Choice Specs","Choice Scarf","Focus Sash",
-                  "Assault Vest","Sitrus Berry","Leftovers","Rocky Helmet","Eviolite",
-                  "Clear Amulet","Covert Cloak","Safety Goggles","Lum Berry","Wide Lens",
-                  "Expert Belt","Muscle Band","Wise Glasses","Scope Lens","Weakness Policy",
-                  "Booster Energy","Loaded Dice","Protective Pads","Light Clay",
-                ].filter((v, i, a) => v && a.indexOf(v) === i).map(item => ({ value: item, label: item }))}
+                  { value: "(none)", label: "(none)" },
+                  ...getAllItems().map(item => ({ value: item, label: ti(item), sub: tid(item, ITEMS[item]?.description ?? '') })),
+                ]}
               />
             </div>
           </div>
 
           {/* Moves */}
           <div>
-            <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">Moves</label>
+            <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">{t('damageCalc.moves')}</label>
             <div className="grid grid-cols-2 gap-1.5">
               {set.moves.map((moveName, idx) => {
                 const move = getMove(moveName);
@@ -867,12 +996,12 @@ function PokemonPanel({
                     }}
                     placeholder="Move…"
                     preferUp={preferUp}
-                    triggerBadge={move ? { text: displayType.slice(0, 3).toUpperCase(), color: TYPE_COLORS[displayType] } : null}
+                    triggerBadge={move ? { text: tt(displayType), color: TYPE_COLORS[displayType] } : null}
                     options={p.moves.map(m => ({
                       value: m.name,
-                      label: m.name,
+                      label: tm(m.name),
                       sub: m.category !== "status" ? `${m.type} · ${m.category} · ${m.power} BP` : `${m.type} · status`,
-                      badge: m.type.slice(0, 3).toUpperCase(),
+                      badge: tt(m.type),
                       badgeColor: TYPE_COLORS[m.type as PokemonType],
                     }))}
                   />
@@ -887,7 +1016,7 @@ function PokemonPanel({
               onClick={() => setExpanded(!expanded)}
               className="text-[10px] font-semibold uppercase text-muted-foreground flex items-center gap-1 mb-2 hover:text-foreground transition-colors"
             >
-              Stats & SP ({totalSP}/66)
+              {t('damageCalc.statsSP', { used: totalSP })}
               <ChevronDown className={cn("w-3 h-3 transition-transform", expanded && "rotate-180")} />
             </button>
 
@@ -904,7 +1033,7 @@ function PokemonPanel({
                       "text-[10px] w-8 font-bold text-right",
                       natMod > 1 ? "text-green-600" : natMod < 1 ? "text-red-500" : "text-muted-foreground"
                     )}>
-                      {STAT_LABELS[stat]}
+                      {ts(stat)}
                     </span>
                     <span className="text-[10px] text-muted-foreground w-7 text-right font-mono">{base}</span>
                     <div className="flex-1 h-2 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
@@ -936,7 +1065,7 @@ function PokemonPanel({
           {/* Stat stages */}
           {expanded && (showAtkStages || showDefStages) && (
             <div>
-              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">Stat Stages</label>
+              <label className="text-[10px] font-semibold uppercase text-muted-foreground block mb-1">{t('damageCalc.statStages')}</label>
               <div className="grid grid-cols-3 gap-2">
                 {showAtkStages && (
                   <>
@@ -964,11 +1093,11 @@ function PokemonPanel({
                   isBurned ? "bg-red-100 text-red-700 border-red-300" : "glass glass-hover text-muted-foreground border-transparent"
                 )}
               >
-                🔥 Burned
+                {t('damageCalc.burned')}
               </button>
               {onHPChange && (
                 <div className="flex items-center gap-2 flex-1">
-                  <span className="text-[10px] font-semibold text-muted-foreground">HP%</span>
+                  <span className="text-[10px] font-semibold text-muted-foreground">{t('damageCalc.hpPercent')}</span>
                   <input
                     type="range"
                     min={1}

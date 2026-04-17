@@ -21,6 +21,42 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   // ── S-TIER TEAMS ──────────────────────────────────────
 
   {
+    id: "pre-46",
+    name: "Mega Floette HO",
+    archetype: "Hyper Offense",
+    description: "Mega Floette + Sneasler Fake Out lead with Tailwind Dragonite, Scarf Excadrill, and bulky Rotom-Wash. By Illiterate Duck.",
+    pokemonIds: [670, 903, 727, 530, 149, 10009],
+    sets: [
+      { name: "Mega Fairy Nuke", nature: "Timid", ability: "Fairy Aura", item: "Floettite", moves: ["Dazzling Gleam", "Moonblast", "Psychic", "Protect"], sp: { hp: 0, attack: 0, defense: 1, spAtk: 32, spDef: 1, speed: 32 }, preMegaAbility: "Flower Veil" },
+      { name: "Unburden Lead", nature: "Jolly", ability: "Unburden", item: "Focus Sash", moves: ["Close Combat", "Dire Claw", "Fake Out", "Rock Slide"], sp: { hp: 0, attack: 32, defense: 1, spAtk: 0, spDef: 1, speed: 32 } },
+      { name: "Intimidate Pivot", nature: "Adamant", ability: "Intimidate", item: "Sitrus Berry", moves: ["Fake Out", "Throat Chop", "Flare Blitz", "Parting Shot"], sp: { hp: 32, attack: 5, defense: 1, spAtk: 0, spDef: 3, speed: 25 } },
+      { name: "Scarf Breaker", nature: "Adamant", ability: "Mold Breaker", item: "Choice Scarf", moves: ["Iron Head", "High Horsepower", "Earthquake", "Rock Slide"], sp: { hp: 0, attack: 32, defense: 1, spAtk: 0, spDef: 1, speed: 32 } },
+      { name: "Tailwind Sweeper", nature: "Adamant", ability: "Multiscale", item: "White Herb", moves: ["Extreme Speed", "Protect", "Tailwind", "Scale Shot"], sp: { hp: 0, attack: 32, defense: 1, spAtk: 0, spDef: 1, speed: 32 } },
+      { name: "Bulky Special", nature: "Modest", ability: "Levitate", item: "Leftovers", moves: ["Hydro Pump", "Electroweb", "Thunderbolt", "Protect"], sp: { hp: 24, attack: 0, defense: 6, spAtk: 15, spDef: 18, speed: 3 } },
+    ],
+    tags: ["fairy", "hyper-offense", "fake-out", "tailwind", "mega"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-47",
+    name: "Sand Bulky Offense",
+    archetype: "Sand",
+    description: "Tyranitar sand with Mega Glimmora, Corviknight bulk, Competitive Milotic, and Rage Powder Sinistcha. By Illiterate Duck.",
+    pokemonIds: [248, 823, 350, 1013, 149, 970],
+    sets: [
+      { name: "Sand Setter", nature: "Adamant", ability: "Sand Stream", item: "Chople Berry", moves: ["Rock Slide", "Knock Off", "Low Kick", "Protect"], sp: { hp: 17, attack: 22, defense: 1, spAtk: 0, spDef: 1, speed: 25 } },
+      { name: "Bulk Up Wall", nature: "Impish", ability: "Mirror Armor", item: "Leftovers", moves: ["Brave Bird", "Body Press", "Bulk Up", "Roost"], sp: { hp: 32, attack: 1, defense: 19, spAtk: 0, spDef: 14, speed: 0 } },
+      { name: "Competitive Check", nature: "Calm", ability: "Competitive", item: "Sitrus Berry", moves: ["Scald", "Icy Wind", "Muddy Water", "Life Dew"], sp: { hp: 31, attack: 0, defense: 17, spAtk: 2, spDef: 5, speed: 11 } },
+      { name: "Rage Powder Support", nature: "Bold", ability: "Heatproof", item: "Occa Berry", moves: ["Matcha Gotcha", "Strength Sap", "Calm Mind", "Rage Powder"], sp: { hp: 32, attack: 0, defense: 4, spAtk: 1, spDef: 29, speed: 0 } },
+      { name: "Tailwind Sweeper", nature: "Adamant", ability: "Multiscale", item: "White Herb", moves: ["Scale Shot", "Extreme Speed", "Tailwind", "Protect"], sp: { hp: 2, attack: 30, defense: 1, spAtk: 0, spDef: 1, speed: 32 } },
+      { name: "Mega Poison Rock", nature: "Timid", ability: "Adaptability", item: "Glimmoranite", moves: ["Spiky Shield", "Sludge Bomb", "Earth Power", "Power Gem"], sp: { hp: 0, attack: 0, defense: 1, spAtk: 32, spDef: 1, speed: 32 }, preMegaAbility: "Toxic Debris" },
+    ],
+    tags: ["sand", "weather", "bulky-offense", "redirect", "mega"],
+    tier: "S",
+  },
+
+  {
     id: "pre-1",
     name: "Sand Offense",
     archetype: "Sand",
@@ -94,12 +130,12 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
 
   {
     id: "pre-5",
-    name: "Metagross Balance",
+    name: "Archaludon Balance",
     archetype: "Balance",
-    description: "Mega Metagross pivot with Incineroar + Tailwind support",
-    pokemonIds: [376, 727, 547, 149, 350, 681],
+    description: "Stamina Archaludon pivot with Incineroar + Tailwind support",
+    pokemonIds: [1018, 727, 547, 149, 350, 681],
     sets: [
-      { name: "Mega Physical", nature: "Jolly", ability: "Tough Claws", item: "Metagrossite", moves: ["Iron Head", "Zen Headbutt", "Ice Punch", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Stamina Tank", nature: "Modest", ability: "Stamina", item: "Leftovers", moves: ["Electro Shot", "Flash Cannon", "Draco Meteor", "Protect"], sp: { hp: 32, attack: 0, defense: 4, spAtk: 28, spDef: 0, speed: 2 } },
       { name: "Intimidate Support", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
       { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
       { name: "Multiscale Pivot", nature: "Adamant", ability: "Multiscale", item: "Lum Berry", moves: ["Extreme Speed", "Dragon Claw", "Fire Punch", "Protect"], sp: { hp: 4, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 30 } },
@@ -135,14 +171,14 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     name: "Double Intimidate",
     archetype: "Pivoting",
     description: "Incineroar + Krookodile intimidate cycle with setup sweepers",
-    pokemonIds: [727, 553, 149, 681, 547, 376],
+    pokemonIds: [727, 553, 149, 681, 547, 1018],
     sets: [
       { name: "Intimidate Support", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
       { name: "Intimidate Offense", nature: "Jolly", ability: "Intimidate", item: "Choice Scarf", moves: ["Earthquake", "Crunch", "Close Combat", "Rock Slide"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
       { name: "Dragon Dance", nature: "Adamant", ability: "Multiscale", item: "Lum Berry", moves: ["Dragon Dance", "Dragon Claw", "Extreme Speed", "Protect"], sp: { hp: 4, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 30 } },
       { name: "Stance Change", nature: "Quiet", ability: "Stance Change", item: "Weakness Policy", moves: ["Shadow Ball", "Flash Cannon", "King's Shield", "Shadow Sneak"], sp: { hp: 32, attack: 16, defense: 2, spAtk: 16, spDef: 0, speed: 0 } },
       { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Mega Physical", nature: "Jolly", ability: "Tough Claws", item: "Metagrossite", moves: ["Iron Head", "Zen Headbutt", "Ice Punch", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Stamina Tank", nature: "Modest", ability: "Stamina", item: "Leftovers", moves: ["Electro Shot", "Flash Cannon", "Draco Meteor", "Protect"], sp: { hp: 32, attack: 0, defense: 4, spAtk: 28, spDef: 0, speed: 2 } },
     ],
     tags: ["intimidate", "pivoting", "balance", "dragon-dance"],
     tier: "A",
@@ -225,12 +261,12 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     name: "Hydreigon Offense",
     archetype: "Offense",
     description: "Hydreigon special wallbreaker with Intimidate + Tailwind support",
-    pokemonIds: [635, 727, 547, 376, 149, 658],
+    pokemonIds: [635, 727, 547, 1018, 149, 658],
     sets: [
       { name: "Special Wallbreaker", nature: "Modest", ability: "Levitate", item: "Choice Specs", moves: ["Draco Meteor", "Dark Pulse", "Flamethrower", "Flash Cannon"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
       { name: "Intimidate Support", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
       { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Mega Physical", nature: "Jolly", ability: "Tough Claws", item: "Metagrossite", moves: ["Iron Head", "Zen Headbutt", "Ice Punch", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Stamina Tank", nature: "Modest", ability: "Stamina", item: "Leftovers", moves: ["Electro Shot", "Flash Cannon", "Draco Meteor", "Protect"], sp: { hp: 32, attack: 0, defense: 4, spAtk: 28, spDef: 0, speed: 2 } },
       { name: "Multiscale Pivot", nature: "Adamant", ability: "Multiscale", item: "Lum Berry", moves: ["Extreme Speed", "Dragon Claw", "Fire Punch", "Protect"], sp: { hp: 4, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 30 } },
       { name: "Fast Special", nature: "Timid", ability: "Protean", item: "Focus Sash", moves: ["Ice Beam", "Dark Pulse", "Grass Knot", "Protect"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
     ],
@@ -263,11 +299,11 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     name: "Hail Offense",
     archetype: "Snow",
     description: "Snow-based team with Aurora Veil support",
-    pokemonIds: [471, 478, 376, 727, 547, 445],
+    pokemonIds: [471, 478, 1018, 727, 547, 445],
     sets: [
       { name: "AV Snow Sweeper", nature: "Modest", ability: "Ice Body", item: "Choice Specs", moves: ["Blizzard", "Shadow Ball", "Freeze-Dry", "Hidden Power Ground"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 30 } },
       { name: "Aurora Veil Lead", nature: "Timid", ability: "Snow Cloak", item: "Focus Sash", moves: ["Aurora Veil", "Blizzard", "Icy Wind", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Mega Physical", nature: "Jolly", ability: "Tough Claws", item: "Metagrossite", moves: ["Iron Head", "Zen Headbutt", "Ice Punch", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Stamina Tank", nature: "Modest", ability: "Stamina", item: "Leftovers", moves: ["Electro Shot", "Flash Cannon", "Draco Meteor", "Protect"], sp: { hp: 32, attack: 0, defense: 4, spAtk: 28, spDef: 0, speed: 2 } },
       { name: "Intimidate Support", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
       { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
       { name: "Ground Coverage", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
@@ -601,11 +637,11 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   },
 
   {
-    id: "pre-35", name: "Mega Metagross Rush", archetype: "Steel Offense",
-    description: "Mega Metagross Tough Claws + Intimidate support",
-    pokemonIds: [376, 727, 445, 547, 887, 282],
+    id: "pre-35", name: "Archaludon Steel Offense", archetype: "Steel Offense",
+    description: "Stamina Archaludon + Intimidate support",
+    pokemonIds: [1018, 727, 445, 547, 887, 282],
     sets: [
-      { name: "Mega Steel", nature: "Jolly", ability: "Tough Claws", item: "Metagrossite", moves: ["Iron Head", "Zen Headbutt", "Ice Punch", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Magnet Attacker", nature: "Modest", ability: "Stamina", item: "Magnet", moves: ["Electro Shot", "Flash Cannon", "Protect", "Snarl"], sp: { hp: 20, attack: 0, defense: 4, spAtk: 32, spDef: 0, speed: 10 } },
       { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
       { name: "EQ Pivot", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
       { name: "Tailwind", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },

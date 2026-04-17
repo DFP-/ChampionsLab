@@ -60,7 +60,7 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Snow Team",
     description: "Hail-based team with Aurora Veil",
     coreIds: [471], // Glaceon (or other snow setter)
-    flexPool: [376, 227, 478], // Metagross, Skarmory, Froslass
+    flexPool: [1018, 227, 478], // Archaludon, Skarmory, Froslass
     preferredRoles: ["speed-control", "support", "physical-sweeper"],
     weatherNeeded: "snow",
   },
@@ -78,7 +78,7 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Semi Trick Room",
     description: "Flexible team with Trick Room as option",
     coreIds: [36], // Clefable (TR setter + Follow Me)
-    flexPool: [983, 727, 681, 149, 376, 858, 248, 780],
+    flexPool: [983, 727, 681, 149, 1018, 858, 248, 780],
     preferredRoles: ["physical-sweeper", "special-sweeper", "support"],
     hasTrickRoom: true,
   },
@@ -96,7 +96,7 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Tailwind Offense",
     description: "Whimsicott Tailwind + fast attackers",
     coreIds: [547], // Whimsicott
-    flexPool: [887, 149, 445, 658, 376, 681, 635, 282],
+    flexPool: [887, 149, 445, 658, 1018, 681, 635, 282],
     preferredRoles: ["physical-sweeper", "special-sweeper", "intimidate-user"],
     hasTailwind: true,
   },
@@ -104,7 +104,7 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Dragapult Tailwind",
     description: "Dragapult speed control + offensive core",
     coreIds: [887], // Dragapult
-    flexPool: [727, 445, 983, 282, 376, 658, 681, 547],
+    flexPool: [727, 445, 983, 282, 1018, 658, 681, 547],
     preferredRoles: ["intimidate-user", "support", "special-sweeper"],
     hasTailwind: true,
   },
@@ -114,13 +114,13 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Incineroar Balance",
     description: "Incineroar pivot + balanced attackers",
     coreIds: [727], // Incineroar
-    flexPool: [149, 445, 376, 681, 350, 282, 887, 983, 658, 547, 635],
+    flexPool: [149, 445, 1018, 681, 350, 282, 887, 983, 658, 547, 635],
     preferredRoles: ["special-sweeper", "physical-sweeper", "speed-control", "support"],
   },
   {
-    name: "Metagross Core",
-    description: "Mega Metagross as anchor with flexible support",
-    coreIds: [376], // Metagross
+    name: "Archaludon Core",
+    description: "Archaludon Stamina anchor with flexible support",
+    coreIds: [1018], // Archaludon
     flexPool: [727, 547, 149, 350, 681, 445, 282, 887],
     preferredRoles: ["intimidate-user", "speed-control", "support", "special-sweeper"],
   },
@@ -128,21 +128,21 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Garchomp Offense",
     description: "Garchomp-led offensive team",
     coreIds: [445], // Garchomp
-    flexPool: [727, 547, 282, 887, 681, 376, 149, 658, 350],
+    flexPool: [727, 547, 282, 887, 681, 1018, 149, 658, 350],
     preferredRoles: ["speed-control", "intimidate-user", "support", "special-sweeper"],
   },
   {
     name: "Dragonite Pivot",
     description: "Multiscale Dragonite + versatile core",
     coreIds: [149], // Dragonite
-    flexPool: [727, 547, 681, 376, 350, 282, 445, 658, 983],
+    flexPool: [727, 547, 681, 1018, 350, 282, 445, 658, 983],
     preferredRoles: ["speed-control", "intimidate-user", "support"],
   },
   {
     name: "Kingambit Hyper Offense",
     description: "Supreme Overlord Kingambit + aggressive core",
     coreIds: [983], // Kingambit
-    flexPool: [727, 547, 887, 445, 658, 149, 376, 282],
+    flexPool: [727, 547, 887, 445, 658, 149, 1018, 282],
     preferredRoles: ["speed-control", "intimidate-user", "support"],
   },
 
@@ -151,13 +151,13 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Intimidate Cycle",
     description: "Double Intimidate with pivoting",
     coreIds: [727, 553], // Incineroar, Krookodile
-    flexPool: [130, 149, 445, 376, 547, 282, 681],
+    flexPool: [130, 149, 445, 1018, 547, 282, 681],
     preferredRoles: ["speed-control", "special-sweeper", "support"],
   },
   {
     name: "Follow Me + Setup",
     description: "Redirector + setup sweeper",
-    coreIds: [36, 376], // Clefable + Metagross
+    coreIds: [36, 1018], // Clefable + Archaludon
     flexPool: [727, 149, 445, 547, 681, 887, 350],
     preferredRoles: ["speed-control", "physical-sweeper", "support"],
   },
@@ -165,14 +165,14 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     name: "Hyper Offense",
     description: "All-out attacking with minimal support",
     coreIds: [887], // Dragapult
-    flexPool: [445, 983, 658, 635, 376, 149, 500, 448],
+    flexPool: [445, 983, 658, 635, 1018, 149, 500, 448],
     preferredRoles: ["physical-sweeper", "special-sweeper", "speed-control"],
   },
   {
     name: "Bulky Balance",
     description: "Defensive core with win conditions",
     coreIds: [350, 727], // Milotic, Incineroar
-    flexPool: [681, 376, 149, 36, 445, 547, 983, 282],
+    flexPool: [681, 1018, 149, 36, 445, 547, 983, 282],
     preferredRoles: ["speed-control", "physical-sweeper", "special-sweeper"],
   },
 ];

@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
+import { useI18n } from "@/lib/i18n";
+import { SECTIONS_FR } from "@/lib/learn-sections-fr";
 import { LastUpdated } from "@/components/last-updated";
 import { AlertTriangle, Lightbulb, Trophy, Info } from "lucide-react";
 
@@ -28,21 +30,22 @@ function renderRichText(text: string) {
   });
 }
 
-const TIP_STYLES: Record<TipType, { icon: React.ElementType; label: string; border: string; bg: string; iconColor: string; labelColor: string }> = {
-  pro:          { icon: Lightbulb,      label: "Pro Tip",       border: "border-amber-400/50",  bg: "bg-amber-50/60 dark:bg-amber-950/20",  iconColor: "text-amber-500",  labelColor: "text-amber-700 dark:text-amber-400" },
-  "did-you-know": { icon: Info,         label: "Did You Know?", border: "border-blue-400/50",   bg: "bg-blue-50/60 dark:bg-blue-950/20",    iconColor: "text-blue-500",   labelColor: "text-blue-700 dark:text-blue-400" },
-  champions:    { icon: Trophy,         label: "Champions Tip", border: "border-emerald-400/50", bg: "bg-emerald-50/60 dark:bg-emerald-950/20", iconColor: "text-emerald-500", labelColor: "text-emerald-700 dark:text-emerald-400" },
-  warning:      { icon: AlertTriangle,  label: "Watch Out!",    border: "border-rose-400/50",   bg: "bg-rose-50/60 dark:bg-rose-950/20",    iconColor: "text-rose-500",   labelColor: "text-rose-700 dark:text-rose-400" },
+const TIP_STYLES: Record<TipType, { icon: React.ElementType; labelKey: string; border: string; bg: string; iconColor: string; labelColor: string }> = {
+  pro:          { icon: Lightbulb,      labelKey: "learn.tips.proTip",       border: "border-amber-400/50",  bg: "bg-amber-50/60 dark:bg-amber-950/20",  iconColor: "text-amber-500",  labelColor: "text-amber-700 dark:text-amber-400" },
+  "did-you-know": { icon: Info,         labelKey: "learn.tips.didYouKnow", border: "border-blue-400/50",   bg: "bg-blue-50/60 dark:bg-blue-950/20",    iconColor: "text-blue-500",   labelColor: "text-blue-700 dark:text-blue-400" },
+  champions:    { icon: Trophy,         labelKey: "learn.tips.championsTip", border: "border-emerald-400/50", bg: "bg-emerald-50/60 dark:bg-emerald-950/20", iconColor: "text-emerald-500", labelColor: "text-emerald-700 dark:text-emerald-400" },
+  warning:      { icon: AlertTriangle,  labelKey: "learn.tips.watchOut",    border: "border-rose-400/50",   bg: "bg-rose-50/60 dark:bg-rose-950/20",    iconColor: "text-rose-500",   labelColor: "text-rose-700 dark:text-rose-400" },
 };
 
 function TipCallout({ type, text }: { type: TipType; text: string }) {
+  const { t: tr } = useI18n();
   const style = TIP_STYLES[type];
   const Icon = style.icon;
   return (
     <div className={cn("flex gap-3 rounded-xl border px-4 py-3 mt-2", style.border, style.bg)}>
       <Icon className={cn("w-5 h-5 shrink-0 mt-0.5", style.iconColor)} />
       <div>
-        <span className={cn("text-xs font-bold uppercase tracking-wide", style.labelColor)}>{style.label}</span>
+        <span className={cn("text-xs font-bold uppercase tracking-wide", style.labelColor)}>{tr(style.labelKey)}</span>
         <p className="text-sm text-muted-foreground leading-relaxed mt-0.5">{renderRichText(text)}</p>
       </div>
     </div>
@@ -469,8 +472,22 @@ const COLOR_MAP: Record<string, { bg: string; border: string; text: string; icon
 };
 
 export default function LearnPage() {
+  const { t, locale } = useI18n();
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["intro"]));
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set());
+
+  const activeSections = SECTIONS.map((section, i) => {
+    const frSection = locale === "fr" ? SECTIONS_FR[i] : null;
+    if (!frSection) return section;
+    return {
+      ...section,
+      subsections: section.subsections.map((sub, j) => ({
+        ...sub,
+        title: frSection.subsections[j]?.title ?? sub.title,
+        content: frSection.subsections[j]?.content ?? sub.content,
+      })),
+    };
+  });
 
   const toggleSection = (id: string) => {
     trackEvent("toggle_section", "pokeschool", id);
@@ -494,9 +511,9 @@ export default function LearnPage() {
 
   const expandAll = () => {
     trackEvent("expand_all", "pokeschool");
-    setExpandedSections(new Set(SECTIONS.map(s => s.id)));
+    setExpandedSections(new Set(activeSections.map(s => s.id)));
     const allSubs = new Set<string>();
-    SECTIONS.forEach(s => s.subsections.forEach((_, i) => allSubs.add(`${s.id}-${i}`)));
+    activeSections.forEach(s => s.subsections.forEach((_, i) => allSubs.add(`${s.id}-${i}`)));
     setExpandedSubs(allSubs);
   };
 
@@ -521,11 +538,11 @@ export default function LearnPage() {
           <div>
             <h1 className="text-3xl font-bold">
               <span className="bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
-                PokéSchool
+                {t('learn.title')}
               </span>
             </h1>
             <p className="text-sm text-muted-foreground">
-              Your complete guide from beginner to VGC Champion
+              {t('learn.description')}
             </p>
             <div className="mt-1.5">
               <LastUpdated page="learn" />
@@ -535,20 +552,20 @@ export default function LearnPage() {
 
         <div className="flex items-center gap-3 mt-4">
           <span className="text-xs text-muted-foreground">
-            {SECTIONS.length} chapters · {SECTIONS.reduce((a, s) => a + s.subsections.length, 0)} lessons
+            {t('learn.chaptersLessons', { chapters: activeSections.length, lessons: activeSections.reduce((a, s) => a + s.subsections.length, 0) })}
           </span>
           <div className="flex gap-2 ml-auto">
             <button
               onClick={expandAll}
               className="px-3 py-1.5 text-xs rounded-lg glass glass-hover text-muted-foreground hover:text-foreground transition-colors"
             >
-              Expand All
+              {t('learn.expandAll')}
             </button>
             <button
               onClick={collapseAll}
               className="px-3 py-1.5 text-xs rounded-lg glass glass-hover text-muted-foreground hover:text-foreground transition-colors"
             >
-              Collapse All
+              {t('learn.collapseAll')}
             </button>
           </div>
         </div>
@@ -562,10 +579,10 @@ export default function LearnPage() {
         className="glass rounded-2xl border border-gray-200/60 p-5 mb-8"
       >
         <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
-          <BookOpen className="w-4 h-4" /> Table of Contents
+          <BookOpen className="w-4 h-4" /> {t('learn.tableOfContents')}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {SECTIONS.map((section, idx) => {
+          {activeSections.map((section, idx) => {
             const colors = COLOR_MAP[section.color];
             return (
               <button
@@ -581,8 +598,8 @@ export default function LearnPage() {
               >
                 <span className={cn("text-lg font-bold", colors.text)}>{idx + 1}</span>
                 <section.icon className={cn("w-5 h-5", colors.icon)} />
-                <span className="text-sm font-medium">{section.title}</span>
-                <span className="ml-auto text-xs text-muted-foreground">{section.subsections.length} lessons</span>
+                <span className="text-sm font-medium">{t('learn.sections.' + section.id)}</span>
+                <span className="ml-auto text-xs text-muted-foreground">{t('learn.lessons', { n: section.subsections.length })}</span>
               </button>
             );
           })}
@@ -591,7 +608,7 @@ export default function LearnPage() {
 
       {/* Sections */}
       <div className="space-y-4">
-        {SECTIONS.map((section, sIdx) => {
+        {activeSections.map((section, sIdx) => {
           const isExpanded = expandedSections.has(section.id);
           const colors = COLOR_MAP[section.color];
           return (
@@ -622,12 +639,12 @@ export default function LearnPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className={cn("text-xs font-bold uppercase tracking-wider", isExpanded ? colors.text : "text-muted-foreground")}>
-                      Chapter {sIdx + 1}
+                      {t('learn.chapter', { n: sIdx + 1 })}
                     </span>
                   </div>
-                  <h2 className="text-lg font-semibold mt-0.5">{section.title}</h2>
+                  <h2 className="text-lg font-semibold mt-0.5">{t('learn.sections.' + section.id)}</h2>
                 </div>
-                <span className="text-xs text-muted-foreground mr-2">{section.subsections.length} lessons</span>
+                <span className="text-xs text-muted-foreground mr-2">{t('learn.lessons', { n: section.subsections.length })}</span>
                 <motion.div
                   animate={{ rotate: isExpanded ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
@@ -712,10 +729,9 @@ export default function LearnPage() {
         className="mt-12 text-center glass rounded-2xl border border-gray-200/60 p-8"
       >
         <GraduationCap className="w-12 h-12 mx-auto text-emerald-500 mb-4" />
-        <h3 className="text-xl font-bold mb-2">Ready to Put It Into Practice?</h3>
+        <h3 className="text-xl font-bold mb-2">{t('learn.cta.title')}</h3>
         <p className="text-sm text-muted-foreground mb-4 max-w-md mx-auto">
-          Use the Team Builder to create your squad, check the META page for what&apos;s winning,
-          and put your theories to the test with our advanced battle engine.
+          {t('learn.cta.description')}
         </p>
 
         {/* Engine Highlight */}
@@ -724,8 +740,8 @@ export default function LearnPage() {
             <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
           <div className="text-left">
-            <p className="text-xs font-bold text-amber-700">Champions Lab Advanced VGC Battle Engine</p>
-            <p className="text-[10px] text-muted-foreground">2,000,000+ battles simulated · Full AI · ELO Rankings · Live Replay</p>
+            <p className="text-xs font-bold text-amber-700">{t('learn.cta.banner')}</p>
+            <p className="text-[10px] text-muted-foreground">{t('learn.cta.bannerDesc')}</p>
           </div>
         </div>
 
@@ -734,19 +750,19 @@ export default function LearnPage() {
             href="/team-builder"
             className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-cyan-600 text-white text-sm font-medium shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-105 transition-all"
           >
-            Open Team Builder
+            {t('learn.cta.openBuilder')}
           </a>
           <a
             href="/meta"
             className="px-6 py-2.5 rounded-xl glass glass-hover text-sm font-medium border border-gray-200"
           >
-            Explore META
+            {t('learn.cta.exploreMeta')}
           </a>
           <a
             href="/battle-bot"
             className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-sm font-bold shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-105 transition-all"
           >
-            ⚡ Battle Engine
+            {t('learn.cta.battleEngine')}
           </a>
         </div>
       </motion.div>

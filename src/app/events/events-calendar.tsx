@@ -11,6 +11,7 @@ import {
   type EventRegion,
   type VGCEvent,
 } from '@/lib/vgc-events';
+import { useI18n } from '@/lib/i18n';
 
 // ── Tier colours ──────────────────────────────────────────────────────────────
 
@@ -66,13 +67,14 @@ function safeUrl(url: string): string {
 // ── Event card ────────────────────────────────────────────────────────────────
 
 function EventCard({ event, todayISO, index }: { event: VGCEvent; todayISO: string; index: number }) {
+  const { t } = useI18n();
   const color   = TIER_COLOR[event.tier];
   const past    = isPast(event, todayISO);
   const ongoing = isOngoing(event, todayISO);
   const note    = event.registrationNote;
   const soldOut = note?.toLowerCase().includes('sold out');
 
-  const btnLabel = past ? 'Results' : soldOut ? 'Sold Out' : 'Register';
+  const btnLabel = past ? t('events.results') : soldOut ? t('events.soldOut') : t('events.register');
   const btnColor = past || soldOut ? 'var(--muted-foreground)' : color;
   const btnBg    = past || soldOut ? 'var(--card)' : `${color}22`;
   const btnBorder = past || soldOut ? 'var(--border)' : `${color}44`;
@@ -112,7 +114,7 @@ function EventCard({ event, todayISO, index }: { event: VGCEvent; todayISO: stri
           </span>
           {ongoing && (
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-green-500/20 text-green-500">
-              LIVE
+              {t('events.live')}
             </span>
           )}
           <span className="text-xs text-muted-foreground">
@@ -202,6 +204,7 @@ export function EventsCalendar({ events, todayISO }: { events: VGCEvent[]; today
   const [time,   setTime]   = useState<TimeFilter>('upcoming');
   const [tier,   setTier]   = useState<TierFilter>('all');
   const [region, setRegion] = useState<RegionFilter>('all');
+  const { t } = useI18n();
 
   const filtered = useMemo(() => {
     return events.filter(ev => {
@@ -239,20 +242,20 @@ export function EventsCalendar({ events, todayISO }: { events: VGCEvent[]; today
       >
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-emerald-500">
-            Season 2025-2026
+            {t('events.season')}
           </p>
           <h1 className="text-3xl font-bold tracking-tight font-heading bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
-            VGC Calendar
+            {t('events.title')}
           </h1>
           <div className="mt-1"><LastUpdated page="events" /></div>
           <p className="text-sm mt-1 text-muted-foreground">
-            {upcomingCount} upcoming event{upcomingCount !== 1 ? 's' : ''}
+            {t('events.upcomingCount', { count: upcomingCount })}
           </p>
         </div>
         <div className="flex gap-2 flex-wrap">
-          {(['upcoming', 'all', 'past'] as TimeFilter[]).map(t => (
-            <FilterPill key={t} active={time === t} onClick={() => setTime(t)}>
-              {t === 'upcoming' ? 'Upcoming' : t === 'past' ? 'Past' : 'All'}
+          {(['upcoming', 'all', 'past'] as TimeFilter[]).map(tf => (
+            <FilterPill key={tf} active={time === tf} onClick={() => setTime(tf)}>
+              {tf === 'upcoming' ? t('events.upcoming') : tf === 'past' ? t('events.past') : t('events.all')}
             </FilterPill>
           ))}
         </div>
@@ -265,7 +268,7 @@ export function EventsCalendar({ events, todayISO }: { events: VGCEvent[]; today
         className="space-y-2"
       >
         <div className="flex gap-2 flex-wrap">
-          <FilterPill active={tier === 'all'} onClick={() => setTier('all')}>All tiers</FilterPill>
+          <FilterPill active={tier === 'all'} onClick={() => setTier('all')}>{t('events.allTiers')}</FilterPill>
           {TIER_FILTERS.map(t => (
             <FilterPill key={t} active={tier === t} color={TIER_COLOR[t]} onClick={() => setTier(t)}>
               {TIER_LABEL[t]}
@@ -273,7 +276,7 @@ export function EventsCalendar({ events, todayISO }: { events: VGCEvent[]; today
           ))}
         </div>
         <div className="flex gap-2 flex-wrap">
-          <FilterPill active={region === 'all'} onClick={() => setRegion('all')}>All regions</FilterPill>
+          <FilterPill active={region === 'all'} onClick={() => setRegion('all')}>{t('events.allRegions')}</FilterPill>
           {REGION_FILTERS.map(r => (
             <FilterPill key={r} active={region === r} onClick={() => setRegion(r)}>
               {r}
@@ -299,7 +302,7 @@ export function EventsCalendar({ events, todayISO }: { events: VGCEvent[]; today
       {/* Events grouped by month */}
       {grouped.length === 0 ? (
         <div className="glass rounded-xl p-8 text-center text-sm text-muted-foreground border border-border">
-          No events match the current filters.
+          {t('events.noMatch')}
         </div>
       ) : (
         <div>

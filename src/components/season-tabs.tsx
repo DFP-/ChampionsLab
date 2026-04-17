@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "@/lib/motion";
 import { SEASONS, POKEMON_SEED } from "@/lib/pokemon-data";
 import { cn } from "@/lib/utils";
 import { Shield, Swords, Users, Timer, Sparkles, Ban, Gauge, ListChecks, Calendar, Dna, Package } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 interface SeasonTabsProps {
   activeSeason: number;
@@ -50,87 +51,90 @@ export function SeasonTabs({ activeSeason, onSeasonChange }: SeasonTabsProps) {
 
 interface RuleConfig {
   icon: typeof Swords;
-  label: string;
+  labelKey: string;
+  descKey: string;
   color: string;
   bg: string;
   ring: string;
-  description: string;
 }
 
 const RULES_CONFIG: Record<string, RuleConfig> = {
   "Doubles format": {
     icon: Swords,
-    label: "Doubles",
+    labelKey: "season.ruleDoubles",
+    descKey: "season.ruleDoublesDesc",
     color: "text-red-600 dark:text-red-400",
     bg: "bg-red-50 dark:bg-red-500/15",
     ring: "ring-red-100 dark:ring-red-500/25",
-    description: "All battles are played in Double Battle format - 2v2 on the field at all times. The standard competitive Pokémon format used in official VGC tournaments worldwide.",
   },
   "Bring 6, Pick 4": {
     icon: ListChecks,
-    label: "Bring 6, Pick 4",
+    labelKey: "season.ruleBring6",
+    descKey: "season.ruleBring6Desc",
     color: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-50 dark:bg-blue-500/15",
     ring: "ring-blue-100 dark:ring-blue-500/25",
-    description: "Build a team of 6 Pokémon, then select 4 to bring into each battle after seeing your opponent's team during Team Preview. Strategy starts before the first move.",
   },
   "Level 50 auto-level": {
     icon: Gauge,
-    label: "Level 50",
+    labelKey: "season.ruleLevel50",
+    descKey: "season.ruleLevel50Desc",
     color: "text-amber-600 dark:text-amber-400",
     bg: "bg-amber-50 dark:bg-amber-500/15",
     ring: "ring-amber-100 dark:ring-amber-500/25",
-    description: "All Pokémon are automatically set to Level 50 for battles, ensuring a fair playing field regardless of your Pokémon's actual level.",
   },
   "Stat Points (no IVs/EVs)": {
     icon: Sparkles,
-    label: "Stat Points",
+    labelKey: "season.ruleStatPoints",
+    descKey: "season.ruleStatPointsDesc",
     color: "text-violet-600 dark:text-violet-400",
     bg: "bg-violet-50 dark:bg-violet-500/15",
     ring: "ring-violet-100 dark:ring-violet-500/25",
-    description: "Champions replaces IVs and EVs with a streamlined Stat Point system. You get 64 total points to distribute (max 32 per stat). Each point adds ~1 stat at Level 50. No RNG, pure strategy.",
   },
   "Mega Evolution": {
     icon: Sparkles,
-    label: "Mega Evolution",
+    labelKey: "season.ruleMega",
+    descKey: "season.ruleMegaDesc",
     color: "text-pink-600 dark:text-pink-400",
     bg: "bg-pink-50 dark:bg-pink-500/15",
     ring: "ring-pink-100 dark:ring-pink-500/25",
-    description: "Mega Evolution returns! One Pokémon per team can Mega Evolve during battle, gaining boosted stats and sometimes a new typing or ability. A game-changing mechanic from Gen 6 & 7.",
   },
   "No duplicate Pokémon": {
     icon: Ban,
-    label: "No duplicate Pokémon",
+    labelKey: "season.ruleNoDupePokemon",
+    descKey: "season.ruleNoDupePokemonDesc",
     color: "text-emerald-600 dark:text-emerald-400",
     bg: "bg-emerald-50 dark:bg-emerald-500/15",
     ring: "ring-emerald-100 dark:ring-emerald-500/25",
-    description: "Each Pokémon species can only appear once on your team. Known as the Species Clause - a core rule in all official competitive formats.",
   },
   "No duplicate held items": {
     icon: Ban,
-    label: "No duplicate items",
+    labelKey: "season.ruleNoDupeItems",
+    descKey: "season.ruleNoDupeItemsDesc",
     color: "text-cyan-600 dark:text-cyan-400",
     bg: "bg-cyan-50 dark:bg-cyan-500/15",
     ring: "ring-cyan-100 dark:ring-cyan-500/25",
-    description: "Each held item can only be used once per team. Known as the Item Clause - forces diverse item choices and prevents stacking powerful items like Leftovers or Choice Scarf.",
   },
   "20-minute game timer": {
     icon: Timer,
-    label: "20-min timer",
+    labelKey: "season.ruleTimer",
+    descKey: "season.ruleTimerDesc",
     color: "text-orange-600 dark:text-orange-400",
     bg: "bg-orange-50 dark:bg-orange-500/15",
     ring: "ring-orange-100 dark:ring-orange-500/25",
-    description: "Each game has a 20-minute time limit. If time runs out, the player with more remaining Pokémon wins. Prevents stalling and keeps games fast-paced.",
   },
 };
 
 function RuleCard({ rule }: { rule: string }) {
   const [hovered, setHovered] = useState(false);
+  const { t } = useI18n();
   const config = RULES_CONFIG[rule];
 
   if (!config) return null;
 
   const Icon = config.icon;
+  const label = t(config.labelKey);
+  const description = t(config.descKey);
 
   return (
     <div
@@ -147,7 +151,7 @@ function RuleCard({ rule }: { rule: string }) {
         )}
       >
         <Icon className={cn("w-3.5 h-3.5 flex-shrink-0", config.color)} />
-        <span className={cn("text-xs font-medium", config.color)}>{config.label}</span>
+        <span className={cn("text-xs font-medium", config.color)}>{label}</span>
       </div>
 
       <AnimatePresence>
@@ -163,9 +167,9 @@ function RuleCard({ rule }: { rule: string }) {
               <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center", config.bg)}>
                 <Icon className={cn("w-3.5 h-3.5", config.color)} />
               </div>
-              <span className="text-sm font-semibold text-gray-900">{config.label}</span>
+              <span className="text-sm font-semibold text-gray-900">{label}</span>
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed">{config.description}</p>
+            <p className="text-xs text-gray-500 leading-relaxed">{description}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -174,6 +178,7 @@ function RuleCard({ rule }: { rule: string }) {
 }
 
 export function SeasonInfo({ seasonId }: { seasonId: number }) {
+  const { t, locale } = useI18n();
   const season = SEASONS.find((s) => s.id === seasonId);
   if (!season) return null;
 
@@ -181,7 +186,7 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
   const megaCount = POKEMON_SEED.filter(p => p.hasMega && !(p as any).hidden).length;
 
   const formatDate = (d: string) =>
-    new Date(d + "T12:00:00Z").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    new Date(d + "T12:00:00Z").toLocaleDateString(locale === "fr" ? "fr-FR" : "en-US", { month: "long", day: "numeric", year: "numeric" });
 
   const regulationEnd = "2026-06-17";
 
@@ -205,7 +210,7 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
         </div>
         {season.isActive && (
           <span className="px-3 py-1 text-[10px] font-bold rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200 uppercase tracking-wider">
-            Active Season
+            {t('season.activeSeason')}
           </span>
         )}
       </div>
@@ -215,34 +220,34 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
           <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Season Ends</p>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.seasonEnds')}</p>
             <p className="text-xs font-semibold text-gray-700">{season.endDate ? formatDate(season.endDate) : "TBD"}</p>
           </div>
         </div>
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
           <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Regulation Until</p>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.regulationUntil')}</p>
             <p className="text-xs font-semibold text-gray-700">{formatDate(regulationEnd)}</p>
           </div>
         </div>
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
           <Users className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Pokémon</p>
-            <p className="text-xs font-semibold text-gray-700">{rosterCount} in roster</p>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.pokemon')}</p>
+            <p className="text-xs font-semibold text-gray-700">{t('season.inRoster', { count: rosterCount })}</p>
           </div>
         </div>
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
           <Dna className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Mega Evolutions</p>
-            <p className="text-xs font-semibold text-gray-700">{megaCount} available</p>
+            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.megaEvolutions')}</p>
+            <p className="text-xs font-semibold text-gray-700">{t('season.available', { count: megaCount })}</p>
           </div>
         </div>
       </div>
 
-      <p className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">Rules - hover for details</p>
+      <p className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">{t('season.rulesHover')}</p>
 
       <div className="flex flex-wrap gap-2">
         {season.rules.map((rule) => (

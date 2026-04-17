@@ -967,8 +967,17 @@ function aiChooseAction(
   }
   
   if (allChoices.length === 0) {
-    // Struggle fallback
-    return { moveName: mon.set.moves[0], targetSlot: 0 };
+    // Choice-locked into unusable move (e.g. Fake Out after turn 1) → switch out
+    if (mon.choiceLockedMove) {
+      const myTeamForSwitch = sideIndex === 1 ? state.team1 : state.team2;
+      const myActiveForSwitch = sideIndex === 1 ? state.active1 : state.active2;
+      const hasBench = myTeamForSwitch.some(p =>
+        p.isAlive && !p.isFainted && p !== myActiveForSwitch[0] && p !== myActiveForSwitch[1]
+      );
+      if (hasBench) return { moveName: "", targetSlot: -1, switchOut: true };
+    }
+    // Struggle fallback (no usable moves and can't switch)
+    return { moveName: "Struggle", targetSlot: 0 };
   }
   
   // Human-like variance: ±12 for score randomness (humans aren't perfect calculators)
@@ -1265,6 +1274,22 @@ function applySwitch(state: BattleState, sideIndex: 1 | 2, slot: 0 | 1, excludeF
     if (next.ability === "Imposter") {
       const oppTarget = opponents.find(o => o && !o.isFainted);
       if (oppTarget) applyImposterTransform(next, oppTarget);
+      // Copied Intimidate triggers after Imposter transform
+      if (next.ability === "Intimidate") {
+        for (const opp of opponents) {
+          if (opp && opp.isAlive) {
+            if (opp.ability === "Mirror Armor") {
+              next.boosts.attack = Math.max(-6, next.boosts.attack - 1);
+            } else if (opp.ability === "Guard Dog") {
+              opp.boosts.attack = Math.min(6, opp.boosts.attack + 1);
+            } else if (!isIntimidateBlocked(opp)) {
+              opp.boosts.attack = Math.max(-6, opp.boosts.attack - 1);
+              if (opp.ability === "Competitive") opp.boosts.spAtk = Math.min(6, opp.boosts.spAtk + 2);
+              if (opp.ability === "Defiant") opp.boosts.attack = Math.min(6, opp.boosts.attack + 2);
+            }
+          }
+        }
+      }
     }
   } else {
     active[slot] = null;
@@ -2083,12 +2108,12 @@ export function simulateBattle(
       }
     }
   }
-  // Intimidate on entry (skip Imposter-transformed mons  -  Imposter already consumed entry trigger)
+  // Intimidate on entry (includes Imposter-transformed mons that copied Intimidate)
   for (let s = 0; s < 2; s++) {
     const active = s === 0 ? state.active1 : state.active2;
     const opponents = s === 0 ? state.active2 : state.active1;
     for (const mon of active) {
-      if (mon?.ability === "Intimidate" && !mon.isTransformed) {
+      if (mon?.ability === "Intimidate") {
         for (const opp of opponents) {
           if (!opp) continue;
           if (opp.ability === "Mirror Armor") {
@@ -2313,6 +2338,21 @@ export function simulateBattle(
         continue;
       }
       
+      // Sucker Punch: fails if target is using a status move, switching, or already moved
+      if (action.moveName === "Sucker Punch") {
+        const targetMon = (action.sideIndex === 1 ? state.active2 : state.active1)[action.targetSlot];
+        if (targetMon && !targetMon.isFainted) {
+          const targetAction = actions.find(a => a.mon === targetMon);
+          if (!targetAction || targetAction.switchOut || targetAction.mon.hasMoved) {
+            continue; // Sucker Punch fails
+          }
+          const targetMove = getMove(targetAction.moveName);
+          if (!targetMove || targetMove.category === "status") {
+            continue; // Sucker Punch fails vs status moves
+          }
+        }
+      }
+
       const opponents = action.sideIndex === 1 ? state.active2 : state.active1;
       const allies = action.sideIndex === 1 ? state.active1 : state.active2;
       const target = opponents[action.targetSlot] ?? null;
@@ -2471,12 +2511,12 @@ export function simulateBattleWithLog(
       }
     }
   }
-  // Intimidate on entry (skip Imposter-transformed mons  -  Imposter already consumed entry trigger)
+  // Intimidate on entry (includes Imposter-transformed mons that copied Intimidate)
   for (let s = 0; s < 2; s++) {
     const active = s === 0 ? state.active1 : state.active2;
     const opponents = s === 0 ? state.active2 : state.active1;
     for (const mon of active) {
-      if (mon?.ability === "Intimidate" && !mon.isTransformed) {
+      if (mon?.ability === "Intimidate") {
         for (const opp of opponents) {
           if (opp && opp.ability === "Mirror Armor") {
             mon.boosts.attack = Math.max(-6, mon.boosts.attack - 1);
@@ -2688,8 +2728,8 @@ export function simulateBattleWithLog(
                 turnEvents.push(`${newMon.pokemon.name} transformed into ${imposterTarget.pokemon.name} using Imposter!`);
               }
             }
-            // Log Intimidate (skip Imposter-transformed)
-            if (newMon.ability === "Intimidate" && !newMon.isTransformed) {
+            // Log Intimidate (includes Imposter-copied Intimidate)
+            if (newMon.ability === "Intimidate") {
               for (let oi = 0; oi < switchOpponents.length; oi++) {
                 const opp = switchOpponents[oi];
                 if (!opp || opp.isFainted) continue;
@@ -2712,6 +2752,24 @@ export function simulateBattleWithLog(
         }
         continue;
       }
+
+      // Sucker Punch: fails if target is using a status move, switching, or already moved
+      if (action.moveName === "Sucker Punch") {
+        const targetMon = (action.sideIndex === 1 ? state.active2 : state.active1)[action.targetSlot];
+        if (targetMon && !targetMon.isFainted) {
+          const targetAction = actions.find(a => a.mon === targetMon);
+          if (!targetAction || targetAction.switchOut || targetAction.mon.hasMoved) {
+            turnEvents.push(`${action.mon.pokemon.name} used Sucker Punch - but it failed!`);
+            continue;
+          }
+          const targetMove = getMove(targetAction.moveName);
+          if (!targetMove || targetMove.category === "status") {
+            turnEvents.push(`${action.mon.pokemon.name} used Sucker Punch - but it failed!`);
+            continue;
+          }
+        }
+      }
+
       const opponents = action.sideIndex === 1 ? state.active2 : state.active1;
       const allies = action.sideIndex === 1 ? state.active1 : state.active2;
       const target = opponents[action.targetSlot] ?? null;
@@ -2893,8 +2951,8 @@ export function simulateBattleWithLog(
                 turnEvents.push(`${switched.pokemon.name} transformed into ${transformedInto.pokemon.name} using Imposter!`);
               }
             }
-            // Log Intimidate effects (skip Imposter-transformed mons)
-            if (switched.ability === "Intimidate" && !switched.isTransformed) {
+            // Log Intimidate effects (includes Imposter-copied Intimidate)
+            if (switched.ability === "Intimidate") {
               for (let oi = 0; oi < opponents.length; oi++) {
                 const opp = opponents[oi];
                 if (!opp || opp.isFainted) continue;
@@ -3254,11 +3312,14 @@ export function runTeamTestSimulation(
 
 // ── RANDOM TEAM GENERATOR ────────────────────────────────────────────────────
 
+// Only Champions-available items (matches CHAMPIONS_ITEMS in items.ts)
 const COMPETITIVE_ITEMS = [
-  "Life Orb", "Choice Scarf", "Choice Band", "Choice Specs",
-  "Focus Sash", "Weakness Policy", "Assault Vest", "Leftovers",
-  "Sitrus Berry", "Lum Berry", "Rocky Helmet", "Safety Goggles",
-  "Covert Cloak", "Clear Amulet",
+  "Focus Sash", "Choice Scarf", "Leftovers", "Sitrus Berry", "Lum Berry",
+  "Charcoal", "Mystic Water", "Miracle Seed", "Magnet", "Never-Melt Ice",
+  "Black Belt", "Sharp Beak", "Twisted Spoon", "Silver Powder", "Dragon Fang",
+  "Black Glasses", "Spell Tag", "Soft Sand", "Hard Stone", "Poison Barb",
+  "Metal Coat", "Silk Scarf", "Focus Band", "Shell Bell", "Scope Lens",
+  "White Herb", "Mental Herb", "BrightPowder", "King's Rock", "Quick Claw",
 ];
 
 function pickNatureForMon(p: ChampionsPokemon): string {

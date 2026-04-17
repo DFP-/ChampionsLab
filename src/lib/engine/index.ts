@@ -117,6 +117,12 @@ export {
   type StrategyNodeType,
 } from "./strategy-tree";
 
+// Strategy Tree i18n
+export {
+  translateStrategyTree,
+  translateInsights,
+} from "./strategy-i18n";
+
 // Suggestion Engine
 export {
   suggestTeammates,

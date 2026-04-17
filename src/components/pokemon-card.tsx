@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChampionsPokemon, TYPE_COLORS } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Sparkles } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 interface PokemonCardProps {
   pokemon: ChampionsPokemon;
@@ -14,6 +15,7 @@ interface PokemonCardProps {
 
 export function PokemonCard({ pokemon, onClick, index }: PokemonCardProps) {
   const primaryColor = TYPE_COLORS[pokemon.types[0]];
+  const { tp, t } = useI18n();
 
   return (
     <motion.div
@@ -78,7 +80,7 @@ export function PokemonCard({ pokemon, onClick, index }: PokemonCardProps) {
           <div className="relative z-10 transition-transform duration-500 group-hover:scale-110">
             <Image
               src={pokemon.officialArt}
-              alt={pokemon.name}
+              alt={tp(pokemon.name)}
               width={130}
               height={130}
               className="drop-shadow-xl object-contain"
@@ -93,7 +95,7 @@ export function PokemonCard({ pokemon, onClick, index }: PokemonCardProps) {
           {/* Name & Dex number */}
           <div className="flex items-center justify-between gap-1">
             <h3 className="font-semibold text-[13px] tracking-tight text-gray-900 truncate min-w-0">
-              {pokemon.name.replace(/^(.+?)\s*\((.+)\)$/, "($2) $1")}
+              {tp(pokemon.name).replace(/^(.+?)\s*\((.+)\)$/, "($2) $1")}
             </h3>
             <span className="text-[10px] text-gray-400 tabular-nums flex-shrink-0">
               #{pokemon.dexNumber.toString().padStart(3, "0")}
@@ -108,7 +110,7 @@ export function PokemonCard({ pokemon, onClick, index }: PokemonCardProps) {
                 className="px-2 py-0.5 text-[9px] font-bold uppercase rounded-md text-white tracking-wider"
                 style={{ backgroundColor: `${TYPE_COLORS[type]}D0` }}
               >
-                {type}
+                {t(`common.types.${type}`)}
               </span>
             ))}
           </div>

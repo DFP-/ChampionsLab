@@ -15,15 +15,17 @@ import {
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
+import { LanguageSelector } from "@/components/language-selector";
+import { useI18n } from "@/lib/i18n";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Pokédex", icon: Grid3X3 },
-  { href: "/team-builder", label: "Team Builder", icon: Users },
-  { href: "/battle-bot", label: "Battle Bot", icon: Swords },
-  { href: "/meta", label: "Meta", icon: TrendingUp },
-  { href: "/events", label: "Tournaments", icon: CalendarDays },
-  { href: "/learn", label: "PokéSchool", icon: GraduationCap },
-  { href: "/about", label: "About", icon: Heart },
+  { href: "/", i18nKey: "nav.pokedex", icon: Grid3X3 },
+  { href: "/team-builder", i18nKey: "nav.teamBuilder", icon: Users },
+  { href: "/battle-bot", i18nKey: "nav.battleBot", icon: Swords },
+  { href: "/meta", i18nKey: "nav.meta", icon: TrendingUp },
+  { href: "/events", i18nKey: "nav.tournaments", icon: CalendarDays },
+  { href: "/learn", i18nKey: "nav.pokeSchool", icon: GraduationCap },
+  { href: "/about", i18nKey: "nav.about", icon: Heart },
 ];
 
 // First 3 items shown in the bar at tablet widths (800–1139px)
@@ -32,6 +34,7 @@ const SECONDARY_NAV = NAV_ITEMS.slice(3);
 
 export function Navbar() {
   const pathname = usePathname();
+  const { t } = useI18n();
 
   // Close mobile nav on route change (body class is set by inline script in layout)
   useEffect(() => {
@@ -60,7 +63,7 @@ export function Navbar() {
                   Champions Lab
                 </span>
                 <span className="hidden md:block text-[10px] text-muted-foreground -mt-1 tracking-widest uppercase">
-                  Your competitive edge starts here
+                  {t('nav.subtitle')}
                 </span>
               </div>
             </Link>
@@ -73,7 +76,7 @@ export function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => trackEvent("nav_click", "navigation", item.label)}
+                    onClick={() => trackEvent("nav_click", "navigation", t(item.i18nKey))}
                     className={cn(
                       "relative px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 whitespace-nowrap",
                       isActive
@@ -82,7 +85,7 @@ export function Navbar() {
                     )}
                   >
                     <item.icon className="w-4 h-4" />
-                    <span>{item.label}</span>
+                    <span>{t(item.i18nKey)}</span>
                   </Link>
                 );
               })}
@@ -94,8 +97,9 @@ export function Navbar() {
                 className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white hover:from-yellow-500 hover:to-orange-600 shadow-sm shadow-orange-500/20 flex items-center gap-2 transition-all hover:scale-105 whitespace-nowrap"
               >
                 <Heart className="w-4 h-4 fill-white" />
-                <span>Support Us</span>
+                <span>{t("nav.supportUs")}</span>
               </a>
+              <LanguageSelector />
             </nav>
 
             {/* Tablet Nav  -  primary items only, 800–1139px */}
@@ -133,7 +137,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => trackEvent("nav_click", "navigation", `mobile_${item.label}`)}
+                onClick={() => trackEvent("nav_click", "navigation", `mobile_${t(item.i18nKey)}`)}
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                   isPrimary && "tablet-hide-item",
@@ -143,7 +147,7 @@ export function Navbar() {
                 )}
               >
                 <item.icon className="w-5 h-5" />
-                {item.label}
+                {t(item.i18nKey)}
               </Link>
             );
           })}
@@ -155,8 +159,11 @@ export function Navbar() {
             className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-yellow-400 to-orange-500 text-white"
           >
             <Heart className="w-5 h-5 fill-white" />
-            Support Us
+            {t("nav.supportUs")}
           </a>
+          <div className="px-4 pt-2">
+            <LanguageSelector mobile />
+          </div>
         </nav>
       </header>
 

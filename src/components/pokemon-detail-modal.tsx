@@ -217,6 +217,29 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
 
   const defensiveProfile = useMemo(() => getDefensiveProfile(displayTypes), [displayTypes]);
 
+  // Ability-aware type matchup adjustments for the defensive chart
+  const abilityTypeAdjustments = useMemo(() => {
+    const ABILITY_IMMUNITIES: Record<string, string> = {
+      "Levitate": "ground", "Flash Fire": "fire", "Water Absorb": "water",
+      "Volt Absorb": "electric", "Sap Sipper": "grass", "Motor Drive": "electric",
+      "Lightning Rod": "electric", "Storm Drain": "water", "Earth Eater": "ground",
+      "Dry Skin": "water",
+    };
+    const ABILITY_HALF: Record<string, string[]> = {
+      "Thick Fat": ["fire", "ice"], "Heatproof": ["fire"], "Water Bubble": ["fire"],
+      "Purifying Salt": ["ghost"],
+    };
+    const immunities = new Set<string>();
+    const halved = new Set<string>();
+    for (const ab of displayAbilities) {
+      if (ab.isHidden) continue;
+      const imm = ABILITY_IMMUNITIES[ab.name];
+      if (imm) immunities.add(imm);
+      for (const t of ABILITY_HALF[ab.name] ?? []) halved.add(t);
+    }
+    return { immunities, halved };
+  }, [displayAbilities]);
+
   const offensiveCoverageData = useMemo(() => {
     if (!pokemon) return [];
     const moveTypes = [...new Set(pokemon.moves.filter(m => m.category !== "status").map(m => m.type))];
@@ -454,11 +477,15 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
                       <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">{t('pokemonDetail.typeDefenses')}</h3>
                       <div className="grid grid-cols-6 sm:grid-cols-9 gap-1.5">
                         {getAllTypes().map((type) => {
-                          const mult = getMatchup(type as PokemonType, displayTypes);
+                          let mult = getMatchup(type as PokemonType, displayTypes);
+                          // Apply ability-based adjustments
+                          if (abilityTypeAdjustments.immunities.has(type)) mult = 0;
+                          else if (abilityTypeAdjustments.halved.has(type)) mult *= 0.5;
                           let label = "";
                           let bg = "bg-gray-50 dark:bg-gray-200/5";
                           let textColor = "text-gray-300 dark:text-gray-600";
                           if (mult === 0) { label = "0"; bg = "bg-gray-900 dark:bg-gray-900"; textColor = "text-gray-400"; }
+                          else if (mult <= 0.125) { label = "⅛"; bg = "bg-emerald-200 dark:bg-emerald-500/30"; textColor = "text-emerald-800 dark:text-emerald-300"; }
                           else if (mult === 0.25) { label = "¼"; bg = "bg-emerald-100 dark:bg-emerald-500/20"; textColor = "text-emerald-700 dark:text-emerald-400"; }
                           else if (mult === 0.5) { label = "½"; bg = "bg-emerald-50 dark:bg-emerald-500/10"; textColor = "text-emerald-600 dark:text-emerald-400"; }
                           else if (mult === 1) { label = ""; }
