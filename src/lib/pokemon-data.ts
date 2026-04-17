@@ -1,4 +1,5 @@
 import { ChampionsPokemon, Season } from "./types";
+import { spriteUrl } from "./sprite-url";
 
 // ============================================================
 // Auto-generated from PokeAPI - updated 2026-03-26
@@ -28730,6 +28731,18 @@ export const POKEMON_SEED: ChampionsPokemon[] = [
     "usageRate": 0.14,
   }
 ];
+
+// Resolve sprite paths → CDN URLs at load time (once).
+for (const p of POKEMON_SEED) {
+  p.sprite = spriteUrl(p.sprite);
+  p.officialArt = spriteUrl(p.officialArt);
+  if (p.forms) {
+    for (const f of p.forms) {
+      f.sprite = spriteUrl(f.sprite);
+    }
+  }
+}
+
 export function getPokemonBySeason(season: number): ChampionsPokemon[] {
   return POKEMON_SEED.filter((p) => p.season <= season && !p.hidden);
 }

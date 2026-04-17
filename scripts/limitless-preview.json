@@ -1,0 +1,201 @@
+{
+  "teams": [
+    {
+      "id": "ct-1",
+      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
+      "players": 30,
+      "placement": 1,
+      "player": "drkekoVGC",
+      "wins": 8,
+      "losses": 1,
+      "pokemonIds": [
+        6,
+        10009,
+        727,
+        445,
+        681,
+        3
+      ],
+      "pokemonNames": [
+        "Charizard",
+        "Wash Rotom",
+        "Incineroar",
+        "Garchomp",
+        "Aegislash",
+        "Venusaur"
+      ]
+    },
+    {
+      "id": "ct-2",
+      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
+      "players": 30,
+      "placement": 2,
+      "player": "Nehzzy",
+      "wins": 7,
+      "losses": 2,
+      "pokemonIds": [
+        670,
+        1013,
+        727,
+        445,
+        902,
+        903
+      ],
+      "pokemonNames": [
+        "Floette",
+        "Sinistcha",
+        "Incineroar",
+        "Garchomp",
+        "Basculegion-M",
+        "Sneasler"
+      ]
+    },
+    {
+      "id": "ct-3",
+      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
+      "players": 30,
+      "placement": 3,
+      "player": "LovelyLuna",
+      "wins": 6,
+      "losses": 2,
+      "pokemonIds": [
+        149,
+        279,
+        902,
+        903,
+        727,
+        983
+      ],
+      "pokemonNames": [
+        "Dragonite",
+        "Pelipper",
+        "Basculegion-M",
+        "Sneasler",
+        "Incineroar",
+        "Kingambit"
+      ]
+    },
+    {
+      "id": "ct-4",
+      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
+      "players": 30,
+      "placement": 4,
+      "player": "Lucks_001",
+      "wins": 6,
+      "losses": 2,
+      "pokemonIds": [
+        970,
+        279,
+        1018,
+        547,
+        902,
+        727
+      ],
+      "pokemonNames": [
+        "Glimmora",
+        "Pelipper",
+        "Archaludon",
+        "Whimsicott",
+        "Basculegion-M",
+        "Incineroar"
+      ]
+    },
+    {
+      "id": "ct-5",
+      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
+      "players": 30,
+      "placement": 5,
+      "player": "KiloElite",
+      "wins": 5,
+      "losses": 2,
+      "pokemonIds": [
+        10009,
+        154,
+        981,
+        727,
+        445,
+        983
+      ],
+      "pokemonNames": [
+        "Wash Rotom",
+        "Meganium",
+        "Farigiraf",
+        "Incineroar",
+        "Garchomp",
+        "Kingambit"
+      ]
+    }
+  ],
+  "usage": [
+    {
+      "rank": 1,
+      "name": "Incineroar",
+      "count": 1203,
+      "usagePct": 50.8,
+      "top8Count": 168
+    },
+    {
+      "rank": 2,
+      "name": "Sneasler",
+      "count": 1108,
+      "usagePct": 46.8,
+      "top8Count": 195
+    },
+    {
+      "rank": 3,
+      "name": "Garchomp",
+      "count": 885,
+      "usagePct": 37.4,
+      "top8Count": 137
+    },
+    {
+      "rank": 4,
+      "name": "Sinistcha",
+      "count": 722,
+      "usagePct": 30.5,
+      "top8Count": 111
+    },
+    {
+      "rank": 5,
+      "name": "Kingambit",
+      "count": 652,
+      "usagePct": 27.5,
+      "top8Count": 135
+    },
+    {
+      "rank": 6,
+      "name": "Basculegion-M",
+      "count": 559,
+      "usagePct": 23.6,
+      "top8Count": 103
+    },
+    {
+      "rank": 7,
+      "name": "Whimsicott",
+      "count": 455,
+      "usagePct": 19.2,
+      "top8Count": 49
+    },
+    {
+      "rank": 8,
+      "name": "Charizard",
+      "count": 449,
+      "usagePct": 19,
+      "top8Count": 52
+    },
+    {
+      "rank": 9,
+      "name": "Wash Rotom",
+      "count": 392,
+      "usagePct": 16.6,
+      "top8Count": 64
+    },
+    {
+      "rank": 10,
+      "name": "Floette",
+      "count": 380,
+      "usagePct": 16,
+      "top8Count": 74
+    }
+  ]
+}

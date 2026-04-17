@@ -46,7 +46,7 @@ function TipCallout({ type, text }: { type: TipType; text: string }) {
       <Icon className={cn("w-5 h-5 shrink-0 mt-0.5", style.iconColor)} />
       <div>
         <span className={cn("text-xs font-bold uppercase tracking-wide", style.labelColor)}>{tr(style.labelKey)}</span>
-        <p className="text-sm text-muted-foreground leading-relaxed mt-0.5">{renderRichText(text)}</p>
+        <p className="text-sm text-foreground/90 leading-relaxed mt-0.5">{renderRichText(text)}</p>
       </div>
     </div>
   );
@@ -598,7 +598,7 @@ export default function LearnPage() {
               >
                 <span className={cn("text-lg font-bold", colors.text)}>{idx + 1}</span>
                 <section.icon className={cn("w-5 h-5", colors.icon)} />
-                <span className="text-sm font-medium">{t('learn.sections.' + section.id)}</span>
+                <span className="text-sm font-medium text-foreground">{t('learn.sections.' + section.id)}</span>
                 <span className="ml-auto text-xs text-muted-foreground">{t('learn.lessons', { n: section.subsections.length })}</span>
               </button>
             );
@@ -642,7 +642,7 @@ export default function LearnPage() {
                       {t('learn.chapter', { n: sIdx + 1 })}
                     </span>
                   </div>
-                  <h2 className="text-lg font-semibold mt-0.5">{t('learn.sections.' + section.id)}</h2>
+                  <h2 className="text-lg font-semibold mt-0.5 text-foreground">{t('learn.sections.' + section.id)}</h2>
                 </div>
                 <span className="text-xs text-muted-foreground mr-2">{t('learn.lessons', { n: section.subsections.length })}</span>
                 <motion.div
@@ -682,7 +682,7 @@ export default function LearnPage() {
                               <span className={cn("px-2 py-0.5 text-[10px] font-bold rounded", colors.pill)}>
                                 {sIdx + 1}.{subIdx + 1}
                               </span>
-                              <span className="text-sm font-medium">{sub.title}</span>
+                              <span className="text-sm font-medium text-foreground">{sub.title}</span>
                             </button>
 
                             <AnimatePresence initial={false}>
@@ -697,7 +697,7 @@ export default function LearnPage() {
                                   <div className="px-4 py-3 ml-8 space-y-3">
                                     {sub.content.map((block, pi) => (
                                       <div key={pi}>
-                                        <p className="text-sm text-muted-foreground leading-relaxed">
+                                        <p className="text-sm text-foreground/90 leading-relaxed">
                                           {renderRichText(block.text)}
                                         </p>
                                         {block.tip && (

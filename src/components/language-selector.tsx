@@ -89,11 +89,11 @@ export function LanguageSelector({ mobile = false }: { mobile?: boolean }) {
               "absolute top-full mt-2 w-60 z-[60]",
               mobile ? "left-0" : "right-0",
               "rounded-2xl p-1.5 overflow-hidden",
-              "bg-white/80 dark:bg-gray-900/80",
+              "bg-white/80 dark:bg-[rgba(14,21,40,0.88)]",
               "backdrop-blur-xl",
               "border border-gray-200/60 dark:border-white/10",
               "shadow-xl shadow-black/10 dark:shadow-black/40",
-              "ring-1 ring-black/[0.03]"
+              "ring-1 ring-black/[0.03] dark:ring-white/[0.05]"
             )}
           >
             <div className="px-3 pt-2 pb-1.5">

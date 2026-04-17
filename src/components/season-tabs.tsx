@@ -31,14 +31,14 @@ export function SeasonTabs({ activeSeason, onSeasonChange }: SeasonTabsProps) {
             {isActive && (
               <motion.div
                 layoutId="season-active"
-                className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-100 to-blue-100 border border-violet-300"
+                className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-100 to-blue-100 dark:from-violet-500/20 dark:to-blue-500/20 border border-violet-300 dark:border-violet-500/30"
                 transition={{ type: "spring", stiffness: 380, damping: 30 }}
               />
             )}
             <Shield className="w-4 h-4 relative z-10" />
             <span className="relative z-10">{season.name}</span>
             {season.isActive && (
-              <span className="relative z-10 px-1.5 py-0.5 text-[10px] font-bold rounded-md bg-emerald-100 text-emerald-700 border border-emerald-300">
+              <span className="relative z-10 px-1.5 py-0.5 text-[10px] font-bold rounded-md bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30">
                 LIVE
               </span>
             )}
@@ -167,9 +167,9 @@ function RuleCard({ rule }: { rule: string }) {
               <div className={cn("w-6 h-6 rounded-lg flex items-center justify-center", config.bg)}>
                 <Icon className={cn("w-3.5 h-3.5", config.color)} />
               </div>
-              <span className="text-sm font-semibold text-gray-900">{label}</span>
+              <span className="text-sm font-semibold text-foreground">{label}</span>
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed">{description}</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -194,22 +194,22 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm"
+      className="bg-white dark:bg-white/5 rounded-2xl p-6 border border-gray-100 dark:border-gray-200/10 shadow-sm"
     >
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-100 to-indigo-100 flex items-center justify-center">
-            <Shield className="w-4.5 h-4.5 text-violet-600" />
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-100 to-indigo-100 dark:from-violet-500/20 dark:to-indigo-500/20 flex items-center justify-center">
+            <Shield className="w-4.5 h-4.5 text-violet-600 dark:text-violet-400" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-gray-900">{season.name}</h3>
-            <p className="text-xs text-gray-400">
+            <h3 className="text-sm font-semibold text-foreground">{season.name}</h3>
+            <p className="text-xs text-muted-foreground">
               {formatDate(season.startDate)}
             </p>
           </div>
         </div>
         {season.isActive && (
-          <span className="px-3 py-1 text-[10px] font-bold rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200 uppercase tracking-wider">
+          <span className="px-3 py-1 text-[10px] font-bold rounded-full bg-emerald-50 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 ring-1 ring-emerald-200 dark:ring-emerald-500/25 uppercase tracking-wider">
             {t('season.activeSeason')}
           </span>
         )}
@@ -217,37 +217,37 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
 
       {/* Season details grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
-          <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/5 ring-1 ring-gray-100 dark:ring-gray-200/10">
+          <Calendar className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.seasonEnds')}</p>
-            <p className="text-xs font-semibold text-gray-700">{season.endDate ? formatDate(season.endDate) : "TBD"}</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t('season.seasonEnds')}</p>
+            <p className="text-xs font-semibold text-foreground">{season.endDate ? formatDate(season.endDate) : "TBD"}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
-          <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/5 ring-1 ring-gray-100 dark:ring-gray-200/10">
+          <Calendar className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.regulationUntil')}</p>
-            <p className="text-xs font-semibold text-gray-700">{formatDate(regulationEnd)}</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t('season.regulationUntil')}</p>
+            <p className="text-xs font-semibold text-foreground">{formatDate(regulationEnd)}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
-          <Users className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/5 ring-1 ring-gray-100 dark:ring-gray-200/10">
+          <Users className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.pokemon')}</p>
-            <p className="text-xs font-semibold text-gray-700">{t('season.inRoster', { count: rosterCount })}</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t('season.pokemon')}</p>
+            <p className="text-xs font-semibold text-foreground">{t('season.inRoster', { count: rosterCount })}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 ring-1 ring-gray-100">
-          <Dna className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-50 dark:bg-white/5 ring-1 ring-gray-100 dark:ring-gray-200/10">
+          <Dna className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
           <div>
-            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider">{t('season.megaEvolutions')}</p>
-            <p className="text-xs font-semibold text-gray-700">{t('season.available', { count: megaCount })}</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t('season.megaEvolutions')}</p>
+            <p className="text-xs font-semibold text-foreground">{t('season.available', { count: megaCount })}</p>
           </div>
         </div>
       </div>
 
-      <p className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">{t('season.rulesHover')}</p>
+      <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-3">{t('season.rulesHover')}</p>
 
       <div className="flex flex-wrap gap-2">
         {season.rules.map((rule) => (

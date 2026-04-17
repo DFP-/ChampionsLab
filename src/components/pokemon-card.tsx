@@ -19,9 +19,6 @@ export function PokemonCard({ pokemon, onClick, index }: PokemonCardProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: index * 0.02, duration: 0.4, ease: "easeOut" }}
       whileHover={{ y: -8, scale: 1.04 }}
       whileTap={{ scale: 0.97 }}
       onClick={() => onClick(pokemon)}

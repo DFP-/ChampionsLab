@@ -348,6 +348,10 @@ body.mobile-open .mobile-nav-panel { display: block; }
   --color-yellow-50:   #1c1a06;
   --color-yellow-100:  #28260a;
   --color-yellow-200:  #36340c;
+  --color-teal-50:     #081c1c;
+  --color-teal-100:    #0c2828;
+  --color-teal-200:    #103838;
+  --color-teal-500:    #2dd4bf;
 
   /* ── Colored -700 text remap (lighter for dark bg readability) ── */
   --color-emerald-700: #6ee7b7;
@@ -372,6 +376,8 @@ body.mobile-open .mobile-nav-panel { display: block; }
   --color-green-800:   #bbf7d0;
   --color-yellow-700:  #fde047;
   --color-yellow-800:  #fef08a;
+  --color-teal-700:    #5eead4;
+  --color-teal-800:    #99f6e4;
 }
 
 /* ── Body background with cosmic blue gradients ── */

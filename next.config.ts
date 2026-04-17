@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
         hostname: "raw.githubusercontent.com",
         pathname: "/PokeAPI/sprites/**",
       },
+      {
+        protocol: "https",
+        hostname: "champions-lab-sprites.nbg1.your-objectstorage.com",
+        pathname: "/sprites/**",
+      },
     ],
   },
   headers: async () => [

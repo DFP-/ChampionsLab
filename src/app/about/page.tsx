@@ -160,18 +160,9 @@ export default function AboutPage() {
             <h2 className="text-lg font-bold">{t("about.whyWeBuilt")}</h2>
           </div>
           <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-            <p>
-              Champions Lab was born from a simple idea: <span className="font-semibold text-foreground">competitive Pokémon tools should be free and accessible to everyone</span>.
-              We&apos;re a small team of passionate Pokémon fans who have been playing VGC for years, and we wanted to create the ultimate companion for Pokémon Champions 2026.
-            </p>
-            <p>
-              Every feature you see - the Pokédex, the Team Builder, the 2,000,000+ battle simulation engine, the Meta analysis, PokéSchool - was built with love during our free time.
-              <span className="font-semibold text-foreground"> We don&apos;t charge anything. No ads, no paywalls, no premium tiers.</span> This project is and will always be 100% free.
-            </p>
-            <p>
-              We believe the competitive Pokémon community deserves high-quality tools without having to pay for them.
-              If you find Champions Lab useful, the best way to support us is to share it with your friends and fellow trainers!
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t("about.mission.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t("about.mission.p2") }} />
+            <p dangerouslySetInnerHTML={{ __html: t("about.mission.p3") }} />
           </div>
         </div>
 
@@ -206,18 +197,9 @@ export default function AboutPage() {
             <h2 className="text-lg font-bold">{t("about.creditsTitle")}</h2>
           </div>
           <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-            <p>
-              <span className="font-semibold text-foreground">Champions Lab Team</span> - Design, development, battle engine, data curation, and everything in between.
-              We&apos;re a small but dedicated team that pours hours into making this the best competitive Pokémon tool out there.
-            </p>
-            <p>
-              Huge thanks to the <span className="font-semibold text-foreground">competitive Pokémon community</span> for the constant inspiration,
-              the tournament organizers who make VGC possible, and every player who has shared a team, written a guide, or helped a newcomer.
-            </p>
-            <p>
-              Special thanks to everyone who has reported bugs, suggested features, or just said something nice.
-              This project exists because of you.
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t("about.credits.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t("about.credits.p2") }} />
+            <p dangerouslySetInnerHTML={{ __html: t("about.credits.p3") }} />
           </div>
           <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
             <Globe className="w-3.5 h-3.5" />
@@ -232,17 +214,12 @@ export default function AboutPage() {
             <h2 className="text-lg font-bold">{t("about.wantToHelp")}</h2>
           </div>
           <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-            <p>
-              Champions Lab is open source and we welcome contributions! Whether you&apos;re a developer, a designer,
-              a competitive player with data to share, or just someone who spotted a bug - <span className="font-semibold text-foreground">we&apos;d love your help</span>.
-            </p>
-            <p>
-              You can report bugs, suggest features, or contribute code. Use the contact form below to get in touch,
-              or open an issue on our <a href="https://github.com/Andrew21P/ChampionsLab" target="_blank" rel="noopener noreferrer" onClick={() => trackEvent("github_click", "about")} className="font-semibold text-emerald-600 hover:text-emerald-700 underline underline-offset-2">GitHub repository</a>.
-            </p>
-            <p>
-              If you&apos;d like to support us financially, every little bit helps keep the project alive:
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t("about.contribute.p1") }} />
+            <p dangerouslySetInnerHTML={{ __html: t("about.contribute.p2").replace(
+              /<github>(.*?)<\/github>/,
+              (_: string, label: string) => `<a href="https://github.com/Andrew21P/ChampionsLab" target="_blank" rel="noopener noreferrer" class="font-semibold text-emerald-600 hover:text-emerald-700 underline underline-offset-2">${label}</a>`
+            ) }} />
+            <p>{t("about.contribute.p3")}</p>
             <a
               href="https://buymeacoffee.com/championslab"
               target="_blank"

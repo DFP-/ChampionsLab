@@ -147,6 +147,107 @@
       "Special Sweeper": "Sweeper spécial",
       "Trick Room Tank": "Tank sous Distorsion",
       "Mixed Attacker": "Attaquant mixte"
+    },
+    "roles": {
+      "weather-setter": "Poseur de Météo",
+      "weather-sweeper": "Sweeper Météo",
+      "speed-control": "Contrôle de Vitesse",
+      "trick-room-setter": "Poseur de Distorsion",
+      "trick-room-abuser": "Abuseur de Distorsion",
+      "physical-sweeper": "Sweeper Physique",
+      "special-sweeper": "Sweeper Spécial",
+      "mixed-attacker": "Attaquant Mixte",
+      "physical-wall": "Mur Physique",
+      "special-wall": "Mur Spécial",
+      "support": "Support",
+      "pivot": "Pivot",
+      "redirector": "Redirecteur",
+      "intimidate-user": "Intimidation",
+      "setup-sweeper": "Sweeper Setup",
+      "lead": "Lead",
+      "restricted": "Restreint"
+    },
+    "suggestions": {
+      "greatDefSynergy": "Excellente synergie défensive",
+      "coversWeaknesses": "Couvre les faiblesses {types}",
+      "fillsRole": "Comble le rôle manquant de {role}",
+      "strongStartingPick": "Excellent choix de départ"
+    },
+    "natureReasons": {
+      "mostUsed": "Le plus utilisé en compétitif ({pct}%)",
+      "basedOnStats": "Basé sur les stats de base"
+    },
+    "spReasons": {
+      "fromBuild": "Du build {name}",
+      "defaultSpread": "Répartition offensive par défaut"
+    },
+    "setReasons": {
+      "sunSynergy": "Synergie avec le Soleil de l'équipe",
+      "rainSynergy": "Synergie avec la Pluie de l'équipe",
+      "sandSynergy": "Synergie avec le Sable de l'équipe",
+      "slowForTR": "Lent pour Distorsion",
+      "tooFastForTR": "Trop rapide pour Distorsion",
+      "addsFakeOut": "Ajoute le soutien Bluff",
+      "addsIntimidate": "Ajoute Intimidation"
+    },
+    "moveReasons": {
+      "stab": "STAB",
+      "newCoverage": "Nouvelle couverture de type",
+      "essentialVGC": "Capacité VGC essentielle",
+      "needsSpeedControl": "L'équipe a besoin de contrôle de vitesse",
+      "disruption": "Perturbation",
+      "priority": "Priorité",
+      "viableOption": "Option viable"
+    },
+    "abilityReasons": {
+      "intimidateCycle": "Cycle d'Intimidation",
+      "keyVGCAbility": "Talent VGC clé",
+      "weatherSetter": "Poseur de météo",
+      "weatherSynergy": "Synergie météo",
+      "antiIntimidate": "Anti-Intimidation",
+      "priorityStatus": "Statut prioritaire",
+      "intimidateImmune": "Immunisé à Intimidation"
+    },
+    "setWords": {
+      "Sweeper": "Sweeper",
+      "Attacker": "Attaquant",
+      "Tank": "Tank",
+      "Support": "Support",
+      "Lead": "Lead",
+      "Wall": "Mur",
+      "Setter": "Poseur",
+      "Pivot": "Pivot",
+      "Bulky": "Costaud",
+      "Offensive": "Offensif",
+      "Physical": "Physique",
+      "Special": "Spécial",
+      "Mixed": "Mixte",
+      "Fast": "Rapide",
+      "Trick Room": "Distorsion",
+      "Sun": "Soleil",
+      "Rain": "Pluie",
+      "Sand": "Sable",
+      "Snow": "Neige",
+      "Hail": "Grêle",
+      "Tailwind": "Vent Arrière",
+      "Choice Band": "Bandeau Choix",
+      "Choice Scarf": "Écharpe Choix",
+      "Choice Specs": "Lunettes Choix",
+      "Assault Vest": "Veste de Combat",
+      "Life Orb": "Orbe Vie",
+      "Focus Sash": "Ceinture Force",
+      "Swords Dance": "Danse-Lames",
+      "Nasty Plot": "Machination",
+      "Calm Mind": "Plénitude",
+      "Dragon Dance": "Danse Draco",
+      "Shell Smash": "Exuviation",
+      "Quiver Dance": "Papillodanse",
+      "Belly Drum": "Cognobidon",
+      "Mega": "Méga",
+      "Supportive": "Soutien",
+      "Defensive": "Défensif",
+      "Counter": "Contre",
+      "Specially Defensive": "Spécialement Défensif"
     }
   },
   "pokedex": {
@@ -208,7 +309,7 @@
     "usage": "Utilisation",
     "typeDefenses": "Défenses par type",
     "typeCoverage": "Couverture de type",
-    "typeCoverageHint": "Meilleure efficacité que vos capacités peuvent atteindre contre chaque type",
+    "typeCoverageHint": "Efficacité maximale de vos capacités contre chaque type.",
     "learnableMoves": "Capacités apprises · {count}",
     "pwr": "PUI",
     "statPoints": "Points de Stat",
@@ -898,6 +999,21 @@
       "freeDesc": "Pas de pubs, pas de paywall, pour toujours",
       "community": "Communauté",
       "communityDesc": "Fait par des fans, pour des fans"
+    },
+    "mission": {
+      "p1": "Champions Lab est né d'une idée simple : <strong>les outils Pokémon compétitifs devraient être gratuits et accessibles à tous</strong>. Nous sommes une petite équipe de fans passionnés de Pokémon qui jouent au VGC depuis des années, et nous voulions créer le compagnon ultime pour Pokémon Champions 2026.",
+      "p2": "Chaque fonctionnalité que vous voyez - le Pokédex, le Team Builder, le moteur de simulation de 2 000 000+ combats, l'analyse Méta, PokéÉcole - a été créée avec amour pendant notre temps libre. <strong>Nous ne faisons payer personne. Pas de pubs, pas de paywall, pas d'abonnement premium.</strong> Ce projet est et restera toujours 100% gratuit.",
+      "p3": "Nous pensons que la communauté Pokémon compétitive mérite des outils de qualité sans avoir à les payer. Si Champions Lab vous est utile, la meilleure façon de nous soutenir est de le partager avec vos amis et vos compagnons dresseurs !"
+    },
+    "credits": {
+      "p1": "<strong>L'équipe Champions Lab</strong> - Design, développement, moteur de combat, curation des données, et tout le reste. Nous sommes une petite équipe dévouée qui consacre des heures à faire de ceci le meilleur outil Pokémon compétitif qui soit.",
+      "p2": "Un immense merci à la <strong>communauté Pokémon compétitive</strong> pour l'inspiration constante, aux organisateurs de tournois qui rendent le VGC possible, et à chaque joueur qui a partagé une équipe, écrit un guide ou aidé un débutant.",
+      "p3": "Merci tout particulièrement à tous ceux qui ont signalé des bugs, suggéré des fonctionnalités ou juste dit quelque chose de gentil. Ce projet existe grâce à vous."
+    },
+    "contribute": {
+      "p1": "Champions Lab est open source et nous accueillons les contributions ! Que vous soyez développeur, designer, joueur compétitif avec des données à partager, ou simplement quelqu'un qui a repéré un bug - <strong>nous adorerions votre aide</strong>.",
+      "p2": "Vous pouvez signaler des bugs, suggérer des fonctionnalités ou contribuer au code. Utilisez le formulaire de contact ci-dessous pour nous joindre, ou ouvrez une issue sur notre <github>dépôt GitHub</github>.",
+      "p3": "Si vous souhaitez nous soutenir financièrement, chaque petit geste aide à maintenir le projet en vie :"
     },
     "contact": {
       "name": "Nom *",

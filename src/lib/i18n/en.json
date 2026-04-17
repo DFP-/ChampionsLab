@@ -147,6 +147,107 @@
       "Special Sweeper": "Special Sweeper",
       "Trick Room Tank": "Trick Room Tank",
       "Mixed Attacker": "Mixed Attacker"
+    },
+    "roles": {
+      "weather-setter": "Weather Setter",
+      "weather-sweeper": "Weather Sweeper",
+      "speed-control": "Speed Control",
+      "trick-room-setter": "Trick Room Setter",
+      "trick-room-abuser": "Trick Room Abuser",
+      "physical-sweeper": "Physical Sweeper",
+      "special-sweeper": "Special Sweeper",
+      "mixed-attacker": "Mixed Attacker",
+      "physical-wall": "Physical Wall",
+      "special-wall": "Special Wall",
+      "support": "Support",
+      "pivot": "Pivot",
+      "redirector": "Redirector",
+      "intimidate-user": "Intimidate",
+      "setup-sweeper": "Setup Sweeper",
+      "lead": "Lead",
+      "restricted": "Restricted"
+    },
+    "suggestions": {
+      "greatDefSynergy": "Great defensive type synergy",
+      "coversWeaknesses": "Covers {types} weaknesses",
+      "fillsRole": "Fills missing {role} role",
+      "strongStartingPick": "Strong starting pick"
+    },
+    "natureReasons": {
+      "mostUsed": "Most used competitively ({pct}%)",
+      "basedOnStats": "Based on base stats"
+    },
+    "spReasons": {
+      "fromBuild": "From {name} build",
+      "defaultSpread": "Default offensive spread"
+    },
+    "setReasons": {
+      "sunSynergy": "Synergizes with team's sun",
+      "rainSynergy": "Synergizes with team's rain",
+      "sandSynergy": "Synergizes with team's sand",
+      "slowForTR": "Slow for Trick Room",
+      "tooFastForTR": "Too fast for Trick Room",
+      "addsFakeOut": "Adds Fake Out support",
+      "addsIntimidate": "Adds Intimidate"
+    },
+    "moveReasons": {
+      "stab": "STAB",
+      "newCoverage": "New type coverage",
+      "essentialVGC": "Essential VGC move",
+      "needsSpeedControl": "Team needs speed control",
+      "disruption": "Disruption",
+      "priority": "Priority",
+      "viableOption": "Viable option"
+    },
+    "abilityReasons": {
+      "intimidateCycle": "Intimidate cycle",
+      "keyVGCAbility": "Key VGC ability",
+      "weatherSetter": "Weather setter",
+      "weatherSynergy": "Weather synergy",
+      "antiIntimidate": "Anti-Intimidate",
+      "priorityStatus": "Priority status",
+      "intimidateImmune": "Intimidate immune"
+    },
+    "setWords": {
+      "Sweeper": "Sweeper",
+      "Attacker": "Attacker",
+      "Tank": "Tank",
+      "Support": "Support",
+      "Lead": "Lead",
+      "Wall": "Wall",
+      "Setter": "Setter",
+      "Pivot": "Pivot",
+      "Bulky": "Bulky",
+      "Offensive": "Offensive",
+      "Physical": "Physical",
+      "Special": "Special",
+      "Mixed": "Mixed",
+      "Fast": "Fast",
+      "Trick Room": "Trick Room",
+      "Sun": "Sun",
+      "Rain": "Rain",
+      "Sand": "Sand",
+      "Snow": "Snow",
+      "Hail": "Hail",
+      "Tailwind": "Tailwind",
+      "Choice Band": "Choice Band",
+      "Choice Scarf": "Choice Scarf",
+      "Choice Specs": "Choice Specs",
+      "Assault Vest": "Assault Vest",
+      "Life Orb": "Life Orb",
+      "Focus Sash": "Focus Sash",
+      "Swords Dance": "Swords Dance",
+      "Nasty Plot": "Nasty Plot",
+      "Calm Mind": "Calm Mind",
+      "Dragon Dance": "Dragon Dance",
+      "Shell Smash": "Shell Smash",
+      "Quiver Dance": "Quiver Dance",
+      "Belly Drum": "Belly Drum",
+      "Mega": "Mega",
+      "Supportive": "Supportive",
+      "Defensive": "Defensive",
+      "Counter": "Counter",
+      "Specially Defensive": "Specially Defensive"
     }
   },
   "pokedex": {
@@ -898,6 +999,21 @@
       "freeDesc": "No ads, no paywalls, forever",
       "community": "Community",
       "communityDesc": "Built by fans, for fans"
+    },
+    "mission": {
+      "p1": "Champions Lab was born from a simple idea: <strong>competitive Pokémon tools should be free and accessible to everyone</strong>. We're a small team of passionate Pokémon fans who have been playing VGC for years, and we wanted to create the ultimate companion for Pokémon Champions 2026.",
+      "p2": "Every feature you see - the Pokédex, the Team Builder, the 2,000,000+ battle simulation engine, the Meta analysis, PokéSchool - was built with love during our free time. <strong>We don't charge anything. No ads, no paywalls, no premium tiers.</strong> This project is and will always be 100% free.",
+      "p3": "We believe the competitive Pokémon community deserves high-quality tools without having to pay for them. If you find Champions Lab useful, the best way to support us is to share it with your friends and fellow trainers!"
+    },
+    "credits": {
+      "p1": "<strong>Champions Lab Team</strong> - Design, development, battle engine, data curation, and everything in between. We're a small but dedicated team that pours hours into making this the best competitive Pokémon tool out there.",
+      "p2": "Huge thanks to the <strong>competitive Pokémon community</strong> for the constant inspiration, the tournament organizers who make VGC possible, and every player who has shared a team, written a guide, or helped a newcomer.",
+      "p3": "Special thanks to everyone who has reported bugs, suggested features, or just said something nice. This project exists because of you."
+    },
+    "contribute": {
+      "p1": "Champions Lab is open source and we welcome contributions! Whether you're a developer, a designer, a competitive player with data to share, or just someone who spotted a bug - <strong>we'd love your help</strong>.",
+      "p2": "You can report bugs, suggest features, or contribute code. Use the contact form below to get in touch, or open an issue on our <github>GitHub repository</github>.",
+      "p3": "If you'd like to support us financially, every little bit helps keep the project alive:"
     },
     "contact": {
       "name": "Name *",

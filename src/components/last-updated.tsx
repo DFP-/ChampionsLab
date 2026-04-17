@@ -12,6 +12,19 @@ interface ChangelogEntry {
 
 const SHARED_ENTRIES: ChangelogEntry[] = [
   {
+    date: "17/04/2026",
+    items: [
+      "🚀 Sprite CDN  -  all Pokémon sprites now served from Hetzner Object Storage with 1-year immutable cache headers for faster load times",
+      "🌍 French i18n for Team Builder  -  role tags, teammate suggestion reasons, nature suggestion text, move/ability/SP/set reasons, and competitive set names (288 names translated via word-level decomposition of 40+ VGC vocabulary terms)",
+      "🌍 French i18n for stat presets  -  all stat preset labels now translated (Balanced, Sweeper, Tank, etc.)",
+      "🌍 French i18n for About page  -  mission, credits, and contribute sections refactored from hardcoded English to i18n keys with HTML support",
+      "🐛 Fixed ability description newlines  -  96 literal '\\n' strings in French ability descriptions replaced with proper line breaks",
+      "🌙 Dark mode: Language Selector  -  dropdown background now uses proper dark color instead of transparent",
+      "🌙 Dark mode: PokéÉcole  -  teal color remaps for dark backgrounds (50/100/200/500/700/800 shades) and improved text contrast on learn page titles/sections",
+      "🌙 Dark mode: Season Info card  -  icon container, shield badge, text labels, grid cells, LIVE badge, active tab pill, and rule tooltips all now have proper dark variants",
+    ],
+  },
+  {
     date: "16/04/2026",
     items: [
       "🌍 French i18n for Meta page  -  all overview sections (Tournament Core Pairs, ML-Discovered Cores, Type Distribution, Archetype Rankings, Key Counter Matchups, Rising/Falling trends), Core Pairs tab, Speed Tiers tab, and Moves tab now fully translated",

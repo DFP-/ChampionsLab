@@ -162,6 +162,43 @@ export default function TeamBuilderPage() {
     if ((m = s.match(/^Poor coverage - no super effective hits vs (.+)$/))) return t("teamBuilder.insights.poorCoverage", { types: m[1].split(", ").map(tFullType).join(", ") });
     return s;
   };
+  const translateReason = (s: string): string => {
+    if (s === "Strong starting pick") return t("common.suggestions.strongStartingPick");
+    if (s === "Great defensive type synergy") return t("common.suggestions.greatDefSynergy");
+    let m;
+    if ((m = s.match(/^Covers (.+) weaknesses$/))) return t("common.suggestions.coversWeaknesses", { types: m[1].split("/").map(tFullType).join("/") });
+    if ((m = s.match(/^Fills missing (.+) role$/))) return t("common.suggestions.fillsRole", { role: t("common.roles." + m[1].replace(/ /g, "-")) });
+    return s;
+  };
+  const translateSetName = (name: string): string => {
+    const words = t("common.setWords." + name);
+    if (words !== "common.setWords." + name) return words;
+    // Word-level translation for compound names
+    const SET_WORDS = [
+      "Specially Defensive", "Trick Room", "Choice Band", "Choice Scarf", "Choice Specs",
+      "Assault Vest", "Life Orb", "Focus Sash", "Swords Dance", "Nasty Plot", "Calm Mind",
+      "Dragon Dance", "Shell Smash", "Quiver Dance", "Belly Drum",
+      "Sweeper", "Attacker", "Tank", "Support", "Lead", "Wall", "Setter", "Pivot",
+      "Bulky", "Offensive", "Physical", "Special", "Mixed", "Fast", "Defensive",
+      "Supportive", "Counter", "Sun", "Rain", "Sand", "Snow", "Hail", "Tailwind", "Mega",
+    ];
+    let result = name;
+    for (const w of SET_WORDS) {
+      const tr = t("common.setWords." + w);
+      if (tr !== "common.setWords." + w) {
+        result = result.replace(new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, "g"), tr);
+      }
+    }
+    return result;
+  };
+  const translateNatureReason = (reason: string): string => {
+    let m;
+    if ((m = reason.match(/^Most used competitively \((\d+)%\)$/))) return t("common.natureReasons.mostUsed", { pct: m[1] });
+    if (reason === "Based on base stats") return t("common.natureReasons.basedOnStats");
+    if ((m = reason.match(/^From (.+) build$/))) return t("common.spReasons.fromBuild", { name: translateSetName(m[1]) });
+    if (reason === "Default offensive spread") return t("common.spReasons.defaultSpread");
+    return reason;
+  };
   const [slots, setSlots] = useState<TeamSlot[]>(
     Array.from({ length: 6 }, createEmptySlot)
   );
@@ -1548,7 +1585,7 @@ export default function TeamBuilderPage() {
                       </div>
                       <span className={cn("text-[11px] font-bold", s.score >= 70 ? "text-green-600" : s.score >= 50 ? "text-amber-600" : "text-gray-400")}>{s.score}</span>
                     </div>
-                    {s.reasons.length > 0 && <p className="text-[9px] text-muted-foreground truncate mt-0.5 ml-8">{s.reasons[0]}</p>}
+                    {s.reasons.length > 0 && <p className="text-[9px] text-muted-foreground truncate mt-0.5 ml-8">{translateReason(s.reasons[0])}</p>}
                   </button>
                 ))}
               </div>
@@ -1724,7 +1761,7 @@ export default function TeamBuilderPage() {
                             )}
                             {filteredSets.slice(bestSet ? 1 : 0, 5).map((s, i) => (
                               <button key={i} onClick={() => applySet(selectedSlotIndex, { ability: s.ability, moves: s.moves, sp: s.sp, nature: s.nature, item: s.item })} className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 hover:border-emerald-300 transition-all text-[11px] font-medium text-emerald-700">
-                                {s.name}
+                                {translateSetName(s.name)}
                               </button>
                             ))}
                           </>
@@ -1732,7 +1769,7 @@ export default function TeamBuilderPage() {
                       })()}
                       {slotSuggestion && slotSuggestion.altSets.length > 0 && slotSuggestion.altSets.slice(0, 3).map((s, i) => (
                         <button key={`sug-${i}`} onClick={() => applySet(selectedSlotIndex, s.set)} className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 hover:border-emerald-300 transition-all text-[11px] font-medium text-emerald-700">
-                            {s.set.name}
+                            {translateSetName(s.set.name)}
                             <span className={cn("ml-1.5 text-[9px] font-bold", s.matchScore >= 70 ? "text-green-600" : s.matchScore >= 50 ? "text-amber-600" : "text-gray-400")}>{s.matchScore}%</span>
                           </button>
                         ))}
@@ -1950,7 +1987,7 @@ export default function TeamBuilderPage() {
                           onChange={(v) => updateSlot(selectedSlotIndex, { nature: v })}
                           placeholder={t('teamBuilder.selectNature')}
                         />
-                        {slotSuggestion && <button onClick={() => updateSlot(selectedSlotIndex, { nature: slotSuggestion.suggestedNature.nature })} className="mt-1 text-[9px] text-emerald-600 hover:text-emerald-800 transition-colors">{t('teamBuilder.suggestedPreset')}: {tn(slotSuggestion.suggestedNature.nature)} - {slotSuggestion.suggestedNature.reason}</button>}
+                        {slotSuggestion && <button onClick={() => updateSlot(selectedSlotIndex, { nature: slotSuggestion.suggestedNature.nature })} className="mt-1 text-[9px] text-emerald-600 hover:text-emerald-800 transition-colors">{t('teamBuilder.suggestedPreset')}: {tn(slotSuggestion.suggestedNature.nature)} - {translateNatureReason(slotSuggestion.suggestedNature.reason)}</button>}
                       </div>
                       <div>
                         <p className="text-[10px] text-muted-foreground uppercase font-bold mb-1">{t('teamBuilder.item')}</p>
@@ -2107,7 +2144,7 @@ export default function TeamBuilderPage() {
                     <div className="mt-3 pt-2 border-t border-gray-100">
                       <div className="flex flex-wrap gap-1">
                         <span className="text-[9px] text-muted-foreground mr-1">{t('teamBuilder.roles')}</span>
-                        {slotSuggestion.role.roles.map(r => <span key={r} className="px-1.5 py-0.5 text-[9px] rounded bg-gray-100 text-gray-600 capitalize">{r.replace(/-/g, " ")}</span>)}
+                        {slotSuggestion.role.roles.map(r => <span key={r} className="px-1.5 py-0.5 text-[9px] rounded bg-gray-100 text-gray-600 capitalize">{t('common.roles.' + r)}</span>)}
                       </div>
                     </div>
                   )}
