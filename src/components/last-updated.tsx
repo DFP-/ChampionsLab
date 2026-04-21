@@ -12,6 +12,33 @@ interface ChangelogEntry {
 
 const SHARED_ENTRIES: ChangelogEntry[] = [
   {
+    date: "21/04/2026",
+    items: [
+      "�🇸 Full Spanish translation  —  complete localization including UI strings, Pokémon/move/ability/item names, move and ability descriptions, nature names, PokéSchool long-form content (9 sections, 36 subsections), and strategy flowchart post-processor with VGC Spanish terminology",
+      "🌙 Dark mode readability fix (Pokémon modal)  —  Stat Points description now uses violet-300 highlights and gray-100 bold text for readable contrast on dark backgrounds",
+      "🗓️ Season/Regulation names now translate  —  'Season M-1 · Regulation M-A' header and tab label dynamically localize the words 'Season' and 'Regulation' per locale",
+      "📖 Move descriptions in selectors now translate  —  Team Builder, Team Tester, and Battle Bot move picker dropdowns route descriptions through the localized dictionary",
+      "�🌙 Dark mode readability fix  —  Team Builder Pokémon picker role filter pills now use higher-contrast text, borders, and hover backgrounds so labels are clearly readable in dark theme",
+      "🎯 Role-based preset filter in Team Builder picker  —  9 role pills (Physical Sweeper, Special Sweeper, Physical Tank, Special Tank, Support, Speed Control, Redirector, Trick Room, Setup Sweeper) filter the Pokémon selection modal and auto-apply matching competitive sets",
+      "📖 Move descriptions in selector dropdown  —  opening any move selector now shows the move description permanently below each option, with italic styling and a bottom divider separating entries",
+      "⚔️ Move category styling in dropdowns  —  Physical moves show ⚔ Phys in orange, Special moves show ✦ Spec in indigo, Status moves show ◇ Status in gray across all move selectors",
+      "🐛 Fixed Body Press damage calculator  —  attacker can now add Defense boosts which correctly feed into Body Press damage calculation",
+    ],
+  },
+  {
+    date: "20/04/2026",
+    items: [
+      "📊 Meta usage updated from in-game data  —  207 Pokémon reranked using actual Pokémon Champions game battle stats, Sneasler now #1 (52%), Incineroar #2 (46.2%), Garchomp #3 (40.4%)",
+      "📈 Rising in the Meta  —  Talonflame (+36 ranks, 54.5% WR), Froslass (+24, 54.2% WR), Corviknight, Archaludon, and Floette identified as top risers",
+      "📉 Falling in the Meta  —  Whimsicott, Dragonite, Gengar, Maushold, and Dragapult now flagged as declining picks with sub-50% win rates",
+      "🏆 Victory Road Champions Arena  —  full top-8 teams imported (146 players), Hyungwoo Shin (1st), Jorge Tabuyo (2nd), Juan Benítez (3rd), Joseph Ugarte (4th) + 4 more",
+      "⚔️ Battle Bot  —  VR Champions Arena top-8 now in all opponent pools (S-tier gets top 2, A-tier gets top 4)",
+      "🔄 10 new tournament prebuilt teams  —  replaced old generic teams with real VR Champions Arena and DevonCorp tournament teams",
+      "🏷️ Archetype detection rewrite  —  weather setter alone = weather team, Snow archetype added, Tailwind false positives fixed, Goodstuffs renamed to Balance",
+      "🐛 Fixed duplicate '55%' in alt-sets, paste import/export for gendered forms (Basculegion-M/F, Meowstic-M/F), dynamic tournament count",
+    ],
+  },
+  {
     date: "18/04/2026",
     items: [
       "📋 PokéPaste  —  new /paste page to share teams as a read-only view with gradient title header, copy-as-text export, and Open in Team Builder link that actually loads the team",

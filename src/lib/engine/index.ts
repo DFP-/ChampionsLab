@@ -122,6 +122,10 @@ export {
   translateStrategyTree,
   translateInsights,
 } from "./strategy-i18n";
+export {
+  translateStrategyTreeES,
+  translateInsightsES,
+} from "./strategy-i18n-es";
 
 // Suggestion Engine
 export {

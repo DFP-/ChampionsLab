@@ -320,6 +320,7 @@ export default function DamageCalculator() {
       ability: atkResolved.ability,
       item: attacker.set.item,
       atkStages: attacker.stages.atk,
+      defStages: attacker.stages.def,
       spAtkStages: attacker.stages.spAtk,
       isBurned: attacker.isBurned,
       currentHPPercent: attacker.currentHP,
@@ -524,6 +525,7 @@ export default function DamageCalculator() {
           onSPUpdate={updateAttackerSP}
           onStageChange={(stat, val) => setAttacker(prev => ({ ...prev, stages: { ...prev.stages, [stat]: val } }))}
           showAtkStages
+          showDefStages
           onBurnToggle={() => setAttacker(prev => ({ ...prev, isBurned: !prev.isBurned }))}
           isBurned={attacker.isBurned}
           currentHP={attacker.currentHP}

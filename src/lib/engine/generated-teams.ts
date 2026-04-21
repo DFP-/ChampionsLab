@@ -20,6 +20,188 @@ export interface PrebuiltTeam {
 export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   // ── S-TIER TEAMS ──────────────────────────────────────
 
+  // ── VICTORY ROAD CHAMPIONS ARENA + TOP RATED TEAMS ─────────────────
+
+  {
+    id: "pre-vr1",
+    name: "VR Winner: Charizard Y Sun",
+    archetype: "Sun",
+    description: "Hyungwoo Shin's Victory Road Champions Arena winning team. Mega Charizard Y sun with Chlorophyll Venusaur, Competitive Milotic, and Unburden Sneasler.",
+    pokemonIds: [6, 350, 727, 903, 445, 3],
+    sets: [
+      { name: "Mega Sun Sweeper", nature: "Modest", ability: "Drought", item: "Charizardite Y", moves: ["Heat Wave", "Weather Ball", "Solar Beam", "Protect"], sp: { hp: 6, attack: 0, defense: 16, spAtk: 30, spDef: 0, speed: 14 }, preMegaAbility: "Solar Power" },
+      { name: "Competitive Bulk", nature: "Bold", ability: "Competitive", item: "Leftovers", moves: ["Muddy Water", "Coil", "Hypnosis", "Recover"], sp: { hp: 31, attack: 0, defense: 21, spAtk: 1, spDef: 12, speed: 1 } },
+      { name: "Intimidate Pivot", nature: "Serious", ability: "Intimidate", item: "Chople Berry", moves: ["Throat Chop", "Parting Shot", "Fake Out", "Flare Blitz"], sp: { hp: 32, attack: 0, defense: 11, spAtk: 0, spDef: 16, speed: 7 } },
+      { name: "Unburden Lead", nature: "Adamant", ability: "Unburden", item: "White Herb", moves: ["Fake Out", "Close Combat", "Dire Claw", "Protect"], sp: { hp: 2, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Rough Skin Pivot", nature: "Adamant", ability: "Rough Skin", item: "Sitrus Berry", moves: ["Dragon Claw", "Rock Slide", "Earthquake", "Protect"], sp: { hp: 24, attack: 19, defense: 0, spAtk: 0, spDef: 1, speed: 22 } },
+      { name: "Chlorophyll Sweeper", nature: "Modest", ability: "Chlorophyll", item: "Focus Sash", moves: ["Energy Ball", "Sludge Bomb", "Sleep Powder", "Protect"], sp: { hp: 2, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 32 } },
+    ],
+    tags: ["sun", "weather", "tournament", "victory-road", "mega"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-vr2",
+    name: "VR Finalist: Charizard X Bulky",
+    archetype: "Bulky Offense",
+    description: "Jorge Tabuyo's Victory Road Champions Arena finalist team. Mega Charizard X with Dragon Dance, Competitive Milotic, Mega Tyranitar sand, and Rage Powder Sinistcha.",
+    pokemonIds: [6, 350, 1013, 248, 727, 903],
+    sets: [
+      { name: "DD Mega X", nature: "Adamant", ability: "Tough Claws", item: "Charizardite X", moves: ["Flare Blitz", "Dragon Claw", "Dragon Dance", "Protect"], sp: { hp: 14, attack: 21, defense: 1, spAtk: 0, spDef: 1, speed: 29 }, preMegaAbility: "Blaze" },
+      { name: "Competitive Bulk", nature: "Calm", ability: "Competitive", item: "Leftovers", moves: ["Icy Wind", "Scald", "Protect", "Recover"], sp: { hp: 29, attack: 0, defense: 22, spAtk: 1, spDef: 0, speed: 14 } },
+      { name: "Rage Powder", nature: "Bold", ability: "Hospitality", item: "Coba Berry", moves: ["Matcha Gotcha", "Rage Powder", "Life Dew", "Trick Room"], sp: { hp: 31, attack: 0, defense: 5, spAtk: 1, spDef: 29, speed: 0 } },
+      { name: "Mega Sand Setter", nature: "Adamant", ability: "Sand Stream", item: "Tyranitarite", moves: ["Rock Slide", "Crunch", "Protect", "High Horsepower"], sp: { hp: 17, attack: 26, defense: 1, spAtk: 0, spDef: 1, speed: 21 }, preMegaAbility: "Sand Stream" },
+      { name: "Intimidate Support", nature: "Adamant", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Throat Chop", "Fake Out", "Parting Shot"], sp: { hp: 30, attack: 5, defense: 10, spAtk: 0, spDef: 10, speed: 11 } },
+      { name: "Unburden Attacker", nature: "Adamant", ability: "Unburden", item: "White Herb", moves: ["Dire Claw", "Fake Out", "Close Combat", "Coaching"], sp: { hp: 0, attack: 32, defense: 0, spAtk: 0, spDef: 2, speed: 32 } },
+    ],
+    tags: ["bulky-offense", "dragon-dance", "tournament", "victory-road", "mega"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-vr3",
+    name: "VR Top 3: Charizard Y Tailwind",
+    archetype: "Sun",
+    description: "Juan Benítez's Victory Road Champions Arena Top 3 team. Mega Charizard Y sun with Prankster Whimsicott Tailwind, Scarf Garchomp, and Armor Tail Farigiraf.",
+    pokemonIds: [6, 981, 445, 547, 903, 983],
+    sets: [
+      { name: "Mega Sun Nuke", nature: "Timid", ability: "Drought", item: "Charizardite Y", moves: ["Protect", "Heat Wave", "Overheat", "Solar Beam"], sp: { hp: 10, attack: 0, defense: 5, spAtk: 18, spDef: 1, speed: 32 }, preMegaAbility: "Solar Power" },
+      { name: "Armor Tail TR", nature: "Modest", ability: "Armor Tail", item: "Sitrus Berry", moves: ["Psychic", "Imprison", "Trick Room", "Hyper Voice"], sp: { hp: 31, attack: 0, defense: 12, spAtk: 10, spDef: 13, speed: 0 } },
+      { name: "Scarf Ground", nature: "Adamant", ability: "Rough Skin", item: "Choice Scarf", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Stomping Tantrum"], sp: { hp: 2, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Protect", "Moonblast", "Tailwind", "Encore"], sp: { hp: 32, attack: 0, defense: 10, spAtk: 2, spDef: 0, speed: 22 } },
+      { name: "Unburden Attacker", nature: "Adamant", ability: "Unburden", item: "White Herb", moves: ["Dire Claw", "Fake Out", "Close Combat", "Protect"], sp: { hp: 8, attack: 20, defense: 5, spAtk: 0, spDef: 1, speed: 32 } },
+      { name: "Defiant Finisher", nature: "Adamant", ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Sucker Punch", "Low Kick", "Protect"], sp: { hp: 6, attack: 25, defense: 2, spAtk: 0, spDef: 1, speed: 32 } },
+    ],
+    tags: ["sun", "tailwind", "tournament", "victory-road", "mega"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-vr4",
+    name: "VR Top Cut: Mega Floette",
+    archetype: "Tailwind",
+    description: "Pablo Rico's Victory Road Champions Arena Top Cut team. Mega Floette with Tailwind Aerodactyl, Adamant Aegislash, Scarf Rotom-Wash, and Incineroar.",
+    pokemonIds: [670, 142, 681, 10009, 727, 445],
+    sets: [
+      { name: "Mega Fairy Aura", nature: "Modest", ability: "Fairy Aura", item: "Floettite", moves: ["Protect", "Moonblast", "Dazzling Gleam", "Light of Ruin"], sp: { hp: 16, attack: 0, defense: 22, spAtk: 5, spDef: 1, speed: 22 }, preMegaAbility: "Flower Veil" },
+      { name: "Tailwind Lead", nature: "Jolly", ability: "Unnerve", item: "Focus Sash", moves: ["Protect", "Rock Slide", "Dual Wingbeat", "Tailwind"], sp: { hp: 6, attack: 27, defense: 0, spAtk: 0, spDef: 1, speed: 32 } },
+      { name: "Physical Stance", nature: "Adamant", ability: "Stance Change", item: "Spell Tag", moves: ["King's Shield", "Poltergeist", "Sacred Sword", "Shadow Sneak"], sp: { hp: 30, attack: 32, defense: 0, spAtk: 0, spDef: 1, speed: 3 } },
+      { name: "Scarf Rotom", nature: "Timid", ability: "Levitate", item: "Choice Scarf", moves: ["Will-O-Wisp", "Hydro Pump", "Thunderbolt", "Electroweb"], sp: { hp: 8, attack: 0, defense: 2, spAtk: 31, spDef: 0, speed: 25 } },
+      { name: "Intimidate Pivot", nature: "Impish", ability: "Blaze", item: "Sitrus Berry", moves: ["Parting Shot", "Fake Out", "Flare Blitz", "Helping Hand"], sp: { hp: 32, attack: 0, defense: 21, spAtk: 0, spDef: 12, speed: 1 } },
+      { name: "Haban Berry Ground", nature: "Jolly", ability: "Rough Skin", item: "Haban Berry", moves: ["Protect", "Earthquake", "Rock Slide", "Dragon Claw"], sp: { hp: 6, attack: 27, defense: 0, spAtk: 0, spDef: 1, speed: 32 } },
+    ],
+    tags: ["fairy", "tailwind", "tournament", "victory-road", "mega"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-dc1",
+    name: "Wolfe's Mega Starmie Sand",
+    archetype: "Sand",
+    description: "Wolfe Glick's Mega Starmie team. Sand Veil Garchomp + Scarf Tyranitar sand with Tailwind Aerodactyl and Skill Swap Starmie.",
+    pokemonIds: [10008, 248, 142, 681, 121, 445],
+    sets: [
+      { name: "Bulky Special", nature: "Modest", ability: "Levitate", item: "Sitrus Berry", moves: ["Protect", "Thunderbolt", "Overheat", "Helping Hand"], sp: { hp: 32, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 2 } },
+      { name: "Scarf Sand", nature: "Jolly", ability: "Sand Stream", item: "Choice Scarf", moves: ["Rock Slide", "Knock Off", "Ice Punch", "Superpower"], sp: { hp: 2, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Tailwind Lead", nature: "Jolly", ability: "Unnerve", item: "Focus Sash", moves: ["Protect", "Rock Slide", "Dual Wingbeat", "Tailwind"], sp: { hp: 2, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Special Stance", nature: "Quiet", ability: "Stance Change", item: "Leftovers", moves: ["King's Shield", "Wide Guard", "Flash Cannon", "Shadow Ball"], sp: { hp: 32, attack: 0, defense: 0, spAtk: 32, spDef: 2, speed: 0 } },
+      { name: "Mega Skill Swap", nature: "Jolly", ability: "Natural Cure", item: "Starminite", moves: ["Protect", "Liquidation", "Skill Swap", "Zen Headbutt"], sp: { hp: 2, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 32 }, preMegaAbility: "Natural Cure" },
+      { name: "Sand Veil Pivot", nature: "Jolly", ability: "Sand Veil", item: "White Herb", moves: ["Protect", "Iron Head", "Earthquake", "Dragon Claw"], sp: { hp: 2, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 32 } },
+    ],
+    tags: ["sand", "tournament", "mega", "tailwind"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-dc2",
+    name: "Rank 1 Global: Floette Froslass",
+    archetype: "Hyper Offense",
+    description: "Spy_Anya's Rank 1 Global team. Mega Floette + Mega Froslass dual mega option with Garchomp, Defiant Kingambit, Adaptability Basculegion, and Sneasler.",
+    pokemonIds: [670, 445, 983, 902, 903, 478],
+    sets: [
+      { name: "Mega Fairy Nuke", nature: "Modest", ability: "Fairy Aura", item: "Floettite", moves: ["Moonblast", "Dazzling Gleam", "Light of Ruin", "Protect"], sp: { hp: 14, attack: 0, defense: 0, spAtk: 20, spDef: 0, speed: 32 }, preMegaAbility: "Flower Veil" },
+      { name: "Haban Berry Ground", nature: "Adamant", ability: "Rough Skin", item: "Haban Berry", moves: ["Dragon Claw", "Earthquake", "Rock Slide", "Protect"], sp: { hp: 32, attack: 7, defense: 1, spAtk: 0, spDef: 1, speed: 25 } },
+      { name: "Chople Defiant", nature: "Adamant", ability: "Defiant", item: "Chople Berry", moves: ["Kowtow Cleave", "Sucker Punch", "Low Kick", "Protect"], sp: { hp: 32, attack: 26, defense: 2, spAtk: 0, spDef: 1, speed: 5 } },
+      { name: "Adaptability Nuke", nature: "Adamant", ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"], sp: { hp: 20, attack: 32, defense: 8, spAtk: 0, spDef: 1, speed: 5 } },
+      { name: "Poison Touch Lead", nature: "Adamant", ability: "Poison Touch", item: "Focus Sash", moves: ["Fake Out", "Close Combat", "Dire Claw", "Protect"], sp: { hp: 1, attack: 32, defense: 1, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Mega Ice Offense", nature: "Modest", ability: "Frozen Heart", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Substitute", "Protect"], sp: { hp: 30, attack: 0, defense: 2, spAtk: 3, spDef: 1, speed: 30 }, preMegaAbility: "Cursed Body" },
+    ],
+    tags: ["hyper-offense", "tournament", "mega", "rank-1"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-dc3",
+    name: "Cybertron's Charizard Y Sun",
+    archetype: "Sun",
+    description: "Aaron Zheng's Charizard Y sun team. Classic sun with Chlorophyll Venusaur, Scarf Garchomp, bulky Rotom-Wash, Intimidate Incineroar, and Unburden Sneasler.",
+    pokemonIds: [6, 3, 445, 10009, 903, 727],
+    sets: [
+      { name: "Mega Y Sweeper", nature: "Timid", ability: "Drought", item: "Charizardite Y", moves: ["Heat Wave", "Solar Beam", "Weather Ball", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 32, spDef: 4, speed: 26 }, preMegaAbility: "Solar Power" },
+      { name: "Chlorophyll Sweeper", nature: "Modest", ability: "Chlorophyll", item: "Focus Sash", moves: ["Leaf Storm", "Sludge Bomb", "Sleep Powder", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 32, spDef: 4, speed: 26 } },
+      { name: "Scarf Ground", nature: "Adamant", ability: "Rough Skin", item: "Choice Scarf", moves: ["Earthquake", "Bulldoze", "Dragon Claw", "Rock Slide"], sp: { hp: 4, attack: 32, defense: 4, spAtk: 0, spDef: 0, speed: 26 } },
+      { name: "Bulky Levitate", nature: "Bold", ability: "Levitate", item: "Leftovers", moves: ["Will-O-Wisp", "Thunderbolt", "Hydro Pump", "Protect"], sp: { hp: 32, attack: 0, defense: 10, spAtk: 16, spDef: 0, speed: 8 } },
+      { name: "Unburden Lead", nature: "Jolly", ability: "Unburden", item: "White Herb", moves: ["Fake Out", "Close Combat", "Rock Tomb", "Dire Claw"], sp: { hp: 0, attack: 32, defense: 4, spAtk: 0, spDef: 4, speed: 26 } },
+      { name: "Intimidate Pivot", nature: "Adamant", ability: "Intimidate", item: "Sitrus Berry", moves: ["Fake Out", "Flare Blitz", "Parting Shot", "Darkest Lariat"], sp: { hp: 32, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 2 } },
+    ],
+    tags: ["sun", "weather", "tournament", "mega"],
+    tier: "S",
+  },
+
+  {
+    id: "pre-dc4",
+    name: "Mega Blastoise Rain",
+    archetype: "Rain",
+    description: "Kuro's Mega Blastoise rain team. Pelipper rain with Water Spout Blastoise, Rage Powder Sinistcha, Garchomp, Sneasler, and Defiant Kingambit.",
+    pokemonIds: [9, 279, 1013, 903, 445, 983],
+    sets: [
+      { name: "Mega Launcher", nature: "Quiet", ability: "Mega Launcher", item: "Blastoisinite", moves: ["Water Spout", "Water Pulse", "Ice Beam", "Protect"], sp: { hp: 1, attack: 0, defense: 1, spAtk: 32, spDef: 0, speed: 32 }, preMegaAbility: "Rain Dish" },
+      { name: "Scarf Rain Setter", nature: "Timid", ability: "Drizzle", item: "Choice Scarf", moves: ["Hurricane", "Weather Ball", "U-turn", "Tailwind"], sp: { hp: 1, attack: 0, defense: 0, spAtk: 32, spDef: 1, speed: 32 } },
+      { name: "Rage Powder", nature: "Modest", ability: "Hospitality", item: "Kasib Berry", moves: ["Matcha Gotcha", "Life Dew", "Rage Powder", "Trick Room"], sp: { hp: 32, attack: 0, defense: 0, spAtk: 32, spDef: 2, speed: 0 } },
+      { name: "Poison Touch Lead", nature: "Jolly", ability: "Poison Touch", item: "Focus Sash", moves: ["Close Combat", "Dire Claw", "Rock Slide", "Protect"], sp: { hp: 1, attack: 32, defense: 1, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Ground Pivot", nature: "Jolly", ability: "Rough Skin", item: "Lum Berry", moves: ["Dragon Claw", "Earthquake", "Rock Slide", "Protect"], sp: { hp: 1, attack: 32, defense: 0, spAtk: 0, spDef: 1, speed: 32 } },
+      { name: "Defiant Finisher", nature: "Adamant", ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Sucker Punch", "Iron Head", "Protect"], sp: { hp: 32, attack: 32, defense: 1, spAtk: 0, spDef: 1, speed: 0 } },
+    ],
+    tags: ["rain", "weather", "tournament", "mega"],
+    tier: "A",
+  },
+
+  {
+    id: "pre-dc5",
+    name: "Mega Froslass Snow",
+    archetype: "Snow",
+    description: "Yunitto's Mega Froslass team. Aurora Veil support with Scarf Rotom-Frost, Competitive Empoleon, Intimidate Incineroar, and Defiant Kingambit.",
+    pokemonIds: [478, 445, 10010, 395, 727, 983],
+    sets: [
+      { name: "Mega Aurora Veil", nature: "Modest", ability: "Snow Cloak", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"], sp: { hp: 2, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 32 }, preMegaAbility: "Snow Cloak" },
+      { name: "Ground Pivot", nature: "Jolly", ability: "Rough Skin", item: "White Herb", moves: ["Dragon Claw", "Earthquake", "Rock Slide", "Protect"], sp: { hp: 1, attack: 32, defense: 1, spAtk: 0, spDef: 0, speed: 32 } },
+      { name: "Scarf Ice", nature: "Timid", ability: "Levitate", item: "Choice Scarf", moves: ["Thunderbolt", "Blizzard", "Electroweb", "Volt Switch"], sp: { hp: 2, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 32 } },
+      { name: "Competitive Tank", nature: "Modest", ability: "Competitive", item: "Leftovers", moves: ["Water Pulse", "Flash Cannon", "Roar", "Protect"], sp: { hp: 32, attack: 0, defense: 0, spAtk: 19, spDef: 0, speed: 15 } },
+      { name: "Intimidate Pivot", nature: "Adamant", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Fake Out", "Darkest Lariat", "Parting Shot"], sp: { hp: 32, attack: 26, defense: 0, spAtk: 0, spDef: 8, speed: 0 } },
+      { name: "Defiant Finisher", nature: "Jolly", ability: "Defiant", item: "Focus Sash", moves: ["Iron Head", "Low Kick", "Sucker Punch", "Protect"], sp: { hp: 0, attack: 32, defense: 0, spAtk: 0, spDef: 2, speed: 32 } },
+    ],
+    tags: ["snow", "aurora-veil", "tournament", "mega"],
+    tier: "A",
+  },
+
+  {
+    id: "pre-dc6",
+    name: "Mega Golurk Trick Room",
+    archetype: "Trick Room",
+    description: "WDMichael's Mega Golurk Trick Room team. Hatterene + Oranguru double TR setters with Mega Golurk, Follow Me Clefable, Scarf Hydreigon, and Drought Torkoal.",
+    pokemonIds: [858, 765, 623, 36, 635, 324],
+    sets: [
+      { name: "TR Setter", nature: "Quiet", ability: "Magic Bounce", item: "Fairy Feather", moves: ["Protect", "Psychic", "Trick Room", "Dazzling Gleam"], sp: { hp: 32, attack: 0, defense: 3, spAtk: 32, spDef: 0, speed: 0 } },
+      { name: "Instruct TR", nature: "Quiet", ability: "Inner Focus", item: "Mental Herb", moves: ["Protect", "Instruct", "Psychic", "Trick Room"], sp: { hp: 32, attack: 0, defense: 20, spAtk: 4, spDef: 10, speed: 0 } },
+      { name: "Mega TR Sweeper", nature: "Brave", ability: "Iron Fist", item: "Golurkite", moves: ["Protect", "Thunder Punch", "Headlong Rush", "Drain Punch"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 }, preMegaAbility: "Iron Fist" },
+      { name: "Follow Me", nature: "Calm", ability: "Unaware", item: "Focus Sash", moves: ["Moonblast", "Helping Hand", "Follow Me", "Charm"], sp: { hp: 32, attack: 0, defense: 0, spAtk: 32, spDef: 2, speed: 0 } },
+      { name: "Scarf Special", nature: "Timid", ability: "Levitate", item: "Choice Scarf", moves: ["Draco Meteor", "Dark Pulse", "Heat Wave", "Tri Attack"], sp: { hp: 2, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 32 } },
+      { name: "Sun TR Nuke", nature: "Quiet", ability: "Drought", item: "Charcoal", moves: ["Eruption", "Protect", "Clear Smog", "Heat Wave"], sp: { hp: 32, attack: 0, defense: 0, spAtk: 32, spDef: 2, speed: 0 } },
+    ],
+    tags: ["trick-room", "tournament", "mega", "sun"],
+    tier: "A",
+  },
+
   {
     id: "pre-46",
     name: "Mega Floette HO",
@@ -167,24 +349,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   },
 
   {
-    id: "pre-7",
-    name: "Double Intimidate",
-    archetype: "Pivoting",
-    description: "Incineroar + Krookodile intimidate cycle with setup sweepers",
-    pokemonIds: [727, 553, 149, 681, 547, 1018],
-    sets: [
-      { name: "Intimidate Support", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "Intimidate Offense", nature: "Jolly", ability: "Intimidate", item: "Choice Scarf", moves: ["Earthquake", "Crunch", "Close Combat", "Rock Slide"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-      { name: "Dragon Dance", nature: "Adamant", ability: "Multiscale", item: "Lum Berry", moves: ["Dragon Dance", "Dragon Claw", "Extreme Speed", "Protect"], sp: { hp: 4, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 30 } },
-      { name: "Stance Change", nature: "Quiet", ability: "Stance Change", item: "Weakness Policy", moves: ["Shadow Ball", "Flash Cannon", "King's Shield", "Shadow Sneak"], sp: { hp: 32, attack: 16, defense: 2, spAtk: 16, spDef: 0, speed: 0 } },
-      { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Stamina Tank", nature: "Modest", ability: "Stamina", item: "Leftovers", moves: ["Electro Shot", "Flash Cannon", "Draco Meteor", "Protect"], sp: { hp: 32, attack: 0, defense: 4, spAtk: 28, spDef: 0, speed: 2 } },
-    ],
-    tags: ["intimidate", "pivoting", "balance", "dragon-dance"],
-    tier: "A",
-  },
-
-  {
     id: "pre-8",
     name: "Kingambit Hyper Offense",
     archetype: "Hyper Offense",
@@ -239,24 +403,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   },
 
   {
-    id: "pre-11",
-    name: "Bulky Waters",
-    archetype: "Balance",
-    description: "Milotic and Slowbro form a defensive backbone with Trick Room option",
-    pokemonIds: [350, 80, 727, 983, 547, 445],
-    sets: [
-      { name: "Competitive Tank", nature: "Bold", ability: "Competitive", item: "Leftovers", moves: ["Scald", "Ice Beam", "Recover", "Protect"], sp: { hp: 32, attack: 0, defense: 20, spAtk: 14, spDef: 0, speed: 0 } },
-      { name: "TR Setter", nature: "Relaxed", ability: "Regenerator", item: "Sitrus Berry", moves: ["Trick Room", "Scald", "Psychic", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 2, spDef: 0, speed: 0 } },
-      { name: "Intimidate Support", nature: "Careful", ability: "Intimidate", item: "Figy Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "Supreme Overlord", nature: "Adamant", ability: "Supreme Overlord", item: "Assault Vest", moves: ["Sucker Punch", "Iron Head", "Kowtow Cleave", "Close Combat"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-      { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Offensive Pivot", nature: "Jolly", ability: "Rough Skin", item: "Choice Scarf", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Poison Jab"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-    ],
-    tags: ["balance", "bulky", "trick-room", "competitive"],
-    tier: "A",
-  },
-
-  {
     id: "pre-12",
     name: "Hydreigon Offense",
     archetype: "Offense",
@@ -291,24 +437,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
       { name: "Stance Change", nature: "Quiet", ability: "Stance Change", item: "Weakness Policy", moves: ["Shadow Ball", "Flash Cannon", "King's Shield", "Shadow Sneak"], sp: { hp: 32, attack: 16, defense: 2, spAtk: 16, spDef: 0, speed: 0 } },
     ],
     tags: ["perish-trap", "trapping", "shadow-tag", "stall"],
-    tier: "B",
-  },
-
-  {
-    id: "pre-14",
-    name: "Hail Offense",
-    archetype: "Snow",
-    description: "Snow-based team with Aurora Veil support",
-    pokemonIds: [471, 478, 1018, 727, 547, 445],
-    sets: [
-      { name: "AV Snow Sweeper", nature: "Modest", ability: "Ice Body", item: "Never-Melt Ice", moves: ["Blizzard", "Shadow Ball", "Freeze-Dry", "Hidden Power Ground"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 30 } },
-      { name: "Aurora Veil Lead", nature: "Timid", ability: "Snow Cloak", item: "Focus Sash", moves: ["Aurora Veil", "Blizzard", "Icy Wind", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Stamina Tank", nature: "Modest", ability: "Stamina", item: "Leftovers", moves: ["Electro Shot", "Flash Cannon", "Draco Meteor", "Protect"], sp: { hp: 32, attack: 0, defense: 4, spAtk: 28, spDef: 0, speed: 2 } },
-      { name: "Intimidate Support", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "Tailwind Lead", nature: "Timid", ability: "Prankster", item: "Lum Berry", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Ground Coverage", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-    ],
-    tags: ["snow", "aurora-veil", "weather", "offense"],
     tier: "B",
   },
 
@@ -362,22 +490,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     ],
     tags: ["screens", "hyper-offense", "prankster", "fast"],
     tier: "S",
-  },
-
-  {
-    id: "pre-18", name: "Commander", archetype: "Commander",
-    description: "Dondozo + Tatsugiri Commander combo with backup sweepers",
-    pokemonIds: [977, 978, 858, 727, 445, 212],
-    sets: [
-      { name: "Commander Host", nature: "Impish", ability: "Unaware", item: "Leftovers", moves: ["Wave Crash", "Earthquake", "Protect", "Yawn"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 0, spDef: 2, speed: 0 } },
-      { name: "Commander", nature: "Modest", ability: "Commander", item: "Choice Specs", moves: ["Muddy Water", "Draco Meteor", "Ice Beam", "Surf"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 30 } },
-      { name: "TR Backup", nature: "Quiet", ability: "Magic Bounce", item: "Focus Sash", moves: ["Trick Room", "Dazzling Gleam", "Psychic", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 0 } },
-      { name: "Fake Out", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "Fast Ground", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-      { name: "Priority Steel", nature: "Adamant", ability: "Technician", item: "Choice Band", moves: ["Bullet Punch", "Bug Bite", "Superpower", "Dual Wingbeat"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-    ],
-    tags: ["commander", "combo", "trick-room", "bulk"],
-    tier: "A",
   },
 
   {
@@ -573,22 +685,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   },
 
   {
-    id: "pre-31", name: "Mimikyu Disguise TR", archetype: "Disguise TR",
-    description: "Mimikyu's Disguise guarantees Trick Room setup",
-    pokemonIds: [778, 464, 901, 727, 983, 445],
-    sets: [
-      { name: "TR Setter", nature: "Brave", ability: "Disguise", item: "Mental Herb", moves: ["Trick Room", "Shadow Sneak", "Play Rough", "Protect"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-      { name: "TR Sweeper", nature: "Brave", ability: "Solid Rock", item: "Life Orb", moves: ["Rock Slide", "Earthquake", "Ice Punch", "Protect"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-      { name: "Guts Nuke", nature: "Brave", ability: "Guts", item: "Flame Orb", moves: ["Headlong Rush", "Facade", "Rock Slide", "Protect"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-      { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "Finisher", nature: "Adamant", ability: "Supreme Overlord", item: "Assault Vest", moves: ["Sucker Punch", "Iron Head", "Kowtow Cleave", "Brick Break"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-      { name: "Fast Pivot", nature: "Jolly", ability: "Rough Skin", item: "Choice Scarf", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Poison Jab"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-    ],
-    tags: ["trick-room", "disguise", "slow", "physical"],
-    tier: "A",
-  },
-
-  {
     id: "pre-32", name: "Mega Kangaskhan Offense", archetype: "Parental Bond",
     description: "Mega Kangaskhan Parental Bond for double-hit domination",
     pokemonIds: [115, 445, 282, 727, 547, 130],
@@ -602,38 +698,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     ],
     tags: ["mega", "parental-bond", "fake-out", "physical"],
     tier: "S",
-  },
-
-  {
-    id: "pre-33", name: "Hydreigon Special", archetype: "Dragon Spam",
-    description: "Hydreigon + Dragapult double dragon with Tailwind",
-    pokemonIds: [635, 887, 547, 727, 445, 700],
-    sets: [
-      { name: "Special Dragon", nature: "Modest", ability: "Levitate", item: "Life Orb", moves: ["Dark Pulse", "Draco Meteor", "Heat Wave", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 30 } },
-      { name: "Fast Ghost", nature: "Timid", ability: "Clear Body", item: "Choice Specs", moves: ["Shadow Ball", "Draco Meteor", "Thunderbolt", "Flamethrower"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
-      { name: "Tailwind", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "EQ Pivot", nature: "Jolly", ability: "Rough Skin", item: "Choice Scarf", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Poison Jab"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-      { name: "Fairy Cover", nature: "Modest", ability: "Pixilate", item: "Fairy Feather", moves: ["Hyper Voice", "Shadow Ball", "Mystical Fire", "Quick Attack"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 0 } },
-    ],
-    tags: ["dragon", "special", "tailwind", "fast"],
-    tier: "B",
-  },
-
-  {
-    id: "pre-34", name: "Toxapex Stall", archetype: "Stall",
-    description: "Toxapex + Garganacl stall duo with chip damage",
-    pokemonIds: [748, 934, 727, 823, 887, 445],
-    sets: [
-      { name: "Regen Wall", nature: "Bold", ability: "Regenerator", item: "Rocky Helmet", moves: ["Scald", "Toxic", "Recover", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 2, spDef: 0, speed: 0 } },
-      { name: "Salt Wall", nature: "Careful", ability: "Purifying Salt", item: "Leftovers", moves: ["Rock Slide", "Body Press", "Recover", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 0, spDef: 2, speed: 0 } },
-      { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "Steel Bird", nature: "Impish", ability: "Mirror Armor", item: "Safety Goggles", moves: ["Body Press", "Brave Bird", "Iron Defense", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 0, spDef: 2, speed: 0 } },
-      { name: "Fast Ghost", nature: "Timid", ability: "Clear Body", item: "Choice Specs", moves: ["Shadow Ball", "Draco Meteor", "Thunderbolt", "Flamethrower"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
-      { name: "Scarfer", nature: "Jolly", ability: "Rough Skin", item: "Choice Scarf", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Poison Jab"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-    ],
-    tags: ["stall", "regenerator", "wall", "defense"],
-    tier: "B",
   },
 
   {
@@ -669,38 +733,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   },
 
   {
-    id: "pre-37", name: "Kommo-o Clangorous", archetype: "Z-Move",
-    description: "Kommo-o Clangorous Soulblaze with Tailwind backup",
-    pokemonIds: [784, 547, 727, 445, 887, 983],
-    sets: [
-      { name: "Clangorous", nature: "Timid", ability: "Bulletproof", item: "Throat Spray", moves: ["Clanging Scales", "Aura Sphere", "Flash Cannon", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 32, spDef: 0, speed: 30 } },
-      { name: "Tailwind", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "EQ Pivot", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-      { name: "Fast Ghost", nature: "Timid", ability: "Clear Body", item: "Choice Specs", moves: ["Shadow Ball", "Draco Meteor", "Thunderbolt", "Flamethrower"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
-      { name: "Finisher", nature: "Adamant", ability: "Supreme Overlord", item: "Assault Vest", moves: ["Sucker Punch", "Iron Head", "Kowtow Cleave", "Brick Break"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-    ],
-    tags: ["dragon", "special", "tailwind", "z-move"],
-    tier: "B",
-  },
-
-  {
-    id: "pre-38", name: "Maushold Population", archetype: "Multi-Hit",
-    description: "Population Bomb with Tailwind for speed sweeping",
-    pokemonIds: [925, 547, 727, 445, 887, 983],
-    sets: [
-      { name: "Pop Bomb", nature: "Jolly", ability: "Technician", item: "Wide Lens", moves: ["Population Bomb", "Tidy Up", "Protect", "Follow Me"], sp: { hp: 4, attack: 32, defense: 0, spAtk: 0, spDef: 0, speed: 30 } },
-      { name: "Tailwind", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "EQ Pivot", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-      { name: "Fast Ghost", nature: "Timid", ability: "Clear Body", item: "Choice Specs", moves: ["Shadow Ball", "Draco Meteor", "Thunderbolt", "Flamethrower"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
-      { name: "Finisher", nature: "Adamant", ability: "Supreme Overlord", item: "Assault Vest", moves: ["Sucker Punch", "Iron Head", "Kowtow Cleave", "Brick Break"], sp: { hp: 32, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 0 } },
-    ],
-    tags: ["multi-hit", "technician", "tailwind", "normal"],
-    tier: "B",
-  },
-
-  {
     id: "pre-39", name: "Mega Scizor Pivot", archetype: "Pivot Chain",
     description: "Mega Scizor Bug/Steel Technician with U-turn pivoting",
     pokemonIds: [212, 445, 727, 887, 282, 858],
@@ -714,22 +746,6 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     ],
     tags: ["mega", "pivot", "technician", "steel"],
     tier: "A",
-  },
-
-  {
-    id: "pre-40", name: "Anti-Meta Goodstuff", archetype: "Goodstuff",
-    description: "The classic VGC goodstuff - no gimmicks, just solid picks",
-    pokemonIds: [445, 727, 887, 547, 934, 282],
-    sets: [
-      { name: "Offensive Lead", nature: "Jolly", ability: "Rough Skin", item: "Life Orb", moves: ["Earthquake", "Dragon Claw", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
-      { name: "Intimidate", nature: "Careful", ability: "Intimidate", item: "Sitrus Berry", moves: ["Flare Blitz", "Darkest Lariat", "Fake Out", "Protect"], sp: { hp: 32, attack: 0, defense: 2, spAtk: 0, spDef: 32, speed: 0 } },
-      { name: "Fast Ghost", nature: "Timid", ability: "Clear Body", item: "Choice Specs", moves: ["Shadow Ball", "Draco Meteor", "Thunderbolt", "Flamethrower"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
-      { name: "Tailwind", nature: "Timid", ability: "Prankster", item: "Focus Sash", moves: ["Tailwind", "Moonblast", "Encore", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
-      { name: "Salt Wall", nature: "Careful", ability: "Purifying Salt", item: "Leftovers", moves: ["Rock Slide", "Body Press", "Recover", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 0, spDef: 2, speed: 0 } },
-      { name: "Mega Support", nature: "Timid", ability: "Pixilate", item: "Gardevoirite", moves: ["Hyper Voice", "Psychic", "Trick Room", "Protect"], sp: { hp: 20, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 12 } },
-    ],
-    tags: ["goodstuff", "balanced", "no-gimmick", "consistent"],
-    tier: "S",
   },
 
   {

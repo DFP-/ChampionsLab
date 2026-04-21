@@ -280,10 +280,33 @@ export function SearchSelect({
                             </span>
                           )}
 
-                          {/* Label + sub */}
+                          {/* Label + sub + description */}
                           <div className="flex-1 min-w-0">
                             <span className="truncate block">{opt.label}</span>
-                            {opt.sub && <span className="text-[10px] text-muted-foreground truncate block">{opt.sub}</span>}
+                            {opt.sub && (
+                              <span className="flex flex-wrap items-center gap-1 mt-0.5">
+                                {opt.sub.split(" · ").map((token, ti) => {
+                                  const lower = token.toLowerCase();
+                                  if (lower === "physical") return (
+                                    <span key={ti} className="text-[9px] font-extrabold text-orange-500">⚔ Phys</span>
+                                  );
+                                  if (lower === "special") return (
+                                    <span key={ti} className="text-[9px] font-extrabold text-indigo-500">✦ Spec</span>
+                                  );
+                                  if (lower === "status") return (
+                                    <span key={ti} className="text-[9px] font-extrabold text-gray-400">◇ Status</span>
+                                  );
+                                  return (
+                                    <span key={ti} className="text-[9px] text-muted-foreground">{token}</span>
+                                  );
+                                })}
+                              </span>
+                            )}
+                            {opt.description && (
+                              <p className="text-[10px] leading-snug font-medium italic text-muted-foreground mt-1 pb-0.5 border-b border-dashed border-gray-200 dark:border-white/10">
+                                {opt.description}
+                              </p>
+                            )}
                           </div>
 
                           {/* Suggested star */}
@@ -291,14 +314,6 @@ export function SearchSelect({
                             <span className="text-[10px] text-amber-500 font-bold shrink-0">★</span>
                           )}
                         </button>
-                        {/* Description shown on hover */}
-                        {opt.description && isHighlighted && (
-                          <div className="px-3 pb-2 ml-[26px] mr-2">
-                            <p className="text-[10px] text-muted-foreground leading-relaxed">
-                              {opt.description}
-                            </p>
-                          </div>
-                        )}
                       </div>
                     );
                   })

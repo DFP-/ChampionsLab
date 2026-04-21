@@ -13,6 +13,11 @@ interface SeasonTabsProps {
 }
 
 export function SeasonTabs({ activeSeason, onSeasonChange }: SeasonTabsProps) {
+  const { t } = useI18n();
+  const translateSeasonName = (name: string) =>
+    name
+      .replace(/\bSeason\b/g, t('season.seasonWord'))
+      .replace(/\bRegulation\b/g, t('season.regulationWord'));
   return (
     <div className="flex flex-wrap gap-2">
       {SEASONS.map((season) => {
@@ -36,7 +41,7 @@ export function SeasonTabs({ activeSeason, onSeasonChange }: SeasonTabsProps) {
               />
             )}
             <Shield className="w-4 h-4 relative z-10" />
-            <span className="relative z-10">{season.name}</span>
+            <span className="relative z-10">{translateSeasonName(season.name)}</span>
             {season.isActive && (
               <span className="relative z-10 px-1.5 py-0.5 text-[10px] font-bold rounded-md bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30">
                 LIVE
@@ -186,7 +191,10 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
   const megaCount = POKEMON_SEED.filter(p => p.hasMega && !(p as any).hidden).length;
 
   const formatDate = (d: string) =>
-    new Date(d + "T12:00:00Z").toLocaleDateString(locale === "fr" ? "fr-FR" : "en-US", { month: "long", day: "numeric", year: "numeric" });
+    new Date(d + "T12:00:00Z").toLocaleDateString(
+      locale === "fr" ? "fr-FR" : locale === "es" ? "es-ES" : "en-US",
+      { month: "long", day: "numeric", year: "numeric" }
+    );
 
   const regulationEnd = "2026-06-17";
 
@@ -202,7 +210,7 @@ export function SeasonInfo({ seasonId }: { seasonId: number }) {
             <Shield className="w-4.5 h-4.5 text-violet-600 dark:text-violet-400" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-foreground">{season.name}</h3>
+            <h3 className="text-sm font-semibold text-foreground">{season.name.replace(/\bSeason\b/g, t('season.seasonWord')).replace(/\bRegulation\b/g, t('season.regulationWord'))}</h3>
             <p className="text-xs text-muted-foreground">
               {formatDate(season.startDate)}
             </p>

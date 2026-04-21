@@ -25,6 +25,7 @@ import {
   PREBUILT_TEAMS,
   analyzeTeamSynergy,
   getWeaknesses,
+  detectArchetypes,
   NATURES,
   ITEMS,
   getAllNatures,
@@ -162,6 +163,45 @@ interface FullSimResult {
   totalBattles: number;
 }
 
+// ── Normalize granular archetypes into broad categories ─────────────────
+const ARCHETYPE_MAP: Record<string, string> = {
+  // Weather
+  "rain": "Rain", "modern rain": "Rain",
+  "sun": "Sun", "sun tr": "Sun",
+  "sand": "Sand",
+  "snow": "Snow",
+  // Speed control
+  "trick room": "Trick Room", "trick-room": "Trick Room",
+  "hard-trick-room": "Trick Room", "semi-trick-room": "Trick Room",
+  "disguise tr": "Trick Room",
+  "tailwind": "Tailwind", "tailwind ho": "Tailwind",
+  // Offense
+  "hyper offense": "Hyper Offense", "hyper-offense": "Hyper Offense",
+  "offense": "Hyper Offense", "fast offense": "Hyper Offense",
+  "screens": "Hyper Offense", "aurora veil": "Hyper Offense",
+  "setup": "Hyper Offense", "dragon dance": "Hyper Offense", "belly drum": "Hyper Offense",
+  "parental bond": "Hyper Offense", "palafin": "Hyper Offense", "commander": "Hyper Offense",
+  "z-move": "Hyper Offense", "multi-hit": "Hyper Offense",
+  "dragon spam": "Hyper Offense", "steel offense": "Hyper Offense", "fairy spam": "Hyper Offense",
+  // Bulky Offense / Balance
+  "bulky-offense": "Bulky Offense", "bulky offense": "Bulky Offense",
+  "balance": "Balance", "balanced": "Balance",
+  "goodstuffs": "Balance", "goodstuff": "Balance",
+  "pivoting": "Balance", "pivot chain": "Balance",
+  "redirection": "Balance", "follow me": "Balance",
+  "body press": "Balance", "fairy core": "Balance",
+  "speed control": "Balance", "weather": "Balance",
+  // Defensive
+  "stall": "Stall", "steel stall": "Stall",
+  // Gimmick
+  "beat up": "Beat Up", "beat-up": "Beat Up",
+  "perish trap": "Perish Trap", "perish-trap": "Perish Trap",
+};
+
+function normalizeArchetype(raw: string): string {
+  return ARCHETYPE_MAP[raw.toLowerCase()] ?? "Balance";
+}
+
 // ── Sim Runner ──────────────────────────────────────────────────────────
 
 function runFullSimulation(
@@ -182,7 +222,7 @@ function runFullSimulation(
   for (const t of prebuiltFilter) {
     const pokemon = t.pokemonIds.map(id => POKEMON_SEED.find(p => p.id === id)).filter(Boolean) as ChampionsPokemon[];
     if (pokemon.length >= 4) {
-      oppTeams.push({ name: t.name, pokemon, sets: t.sets.slice(0, pokemon.length), archetype: t.archetype });
+      oppTeams.push({ name: t.name, pokemon, sets: t.sets.slice(0, pokemon.length), archetype: normalizeArchetype(t.archetype) });
     }
   }
 
@@ -196,7 +236,9 @@ function runFullSimulation(
     const pokemon = ct.pokemonIds.map(id => POKEMON_SEED.find(p => p.id === id)).filter(Boolean) as ChampionsPokemon[];
     if (pokemon.length >= 4) {
       const sets = pokemon.map(p => bestAvailableSet(p));
-      oppTeams.push({ name: `${ct.player} (${ct.tournament.slice(0, 30)})`, pokemon, sets, archetype: "tournament" });
+      const detected = detectArchetypes(pokemon);
+      const arch = detected.length > 0 ? detected[0].archetype : "goodstuffs";
+      oppTeams.push({ name: `${ct.player} (${ct.tournament.slice(0, 30)})`, pokemon, sets, archetype: normalizeArchetype(arch) });
     }
   }
 
@@ -207,7 +249,7 @@ function runFullSimulation(
     const randoms = generateRandomPool(randomCount);
     for (const r of randoms) {
       if (r.pokemon.length >= 4) {
-        oppTeams.push({ name: r.name, pokemon: r.pokemon, sets: r.sets, archetype: r.archetype });
+        oppTeams.push({ name: r.name, pokemon: r.pokemon, sets: r.sets, archetype: normalizeArchetype(r.archetype) });
       }
     }
   }
@@ -215,7 +257,7 @@ function runFullSimulation(
   if (oppTeams.length === 0) {
     for (const t of PREBUILT_TEAMS) {
       const pokemon = t.pokemonIds.map(id => POKEMON_SEED.find(p => p.id === id)).filter(Boolean) as ChampionsPokemon[];
-      if (pokemon.length >= 4) oppTeams.push({ name: t.name, pokemon, sets: t.sets.slice(0, pokemon.length), archetype: t.archetype });
+      if (pokemon.length >= 4) oppTeams.push({ name: t.name, pokemon, sets: t.sets.slice(0, pokemon.length), archetype: normalizeArchetype(t.archetype) });
     }
   }
 
@@ -390,7 +432,7 @@ function runFullSimulation(
 type MainTab = "battle-engine" | "damage-calc" | "team-tester";
 
 export default function BattleBotPage() {
-  const { t, tp, tm, ta, ti, tn, ts, tt, tad, tid, locale } = useI18n();
+  const { t, tp, tm, ta, ti, tn, ts, tt, tad, tid, tmd, locale } = useI18n();
 
   // Translate engine-generated weakness/tip strings at display time
   const translateBotInsight = (s: string): string => {
@@ -1251,7 +1293,6 @@ export default function BattleBotPage() {
                               <span className={cn("text-xs font-mono w-12 text-right", a.winRate >= 50 ? "text-green-600" : "text-red-500")}>
                                 {a.winRate}%
                               </span>
-                              <span className="text-[9px] text-muted-foreground w-8">({a.count})</span>
                             </div>
                           ))}
                         </div>
@@ -1833,7 +1874,7 @@ export default function BattleBotPage() {
                               sub: `${m.type} · ${m.category}${m.power ? ` · ${m.power}bp` : ""}${m.accuracy ? ` · ${m.accuracy}%` : ""} · ${m.pp}pp`,
                               badge: tt(m.type),
                               badgeColor: `${TYPE_COLORS[m.type]}AA`,
-                              description: m.description || undefined,
+                              description: m.description ? tmd(m.name, m.description) : undefined,
                             })),
                           ];
                           return (

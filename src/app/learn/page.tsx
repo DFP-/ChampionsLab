@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { useI18n } from "@/lib/i18n";
 import { SECTIONS_FR } from "@/lib/learn-sections-fr";
+import { SECTIONS_ES } from "@/lib/learn-sections-es";
 import { LastUpdated } from "@/components/last-updated";
 import { AlertTriangle, Lightbulb, Trophy, Info } from "lucide-react";
 
@@ -477,14 +478,17 @@ export default function LearnPage() {
   const [expandedSubs, setExpandedSubs] = useState<Set<string>>(new Set());
 
   const activeSections = SECTIONS.map((section, i) => {
-    const frSection = locale === "fr" ? SECTIONS_FR[i] : null;
-    if (!frSection) return section;
+    const localized =
+      locale === "fr" ? SECTIONS_FR[i] :
+      locale === "es" ? SECTIONS_ES[i] :
+      null;
+    if (!localized) return section;
     return {
       ...section,
       subsections: section.subsections.map((sub, j) => ({
         ...sub,
-        title: frSection.subsections[j]?.title ?? sub.title,
-        content: frSection.subsections[j]?.content ?? sub.content,
+        title: localized.subsections[j]?.title ?? sub.title,
+        content: localized.subsections[j]?.content ?? sub.content,
       })),
     };
   });

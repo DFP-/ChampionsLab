@@ -203,120 +203,184 @@ export function identifyRoles(pokemon: ChampionsPokemon): PokemonRole {
   };
 }
 
-/** Detect team archetype from a set of Pokémon */
+/** Detect team archetype from a set of Pokémon.
+ *  Based on VGC competitive classification:
+ *  - Weather setter alone defines the weather archetype (Smogon standard)
+ *  - Tailwind checked via known VGC setters, not just move learnability
+ *  - TR checked via move + slow Pokémon count
+ */
 export function detectArchetypes(pokemon: ChampionsPokemon[]): ArchetypeProfile[] {
   const archetypes: ArchetypeProfile[] = [];
   const allAbilities = pokemon.flatMap(p => p.abilities.map(a => a.name));
   const allMoves = pokemon.flatMap(p => p.moves.map(m => m.name));
   const avgSpeed = pokemon.reduce((s, p) => s + p.baseStats.speed, 0) / pokemon.length;
-  const slowCount = pokemon.filter(p => p.baseStats.speed <= 55).length;
+  const slowCount = pokemon.filter(p => p.baseStats.speed <= 60).length;
+
+  // ── Weather (setter presence IS the archetype — VGC standard) ─────────
+  // In VGC, bringing a weather setter defines your team's archetype.
+  // Abuser abilities (Swift Swim, Chlorophyll, etc.) increase confidence.
 
   // Rain
-  if (allAbilities.includes("Drizzle") && allAbilities.includes("Swift Swim")) {
+  if (allAbilities.includes("Drizzle")) {
+    const hasAbuser = allAbilities.includes("Swift Swim");
     const keyMon = pokemon.filter(p =>
-      p.abilities.some(a => a.name === "Drizzle" || a.name === "Swift Swim")
+      p.abilities.some(a => ["Drizzle", "Swift Swim"].includes(a.name))
     ).map(p => p.name);
     archetypes.push({
       archetype: "rain",
-      confidence: 0.9,
-      description: "Rain team with Drizzle setter and Swift Swim sweepers for speed dominance.",
+      confidence: hasAbuser ? 0.95 : 0.85,
+      description: "Rain team with Drizzle setter" + (hasAbuser ? " and Swift Swim sweepers." : "."),
       keyPokemon: keyMon,
     });
   }
 
   // Sun
-  if (allAbilities.includes("Drought") && allAbilities.includes("Chlorophyll")) {
+  if (allAbilities.includes("Drought")) {
+    const hasAbuser = allAbilities.includes("Chlorophyll") || allAbilities.includes("Solar Power")
+      || allAbilities.includes("Flower Gift");
     const keyMon = pokemon.filter(p =>
-      p.abilities.some(a => a.name === "Drought" || a.name === "Chlorophyll")
+      p.abilities.some(a => ["Drought", "Chlorophyll", "Solar Power", "Flower Gift"].includes(a.name))
     ).map(p => p.name);
     archetypes.push({
       archetype: "sun",
-      confidence: 0.9,
-      description: "Sun team with Drought setter and Chlorophyll sweepers for offensive pressure.",
+      confidence: hasAbuser ? 0.95 : 0.85,
+      description: "Sun team with Drought setter" + (hasAbuser ? " and sun-boosted sweepers." : "."),
       keyPokemon: keyMon,
     });
   }
 
   // Sand
-  if (allAbilities.includes("Sand Stream") && (allAbilities.includes("Sand Rush") || allAbilities.includes("Sand Force"))) {
+  if (allAbilities.includes("Sand Stream")) {
+    const hasAbuser = allAbilities.includes("Sand Rush") || allAbilities.includes("Sand Force");
     const keyMon = pokemon.filter(p =>
       p.abilities.some(a => ["Sand Stream", "Sand Rush", "Sand Force"].includes(a.name))
     ).map(p => p.name);
     archetypes.push({
       archetype: "sand",
-      confidence: 0.85,
-      description: "Sand team with Sand Stream and physical attackers boosted by sandstorm.",
+      confidence: hasAbuser ? 0.90 : 0.75,
+      description: "Sand team with Sand Stream setter" + (hasAbuser ? " and sand sweepers." : "."),
       keyPokemon: keyMon,
     });
   }
 
-  // Trick Room
-  const trSetters = pokemon.filter(p => p.moves.some(m => m.name === "Trick Room"));
-  if (trSetters.length >= 1 && slowCount >= 3) {
+  // Snow
+  if (allAbilities.includes("Snow Warning")) {
+    const hasAbuser = allAbilities.includes("Slush Rush") || allAbilities.includes("Ice Body");
+    const keyMon = pokemon.filter(p =>
+      p.abilities.some(a => ["Snow Warning", "Slush Rush", "Ice Body"].includes(a.name))
+    ).map(p => p.name);
     archetypes.push({
-      archetype: trSetters.length >= 2 ? "hard-trick-room" : "trick-room",
-      confidence: trSetters.length >= 2 ? 0.95 : 0.7,
-      description: trSetters.length >= 2
-        ? "Dedicated Trick Room with multiple setters and slow powerhouses."
-        : "Trick Room mode available with slow attackers to abuse reversed speed.",
-      keyPokemon: [...trSetters.map(p => p.name), ...pokemon.filter(p => p.baseStats.speed <= 55).map(p => p.name)],
+      archetype: "snow",
+      confidence: hasAbuser ? 0.90 : 0.75,
+      description: "Snow team with Snow Warning setter.",
+      keyPokemon: keyMon,
     });
   }
 
-  // Semi Trick Room
-  if (trSetters.length === 1 && slowCount >= 1 && slowCount <= 2) {
+  // ── Speed Control ─────────────────────────────────────────────────────
+
+  // Trick Room — check move learners with speed ≤ 100 as plausible setters
+  const trSetters = pokemon.filter(p =>
+    p.moves.some(m => m.name === "Trick Room") && p.baseStats.speed <= 100
+  );
+  if (trSetters.length >= 1 && slowCount >= 2) {
+    const isHard = trSetters.length >= 2 && slowCount >= 3;
+    archetypes.push({
+      archetype: isHard ? "hard-trick-room" : "trick-room",
+      confidence: isHard ? 0.95 : (slowCount >= 3 ? 0.80 : 0.70),
+      description: isHard
+        ? "Dedicated Trick Room with multiple setters and slow powerhouses."
+        : "Trick Room team with slow attackers to abuse reversed speed.",
+      keyPokemon: [...trSetters.map(p => p.name), ...pokemon.filter(p => p.baseStats.speed <= 60).map(p => p.name)],
+    });
+  } else if (trSetters.length >= 1 && slowCount >= 1) {
     archetypes.push({
       archetype: "semi-trick-room",
-      confidence: 0.6,
-      description: "Flexible team with Trick Room as an option for specific matchups.",
+      confidence: 0.55,
+      description: "Flexible team with Trick Room as an option.",
       keyPokemon: trSetters.map(p => p.name),
     });
   }
 
-  // Tailwind
-  const twUsers = pokemon.filter(p => p.moves.some(m => m.name === "Tailwind"));
-  if (twUsers.length >= 1 && avgSpeed >= 75) {
+  // Tailwind — use known VGC Tailwind setters, not just move learnability.
+  // Pokémon like Dragonite/Scizor "learn" Tailwind but never run it in VGC.
+  const VGC_TW_SETTERS = new Set([
+    "Whimsicott", "Talonflame", "Aerodactyl", "Noivern", "Corviknight",
+    "Murkrow", "Vivillon", "Toucannon",
+  ]);
+  const twUsers = pokemon.filter(p =>
+    VGC_TW_SETTERS.has(p.name)
+    || (p.moves.some(m => m.name === "Tailwind") && p.abilities.some(a => a.name === "Prankster"))
+  );
+  // Exclude Pelipper overlap — if already detected as Rain, don't double-count
+  const twNonWeather = twUsers.filter(p => !p.abilities.some(a => a.name === "Drizzle"));
+  if (twNonWeather.length >= 1) {
     archetypes.push({
       archetype: "tailwind",
-      confidence: twUsers.length >= 2 ? 0.85 : 0.65,
-      description: "Tailwind-based speed control to let moderate-speed attackers outpace threats.",
-      keyPokemon: twUsers.map(p => p.name),
+      confidence: twNonWeather.length >= 2 ? 0.85 : 0.65,
+      description: "Tailwind-based speed control.",
+      keyPokemon: twNonWeather.map(p => p.name),
     });
   }
 
-  // Hyper Offense
-  const offensiveMon = pokemon.filter(p =>
-    Math.max(p.baseStats.attack, p.baseStats.spAtk) >= 100 && p.baseStats.speed >= 80
-  );
-  if (offensiveMon.length >= 4) {
-    archetypes.push({
-      archetype: "hyper-offense",
-      confidence: 0.75,
-      description: "All-out offense with fast, powerful attackers and minimal defensive play.",
-      keyPokemon: offensiveMon.map(p => p.name),
-    });
-  }
+  // ── Offense styles (only if no weather/speed control detected) ────────
 
-  // Balance
-  const hasWall = pokemon.some(p => p.baseStats.hp >= 90 && (p.baseStats.defense >= 90 || p.baseStats.spDef >= 90));
-  const hasAttacker = pokemon.some(p => Math.max(p.baseStats.attack, p.baseStats.spAtk) >= 100);
-  const hasSupport = pokemon.some(p => p.abilities.some(a => a.name === "Intimidate") || p.moves.some(m => m.name === "Fake Out"));
-  if (hasWall && hasAttacker && hasSupport && archetypes.length === 0) {
-    archetypes.push({
-      archetype: "balance",
-      confidence: 0.6,
-      description: "Balanced team with offensive, defensive, and support options.",
-      keyPokemon: pokemon.map(p => p.name),
-    });
-  }
-
-  // Good Stuffs (fallback)
   if (archetypes.length === 0) {
+    const offensiveMon = pokemon.filter(p =>
+      Math.max(p.baseStats.attack, p.baseStats.spAtk) >= 100
+    );
+    const fastOffense = offensiveMon.filter(p => p.baseStats.speed >= 80);
+    const hasIntim = allAbilities.includes("Intimidate");
+    const hasFakeOut = allMoves.includes("Fake Out");
+    const hasRedirection = allMoves.includes("Follow Me") || allMoves.includes("Rage Powder");
+
+    if (fastOffense.length >= 4) {
+      archetypes.push({
+        archetype: "hyper-offense",
+        confidence: 0.75,
+        description: "All-out offense with fast, powerful attackers.",
+        keyPokemon: fastOffense.map(p => p.name),
+      });
+    } else if (offensiveMon.length >= 4 && (hasIntim || hasFakeOut || hasRedirection)) {
+      archetypes.push({
+        archetype: "bulky-offense",
+        confidence: 0.65,
+        description: "Offensive team with Intimidate/redirection support.",
+        keyPokemon: pokemon.map(p => p.name),
+      });
+    } else {
+      archetypes.push({
+        archetype: "balance",
+        confidence: 0.55,
+        description: "Balanced team with offensive and defensive elements.",
+        keyPokemon: pokemon.map(p => p.name),
+      });
+    }
+  }
+
+  // ── Gimmick archetypes (can co-exist with primary) ────────────────────
+
+  // Beat Up + Justified
+  if (allMoves.includes("Beat Up") && allAbilities.includes("Justified")) {
     archetypes.push({
-      archetype: "goodstuffs",
-      confidence: 0.5,
-      description: "Collection of individually strong Pokémon with general type synergy.",
-      keyPokemon: pokemon.map(p => p.name),
+      archetype: "beat-up",
+      confidence: 0.90,
+      description: "Beat Up + Justified combo for +4 Attack boost.",
+      keyPokemon: pokemon.filter(p =>
+        p.moves.some(m => m.name === "Beat Up") || p.abilities.some(a => a.name === "Justified")
+      ).map(p => p.name),
+    });
+  }
+
+  // Perish Trap
+  if (allMoves.includes("Perish Song") && allAbilities.includes("Shadow Tag")) {
+    archetypes.push({
+      archetype: "perish-trap",
+      confidence: 0.95,
+      description: "Perish Song + Shadow Tag trapping strategy.",
+      keyPokemon: pokemon.filter(p =>
+        p.moves.some(m => m.name === "Perish Song") || p.abilities.some(a => a.name === "Shadow Tag")
+      ).map(p => p.name),
     });
   }
 

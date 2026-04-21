@@ -31,6 +31,8 @@ import {
   getSpeedTierReport,
   translateInsights,
   translateStrategyTree,
+  translateInsightsES,
+  translateStrategyTreeES,
   generateStrategyTree,
   type PrebuiltTeam,
   type TeamTestDetailedResult,
@@ -340,15 +342,18 @@ export default function TeamTester() {
     setPasteError("");
     const matchName = (p: ChampionsPokemon, name: string) => {
       const c = name.toLowerCase();
-      if (p.name.toLowerCase() === c || p.showdownName?.toLowerCase() === c) return true;
+      const pName = p.name.toLowerCase();
+      if (pName === c || p.showdownName?.toLowerCase() === c) return true;
       const regionalSuffixes: Record<string, string> = { hisui: "Hisuian", alola: "Alolan", galar: "Galarian", paldea: "Paldean" };
       const dashIdx = c.lastIndexOf("-");
       if (dashIdx > 0) {
         const base = c.slice(0, dashIdx);
         const suffix = c.slice(dashIdx + 1);
         const prefix = regionalSuffixes[suffix];
-        if (prefix && p.name.toLowerCase() === `${prefix.toLowerCase()} ${base}`) return true;
+        if (prefix && pName === `${prefix.toLowerCase()} ${base}`) return true;
       }
+      // Gendered forms: "Basculegion" → "Basculegion-M", "Meowstic" → "Meowstic-M" (default = male in Showdown)
+      if (pName === `${c}-m`) return true;
       return false;
     };
     const blocks = text.trim().split(/\n\n+/).filter(Boolean);
@@ -754,7 +759,7 @@ export default function TeamTester() {
                     // Build strategy overview from tree
                     const bestLead = result.leadCombos[0];
                     const rawTree = bestLead ? generateStrategyTree(team1Pokemon, team1Sets, team2Pokemon, team2Sets, bestLead, result.winRate) : null;
-                    const tree = rawTree && locale !== 'en' ? translateStrategyTree(rawTree, tm, ta) : rawTree;
+                    const tree = rawTree && locale === 'fr' ? translateStrategyTree(rawTree, tm, ta) : rawTree && locale === 'es' ? translateStrategyTreeES(rawTree, tm, ta) : rawTree;
                     let strategyData: Parameters<typeof exportTeamTesterPDF>[0]["strategy"] = null;
                     if (tree) {
                       // Flatten the first scenario's nodes into linear steps
@@ -808,7 +813,7 @@ export default function TeamTester() {
                       totalGames: result.totalGames,
                       leadCombos: result.leadCombos.map(lc => ({ lead1: lc.lead1, lead2: lc.lead2, winRate: lc.winRate, games: lc.games })),
                       pokemonImpact: result.pokemonImpact.map(pi => ({ name: pi.name, impact: pi.impact, excludeWinRate: pi.excludeWinRate })),
-                      insights: locale !== 'en' ? translateInsights(result.insights, tm) : result.insights,
+                      insights: locale === 'fr' ? translateInsights(result.insights, tm) : locale === 'es' ? translateInsightsES(result.insights, tm) : result.insights,
                       strategy: strategyData,
                       speedTiers: { team1: speed1, team2: speed2 },
                       typeProfile: {
@@ -1037,8 +1042,7 @@ export default function TeamTester() {
                     {t('teamTester.matchupInsights')}
                   </h3>
                   <div className="space-y-2">
-                    {(locale !== 'en' ? translateInsights(result.insights, tm) : result.insights).map((tip, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5 p-2.5 rounded-lg bg-gray-50 dark:bg-white/5">
+                    {(locale === 'fr' ? translateInsights(result.insights, tm) : locale === 'es' ? translateInsightsES(result.insights, tm) : result.insights).map((tip, idx) => (                      <div key={idx} className="flex items-start gap-2.5 p-2.5 rounded-lg bg-gray-50 dark:bg-white/5">
                         <span className="text-sm mt-0.5">💡</span>
                         <p className="text-xs text-muted-foreground leading-relaxed">{tip}</p>
                       </div>
@@ -1487,7 +1491,7 @@ export default function TeamTester() {
                                 sub: `${m.type} · ${m.category}${m.power ? ` · ${m.power}bp` : ""}${m.accuracy ? ` · ${m.accuracy}%` : ""} · ${m.pp}pp`,
                                 badge: tt(m.type),
                                 badgeColor: `${TYPE_COLORS[m.type]}AA`,
-                                description: m.description || undefined,
+                                description: m.description ? tmd(m.name, m.description) : undefined,
                               })),
                             ];
                             return (
@@ -1772,9 +1776,6 @@ export default function TeamTester() {
                                   {moveData.accuracy && <span>Acc: {moveData.accuracy}%</span>}
                                 </div>
                               )}
-                              {moveData?.description && (
-                                <p className="text-[9px] text-muted-foreground mt-1 line-clamp-2">{tmd(moveData.name, moveData.description)}</p>
-                              )}
                             </div>
                           );
                         })}
@@ -1942,7 +1943,7 @@ function StrategyFlowchart({
   const tree = useMemo(() => {
     if (!bestLead || team1Pokemon.length < 2 || team2Pokemon.length < 2) return null;
     const raw = generateStrategyTree(team1Pokemon, team1Sets, team2Pokemon, team2Sets, bestLead, winRate);
-    return raw && locale !== 'en' ? translateStrategyTree(raw, tm, ta) : raw;
+    return raw && locale === 'fr' ? translateStrategyTree(raw, tm, ta) : raw && locale === 'es' ? translateStrategyTreeES(raw, tm, ta) : raw;
   }, [team1Pokemon, team1Sets, team2Pokemon, team2Sets, bestLead, winRate, locale, tm, ta]);
 
   // Reset scenario tab when lead changes

@@ -107,6 +107,7 @@
       "spAtk": "AtqS",
       "spDef": "DéfS",
       "speed": "Vit",
+      "hpFull": "PV",
       "attackFull": "Attaque",
       "defenseFull": "Défense",
       "spAtkFull": "Atq. Spé.",
@@ -289,7 +290,8 @@
       "hype": "Le hype est réel ! Venez attendre avec nous 👇",
       "discordWait": "Attendez avec nous sur Discord !",
       "released": "Pokémon Champions est LÀ !",
-      "releasedDesc": "L'attente est terminée ! Amusez-vous sur Nintendo Switch — et quand vous êtes prêt à dominer la scène compétitive, on est là. Devenons Champions ensemble !",
+      "releasedDesc": "L'attente est terminée ! Amusez-vous sur Nintendo Switch, et quand vous êtes prêt à dominer la scène compétitive, on est là. Devenons Champions ensemble !",
+      "translationsAdded": "Traductions en espagnol et en français ajoutées à Champions Lab",
       "discordJoin": "Rejoignez notre communauté Discord !"
     }
   },
@@ -425,6 +427,19 @@
     "myTeamsLoad": "Mes Équipes / Charger",
     "newTeamClear": "Nouvelle Équipe / Effacer",
     "baseStatFilter": "Filtre Stats de Base",
+    "rolePreset": "Rôle",
+    "rolePresetDesc": "Filtrer les Pokémon par rôle — la sélection applique automatiquement le preset de tournoi correspondant",
+    "rolePresets": {
+      "physical-sweeper": "Attaquant Physique",
+      "special-sweeper": "Attaquant Spécial",
+      "physical-tank": "Mur Physique",
+      "special-tank": "Mur Spécial",
+      "support": "Support",
+      "speed-control": "Contrôle de Vitesse",
+      "redirector": "Redirecteur",
+      "trick-room": "Distorsion",
+      "setup-sweeper": "Balayeur à Setup"
+    },
     "pokemonCount": "{count} Pokémon trouvés",
     "pokemonAvailable": "{count} Pokémon disponibles",
     "sharedTeam": "Équipe Partagée",
@@ -1229,6 +1244,8 @@
     "speedFull": "Vitesse"
   },
   "season": {
+    "seasonWord": "Saison",
+    "regulationWord": "Régulation",
     "activeSeason": "Saison active",
     "seasonEnds": "Fin de saison",
     "regulationUntil": "Régulation jusqu'au",

@@ -286,8 +286,13 @@ export default function HomePage() {
                 <p className="text-lg font-extrabold bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
                   {t("pokedex.countdown.released")}
                 </p>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
+                <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto">
                   {t("pokedex.countdown.releasedDesc")}
+                </p>
+                <p className="text-xs font-semibold text-foreground/80 flex items-center justify-center gap-1.5 flex-wrap">
+                  <span>🇪🇸</span>
+                  <span>🇫🇷</span>
+                  <span>{t("pokedex.countdown.translationsAdded")}</span>
                 </p>
                 <div className="flex justify-center">
                   <a

@@ -115,6 +115,18 @@ export default function PastePage() {
           ? `${p.name}-Mega-${s.megaFormIndex === 1 ? "Y" : "X"}`
           : `${p.name}-Mega`;
       }
+      // Gendered forms: "Basculegion-M" → "Basculegion" (male = default in Showdown), "Meowstic-M" → "Meowstic"
+      if (exportName.endsWith("-M") && !exportName.startsWith("Rotom")) {
+        exportName = exportName.slice(0, -2);
+      }
+      // Convert regional prefix to Showdown suffix: "Hisuian Samurott" → "Samurott-Hisui"
+      const regionalPrefixes: Record<string, string> = { hisuian: "Hisui", alolan: "Alola", galarian: "Galar", paldean: "Paldea" };
+      for (const [prefix, suffix] of Object.entries(regionalPrefixes)) {
+        if (exportName.toLowerCase().startsWith(prefix + " ")) {
+          exportName = `${exportName.slice(prefix.length + 1)}-${suffix}`;
+          break;
+        }
+      }
       const nameLine = s.item ? `${exportName} @ ${s.item}` : exportName;
       const lines = [nameLine];
       if (s.ability) lines.push(`Ability: ${s.ability}`);

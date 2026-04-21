@@ -20,6 +20,7 @@ export interface DamageCalcPokemon {
   ability: string;
   item: string;
   atkStages?: number;
+  defStages?: number;
   spAtkStages?: number;
   isBurned?: boolean;
   currentHPPercent?: number; // 0-100
@@ -227,7 +228,9 @@ export function calculateDamage(
   }
 
   // Apply stat stages
-  const atkStages = isPhysical ? (attacker.atkStages ?? 0) : (attacker.spAtkStages ?? 0);
+  const atkStages = moveCalc.name === "Body Press"
+    ? (attacker.defStages ?? 0)
+    : (isPhysical ? (attacker.atkStages ?? 0) : (attacker.spAtkStages ?? 0));
   const defStages = useDefense ? (defender.defStages ?? 0) : (defender.spDefStages ?? 0);
 
   if (!options.isCrit || atkStages < 0) {

@@ -514,11 +514,11 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
                         </div>
                         <h4 className="text-xs font-bold text-violet-700 dark:text-violet-400 uppercase tracking-widest">{t('pokemonDetail.statPoints')}</h4>
                       </div>
-                      <p className="text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed mb-3"
+                      <p className="text-[13px] text-gray-600 dark:text-gray-300 leading-relaxed mb-3"
                         dangerouslySetInnerHTML={{ __html: t('pokemonDetail.statPointsDesc')
-                          .replace(/<b>/g, '<span class="font-bold text-gray-800 dark:text-gray-200">')
+                          .replace(/<b>/g, '<span class="font-bold text-gray-800 dark:text-gray-100">')
                           .replace(/<\/b>/g, '</span>')
-                          .replace(/<sp>/g, '<span class="font-bold text-violet-700 dark:text-violet-400">')
+                          .replace(/<sp>/g, '<span class="font-bold text-violet-700 dark:text-violet-300">')
                           .replace(/<\/sp>/g, '</span>')
                         }}
                       />

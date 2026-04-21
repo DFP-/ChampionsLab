@@ -107,6 +107,7 @@
       "spAtk": "SpA",
       "spDef": "SpD",
       "speed": "Spe",
+      "hpFull": "HP",
       "attackFull": "Attack",
       "defenseFull": "Defense",
       "spAtkFull": "Sp. Atk",
@@ -289,7 +290,8 @@
       "hype": "Hype is real! Come wait with us 👇",
       "discordWait": "Wait with us on Discord!",
       "released": "Pokémon Champions is HERE!",
-      "releasedDesc": "The wait is over! Go have a blast on Nintendo Switch — and when you're ready to dominate the competitive scene, we've got your back. Let's become Champions together!",
+      "releasedDesc": "The wait is over! Go have a blast on Nintendo Switch, and when you're ready to dominate the competitive scene, we've got your back. Let's become Champions together!",
+      "translationsAdded": "Spanish and French translations added to Champions Lab",
       "discordJoin": "Join our Discord community!"
     }
   },
@@ -425,6 +427,19 @@
     "myTeamsLoad": "My Teams / Load",
     "newTeamClear": "New Team / Clear",
     "baseStatFilter": "Base Stat Filter",
+    "rolePreset": "Role",
+    "rolePresetDesc": "Filter Pokémon by role — picks auto-apply the matching tournament preset",
+    "rolePresets": {
+      "physical-sweeper": "Physical Sweeper",
+      "special-sweeper": "Special Sweeper",
+      "physical-tank": "Physical Tank",
+      "special-tank": "Special Tank",
+      "support": "Support",
+      "speed-control": "Speed Control",
+      "redirector": "Redirector",
+      "trick-room": "Trick Room",
+      "setup-sweeper": "Setup Sweeper"
+    },
     "pokemonCount": "{count} Pokémon found",
     "pokemonAvailable": "{count} Pokémon available",
     "sharedTeam": "Shared Team",
@@ -1229,6 +1244,8 @@
     "speedFull": "Speed"
   },
   "season": {
+    "seasonWord": "Season",
+    "regulationWord": "Regulation",
     "activeSeason": "Active Season",
     "seasonEnds": "Season Ends",
     "regulationUntil": "Regulation Until",

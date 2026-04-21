@@ -40,6 +40,10 @@ import {
 } from "@/lib/engine";
 import { getMatchup, getAllTypes } from "@/lib/engine/type-chart";
 import {
+  classifyPickerRoles, pickSetForRole, PICKER_ROLES,
+  type PickerRole,
+} from "@/lib/engine/picker-roles";
+import {
   getSavedTeams, saveTeam, deleteTeam, deserializeTeam, saveLastTeam, getLastTeam,
   serializeTeam,
   type SavedTeam, type SavedTeamSlot,
@@ -120,7 +124,7 @@ const ALL_TYPES: PokemonType[] = [
 ];
 
 export default function TeamBuilderPage() {
-  const { locale, t, tp, tm, ta, ti, tn, ts, tt, tad, tid } = useI18n();
+  const { locale, t, tp, tm, ta, ti, tn, ts, tt, tad, tid, tmd } = useI18n();
 
   // ── Analysis text translators ──
   const RATING_KEYS: Record<string, string> = {
@@ -207,6 +211,7 @@ export default function TeamBuilderPage() {
   const [showPokemonPicker, setShowPokemonPicker] = useState(false);
   const [pickerSearch, setPickerSearch] = useState("");
   const [pickerTypeFilter, setPickerTypeFilter] = useState<PokemonType | null>(null);
+  const [pickerRoleFilter, setPickerRoleFilter] = useState<PickerRole | null>(null);
   const [pickerStatFilters, setPickerStatFilters] = useState({ hp: 0, attack: 0, defense: 0, spAtk: 0, spDef: 0, speed: 0, bst: 0 });
   const [showStatFilters, setShowStatFilters] = useState(false);
   const [showExport, setShowExport] = useState(false);
@@ -771,7 +776,12 @@ export default function TeamBuilderPage() {
     trackEvent("add_pokemon", "team_builder", pokemon.name);
     if (activeSlot !== null) {
       const sets = suggestSets(pokemon, teamPokemon);
-      const bestSet = sets.length > 0 ? sets[0].set : null;
+      // When a role filter is active, bias the auto-applied preset toward
+      // a tournament set that actually delivers that role.
+      const roleSet = pickerRoleFilter
+        ? pickSetForRole(USAGE_DATA[pokemon.id] ?? [], pickerRoleFilter)
+        : null;
+      const bestSet = roleSet ?? (sets.length > 0 ? sets[0].set : null);
       const newSlots = [...slots];
 
       // Auto-enable mega if the search matched a mega form ability
@@ -991,6 +1001,7 @@ export default function TeamBuilderPage() {
     setActiveSlot(index);
     setPickerSearch("");
     setPickerTypeFilter(null);
+    setPickerRoleFilter(null);
     setPickerStatFilters({ hp: 0, attack: 0, defense: 0, spAtk: 0, spDef: 0, speed: 0, bst: 0 });
     setShowStatFilters(false);
     setShowPokemonPicker(true);
@@ -1089,7 +1100,8 @@ export default function TeamBuilderPage() {
 
   const matchesPokemonName = (pokemon: ChampionsPokemon, name: string): boolean => {
     const candidate = name.toLowerCase();
-    if (pokemon.name.toLowerCase() === candidate || pokemon.showdownName?.toLowerCase() === candidate) return true;
+    const pName = pokemon.name.toLowerCase();
+    if (pName === candidate || pokemon.showdownName?.toLowerCase() === candidate) return true;
     // Showdown regional forms: "Samurott-Hisui" → "Hisuian Samurott", "Ninetales-Alola" → "Alolan Ninetales", etc.
     const regionalSuffixes: Record<string, string> = { hisui: "Hisuian", alola: "Alolan", galar: "Galarian", paldea: "Paldean" };
     const dashIdx = candidate.lastIndexOf("-");
@@ -1097,8 +1109,12 @@ export default function TeamBuilderPage() {
       const base = candidate.slice(0, dashIdx);
       const suffix = candidate.slice(dashIdx + 1);
       const prefix = regionalSuffixes[suffix];
-      if (prefix && pokemon.name.toLowerCase() === `${prefix.toLowerCase()} ${base}`) return true;
+      if (prefix && pName === `${prefix.toLowerCase()} ${base}`) return true;
     }
+    // Gendered forms: "Basculegion" → "Basculegion-M", "Meowstic" → "Meowstic-M" (default = male in Showdown)
+    if (pName === `${candidate}-m`) return true;
+    // Also match "Indeedee-F" etc. directly
+    if (pName === candidate.replace(/-f$/, "-f") || pName === candidate.replace(/-m$/, "-m")) return true;
     return false;
   };
 
@@ -1247,6 +1263,10 @@ export default function TeamBuilderPage() {
             break;
           }
         }
+        // Gendered forms: "Basculegion-M" → "Basculegion" (male = default in Showdown), "Meowstic-M" → "Meowstic"
+        if (exportName.endsWith("-M") && !exportName.startsWith("Rotom")) {
+          exportName = exportName.slice(0, -2);
+        }
         if (s.isMega && p.hasMega) {
           const megaForms = p.forms?.filter(f => f.isMega && !f.hidden) ?? [];
           if (megaForms.length > 1) {
@@ -1286,6 +1306,10 @@ export default function TeamBuilderPage() {
       if (p.hidden) return false;
       if (usedPokemonIds.includes(p.id)) return false;
       if (pickerTypeFilter && !p.types.includes(pickerTypeFilter)) return false;
+      if (pickerRoleFilter) {
+        const roles = classifyPickerRoles(p, USAGE_DATA[p.id] ?? []);
+        if (!roles.has(pickerRoleFilter)) return false;
+      }
       if (hasStatFilter) {
         const bs = p.baseStats;
         if (bs.hp < sf.hp || bs.attack < sf.attack || bs.defense < sf.defense ||
@@ -1303,7 +1327,7 @@ export default function TeamBuilderPage() {
         (p.hasMega && p.forms?.some((f) => f.isMega && f.abilities.some((a) => a.name.toLowerCase().includes(q) || ta(a.name).toLowerCase().includes(q))))
       );
     });
-  }, [pickerSearch, pickerTypeFilter, pickerStatFilters, usedPokemonIds, tp, tm, ta, t]);
+  }, [pickerSearch, pickerTypeFilter, pickerRoleFilter, pickerStatFilters, usedPokemonIds, tp, tm, ta, t]);
 
   return (
     <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-hidden">
@@ -1835,12 +1859,26 @@ export default function TeamBuilderPage() {
                           </>
                         );
                       })()}
-                      {slotSuggestion && slotSuggestion.altSets.length > 0 && slotSuggestion.altSets.slice(0, 3).map((s, i) => (
+                      {slotSuggestion && slotSuggestion.altSets.length > 0 && (() => {
+                        const shownSetNames = new Set((USAGE_DATA[editPkm.id] ?? []).map(s => s.name));
+                        const isMegaItem = (item: string) => item.endsWith("ite") || item.endsWith("ite X") || item.endsWith("ite Y") || item.endsWith("ite Z");
+                        const isMega = editSlotData.isMega || false;
+                        const filtered = slotSuggestion.altSets.filter(s => {
+                          if (shownSetNames.has(s.set.name)) return false;
+                          if (editPkm.hasMega) {
+                            const setIsMega = isMegaItem(s.set.item);
+                            if (isMega && !setIsMega) return false;
+                            if (!isMega && setIsMega) return false;
+                          }
+                          return true;
+                        });
+                        return filtered.slice(0, 3).map((s, i) => (
                         <button key={`sug-${i}`} onClick={() => applySet(selectedSlotIndex, s.set)} className="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 hover:border-emerald-300 transition-all text-[11px] font-medium text-emerald-700">
                             {translateSetName(s.set.name)}
                             <span className={cn("ml-1.5 text-[9px] font-bold", s.matchScore >= 70 ? "text-green-600" : s.matchScore >= 50 ? "text-amber-600" : "text-gray-400")}>{s.matchScore}%</span>
                           </button>
-                        ))}
+                        ));
+                      })()}
                       </div>
                     </div>
 
@@ -1863,7 +1901,7 @@ export default function TeamBuilderPage() {
                               badge: tt(m.type),
                               badgeColor: `${TYPE_COLORS[m.type]}AA`,
                               suggested: suggestedNames.includes(m.name),
-                              description: m.description || undefined,
+                              description: m.description ? tmd(m.name, m.description) : undefined,
                             })),
                           ];
                           return (
@@ -2558,6 +2596,29 @@ export default function TeamBuilderPage() {
                   ))}
                 </div>
 
+                {/* Role filter pills */}
+                <div className="flex flex-wrap gap-1.5 mt-2 items-center">
+                  <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-200 mr-0.5">{t('teamBuilder.rolePreset')}:</span>
+                  {PICKER_ROLES.map((r) => {
+                    const active = pickerRoleFilter === r;
+                    return (
+                      <button
+                        key={r}
+                        onClick={() => setPickerRoleFilter(active ? null : r)}
+                        className={cn(
+                          "px-2.5 py-1 rounded-full text-[10px] font-semibold capitalize transition-all border",
+                          active
+                            ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-500 shadow-sm"
+                            : "bg-white/40 dark:bg-slate-800/90 text-gray-700 dark:text-slate-100 border-gray-200 dark:border-slate-500/70 hover:border-emerald-400 dark:hover:border-emerald-400 dark:hover:bg-slate-700/90",
+                        )}
+                        title={t(`teamBuilder.rolePresetDesc`)}
+                      >
+                        {t(`teamBuilder.rolePresets.${r}`)}
+                      </button>
+                    );
+                  })}
+                </div>
+
                 {/* Base Stats section */}
                 <div className="mt-3 rounded-xl border border-gray-200/60 dark:border-white/[0.06] overflow-hidden bg-white/40 dark:bg-white/[0.03]">
                   <button
@@ -2629,7 +2690,7 @@ export default function TeamBuilderPage() {
                 {/* Result count */}
                 <div className="flex items-center justify-between mt-2">
                   <p className="text-[10px] text-muted-foreground">
-                    {t(pickerSearch || pickerTypeFilter || Object.values(pickerStatFilters).some(v => v > 0) ? 'teamBuilder.pokemonCount' : 'teamBuilder.pokemonAvailable', { count: filteredPicker.length })}
+                    {t(pickerSearch || pickerTypeFilter || pickerRoleFilter || Object.values(pickerStatFilters).some(v => v > 0) ? 'teamBuilder.pokemonCount' : 'teamBuilder.pokemonAvailable', { count: filteredPicker.length })}
                   </p>
                 </div>
               </div>

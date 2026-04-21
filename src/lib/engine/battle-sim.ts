@@ -3431,13 +3431,16 @@ export function generateRandomTeam(usedItems?: Set<string>): RandomTeam {
     };
   });
 
-  const hasWeather = team.some(p => p.abilities.some(a => ["Drought", "Drizzle", "Sand Stream", "Snow Warning"].includes(a.name)));
+  const teamAbilities = team.flatMap(p => p.abilities.map(a => a.name));
   const hasTR = sets.some(s => s.moves.includes("Trick Room"));
   const hasTailwind = sets.some(s => s.moves.includes("Tailwind"));
-  let archetype = "Balanced";
-  if (hasWeather) archetype = "Weather";
-  else if (hasTR) archetype = "Trick Room";
-  else if (hasTailwind) archetype = "Speed Control";
+  let archetype = "balance";
+  if (teamAbilities.includes("Drizzle")) archetype = "rain";
+  else if (teamAbilities.includes("Drought")) archetype = "sun";
+  else if (teamAbilities.includes("Sand Stream")) archetype = "sand";
+  else if (teamAbilities.includes("Snow Warning")) archetype = "snow";
+  else if (hasTR) archetype = "trick-room";
+  else if (hasTailwind) archetype = "tailwind";
 
   return {
     id: `rand-${Math.random().toString(36).slice(2, 8)}`,
