@@ -49,6 +49,7 @@ export interface DamageCalcOptions {
   auroraVeil?: boolean;
   friendGuard?: boolean;
   computeKOChance?: boolean; // expensive - only enable for UI damage calc
+  targetCount?: number;      // number of targets hit (for spread reduction)
 }
 
 export interface KOChance {
@@ -440,10 +441,18 @@ export function calculateDamage(
     screenMult = options.isDoubles ? 2732 / 4096 : 0.5; // ~0.667 in doubles, 0.5 in singles
   }
 
-  // Spread reduction in doubles
+  // Spread reduction in doubles (only when multiple targets are actually hit)
   let spreadMult = 1;
   if (options.isDoubles === true && isSpreadMove(moveCalc)) {
-    spreadMult = 0.75;
+    // If targetCount is provided, only reduce when >1 target is hit
+    // Otherwise fall back to the old behavior for backward compatibility
+    if (options.targetCount !== undefined) {
+      if (options.targetCount > 1) {
+        spreadMult = 0.75;
+      }
+    } else {
+      spreadMult = 0.75;
+    }
   }
 
   // Critical hit

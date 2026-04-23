@@ -426,7 +426,9 @@
     "noSavedTeams": "No saved teams yet. Build a team and click Save!",
     "myTeamsLoad": "My Teams / Load",
     "newTeamClear": "New Team / Clear",
-    "baseStatFilter": "Base Stat Filter",
+    "baseStatFilter": "Base Stat",
+    "typeFilter": "Type",
+    "counterFilter": "Counters",
     "rolePreset": "Role",
     "rolePresetDesc": "Filter Pokémon by role — picks auto-apply the matching tournament preset",
     "rolePresets": {

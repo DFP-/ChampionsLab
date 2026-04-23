@@ -10,15 +10,22 @@ interface ChangelogEntry {
   items: string[];
 }
 
-const SHARED_ENTRIES: ChangelogEntry[] = [
-  {
-    date: "23/04/2026",
-    items: [
+  const SHARED_ENTRIES: ChangelogEntry[] = [
+    {
+      date: "23/04/2026",
+      items: [
+        "📂 Counter and Role filters now collapsed by default in Team Builder picker  —  keeps the modal clean on open while Type filter stays expanded for quick access; click the header to expand Counter or Role pills",
+        "🌙 Dark mode readability fix for Team Builder picker filter labels  —  Type, Counter, and Role section headers now use high-contrast dark:text-white with bold uppercase styling and colorful accent icons for instant scannability",
+        "� Creative modern redesign for Type vs Counter filters  —  Type pills use rounded-full solid-background pills with full-opacity colored borders; Counter pills use dashed-border rectangular pills with a '2×' multiplier badge when active, making the two filter modes instantly distinguishable. Inactive pills use solid neutral backgrounds (bg-white / dark:bg-gray-800) for full visibility in both light and dark modes",
+        "�🎯 Counter type filter in Team Builder picker  —  select a type to see Pokémon that are super effective against it (e.g. Rock → Water, Fighting, Grass, Ground, Steel). Helps cover weaknesses and discover new options (EN/ES/FR)",
+        "🛡️ Protect & immunity handling in Damage Calculator  —  spread moves (Earthquake, Dazzling Gleam, etc.) no longer apply the 0.75× spread reduction in the 1v1 damage calc; reduction only applies when multiple targets are actually hit",
+      "🛡️ Unseen Fist ability support  —  contact moves now bypass Protect for full damage (like Piercing Drill but without the 25% reduction)",
+      "🛡️ Piercing Drill + spread reduction fix in Battle Engine  —  spread moves now only get reduced when 2+ opponents are alive on the field (was always reducing in doubles)",
       "🔗 Meta 'Open in Team Builder' now actually loads teams  —  tournament and curated teams pre-fill moves, nature, ability, item, and SP spreads from usage data instead of opening empty",
-      "🍓 Resist berry support in Damage Calculator  —  Chople Berry, Yache Berry, Occa Berry, etc. now halve super-effective damage and show a pink '{item} reduced damage' badge in results (EN/ES/FR)",
+      "� Resist berry support in Damage Calculator  —  Chople Berry, Yache Berry, Occa Berry, etc. now halve super-effective damage and show a pink '{item} reduced damage' badge in results (EN/ES/FR)",
       "🍓 Resist berry support in Battle Engine  —  defender's resist berry now correctly reduces damage during battle simulations",
       "🎯 Multi-hit moves in Battle Engine  —  Dual Wingbeat, Population Bomb, and other multi-hit moves now deal correct total damage (rolls random hit count and multiplies)",
-      "🎯 Rage Powder / Follow Me redirection in Battle Engine  —  opponent single-target moves are now redirected to the Pokémon that used Rage Powder or Follow Me",
+      "�🎯 Rage Powder / Follow Me redirection in Battle Engine  —  opponent single-target moves are now redirected to the Pokémon that used Rage Powder or Follow Me",
       "🐛 Fixed Intimidate on switch-in  —  Intimidate now always triggers on switch-in (including after Imposter transform) instead of only when Imposter was active",
       "🐛 Fixed move category display in Damage Calculator  —  Physical/Special/Status labels now show correctly (was checking capitalized 'Physical' instead of lowercase 'physical')",
       "🐛 Fixed Psyshock damage calculation  —  now correctly targets Defense stat (was using wrong boolean logic)",

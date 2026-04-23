@@ -211,9 +211,12 @@ export default function TeamBuilderPage() {
   const [showPokemonPicker, setShowPokemonPicker] = useState(false);
   const [pickerSearch, setPickerSearch] = useState("");
   const [pickerTypeFilter, setPickerTypeFilter] = useState<PokemonType | null>(null);
+  const [pickerCounterFilter, setPickerCounterFilter] = useState<PokemonType | null>(null);
   const [pickerRoleFilter, setPickerRoleFilter] = useState<PickerRole | null>(null);
   const [pickerStatFilters, setPickerStatFilters] = useState({ hp: 0, attack: 0, defense: 0, spAtk: 0, spDef: 0, speed: 0, bst: 0 });
   const [showStatFilters, setShowStatFilters] = useState(false);
+  const [showCounterFilter, setShowCounterFilter] = useState(false);
+  const [showRoleFilter, setShowRoleFilter] = useState(false);
   const [showExport, setShowExport] = useState(false);
   const [showImport, setShowImport] = useState(false);
   const [importText, setImportText] = useState("");
@@ -609,8 +612,8 @@ export default function TeamBuilderPage() {
       ctx.font = "15px Inter, system-ui, sans-serif";
       ctx.fillStyle = "rgba(255,255,255,0.8)";
       const abilityText = s.isMega && s.preMegaAbility
-        ? `${ta(s.preMegaAbility)} → ${ta(s.ability)}`
-        : ta(s.ability);
+        ? `${ta(s.preMegaAbility ?? "-")} → ${ta(s.ability ?? "-")}`
+        : ta(s.ability ?? "-");
       const info = [s.nature && `${tn(s.nature)} Nature`, abilityText].filter(Boolean).join(" · ");
       ctx.fillText(info, x + 110, y + 72);
 
@@ -1001,6 +1004,7 @@ export default function TeamBuilderPage() {
     setActiveSlot(index);
     setPickerSearch("");
     setPickerTypeFilter(null);
+    setPickerCounterFilter(null);
     setPickerRoleFilter(null);
     setPickerStatFilters({ hp: 0, attack: 0, defense: 0, spAtk: 0, spDef: 0, speed: 0, bst: 0 });
     setShowStatFilters(false);
@@ -1306,6 +1310,10 @@ export default function TeamBuilderPage() {
       if (p.hidden) return false;
       if (usedPokemonIds.includes(p.id)) return false;
       if (pickerTypeFilter && !p.types.includes(pickerTypeFilter)) return false;
+      if (pickerCounterFilter) {
+        const counters = p.types.some(t => (TYPE_CHART[t]?.[pickerCounterFilter] ?? 1) >= 2);
+        if (!counters) return false;
+      }
       if (pickerRoleFilter) {
         const roles = classifyPickerRoles(p, USAGE_DATA[p.id] ?? []);
         if (!roles.has(pickerRoleFilter)) return false;
@@ -1327,7 +1335,7 @@ export default function TeamBuilderPage() {
         (p.hasMega && p.forms?.some((f) => f.isMega && f.abilities.some((a) => a.name.toLowerCase().includes(q) || ta(a.name).toLowerCase().includes(q))))
       );
     });
-  }, [pickerSearch, pickerTypeFilter, pickerRoleFilter, pickerStatFilters, usedPokemonIds, tp, tm, ta, t]);
+  }, [pickerSearch, pickerTypeFilter, pickerCounterFilter, pickerRoleFilter, pickerStatFilters, usedPokemonIds, tp, tm, ta, t]);
 
   return (
     <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-x-hidden">
@@ -2578,17 +2586,26 @@ export default function TeamBuilderPage() {
                   autoFocus
                 />
                 {/* Type filter pills */}
-                <div className="flex flex-wrap gap-1.5 mt-3">
+                <div className="flex flex-wrap gap-1.5 mt-3 items-center">
+                  <span className="text-[10px] font-bold text-gray-500 dark:text-white uppercase tracking-wider mr-1 self-center shrink-0 flex items-center gap-1">
+                    <span className="w-1 h-3 rounded-full bg-emerald-400" />
+                    {t('teamBuilder.typeFilter')}
+                  </span>
                   {(Object.keys(TYPE_COLORS) as PokemonType[]).map((ty) => (
                     <button
                       key={ty}
-                      onClick={() => setPickerTypeFilter(pickerTypeFilter === ty ? null : ty)}
-                      className="px-2.5 py-1 rounded-full text-[10px] font-bold capitalize transition-all"
-                      style={{
-                        backgroundColor: pickerTypeFilter === ty ? TYPE_COLORS[ty] : `${TYPE_COLORS[ty]}30`,
-                        color: pickerTypeFilter === ty ? "#fff" : TYPE_COLORS[ty],
-                        border: `1.5px solid ${pickerTypeFilter === ty ? TYPE_COLORS[ty] : `${TYPE_COLORS[ty]}60`}`,
-                        textShadow: pickerTypeFilter === ty ? "0 1px 2px rgba(0,0,0,0.2)" : "none",
+                      onClick={() => { setPickerTypeFilter(pickerTypeFilter === ty ? null : ty); setPickerCounterFilter(null); }}
+                      className={cn(
+                        "px-2.5 py-1 rounded-full text-[10px] font-bold capitalize transition-all border hover:scale-105",
+                        pickerTypeFilter === ty
+                          ? "text-white shadow-sm"
+                          : "bg-white dark:bg-gray-800 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
+                      )}
+                      style={pickerTypeFilter === ty ? {
+                        backgroundColor: TYPE_COLORS[ty],
+                        borderColor: TYPE_COLORS[ty],
+                      } : {
+                        borderColor: TYPE_COLORS[ty],
                       }}
                     >
                       {t(`common.types.${ty}`)}
@@ -2596,34 +2613,97 @@ export default function TeamBuilderPage() {
                   ))}
                 </div>
 
-                {/* Role filter pills */}
-                <div className="flex flex-wrap gap-1.5 mt-2 items-center">
-                  <span className="text-[10px] font-semibold text-gray-500 dark:text-gray-200 mr-0.5">{t('teamBuilder.rolePreset')}:</span>
-                  {PICKER_ROLES.map((r) => {
-                    const active = pickerRoleFilter === r;
-                    return (
-                      <button
-                        key={r}
-                        onClick={() => setPickerRoleFilter(active ? null : r)}
-                        className={cn(
-                          "px-2.5 py-1 rounded-full text-[10px] font-semibold capitalize transition-all border",
-                          active
-                            ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-500 shadow-sm"
-                            : "bg-white/40 dark:bg-slate-800/90 text-gray-700 dark:text-slate-100 border-gray-200 dark:border-slate-500/70 hover:border-emerald-400 dark:hover:border-emerald-400 dark:hover:bg-slate-700/90",
-                        )}
-                        title={t(`teamBuilder.rolePresetDesc`)}
-                      >
-                        {t(`teamBuilder.rolePresets.${r}`)}
-                      </button>
-                    );
-                  })}
+                {/* Counter type filter pills — collapsible */}
+                <div className="mt-3 rounded-xl border border-gray-200/60 dark:border-white/[0.06] overflow-hidden bg-white/40 dark:bg-white/[0.03]">
+                  <button
+                    onClick={() => setShowCounterFilter(!showCounterFilter)}
+                    className="w-full flex items-center justify-between px-3 py-3 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Target className="w-3.5 h-3.5 text-rose-400" />
+                      <span className="text-[11px] font-semibold text-gray-700 dark:text-white">{t('teamBuilder.counterFilter')}</span>
+                      {pickerCounterFilter && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400">
+                          {t(`common.types.${pickerCounterFilter}`)}
+                        </span>
+                      )}
+                    </div>
+                    <ChevronDown className={cn("w-3.5 h-3.5 text-gray-400 transition-transform", showCounterFilter && "rotate-180")} />
+                  </button>
+
+                  {showCounterFilter && (
+                    <div className="px-3 pb-3 pt-3 border-t border-gray-100 dark:border-gray-700/60 flex flex-wrap gap-1.5">
+                      {(Object.keys(TYPE_COLORS) as PokemonType[]).map((ty) => (
+                        <button
+                          key={ty}
+                          onClick={() => { setPickerCounterFilter(pickerCounterFilter === ty ? null : ty); setPickerTypeFilter(null); }}
+                          className={cn(
+                            "px-2 py-[3px] rounded-md text-[10px] font-bold capitalize transition-all border flex items-center gap-1 hover:scale-105",
+                            pickerCounterFilter === ty
+                              ? "text-white shadow-sm border-transparent"
+                              : "bg-white dark:bg-gray-800 text-gray-700 dark:text-white border-dashed hover:border-solid hover:bg-gray-50 dark:hover:bg-gray-700"
+                          )}
+                          style={pickerCounterFilter === ty ? {
+                            backgroundColor: TYPE_COLORS[ty],
+                          } : {
+                            borderColor: TYPE_COLORS[ty],
+                          }}
+                        >
+                          {pickerCounterFilter === ty && <span className="text-[8px] opacity-80 font-black">2×</span>}
+                          {t(`common.types.${ty}`)}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Role filter pills — collapsible */}
+                <div className="mt-3 rounded-xl border border-gray-200/60 dark:border-white/[0.06] overflow-hidden bg-white/40 dark:bg-white/[0.03]">
+                  <button
+                    onClick={() => setShowRoleFilter(!showRoleFilter)}
+                    className="w-full flex items-center justify-between px-3 py-3 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Star className="w-3.5 h-3.5 text-violet-400" />
+                      <span className="text-[11px] font-semibold text-gray-700 dark:text-white">{t('teamBuilder.rolePreset')}</span>
+                      {pickerRoleFilter && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-violet-100 dark:bg-violet-500/20 text-violet-600 dark:text-violet-400">
+                          {t(`teamBuilder.rolePresets.${pickerRoleFilter}`)}
+                        </span>
+                      )}
+                    </div>
+                    <ChevronDown className={cn("w-3.5 h-3.5 text-gray-400 transition-transform", showRoleFilter && "rotate-180")} />
+                  </button>
+
+                  {showRoleFilter && (
+                    <div className="px-3 pb-3 pt-3 border-t border-gray-100 dark:border-gray-700/60 flex flex-wrap gap-1.5">
+                      {PICKER_ROLES.map((r) => {
+                        const active = pickerRoleFilter === r;
+                        return (
+                          <button
+                            key={r}
+                            onClick={() => setPickerRoleFilter(active ? null : r)}
+                            className={cn(
+                              "px-2.5 py-1 rounded-full text-[10px] font-semibold capitalize transition-all border",
+                              active
+                                ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-emerald-500 shadow-sm"
+                                : "bg-white/40 dark:bg-slate-800/90 text-gray-700 dark:text-slate-100 border-gray-200 dark:border-slate-500/70 hover:border-emerald-400 dark:hover:border-emerald-400 dark:hover:bg-slate-700/90",
+                            )}
+                            title={t(`teamBuilder.rolePresetDesc`)}
+                          >
+                            {t(`teamBuilder.rolePresets.${r}`)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 {/* Base Stats section */}
                 <div className="mt-3 rounded-xl border border-gray-200/60 dark:border-white/[0.06] overflow-hidden bg-white/40 dark:bg-white/[0.03]">
                   <button
                     onClick={() => setShowStatFilters(!showStatFilters)}
-                    className="w-full flex items-center justify-between px-3 py-2 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors"
+                    className="w-full flex items-center justify-between px-3 py-3 hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors"
                   >
                     <div className="flex items-center gap-2">
                       <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-500" />
@@ -2638,7 +2718,7 @@ export default function TeamBuilderPage() {
                   </button>
 
                   {showStatFilters && (
-                    <div className="px-3 pb-3 pt-1 border-t border-gray-100 dark:border-gray-700/60">
+                    <div className="px-3 pb-3 pt-3 border-t border-gray-100 dark:border-gray-700/60">
                       <div className="flex justify-end mb-1.5">
                         <button
                           onClick={() => setPickerStatFilters({ hp: 0, attack: 0, defense: 0, spAtk: 0, spDef: 0, speed: 0, bst: 0 })}
@@ -2690,7 +2770,7 @@ export default function TeamBuilderPage() {
                 {/* Result count */}
                 <div className="flex items-center justify-between mt-2">
                   <p className="text-[10px] text-muted-foreground">
-                    {t(pickerSearch || pickerTypeFilter || pickerRoleFilter || Object.values(pickerStatFilters).some(v => v > 0) ? 'teamBuilder.pokemonCount' : 'teamBuilder.pokemonAvailable', { count: filteredPicker.length })}
+                    {t(pickerSearch || pickerTypeFilter || pickerCounterFilter || pickerRoleFilter || Object.values(pickerStatFilters).some(v => v > 0) ? 'teamBuilder.pokemonCount' : 'teamBuilder.pokemonAvailable', { count: filteredPicker.length })}
                   </p>
                 </div>
               </div>

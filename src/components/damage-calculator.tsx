@@ -312,6 +312,7 @@ export default function DamageCalculator() {
       weather, terrain, isDoubles, isCrit, helpingHand,
       lightScreen, reflect, auroraVeil, friendGuard,
       computeKOChance: true,
+      targetCount: 1, // UI calc is 1v1; spread reduction only applies when multiple targets are actually hit
     };
     const atkResolved = resolveMegaForCalc(attacker.pokemon, attacker.set);
     const defResolved = resolveDefenderForCalc(defender.pokemon, defender.set);

@@ -426,7 +426,9 @@
     "noSavedTeams": "Aucune équipe sauvegardée. Construisez une équipe et cliquez Enregistrer !",
     "myTeamsLoad": "Mes Équipes / Charger",
     "newTeamClear": "Nouvelle Équipe / Effacer",
-    "baseStatFilter": "Filtre Stats de Base",
+    "baseStatFilter": "Stats de Base",
+    "typeFilter": "Type",
+    "counterFilter": "Contres",
     "rolePreset": "Rôle",
     "rolePresetDesc": "Filtrer les Pokémon par rôle — la sélection applique automatiquement le preset de tournoi correspondant",
     "rolePresets": {

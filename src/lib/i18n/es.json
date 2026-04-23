@@ -426,7 +426,9 @@
     "noSavedTeams": "Aún no hay equipos guardados. ¡Crea uno y pulsa Guardar!",
     "myTeamsLoad": "Mis Equipos / Cargar",
     "newTeamClear": "Nuevo Equipo / Limpiar",
-    "baseStatFilter": "Filtro de Stats Base",
+    "baseStatFilter": "Stats Base",
+    "typeFilter": "Tipo",
+    "counterFilter": "Counters",
     "rolePreset": "Rol",
     "rolePresetDesc": "Filtra Pokémon por rol — las selecciones aplican automáticamente el preset de torneo correspondiente",
     "rolePresets": {

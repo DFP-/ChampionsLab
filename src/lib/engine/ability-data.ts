@@ -452,6 +452,11 @@ export const ABILITY_DATA: Record<string, AbilityEffect> = {
     description: "When the Pokémon uses contact moves, it can hit even targets that are protecting themselves, dealing 1/4 of the damage that the move would otherwise deal. Everything aside from the target's protective effects is still triggered.",
     vgcRelevance: 9,
   },
+  "Unseen Fist": {
+    name: "Unseen Fist", category: "champions",
+    description: "When the Pokémon uses contact moves, it can hit even targets that are protecting themselves, dealing full damage. Everything aside from the target's protective effects is still triggered.",
+    vgcRelevance: 9,
+  },
   "Earth Sovereign": {
     name: "Earth Sovereign", category: "champions",
     description: "Ground/Dragon moves ignore immunities. Summons sandstorm on Mega Evolution.",

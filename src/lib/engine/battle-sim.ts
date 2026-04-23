@@ -1561,15 +1561,15 @@ function executeMove(
   user.lastMoveImmune = false;
   user.spreadMissed = [];
   user.spreadImmune = [];
-  for (const t of targets) {
-    // Protected targets block all damage (except Piercing Drill pierce)
+    for (const t of targets) {
+    // Protected targets block all damage (except Piercing Drill / Unseen Fist pierce)
     if (t.isProtected) {
       // King's Shield: lower attacker's Attack by 1 on contact
       if (t.protectMoveName === "King's Shield" && move.flags.contact) {
         user.boosts.attack = Math.max(-6, user.boosts.attack - 1);
       }
-      if (user.ability === "Piercing Drill" && move.flags.contact) {
-        // Piercing Drill pierces Protect for 25% damage on contact moves - continue but reduce damage later
+      if ((user.ability === "Piercing Drill" || user.ability === "Unseen Fist") && move.flags.contact) {
+        // Piercing Drill / Unseen Fist pierce Protect for contact moves - continue but reduce damage later
       } else {
         continue;
       }
@@ -1632,12 +1632,14 @@ function executeMove(
     const hadSturdy = t.ability === "Sturdy" && t.currentHP === t.maxHP;
     
     // Calculate damage
+    const opponentTargetCount = opponents.filter(o => o && !o.isFainted).length;
     const options: DamageCalcOptions = {
       weather: state.field.weather as DamageCalcOptions["weather"],
       isDoubles: true,
       reflect: (userSide === 1 ? state.field.side2 : state.field.side1).reflect > 0,
       lightScreen: (userSide === 1 ? state.field.side2 : state.field.side1).lightScreen > 0,
       isCrit: Math.random() < 0.0625,
+      targetCount: opponentTargetCount,
     };
     
     // Unaware: ignore opponent's stat boosts
