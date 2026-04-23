@@ -95,6 +95,7 @@ interface BattlePokemon {
   isAlive: boolean;
   isFainted: boolean;
   hasMoved: boolean;
+  isRedirecting: boolean; // Used Rage Powder / Follow Me this turn
   canFakeOut: boolean;
   isProtected: boolean;
   protectCount: number;
@@ -191,6 +192,7 @@ function createBattlePokemon(pokemon: ChampionsPokemon, set: CommonSet, teamForI
     isFainted: false,
     hasMoved: false,
     canFakeOut: true,
+    isRedirecting: false,
     isProtected: false,
     protectCount: 0,
     item: set.item,
@@ -1274,19 +1276,19 @@ function applySwitch(state: BattleState, sideIndex: 1 | 2, slot: 0 | 1, excludeF
     if (next.ability === "Imposter") {
       const oppTarget = opponents.find(o => o && !o.isFainted);
       if (oppTarget) applyImposterTransform(next, oppTarget);
-      // Copied Intimidate triggers after Imposter transform
-      if (next.ability === "Intimidate") {
-        for (const opp of opponents) {
-          if (opp && opp.isAlive) {
-            if (opp.ability === "Mirror Armor") {
-              next.boosts.attack = Math.max(-6, next.boosts.attack - 1);
-            } else if (opp.ability === "Guard Dog") {
-              opp.boosts.attack = Math.min(6, opp.boosts.attack + 1);
-            } else if (!isIntimidateBlocked(opp)) {
-              opp.boosts.attack = Math.max(-6, opp.boosts.attack - 1);
-              if (opp.ability === "Competitive") opp.boosts.spAtk = Math.min(6, opp.boosts.spAtk + 2);
-              if (opp.ability === "Defiant") opp.boosts.attack = Math.min(6, opp.boosts.attack + 2);
-            }
+    }
+    // Intimidate triggers on switch-in (including after Imposter transform)
+    if (next.ability === "Intimidate") {
+      for (const opp of opponents) {
+        if (opp && opp.isAlive) {
+          if (opp.ability === "Mirror Armor") {
+            next.boosts.attack = Math.max(-6, next.boosts.attack - 1);
+          } else if (opp.ability === "Guard Dog") {
+            opp.boosts.attack = Math.min(6, opp.boosts.attack + 1);
+          } else if (!isIntimidateBlocked(opp)) {
+            opp.boosts.attack = Math.max(-6, opp.boosts.attack - 1);
+            if (opp.ability === "Competitive") opp.boosts.spAtk = Math.min(6, opp.boosts.spAtk + 2);
+            if (opp.ability === "Defiant") opp.boosts.attack = Math.min(6, opp.boosts.attack + 2);
           }
         }
       }
@@ -1522,6 +1524,10 @@ function executeMove(
     if (moveName === "Reflect") {
       (userSide === 1 ? state.field.side1 : state.field.side2).reflect = 5;
     }
+    // Rage Powder / Follow Me: redirect opponent single-target moves to user
+    if (moveName === "Rage Powder" || moveName === "Follow Me") {
+      user.isRedirecting = true;
+    }
     return;
   }
   
@@ -1677,6 +1683,16 @@ function executeMove(
     // Apply damage with random roll between min and max
     let damage = result.damage[0] + Math.floor(Math.random() * (result.damage[1] - result.damage[0] + 1));
     damage = Math.max(1, damage);
+
+    // Multi-hit moves (Dual Wingbeat, Population Bomb, etc.)
+    const numHits = move.multiHit
+      ? (move.multiHit[0] === move.multiHit[1]
+          ? move.multiHit[0]
+          : move.multiHit[0] + Math.floor(Math.random() * (move.multiHit[1] - move.multiHit[0] + 1)))
+      : 1;
+    if (numHits > 1) {
+      damage *= numHits;
+    }
     
     // ── DISGUISE (Mimikyu): block first hit, take 1/8 max HP chip ──
     if (t.disguiseIntact) {
@@ -2355,7 +2371,16 @@ export function simulateBattle(
 
       const opponents = action.sideIndex === 1 ? state.active2 : state.active1;
       const allies = action.sideIndex === 1 ? state.active1 : state.active2;
-      const target = opponents[action.targetSlot] ?? null;
+      let target = opponents[action.targetSlot] ?? null;
+
+      // Rage Powder / Follow Me redirection: opponent single-target moves are redirected
+      const redirector = opponents.find(o => o && !o.isFainted && o.isRedirecting);
+      if (redirector && target && !target.isRedirecting) {
+        const move = getMove(action.moveName);
+        if (move && !isSpreadMove(move) && move.target !== "self" && move.target !== "adjacentAlly" && move.target !== "allySide" && move.target !== "foeSide" && move.target !== "all") {
+          target = redirector;
+        }
+      }
       
       executeMove(
         action.mon, action.moveName, target,
@@ -2772,8 +2797,16 @@ export function simulateBattleWithLog(
 
       const opponents = action.sideIndex === 1 ? state.active2 : state.active1;
       const allies = action.sideIndex === 1 ? state.active1 : state.active2;
-      const target = opponents[action.targetSlot] ?? null;
+      let target = opponents[action.targetSlot] ?? null;
       const move = getMove(action.moveName);
+
+      // Rage Powder / Follow Me redirection: opponent single-target moves are redirected
+      const redirector = opponents.find(o => o && !o.isFainted && o.isRedirecting);
+      if (redirector && target && !target.isRedirecting) {
+        if (move && !isSpreadMove(move) && move.target !== "self" && move.target !== "adjacentAlly" && move.target !== "allySide" && move.target !== "foeSide" && move.target !== "all") {
+          target = redirector;
+        }
+      }
 
       // Track transformation states before the move
       const allDisguiseBefore = new Map([...opponents, ...allies].filter((m): m is BattlePokemon => m !== null).map(m => [m, m.disguiseIntact]));
@@ -3004,7 +3037,7 @@ export function simulateBattleWithLog(
     else if (team1Alive === 0) state.winner = 2;
     else if (team2Alive === 0) state.winner = 1;
 
-    for (const mon of [...state.team1, ...state.team2]) { mon.hasMoved = false; mon.isProtected = false; if (!mon.isFainted) mon.canFakeOut = false; }
+    for (const mon of [...state.team1, ...state.team2]) { mon.hasMoved = false; mon.isProtected = false; mon.isRedirecting = false; if (!mon.isFainted) mon.canFakeOut = false; }
   }
 
   if (!state.winner) {

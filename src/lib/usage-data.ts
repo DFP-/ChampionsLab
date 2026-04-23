@@ -95,7 +95,7 @@ export const USAGE_DATA: Record<number, CommonSet[]> = {
     { name: "Offensive Pivot", nature: "Timid", ability: "Natural Cure", item: "Choice Specs", moves: ["Hydro Pump", "Psychic", "Ice Beam", "Thunderbolt"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
     { name: "Speed Control", nature: "Timid", ability: "Natural Cure", item: "Focus Sash", moves: ["Scald", "Icy Wind", "Trick Room", "Protect"], sp: { hp: 4, attack: 0, defense: 0, spAtk: 30, spDef: 0, speed: 32 } },
     { name: "Bulky Attacker", nature: "Modest", ability: "Natural Cure", item: "Sitrus Berry", moves: ["Scald", "Psychic", "Ice Beam", "Protect"], sp: { hp: 20, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 12 } },
-    { name: "Mega Prism", nature: "Timid", ability: "Prism Armor", item: "Starmieite", moves: ["Hydro Pump", "Psychic", "Ice Beam", "Protect"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
+    { name: "Mega Prism", nature: "Timid", ability: "Prism Armor", item: "Starminite", moves: ["Hydro Pump", "Psychic", "Ice Beam", "Protect"], sp: { hp: 0, attack: 0, defense: 2, spAtk: 32, spDef: 0, speed: 32 } },
   ],
 
   // Pinsir (id: 127)

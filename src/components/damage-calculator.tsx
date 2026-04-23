@@ -234,6 +234,9 @@ function buildCalcDescription(
   if (defSPDef > 0) defSpParts.push(`${defSPDef} ${defLabel}`);
   if (defSpParts.length > 0) defParts.push(defSpParts.join(" / "));
   defParts.push(L.tp(def.pokemon.name));
+  if (result.berryActivated && def.set?.item) {
+    defParts.push(`(${def.set.item})`);
+  }
 
   // Modifiers
   const modifiers: string[] = [];
@@ -575,6 +578,11 @@ export default function DamageCalculator() {
                  selectedResult.effectiveness > 1 ? `${t('damageCalc.superEffective')} (×${selectedResult.effectiveness})` :
                  t('damageCalc.neutralEffect')}
               </div>
+              {selectedResult.berryActivated && defender.set?.item && (
+                <div className="mt-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold inline-block bg-pink-100 text-pink-700 border border-pink-200">
+                  {t('damageCalc.berryActivated', { item: defender.set.item })}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -648,7 +656,7 @@ export default function DamageCalculator() {
                     <span className="text-sm font-semibold truncate">{tm(r.moveName)}</span>
                     {move && (
                       <span className="text-[10px] text-muted-foreground uppercase flex-shrink-0">
-                        {move.category === "Physical" ? t('damageCalc.catPhysical') : move.category === "Special" ? t('damageCalc.catSpecial') : t('damageCalc.catStatus')}
+                        {move.category === "physical" ? t('damageCalc.catPhysical') : move.category === "special" ? t('damageCalc.catSpecial') : t('damageCalc.catStatus')}
                       </span>
                     )}
                     {move && (
@@ -685,6 +693,11 @@ export default function DamageCalculator() {
                     )}>
                       ×{r.effectiveness}
                     </span>
+                    {r.berryActivated && defender.set?.item && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-pink-100 text-pink-700 border border-pink-200 whitespace-nowrap">
+                        {defender.set.item}
+                      </span>
+                    )}
                   </div>
                 </button>
               );

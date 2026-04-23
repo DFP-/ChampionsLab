@@ -2516,9 +2516,25 @@ export default function MetaPage() {
                     })}
                   </div>
 
-                  <Link href="/team-builder" className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-sm">
-                    <Sparkles className="w-4 h-4" /> {t('meta.openInTeamBuilder')} <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  {(() => {
+                    const builderSlots = team.pokemonIds.map((id, idx) => {
+                      const set = team.sets[idx];
+                      return {
+                        p: id,
+                        a: set?.ability || undefined,
+                        t: set?.nature || undefined,
+                        m: set?.moves || [],
+                        sp: set ? [set.sp.hp, set.sp.attack, set.sp.defense, set.sp.spAtk, set.sp.spDef, set.sp.speed] : [0, 0, 0, 0, 0, 0],
+                        i: set?.item || undefined,
+                      };
+                    });
+                    const builderJson = JSON.stringify({ n: team.name, s: builderSlots });
+                    return (
+                      <button onClick={() => window.open("/team-builder?team=" + btoa(builderJson), "_blank")} className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-sm">
+                        <Sparkles className="w-4 h-4" /> {t('meta.openInTeamBuilder')} <ArrowRight className="w-4 h-4" />
+                      </button>
+                    );
+                  })()}
                 </div>
               );
             })()}

@@ -1134,7 +1134,8 @@
     "descHelpingHand": "Refuerzo",
     "descCrit": "con golpe crítico",
     "descWeather": "con {weather}",
-    "descTerrain": "en campo {terrain}"
+    "descTerrain": "en campo {terrain}",
+    "berryActivated": "{item} redujo el daño"
   },
   "teamTester": {
     "team1": "Equipo 1",

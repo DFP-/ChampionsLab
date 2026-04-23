@@ -456,11 +456,6 @@ export const ITEMS: Record<string, ItemEffect> = {
     description: "Halves super-effective Bug damage once.",
     resistBerry: "bug",
   },
-  "Passho Berry": {
-    name: "Passho Berry",
-    description: "Halves super-effective Water damage once.",
-    resistBerry: "water",
-  },
 
   // ── Mega Stones ──────────────────────────────────────────────────────────
   "Venusaurite": { name: "Venusaurite", description: "Mega Evolves Venusaur.", isMegaStone: true, forPokemon: "Venusaur" },
@@ -475,7 +470,7 @@ export const ITEMS: Record<string, ItemEffect> = {
   "Slowbronite": { name: "Slowbronite", description: "Mega Evolves Slowbro.", isMegaStone: true, forPokemon: "Slowbro" },
   "Gengarite": { name: "Gengarite", description: "Mega Evolves Gengar.", isMegaStone: true, forPokemon: "Gengar" },
   "Kangaskhanite": { name: "Kangaskhanite", description: "Mega Evolves Kangaskhan.", isMegaStone: true, forPokemon: "Kangaskhan" },
-  "Starmieite": { name: "Starmieite", description: "Mega Evolves Starmie.", isMegaStone: true, forPokemon: "Starmie" },
+  "Starminite": { name: "Starminite", description: "Mega Evolves Starmie.", isMegaStone: true, forPokemon: "Starmie" },
   "Pinsirite": { name: "Pinsirite", description: "Mega Evolves Pinsir.", isMegaStone: true, forPokemon: "Pinsir" },
   "Gyaradosite": { name: "Gyaradosite", description: "Mega Evolves Gyarados.", isMegaStone: true, forPokemon: "Gyarados" },
   "Aerodactylite": { name: "Aerodactylite", description: "Mega Evolves Aerodactyl.", isMegaStone: true, forPokemon: "Aerodactyl" },
@@ -580,6 +575,28 @@ export function getItemDamageMultiplier(
   }
 
   return mult;
+}
+
+/** Get defender item damage reduction multiplier (resist berries) */
+export function getDefenderItemMultiplier(
+  itemName: string,
+  moveType: PokemonType,
+  effectiveness: number
+): number {
+  const item = ITEMS[itemName];
+  if (!item || !item.resistBerry) return 1;
+
+  // Chilan Berry halves any Normal-type damage
+  if (item.resistBerry === "normal" && moveType === "normal") {
+    return 0.5;
+  }
+
+  // Other resist berries only work on super-effective hits
+  if (item.resistBerry === moveType && effectiveness > 1) {
+    return 0.5;
+  }
+
+  return 1;
 }
 
 /** Get speed multiplier from item */

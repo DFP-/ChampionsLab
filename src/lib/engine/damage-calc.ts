@@ -7,7 +7,7 @@
 import type { PokemonType, BaseStats, StatPoints } from "@/lib/types";
 import { getMatchup } from "./type-chart";
 import { calculateStats, applyStatStage, type CalculatedStats } from "./stat-calc";
-import { getItemDamageMultiplier } from "./items";
+import { getItemDamageMultiplier, getDefenderItemMultiplier } from "./items";
 import { getMove, isSpreadMove, type EngineMove } from "./move-data";
 import { getAbilityEffect } from "./ability-data";
 import type { NatureName } from "./natures";
@@ -68,6 +68,7 @@ export interface DamageResult {
   effectiveness: number;        // type effectiveness multiplier
   moveName: string;
   effectiveType: PokemonType;    // resolved move type (after Weather Ball, -ate, etc.)
+  berryActivated: boolean;       // true if defender's resist berry reduced damage
 }
 
 /**
@@ -161,6 +162,7 @@ export function calculateDamage(
       isOHKO: false, is2HKO: false, koChance: { n: Infinity, chance: 0, text: "--" },
       effectiveness: 1, moveName,
       effectiveType: moveOriginal?.type as PokemonType ?? "normal",
+      berryActivated: false,
     };
   }
 
@@ -201,7 +203,7 @@ export function calculateDamage(
 
   // Determine attacking and defending stats
   const isPhysical = moveCalc.category === "physical";
-  const useDefense = isPhysical && moveCalc.name !== "Psyshock"; // Psyshock targets Def with SpA
+  const useDefense = isPhysical || moveCalc.name === "Psyshock"; // Psyshock targets Def with SpA
 
   let atkStat: number;
   let defStat: number;
@@ -252,6 +254,7 @@ export function calculateDamage(
       isOHKO: false, is2HKO: false, koChance: { n: Infinity, chance: 0, text: "--" },
       effectiveness: 0, moveName,
       effectiveType: moveCalc.type as PokemonType,
+      berryActivated: false,
     };
   }
 
@@ -270,6 +273,7 @@ export function calculateDamage(
         percentHP: [Math.round((fixedDmg / defStats.hp) * 100), Math.round((fixedDmg / defStats.hp) * 100)], numHits: 2,
         isOHKO: false, is2HKO: fixedDmg * 2 >= currentHP, koChance: { n: 2, chance: 1, text: "guaranteed 2HKO" },
         effectiveness: 1, moveName, effectiveType: moveCalc.type as PokemonType,
+        berryActivated: false,
       };
     }
   }
@@ -417,6 +421,7 @@ export function calculateDamage(
       isOHKO: false, is2HKO: false, koChance: { n: Infinity, chance: 0, text: "--" },
       effectiveness: 0, moveName,
       effectiveType: moveCalc.type as PokemonType,
+      berryActivated: false,
     };
   }
 
@@ -450,9 +455,12 @@ export function calculateDamage(
     burnMult = 0.5;
   }
 
-  // Item damage multiplier
+  // Item damage multiplier (attacker)
   const isSE = effectiveness >= 2;
   const itemMult = getItemDamageMultiplier(attacker.item, moveCalc.type, moveCalc.category, isSE);
+
+  // Defender resist berry multiplier
+  const defenderItemMult = getDefenderItemMultiplier(defender.item, moveCalc.type, effectiveness);
 
   // Helping Hand
   const helpingHandMult = options.helpingHand ? 1.5 : 1;
@@ -461,7 +469,7 @@ export function calculateDamage(
   const friendGuardMult = options.friendGuard ? 0.75 : 1;
 
   // Assault Vest SpDef boost handled via stat modifiers
-  if (defender.item === "Assault Vest" && !isPhysical) {
+  if (defender.item === "Assault Vest" && !useDefense) {
     defStat = Math.floor(defStat * 1.5);
   }
 
@@ -473,7 +481,10 @@ export function calculateDamage(
 
   // Apply all multipliers
   const modifiers = stabMult * effectiveness * weatherMult * screenMult *
-    spreadMult * critMult * burnMult * itemMult * helpingHandMult * friendGuardMult;
+    spreadMult * critMult * burnMult * itemMult * helpingHandMult * friendGuardMult * defenderItemMult;
+
+  // Check if defender resist berry activated
+  const berryActivated = defenderItemMult === 0.5;
 
   // Random roll is 0.85 to 1.00 (16 possible values)
   const rolls: number[] = [];
@@ -507,6 +518,7 @@ export function calculateDamage(
     effectiveness,
     moveName,
     effectiveType: moveCalc.type as PokemonType,
+    berryActivated,
   };
 }
 

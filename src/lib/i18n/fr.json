@@ -1134,7 +1134,8 @@
     "descHelpingHand": "Coup d'Main",
     "descCrit": "sur un coup critique",
     "descWeather": "sous {weather}",
-    "descTerrain": "sur terrain {terrain}"
+    "descTerrain": "sur terrain {terrain}",
+    "berryActivated": "{item} a réduit les dégâts"
   },
   "teamTester": {
     "team1": "Équipe 1",

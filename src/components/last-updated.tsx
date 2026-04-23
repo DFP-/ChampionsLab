@@ -12,6 +12,23 @@ interface ChangelogEntry {
 
 const SHARED_ENTRIES: ChangelogEntry[] = [
   {
+    date: "23/04/2026",
+    items: [
+      "🔗 Meta 'Open in Team Builder' now actually loads teams  —  tournament and curated teams pre-fill moves, nature, ability, item, and SP spreads from usage data instead of opening empty",
+      "🍓 Resist berry support in Damage Calculator  —  Chople Berry, Yache Berry, Occa Berry, etc. now halve super-effective damage and show a pink '{item} reduced damage' badge in results (EN/ES/FR)",
+      "🍓 Resist berry support in Battle Engine  —  defender's resist berry now correctly reduces damage during battle simulations",
+      "🎯 Multi-hit moves in Battle Engine  —  Dual Wingbeat, Population Bomb, and other multi-hit moves now deal correct total damage (rolls random hit count and multiplies)",
+      "🎯 Rage Powder / Follow Me redirection in Battle Engine  —  opponent single-target moves are now redirected to the Pokémon that used Rage Powder or Follow Me",
+      "🐛 Fixed Intimidate on switch-in  —  Intimidate now always triggers on switch-in (including after Imposter transform) instead of only when Imposter was active",
+      "🐛 Fixed move category display in Damage Calculator  —  Physical/Special/Status labels now show correctly (was checking capitalized 'Physical' instead of lowercase 'physical')",
+      "🐛 Fixed Psyshock damage calculation  —  now correctly targets Defense stat (was using wrong boolean logic)",
+      "🐛 Fixed Assault Vest in damage calc  —  now correctly boosts SpDef (was checking physical flag instead of defense flag)",
+      "🔧 Renamed Starmieite → Starminite  —  correct mega stone name used in item database and Starmie usage set",
+      "📦 Hisuian Goodra movepool updated  —  19 moves added (Body Press, Dragon Cheer, Dragon Tail, Feint, Flail, Gyro Ball, Ice Spinner, Lash Out, Rain Dance, Rest, Sandstorm, Scary Face, Shelter, Skitter Smack, Sleep Talk, Stomping Tantrum, Sunny Day, Tearful Look, Weather Ball); 10 removed (Absorb, Ancient Power, Dragon Breath, Iron Defense, Magnet Bomb, Tackle, Take Down, Toxic, Water Gun)",
+      "📦 Goodra movepool updated  —  added Attract, Double Team, Infestation, Swagger; removed Acid Armor, Counter, Giga Drain, Life Dew",
+    ],
+  },
+  {
     date: "21/04/2026",
     items: [
       "�🇸 Full Spanish translation  —  complete localization including UI strings, Pokémon/move/ability/item names, move and ability descriptions, nature names, PokéSchool long-form content (9 sections, 36 subsections), and strategy flowchart post-processor with VGC Spanish terminology",
