@@ -7,7 +7,7 @@
 import type { PokemonType, BaseStats, StatPoints } from "@/lib/types";
 import { getMatchup } from "./type-chart";
 import { calculateStats, applyStatStage, type CalculatedStats } from "./stat-calc";
-import { getItemDamageMultiplier, getDefenderItemMultiplier } from "./items";
+import { getItemDamageMultiplier, getDefenderItemMultiplier, ITEMS } from "./items";
 import { getMove, isSpreadMove, type EngineMove } from "./move-data";
 import { getAbilityEffect } from "./ability-data";
 import type { NatureName } from "./natures";
@@ -58,6 +58,11 @@ export interface KOChance {
   text: string;     // e.g. "guaranteed OHKO", "43.8% chance to OHKO"
 }
 
+export interface ActiveModifier {
+  name: string;
+  multiplier: number;
+}
+
 export interface DamageResult {
   damage: [number, number];     // [min, max] damage values
   rolls: number[];              // all 16 damage rolls
@@ -70,6 +75,7 @@ export interface DamageResult {
   moveName: string;
   effectiveType: PokemonType;    // resolved move type (after Weather Ball, -ate, etc.)
   berryActivated: boolean;       // true if defender's resist berry reduced damage
+  modifiers: ActiveModifier[];   // active damage modifiers for display
 }
 
 /**
@@ -77,13 +83,25 @@ export interface DamageResult {
  * OHKO: count rolls >= HP / 16
  * 2HKO: sum over all 16×16 pairs where r1+r2 >= HP / 256
  * nHKO: iteratively convolve roll distributions
+ *
+ * Healing berries (Sitrus, Aguav, Oran) are modeled: after the first hit that
+ * drops HP below the berry threshold, the defender heals by berryHeal HP,
+ * increasing the effective HP for subsequent hits.
  */
-function computeKOChance(rolls: number[], targetHP: number): KOChance {
+function computeKOChance(
+  rolls: number[],
+  targetHP: number,
+  berryThreshold?: number, // HP% threshold to activate (e.g. 50 for Sitrus)
+  berryHeal?: number       // HP% restored (e.g. 25 for Sitrus)
+): KOChance {
   if (rolls.length === 0 || rolls[rolls.length - 1] === 0) {
     return { n: Infinity, chance: 0, text: "--" };
   }
 
   const n = rolls.length; // 16
+  const thresholdHP = berryThreshold ? Math.floor(targetHP * (berryThreshold / 100)) : 0;
+  const healHP = berryHeal ? Math.floor(targetHP * (berryHeal / 100)) : 0;
+  const hasBerry = berryThreshold && berryHeal;
 
   // OHKO check
   const ohkoCount = rolls.filter(r => r >= targetHP).length;
@@ -98,15 +116,64 @@ function computeKOChance(rolls: number[], targetHP: number): KOChance {
     };
   }
 
-  // nHKO (n=2,3,4,...): iterative convolution
-  // prev[d] = number of ways to reach exactly total damage d after k hits
-  // We use a Map for sparse representation
+  // 2HKO check (with berry modeling)
+  if (hasBerry) {
+    let koOutcomes = 0;
+    const totalOutcomes = n * n;
+    for (const r1 of rolls) {
+      const remainingAfterFirst = targetHP - r1;
+      // Berry activates if HP drops to or below threshold
+      const effectiveTarget = remainingAfterFirst <= thresholdHP
+        ? targetHP + healHP  // berry heals, need more damage
+        : targetHP;
+      for (const r2 of rolls) {
+        if (r1 + r2 >= effectiveTarget) koOutcomes++;
+      }
+    }
+    if (koOutcomes > 0) {
+      const chance = koOutcomes / totalOutcomes;
+      return {
+        n: 2,
+        chance,
+        text: chance === 1
+          ? "guaranteed 2HKO"
+          : `${formatChance(chance)} chance to 2HKO`,
+      };
+    }
+  } else {
+    // Standard 2HKO without berry
+    let koOutcomes = 0;
+    const totalOutcomes = n * n;
+    for (const r1 of rolls) {
+      for (const r2 of rolls) {
+        if (r1 + r2 >= targetHP) koOutcomes++;
+      }
+    }
+    if (koOutcomes > 0) {
+      const chance = koOutcomes / totalOutcomes;
+      return {
+        n: 2,
+        chance,
+        text: chance === 1
+          ? "guaranteed 2HKO"
+          : `${formatChance(chance)} chance to 2HKO`,
+      };
+    }
+  }
+
+  // nHKO (n=3,4,5,6): iterative convolution
+  // For berries, we approximate by adding healHP to targetHP if the average
+  // first-hit damage would trigger the berry (most berries activate early).
+  const effectiveTargetHP = hasBerry && (rolls[0] >= targetHP - thresholdHP)
+    ? targetHP + healHP
+    : targetHP;
+
   let prev = new Map<number, number>();
   for (const r of rolls) {
     prev.set(r, (prev.get(r) ?? 0) + 1);
   }
 
-  for (let hits = 2; hits <= 6; hits++) {
+  for (let hits = 3; hits <= 6; hits++) {
     const next = new Map<number, number>();
     for (const [prevDmg, prevCount] of prev) {
       for (const r of rolls) {
@@ -116,16 +183,15 @@ function computeKOChance(rolls: number[], targetHP: number): KOChance {
     }
     prev = next;
 
-    // Count outcomes that KO
     const totalOutcomes = Math.pow(n, hits);
     let koOutcomes = 0;
     for (const [dmg, count] of prev) {
-      if (dmg >= targetHP) koOutcomes += count;
+      if (dmg >= effectiveTargetHP) koOutcomes += count;
     }
 
     if (koOutcomes > 0) {
       const chance = koOutcomes / totalOutcomes;
-      const label = hits === 2 ? "2HKO" : hits === 3 ? "3HKO" : `${hits}HKO`;
+      const label = hits === 3 ? "3HKO" : `${hits}HKO`;
       return {
         n: hits,
         chance,
@@ -138,7 +204,7 @@ function computeKOChance(rolls: number[], targetHP: number): KOChance {
 
   // Fallback: estimate from average
   const avg = rolls.reduce((a, b) => a + b, 0) / n;
-  const estHits = Math.ceil(targetHP / avg);
+  const estHits = Math.ceil(effectiveTargetHP / avg);
   return { n: estHits, chance: 1, text: `${estHits}HKO` };
 }
 
@@ -164,6 +230,7 @@ export function calculateDamage(
       effectiveness: 1, moveName,
       effectiveType: moveOriginal?.type as PokemonType ?? "normal",
       berryActivated: false,
+      modifiers: [],
     };
   }
 
@@ -204,7 +271,7 @@ export function calculateDamage(
 
   // Determine attacking and defending stats
   const isPhysical = moveCalc.category === "physical";
-  const useDefense = isPhysical || moveCalc.name === "Psyshock"; // Psyshock targets Def with SpA
+  const useDefense = isPhysical || !!moveCalc.flags.dealsPhysicalDamage; // Psyshock/Psystrike/Secret Sword target Def with SpA
 
   let atkStat: number;
   let defStat: number;
@@ -256,6 +323,7 @@ export function calculateDamage(
       effectiveness: 0, moveName,
       effectiveType: moveCalc.type as PokemonType,
       berryActivated: false,
+      modifiers: [],
     };
   }
 
@@ -275,6 +343,7 @@ export function calculateDamage(
         isOHKO: false, is2HKO: fixedDmg * 2 >= currentHP, koChance: { n: 2, chance: 1, text: "guaranteed 2HKO" },
         effectiveness: 1, moveName, effectiveType: moveCalc.type as PokemonType,
         berryActivated: false,
+        modifiers: [],
       };
     }
   }
@@ -423,6 +492,7 @@ export function calculateDamage(
       effectiveness: 0, moveName,
       effectiveType: moveCalc.type as PokemonType,
       berryActivated: false,
+      modifiers: [],
     };
   }
 
@@ -458,9 +528,9 @@ export function calculateDamage(
   // Critical hit
   const critMult = options.isCrit ? 1.5 : 1;
 
-  // Burn (halves physical damage unless Guts)
+  // Burn (halves physical damage unless Guts or move ignores burn)
   let burnMult = 1;
-  if (attacker.isBurned && isPhysical && attacker.ability !== "Guts") {
+  if (attacker.isBurned && isPhysical && attacker.ability !== "Guts" && !moveCalc.flags.ignoresBurn) {
     burnMult = 0.5;
   }
 
@@ -511,10 +581,32 @@ export function calculateDamage(
   const avgDamage = (minDamage + maxDamage) / 2;
   const numHits = Math.ceil(targetHP / avgDamage);
 
+  // Healing berry support for KO chance
+  const defenderItem = ITEMS[defender.item];
+  const hasHealingBerry = defenderItem?.berryHealThreshold && defenderItem?.berryHealAmount;
+
   // Calculate precise KO probability (expensive - only for UI)
   const koChance = options.computeKOChance
-    ? computeKOChance(rolls, targetHP)
+    ? computeKOChance(
+        rolls,
+        targetHP,
+        defenderItem?.berryHealThreshold,
+        defenderItem?.berryHealAmount
+      )
     : { n: numHits, chance: minDamage >= targetHP ? 1 : 0, text: numHits === 1 ? (minDamage >= targetHP ? "guaranteed OHKO" : `${numHits}HKO`) : `${numHits}HKO` };
+
+  // Build active modifiers list for display
+  const activeModifiers: ActiveModifier[] = [];
+  if (stabMult !== 1) activeModifiers.push({ name: "STAB", multiplier: stabMult });
+  if (weatherMult !== 1) activeModifiers.push({ name: "Weather", multiplier: weatherMult });
+  if (screenMult !== 1) activeModifiers.push({ name: options.auroraVeil ? "Aurora Veil" : isPhysical ? "Reflect" : "Light Screen", multiplier: screenMult });
+  if (spreadMult !== 1) activeModifiers.push({ name: "Spread", multiplier: spreadMult });
+  if (critMult !== 1) activeModifiers.push({ name: "Critical Hit", multiplier: critMult });
+  if (burnMult !== 1) activeModifiers.push({ name: "Burn", multiplier: burnMult });
+  if (itemMult !== 1) activeModifiers.push({ name: "Item", multiplier: itemMult });
+  if (helpingHandMult !== 1) activeModifiers.push({ name: "Helping Hand", multiplier: helpingHandMult });
+  if (friendGuardMult !== 1) activeModifiers.push({ name: "Friend Guard", multiplier: friendGuardMult });
+  if (defenderItemMult !== 1) activeModifiers.push({ name: "Resist Berry", multiplier: defenderItemMult });
 
   return {
     damage: [minDamage, maxDamage],
@@ -528,6 +620,7 @@ export function calculateDamage(
     moveName,
     effectiveType: moveCalc.type as PokemonType,
     berryActivated,
+    modifiers: activeModifiers,
   };
 }
 

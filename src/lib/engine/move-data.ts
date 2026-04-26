@@ -17,20 +17,22 @@ export type MoveTarget =
   | "all"              // entire field;
 
 export interface MoveFlags {
-  contact?: boolean;    // makes contact (Rough Skin, Rocky Helmet)
-  sound?: boolean;      // sound-based (bypasses Substitute)
-  bullet?: boolean;     // ball/bomb move (Bulletproof)
-  punch?: boolean;      // punching move (Iron Fist)
-  bite?: boolean;       // biting move (Strong Jaw)
-  slicing?: boolean;    // cutting move (Sharpness)
-  wind?: boolean;       // wind move (Wind Rider)
-  powder?: boolean;     // powder move (Safety Goggles, Grass immune)
-  pulse?: boolean;      // aura/pulse move (Mega Launcher)
-  recoil?: number;      // recoil % of damage dealt
-  drain?: number;       // drain % of damage dealt (heal)
-  selfFaint?: boolean;  // user faints after the move resolves
-  protect?: boolean;    // is a Protect variant
-  priority?: boolean;   // is a priority move
+  contact?: boolean;         // makes contact (Rough Skin, Rocky Helmet)
+  sound?: boolean;           // sound-based (bypasses Substitute)
+  bullet?: boolean;          // ball/bomb move (Bulletproof)
+  punch?: boolean;           // punching move (Iron Fist)
+  bite?: boolean;            // biting move (Strong Jaw)
+  slicing?: boolean;         // cutting move (Sharpness)
+  wind?: boolean;            // wind move (Wind Rider)
+  powder?: boolean;          // powder move (Safety Goggles, Grass immune)
+  pulse?: boolean;           // aura/pulse move (Mega Launcher)
+  recoil?: number;           // recoil % of damage dealt
+  drain?: number;            // drain % of damage dealt (heal)
+  selfFaint?: boolean;       // user faints after the move resolves
+  protect?: boolean;         // is a Protect variant
+  priority?: boolean;        // is a priority move
+  ignoresBurn?: boolean;     // bypasses burn damage halving (Facade, Sparkling Aria)
+  dealsPhysicalDamage?: boolean; // uses SpA stat but targets Def (Psyshock, Psystrike, Secret Sword)
 }
 
 export interface SecondaryEffect {
@@ -88,8 +90,8 @@ export const MOVE_DATA: Record<string, EngineMove> = {
   "Facade": {
     name: "Facade", type: "normal", category: "physical", basePower: 70,
     accuracy: 100, pp: 20, priority: 0, target: "normal",
-    flags: { contact: true },
-    effect: "Doubles power when burned, poisoned, or paralyzed.",
+    flags: { contact: true, ignoresBurn: true },
+    effect: "Doubles power when burned, poisoned, or paralyzed. Bypasses burn damage reduction.",
   },
   "Fake Out": {
     name: "Fake Out", type: "normal", category: "physical", basePower: 40,
@@ -744,7 +746,7 @@ export const MOVE_DATA: Record<string, EngineMove> = {
   "Psyshock": {
     name: "Psyshock", type: "psychic", category: "special", basePower: 80,
     accuracy: 100, pp: 10, priority: 0, target: "normal",
-    flags: {},
+    flags: { dealsPhysicalDamage: true },
     effect: "Targets Defense instead of Sp.Def.",
   },
   "Trick Room": {
@@ -1079,8 +1081,7 @@ export const MOVE_DATA: Record<string, EngineMove> = {
   "Light of Ruin": {
     name: "Light of Ruin", type: "fairy", category: "special", basePower: 140,
     accuracy: 90, pp: 5, priority: 0, target: "normal",
-    flags: { recoil: true },
-    recoil: [1, 2],
+    flags: { recoil: 50 },
     effect: "User takes 1/2 of the damage dealt as recoil.",
   },
 

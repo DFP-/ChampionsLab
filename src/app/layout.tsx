@@ -85,6 +85,7 @@ export default async function RootLayout({
     <html
       lang={initialLocale.split("-")[0]}
       className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         <script

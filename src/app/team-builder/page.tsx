@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "@/lib/motion";
 import Image from "next/image";
 import { LastUpdated } from "@/components/last-updated";
@@ -2710,7 +2710,7 @@ export default function TeamBuilderPage() {
                       <span className="text-[11px] font-semibold text-gray-700 dark:text-white">{t('teamBuilder.baseStatFilter')}</span>
                       {Object.values(pickerStatFilters).some(v => v > 0) && (
                         <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-                          {Object.values(pickerStatFilters).filter(v => v > 0).length} {t('teamBuilder.activeFilters')}
+                          {t('teamBuilder.activeFilters', { count: Object.values(pickerStatFilters).filter(v => v > 0).length })}
                         </span>
                       )}
                     </div>
@@ -2776,7 +2776,7 @@ export default function TeamBuilderPage() {
               </div>
 
               {/* Picker Grid */}
-              <div className="flex-1 overflow-y-auto p-4 min-h-[40vh]">
+              <div className="flex-1 overflow-y-auto p-4 min-h-0">
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                   {filteredPicker.map((pokemon) => {
                     const q = pickerSearch.toLowerCase().trim();

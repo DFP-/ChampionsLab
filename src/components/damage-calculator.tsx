@@ -312,7 +312,9 @@ export default function DamageCalculator() {
       weather, terrain, isDoubles, isCrit, helpingHand,
       lightScreen, reflect, auroraVeil, friendGuard,
       computeKOChance: true,
-      targetCount: 1, // UI calc is 1v1; spread reduction only applies when multiple targets are actually hit
+      // In doubles mode, spread moves always deal reduced damage (0.75x)
+      // because they hit both opponents. We omit targetCount so the engine
+      // applies the reduction whenever isDoubles && isSpreadMove.
     };
     const atkResolved = resolveMegaForCalc(attacker.pokemon, attacker.set);
     const defResolved = resolveDefenderForCalc(defender.pokemon, defender.set);
@@ -582,6 +584,24 @@ export default function DamageCalculator() {
               {selectedResult.berryActivated && defender.set?.item && (
                 <div className="mt-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold inline-block bg-pink-100 text-pink-700 border border-pink-200">
                   {t('damageCalc.berryActivated', { item: defender.set.item })}
+                </div>
+              )}
+              {selectedResult.modifiers.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-1 justify-center">
+                  {selectedResult.modifiers.map((mod, i) => (
+                    <span
+                      key={i}
+                      className={cn(
+                        "px-1.5 py-0.5 rounded text-[9px] font-semibold border",
+                        mod.multiplier > 1
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          : "bg-amber-50 text-amber-700 border-amber-200"
+                      )}
+                      title={`${mod.name}: ×${mod.multiplier.toFixed(2)}`}
+                    >
+                      {mod.name} ×{mod.multiplier.toFixed(2)}
+                    </span>
+                  ))}
                 </div>
               )}
             </div>

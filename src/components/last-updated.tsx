@@ -12,20 +12,34 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
+      date: "26/04/2026",
+      items: [
+        "🐛 Fixed Base Stat filter active counter in Team Builder picker  —  badge now correctly displays \"2 active\" instead of the broken \"2 {count} active\" format",
+        "🐛 Fixed Team Builder crash on load  —  added missing \"use client\" directive and React hook imports so the page renders correctly instead of throwing a server-side useI18n() error",
+        "🐛 Fixed hydration mismatch warning  —  added suppressHydrationWarning to the <html> element in layout.tsx to silence the font className mismatch between server and client",
+        "🐛 Fixed Pokémon picker scroll in Team Builder  —  the modal grid now scrolls correctly even when filtered results are small (3 rows or fewer), so the last row is no longer cut off",
+        "🐛 Fixed spread move damage reduction in Damage Calculator  —  toggling Doubles on/off now correctly applies/removes the 0.75× spread reduction for moves like Earthquake, Dazzling Gleam, and Hyper Voice",
+        "🧠 Healing berry KO chance modeling  —  Sitrus Berry, Aguav Berry, and Oran Berry now affect KO probability calculations. The calculator accounts for the HP threshold trigger and heal amount when computing 2HKO and nHKO chances",
+        "🔖 Active damage modifiers display  —  the Damage Calculator now shows a badge row for every active modifier applied to the calculation (STAB, Weather, Screens, Spread reduction, Critical Hit, Burn, Items, Helping Hand, Friend Guard, Resist Berries) with their exact multipliers",
+        "🔥 Facade bypasses burn damage halving  —  Facade and other moves with the `ignoresBurn` flag now correctly deal full damage even when the attacker is burned",
+        "🧠 Psyshock-family flag system  —  added `dealsPhysicalDamage` move flag so Psyshock (and future Psystrike/Secret Sword) correctly target Defense while using Special Attack. Body Press and Foul Play also use the same generalized stat-resolution logic",
+      ],
+    },
+    {
       date: "23/04/2026",
       items: [
         "📂 Counter and Role filters now collapsed by default in Team Builder picker  —  keeps the modal clean on open while Type filter stays expanded for quick access; click the header to expand Counter or Role pills",
         "🌙 Dark mode readability fix for Team Builder picker filter labels  —  Type, Counter, and Role section headers now use high-contrast dark:text-white with bold uppercase styling and colorful accent icons for instant scannability",
-        "� Creative modern redesign for Type vs Counter filters  —  Type pills use rounded-full solid-background pills with full-opacity colored borders; Counter pills use dashed-border rectangular pills with a '2×' multiplier badge when active, making the two filter modes instantly distinguishable. Inactive pills use solid neutral backgrounds (bg-white / dark:bg-gray-800) for full visibility in both light and dark modes",
-        "�🎯 Counter type filter in Team Builder picker  —  select a type to see Pokémon that are super effective against it (e.g. Rock → Water, Fighting, Grass, Ground, Steel). Helps cover weaknesses and discover new options (EN/ES/FR)",
+        "🎨 Creative modern redesign for Type vs Counter filters  —  Type pills use rounded-full solid-background pills with full-opacity colored borders; Counter pills use dashed-border rectangular pills with a '2×' multiplier badge when active, making the two filter modes instantly distinguishable. Inactive pills use solid neutral backgrounds (bg-white / dark:bg-gray-800) for full visibility in both light and dark modes",
+        "🎯 Counter type filter in Team Builder picker  —  select a type to see Pokémon that are super effective against it (e.g. Rock → Water, Fighting, Grass, Ground, Steel). Helps cover weaknesses and discover new options (EN/ES/FR)",
         "🛡️ Protect & immunity handling in Damage Calculator  —  spread moves (Earthquake, Dazzling Gleam, etc.) no longer apply the 0.75× spread reduction in the 1v1 damage calc; reduction only applies when multiple targets are actually hit",
       "🛡️ Unseen Fist ability support  —  contact moves now bypass Protect for full damage (like Piercing Drill but without the 25% reduction)",
       "🛡️ Piercing Drill + spread reduction fix in Battle Engine  —  spread moves now only get reduced when 2+ opponents are alive on the field (was always reducing in doubles)",
       "🔗 Meta 'Open in Team Builder' now actually loads teams  —  tournament and curated teams pre-fill moves, nature, ability, item, and SP spreads from usage data instead of opening empty",
-      "� Resist berry support in Damage Calculator  —  Chople Berry, Yache Berry, Occa Berry, etc. now halve super-effective damage and show a pink '{item} reduced damage' badge in results (EN/ES/FR)",
+      "🍓 Resist berry support in Damage Calculator  —  Chople Berry, Yache Berry, Occa Berry, etc. now halve super-effective damage and show a pink '{item} reduced damage' badge in results (EN/ES/FR)",
       "🍓 Resist berry support in Battle Engine  —  defender's resist berry now correctly reduces damage during battle simulations",
       "🎯 Multi-hit moves in Battle Engine  —  Dual Wingbeat, Population Bomb, and other multi-hit moves now deal correct total damage (rolls random hit count and multiplies)",
-      "�🎯 Rage Powder / Follow Me redirection in Battle Engine  —  opponent single-target moves are now redirected to the Pokémon that used Rage Powder or Follow Me",
+      "🎯 Rage Powder / Follow Me redirection in Battle Engine  —  opponent single-target moves are now redirected to the Pokémon that used Rage Powder or Follow Me",
       "🐛 Fixed Intimidate on switch-in  —  Intimidate now always triggers on switch-in (including after Imposter transform) instead of only when Imposter was active",
       "🐛 Fixed move category display in Damage Calculator  —  Physical/Special/Status labels now show correctly (was checking capitalized 'Physical' instead of lowercase 'physical')",
       "🐛 Fixed Psyshock damage calculation  —  now correctly targets Defense stat (was using wrong boolean logic)",
@@ -38,11 +52,11 @@ interface ChangelogEntry {
   {
     date: "21/04/2026",
     items: [
-      "�🇸 Full Spanish translation  —  complete localization including UI strings, Pokémon/move/ability/item names, move and ability descriptions, nature names, PokéSchool long-form content (9 sections, 36 subsections), and strategy flowchart post-processor with VGC Spanish terminology",
+      "🇪🇸 Full Spanish translation  —  complete localization including UI strings, Pokémon/move/ability/item names, move and ability descriptions, nature names, PokéSchool long-form content (9 sections, 36 subsections), and strategy flowchart post-processor with VGC Spanish terminology",
       "🌙 Dark mode readability fix (Pokémon modal)  —  Stat Points description now uses violet-300 highlights and gray-100 bold text for readable contrast on dark backgrounds",
       "🗓️ Season/Regulation names now translate  —  'Season M-1 · Regulation M-A' header and tab label dynamically localize the words 'Season' and 'Regulation' per locale",
       "📖 Move descriptions in selectors now translate  —  Team Builder, Team Tester, and Battle Bot move picker dropdowns route descriptions through the localized dictionary",
-      "�🌙 Dark mode readability fix  —  Team Builder Pokémon picker role filter pills now use higher-contrast text, borders, and hover backgrounds so labels are clearly readable in dark theme",
+      "🌙 Dark mode readability fix  —  Team Builder Pokémon picker role filter pills now use higher-contrast text, borders, and hover backgrounds so labels are clearly readable in dark theme",
       "🎯 Role-based preset filter in Team Builder picker  —  9 role pills (Physical Sweeper, Special Sweeper, Physical Tank, Special Tank, Support, Speed Control, Redirector, Trick Room, Setup Sweeper) filter the Pokémon selection modal and auto-apply matching competitive sets",
       "📖 Move descriptions in selector dropdown  —  opening any move selector now shows the move description permanently below each option, with italic styling and a bottom divider separating entries",
       "⚔️ Move category styling in dropdowns  —  Physical moves show ⚔ Phys in orange, Special moves show ✦ Spec in indigo, Status moves show ◇ Status in gray across all move selectors",
