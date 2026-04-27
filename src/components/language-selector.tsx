@@ -29,13 +29,14 @@ function Flag({ code, size = 20 }: { code: string; size?: number }) {
   );
 }
 
-const LANGUAGES = [
+const LANGUAGES: { code: string; flag: string; label: string; sub?: string }[] = [
   { code: "en",    flag: "gb", label: "English" },
   { code: "fr",    flag: "fr", label: "Français" },
   { code: "es",    flag: "es", label: "Español" },
   { code: "it",    flag: "it", label: "Italiano" },
   { code: "de",    flag: "de", label: "Deutsch" },
-] as const;
+  { code: "pt-PT", flag: "pt", label: "Português" },
+];
 
 export function LanguageSelector({ mobile = false }: { mobile?: boolean }) {
   const [open, setOpen] = useState(false);

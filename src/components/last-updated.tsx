@@ -14,6 +14,12 @@ interface ChangelogEntry {
     {
       date: "27/04/2026",
       items: [
+        "🇵🇹 Partial Portuguese translation — website UI, PokéSchool, and move/ability/item descriptions (Pokémon names, types, attacks, abilities, items, natures remain in English)",
+      ],
+    },
+    {
+      date: "27/04/2026",
+      items: [
         "🇩🇪 Full German translation — complete localization with official German Pokémon terminology (Typen, Attacken, Fähigkeiten, Items, Wesen, Wetter, Terrain), competitive set words, battle event strings with German move/ability names, and all UI strings",
         "📖 German PokéSchool — full 9-chapter educational content translated to German (VGC fundamentals, teambuilding, type mastery, strategies, tournament prep, advanced techniques, tools guide)",
         "🧠 German battle strategy insights — strategy flowchart, archetype descriptions, win conditions, and turn-by-turn decision tree fully translated for Team Tester",

@@ -14,6 +14,10 @@ import fr from "./fr.json";
 import es from "./es.json";
 import it from "./it.json";
 import de from "./de.json";
+import ptPT from "./pt-PT.json";
+import moveDescsPtPT from "./move-descriptions.pt-PT.json";
+import abilityDescsPtPT from "./ability-descriptions.pt-PT.json";
+import itemDescsPtPT from "./item-descriptions.pt-PT.json";
 import pokemonNamesFr from "./pokemon-names.fr.json";
 import pokemonNamesEs from "./pokemon-names.es.json";
 import pokemonNamesIt from "./pokemon-names.it.json";
@@ -55,7 +59,7 @@ export type Locale = "en" | "fr" | "es" | "es-419" | "pt-PT" | "pt-BR" | "it" | 
 
 /* ── UI translation dictionaries ── */
 type Dict = typeof en;
-const UI_TRANSLATIONS: Record<string, Dict> = { en, fr, es: es as Dict, it: it as Dict, de: de as Dict };
+const UI_TRANSLATIONS: Record<string, Dict> = { en, fr, es: es as Dict, it: it as Dict, de: de as Dict, "pt-PT": ptPT as Dict };
 
 /* ── Pokémon name dictionaries (en → localised) ── */
 const POKEMON_NAMES: Record<string, Record<string, string>> = {
@@ -97,6 +101,7 @@ const MOVE_DESCRIPTIONS: Record<string, Record<string, string>> = {
   es: moveDescsEs as Record<string, string>,
   it: moveDescsIt as Record<string, string>,
   de: moveDescsDe as Record<string, string>,
+  "pt-PT": moveDescsPtPT as Record<string, string>,
 };
 
 const ABILITY_DESCRIPTIONS: Record<string, Record<string, string>> = {
@@ -105,6 +110,7 @@ const ABILITY_DESCRIPTIONS: Record<string, Record<string, string>> = {
   es: abilityDescsEs as Record<string, string>,
   it: abilityDescsIt as Record<string, string>,
   de: abilityDescsDe as Record<string, string>,
+  "pt-PT": abilityDescsPtPT as Record<string, string>,
 };
 
 const ITEM_DESCRIPTIONS: Record<string, Record<string, string>> = {
@@ -113,6 +119,7 @@ const ITEM_DESCRIPTIONS: Record<string, Record<string, string>> = {
   es: itemDescsEs as Record<string, string>,
   it: itemDescsIt as Record<string, string>,
   de: itemDescsDe as Record<string, string>,
+  "pt-PT": itemDescsPtPT as Record<string, string>,
 };
 
 /* ── Helpers ── */
