@@ -72,11 +72,6 @@ export function LanguageSelector({ mobile = false }: { mobile?: boolean }) {
         aria-expanded={open}
       >
         <Flag code={current.flag} size={18} />
-        {mobile ? (
-          <span className="text-sm font-medium text-muted-foreground">{t("nav.language")}</span>
-        ) : (
-          <Globe className="w-3.5 h-3.5 text-muted-foreground" />
-        )}
       </motion.button>
 
       {/* Dropdown */}
