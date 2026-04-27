@@ -292,6 +292,7 @@ export default function HomePage() {
                 <p className="text-xs font-semibold text-foreground/80 flex items-center justify-center gap-1.5 flex-wrap">
                   <span>🇪🇸</span>
                   <span>🇫🇷</span>
+                  <span>🇮🇹</span>
                   <span>{t("pokedex.countdown.translationsAdded")}</span>
                 </p>
                 <div className="flex justify-center">

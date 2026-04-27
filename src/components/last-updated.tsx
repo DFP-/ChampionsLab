@@ -14,6 +14,9 @@ interface ChangelogEntry {
     {
       date: "27/04/2026",
       items: [
+        "🇮🇹 Full Italian translation — complete localization with official Italian Pokémon terminology (Tipi, Mosse, Abilità, Strumenti, Natura, Condizioni Atmosferiche, Campo), competitive set words, battle event strings with Italian move/ability names, and all UI strings",
+        "📖 Italian PokéSchool — full 9-chapter educational content translated to Italian (VGC fundamentals, teambuilding, type mastery, strategies, tournament prep, advanced techniques, tools guide)",
+        "🧠 Italian battle strategy insights — strategy flowchart, archetype descriptions, win conditions, and turn-by-turn decision tree fully translated for Team Tester",
         "⚔️ Team Tester replay now uses statistically best leads — sample battle replays now match the 'Best Lead Combos' / flowchart advice instead of using a separate heuristic that could pick different leads",
       ],
     },
