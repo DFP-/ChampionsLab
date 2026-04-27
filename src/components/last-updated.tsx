@@ -12,6 +12,12 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
+      date: "27/04/2026",
+      items: [
+        "⚔️ Team Tester replay now uses statistically best leads — sample battle replays now match the 'Best Lead Combos' / flowchart advice instead of using a separate heuristic that could pick different leads",
+      ],
+    },
+    {
       date: "26/04/2026",
       items: [
         "🐛 Fixed Base Stat filter active counter in Team Builder picker  —  badge now correctly displays \"2 active\" instead of the broken \"2 {count} active\" format",

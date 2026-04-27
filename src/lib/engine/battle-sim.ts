@@ -2479,9 +2479,10 @@ export function simulateBattleWithLog(
   team1Pokemon: ChampionsPokemon[],
   team1Sets: CommonSet[],
   team2Pokemon: ChampionsPokemon[],
-  team2Sets: CommonSet[]
+  team2Sets: CommonSet[],
+  team1Indices?: number[]
 ): DetailedBattleResult {
-  const idx1 = smartPick4(team1Pokemon, team1Sets, team2Pokemon);
+  const idx1 = team1Indices ?? smartPick4(team1Pokemon, team1Sets, team2Pokemon);
   const idx2 = smartPick4(team2Pokemon, team2Sets, team1Pokemon);
   const team1Picked = idx1.map(j => ({ pokemon: team1Pokemon[j], set: team1Sets[j] }));
   const team2Picked = idx2.map(j => ({ pokemon: team2Pokemon[j], set: team2Sets[j] }));
@@ -3265,7 +3266,23 @@ export function runTeamTestSimulation(
   const overallAvgTurns = totalGames > 0 ? Math.round(totalTurns / totalGames * 10) / 10 : 0;
 
   // ── Phase 2: Sample battle for replay (65-70%) ─────────────────────────
-  const sampleBattle = simulateBattleWithLog(team1Pokemon, team1Sets, team2Pokemon, team2Sets);
+  // Use the statistically best lead combo + bring-4 for the replay so the
+  // sample battle matches the "Best Lead Combos" / flowchart advice.
+  let replayIndices: number[] | undefined;
+  if (leadCombos.length > 0 && team1Pokemon.length >= 4) {
+    const best = leadCombos[0];
+    const i = team1Pokemon.findIndex(p => p.name === best.lead1);
+    const j = team1Pokemon.findIndex(p => p.name === best.lead2);
+    if (i >= 0 && j >= 0) {
+      const bringScores = scorePokemonForBring(team1Pokemon, team1Sets, team2Pokemon);
+      const remaining = bringScores
+        .filter(s => s.idx !== i && s.idx !== j)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 2);
+      replayIndices = [i, j, ...remaining.map(r => r.idx)];
+    }
+  }
+  const sampleBattle = simulateBattleWithLog(team1Pokemon, team1Sets, team2Pokemon, team2Sets, replayIndices);
   onProgress?.(70);
 
   // ── Phase 3: Per-Pokemon impact analysis (70-95%) ──────────────────────
