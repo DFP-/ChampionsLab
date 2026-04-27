@@ -13,46 +13,56 @@ import en from "./en.json";
 import fr from "./fr.json";
 import es from "./es.json";
 import it from "./it.json";
+import de from "./de.json";
 import pokemonNamesFr from "./pokemon-names.fr.json";
 import pokemonNamesEs from "./pokemon-names.es.json";
 import pokemonNamesIt from "./pokemon-names.it.json";
+import pokemonNamesDe from "./pokemon-names.de.json";
 import movesFr from "./moves.fr.json";
 import movesEs from "./moves.es.json";
 import movesIt from "./moves.it.json";
+import movesDe from "./moves.de.json";
 import moveDescsFr from "./move-descriptions.fr.json";
 import moveDescsEs from "./move-descriptions.es.json";
 import moveDescsIt from "./move-descriptions.it.json";
+import moveDescsDe from "./move-descriptions.de.json";
 import moveDescsEn from "./move-descriptions.en.json";
 import abilitiesFr from "./abilities.fr.json";
 import abilitiesEs from "./abilities.es.json";
 import abilitiesIt from "./abilities.it.json";
+import abilitiesDe from "./abilities.de.json";
 import abilityDescsFr from "./ability-descriptions.fr.json";
 import abilityDescsEs from "./ability-descriptions.es.json";
 import abilityDescsIt from "./ability-descriptions.it.json";
+import abilityDescsDe from "./ability-descriptions.de.json";
 import abilityDescsEn from "./ability-descriptions.en.json";
 import itemsFr from "./items.fr.json";
 import itemsEs from "./items.es.json";
 import itemsIt from "./items.it.json";
+import itemsDe from "./items.de.json";
 import itemDescsFr from "./item-descriptions.fr.json";
 import itemDescsEs from "./item-descriptions.es.json";
 import itemDescsIt from "./item-descriptions.it.json";
+import itemDescsDe from "./item-descriptions.de.json";
 import itemDescsEn from "./item-descriptions.en.json";
 import naturesFr from "./natures.fr.json";
 import naturesEs from "./natures.es.json";
 import naturesIt from "./natures.it.json";
+import naturesDe from "./natures.de.json";
 
 /* ── Supported locales ── */
-export type Locale = "en" | "fr" | "es" | "es-419" | "pt-PT" | "pt-BR" | "it" | "th";
+export type Locale = "en" | "fr" | "es" | "es-419" | "pt-PT" | "pt-BR" | "it" | "de" | "th";
 
 /* ── UI translation dictionaries ── */
 type Dict = typeof en;
-const UI_TRANSLATIONS: Record<string, Dict> = { en, fr, es: es as Dict, it: it as Dict };
+const UI_TRANSLATIONS: Record<string, Dict> = { en, fr, es: es as Dict, it: it as Dict, de: de as Dict };
 
 /* ── Pokémon name dictionaries (en → localised) ── */
 const POKEMON_NAMES: Record<string, Record<string, string>> = {
   fr: pokemonNamesFr as Record<string, string>,
   es: pokemonNamesEs as Record<string, string>,
   it: pokemonNamesIt as Record<string, string>,
+  de: pokemonNamesDe as Record<string, string>,
 };
 
 /* ── Game data dictionaries (en → localised) ── */
@@ -60,21 +70,25 @@ const MOVE_NAMES: Record<string, Record<string, string>> = {
   fr: movesFr as Record<string, string>,
   es: movesEs as Record<string, string>,
   it: movesIt as Record<string, string>,
+  de: movesDe as Record<string, string>,
 };
 const ABILITY_NAMES: Record<string, Record<string, string>> = {
   fr: abilitiesFr as Record<string, string>,
   es: abilitiesEs as Record<string, string>,
   it: abilitiesIt as Record<string, string>,
+  de: abilitiesDe as Record<string, string>,
 };
 const ITEM_NAMES: Record<string, Record<string, string>> = {
   fr: itemsFr as Record<string, string>,
   es: itemsEs as Record<string, string>,
   it: itemsIt as Record<string, string>,
+  de: itemsDe as Record<string, string>,
 };
 const NATURE_NAMES: Record<string, Record<string, string>> = {
   fr: naturesFr as Record<string, string>,
   es: naturesEs as Record<string, string>,
   it: naturesIt as Record<string, string>,
+  de: naturesDe as Record<string, string>,
 };
 
 const MOVE_DESCRIPTIONS: Record<string, Record<string, string>> = {
@@ -82,6 +96,7 @@ const MOVE_DESCRIPTIONS: Record<string, Record<string, string>> = {
   fr: moveDescsFr as Record<string, string>,
   es: moveDescsEs as Record<string, string>,
   it: moveDescsIt as Record<string, string>,
+  de: moveDescsDe as Record<string, string>,
 };
 
 const ABILITY_DESCRIPTIONS: Record<string, Record<string, string>> = {
@@ -89,6 +104,7 @@ const ABILITY_DESCRIPTIONS: Record<string, Record<string, string>> = {
   fr: abilityDescsFr as Record<string, string>,
   es: abilityDescsEs as Record<string, string>,
   it: abilityDescsIt as Record<string, string>,
+  de: abilityDescsDe as Record<string, string>,
 };
 
 const ITEM_DESCRIPTIONS: Record<string, Record<string, string>> = {
@@ -96,6 +112,7 @@ const ITEM_DESCRIPTIONS: Record<string, Record<string, string>> = {
   fr: itemDescsFr as Record<string, string>,
   es: itemDescsEs as Record<string, string>,
   it: itemDescsIt as Record<string, string>,
+  de: itemDescsDe as Record<string, string>,
 };
 
 /* ── Helpers ── */

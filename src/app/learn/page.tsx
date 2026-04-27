@@ -13,6 +13,7 @@ import { useI18n } from "@/lib/i18n";
 import { SECTIONS_FR } from "@/lib/learn-sections-fr";
 import { SECTIONS_ES } from "@/lib/learn-sections-es";
 import { SECTIONS_IT } from "@/lib/learn-sections-it";
+import { SECTIONS_DE } from "@/lib/learn-sections-de";
 import { LastUpdated } from "@/components/last-updated";
 import { AlertTriangle, Lightbulb, Trophy, Info } from "lucide-react";
 
@@ -483,6 +484,7 @@ export default function LearnPage() {
       locale === "fr" ? SECTIONS_FR[i] :
       locale === "es" ? SECTIONS_ES[i] :
       locale === "it" ? SECTIONS_IT[i] :
+      locale === "de" ? SECTIONS_DE[i] :
       null;
     if (!localized) return section;
     return {

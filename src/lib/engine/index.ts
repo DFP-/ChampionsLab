@@ -130,6 +130,10 @@ export {
   translateStrategyTreeIT,
   translateInsightsIT,
 } from "./strategy-i18n-it";
+export {
+  translateStrategyTreeDE,
+  translateInsightsDE,
+} from "./strategy-i18n-de";
 
 // Suggestion Engine
 export {

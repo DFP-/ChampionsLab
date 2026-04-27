@@ -11,16 +11,21 @@ function Flag({ code, size = 20 }: { code: string; size?: number }) {
   const w = size;
   const h = Math.round(size * 0.67); // ~3:2 real flag ratio
   return (
-    <img
-      src={`https://flagcdn.com/w40/${code}.png`}
-      srcSet={`https://flagcdn.com/w80/${code}.png 2x`}
-      width={w}
-      height={h}
-      alt=""
-      className="rounded-[3px] object-cover shadow-sm ring-1 ring-black/10"
+    <span
+      className="inline-block rounded-[3px] overflow-hidden shadow-sm ring-1 ring-black/10 dark:ring-white/20 bg-gray-100 dark:bg-gray-700"
       style={{ width: w, height: h }}
-      loading="lazy"
-    />
+    >
+      <img
+        src={`https://flagcdn.com/w40/${code}.png`}
+        srcSet={`https://flagcdn.com/w80/${code}.png 2x`}
+        width={w}
+        height={h}
+        alt=""
+        className="block object-cover"
+        style={{ width: w, height: h }}
+        loading="lazy"
+      />
+    </span>
   );
 }
 
@@ -29,6 +34,7 @@ const LANGUAGES = [
   { code: "fr",    flag: "fr", label: "Français" },
   { code: "es",    flag: "es", label: "Español" },
   { code: "it",    flag: "it", label: "Italiano" },
+  { code: "de",    flag: "de", label: "Deutsch" },
 ] as const;
 
 export function LanguageSelector({ mobile = false }: { mobile?: boolean }) {
