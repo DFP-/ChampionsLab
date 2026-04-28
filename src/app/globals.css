@@ -512,11 +512,3 @@ body.mobile-open .mobile-nav-panel { display: block; }
     0 0 0 1px rgba(100, 140, 200, 0.3),
     0 0 24px rgba(59, 130, 246, 0.15);
 }
-
-/* ── Dark mode transition for smooth toggle ── */
-html.transitioning,
-html.transitioning *,
-html.transitioning *::before,
-html.transitioning *::after {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease, box-shadow 0.3s ease !important;
-}
