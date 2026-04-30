@@ -14,6 +14,8 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "🐛 Fixed Huge Power / Pure Power damage calculation — the calculator now correctly doubles Attack for physical moves when a Pokémon has Huge Power or Pure Power (e.g. Mega Starmie)",
+        "🐛 Fixed Flash Fire immunity display in Teambuilder — type defenses grid now correctly shows 0× for Fire when a Pokémon has Flash Fire selected (also applies to Levitate, Water Absorb, Volt Absorb, and other ability-based immunities)",
         "🌸 Added Eternal Floette — new standalone Pokémon entry (id: 10061) with correct base stats 74/65/67/125/128/92, following Pokémon Showdown data. Eternal Floette can Mega Evolve into Mega Floette (74/85/87/155/148/102)",
         "🐛 Fixed Floette sprite references — corrected sprite IDs so Eternal Floette uses its official sprite and Mega Floette uses the custom official-artwork sprite",
         "⚔️ Normal Floette can no longer Mega Evolve — only Eternal Floette can Mega Evolve into Mega Floette. All tournament teams, generated teams, and meta data updated to reflect this Showdown-accurate behavior",

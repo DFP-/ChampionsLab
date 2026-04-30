@@ -286,6 +286,11 @@ export function calculateDamage(
     atkStat = isPhysical ? atkStats.attack : atkStats.spAtk;
   }
 
+  // Huge Power / Pure Power: doubles Attack stat for physical moves
+  if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) {
+    atkStat = Math.floor(atkStat * 2);
+  }
+
   defStat = useDefense ? defStats.defense : defStats.spDef;
 
   // Snow: +50% Defense for Ice types
