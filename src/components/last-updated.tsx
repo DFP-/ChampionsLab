@@ -14,6 +14,8 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "👊 Parental Bond now hits twice in damage calculator — the calculator now correctly applies a second hit at 25% power and shows Parental Bond as an active modifier",
+        "👊 Parental Bond battles now log '(2 hits)' — battle replay messages indicate when Parental Bond triggers on a move",
         "🐛 Fixed Huge Power / Pure Power damage calculation — the calculator now correctly doubles Attack for physical moves when a Pokémon has Huge Power or Pure Power (e.g. Mega Starmie)",
         "🐛 Fixed Flash Fire immunity display in Teambuilder — type defenses grid now correctly shows 0× for Fire when a Pokémon has Flash Fire selected (also applies to Levitate, Water Absorb, Volt Absorb, and other ability-based immunities)",
         "🌸 Added Eternal Floette — new standalone Pokémon entry (id: 10061) with correct base stats 74/65/67/125/128/92, following Pokémon Showdown data. Eternal Floette can Mega Evolve into Mega Floette (74/85/87/155/148/102)",

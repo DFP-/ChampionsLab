@@ -2187,6 +2187,17 @@ export default function TeamBuilderPage() {
                       ? megaForms[editSlotData.megaFormIndex ?? 0].types
                       : editPkm.types;
                     const allTypes = getAllTypes();
+                    const ABILITY_RESISTS: Record<string, string[]> = {
+                      "Thick Fat": ["fire", "ice"],
+                      "Heatproof": ["fire"],
+                      "Water Bubble": ["fire"],
+                      "Purifying Salt": ["ghost"],
+                    };
+                    const ABILITY_EXTRA_WEAK: Record<string, string[]> = {
+                      "Dry Skin": ["fire"],
+                      "Fluffy": ["fire"],
+                    };
+                    const slotAbility = editSlotData.ability || (editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0] ? megaForms[editSlotData.megaFormIndex ?? 0].abilities[0]?.name : undefined) || editPkm.abilities[0]?.name || "";
                     // offensive: best effectiveness from selected moves
                     const selectedMoveData = editSlotData.moves
                       .filter(Boolean)
@@ -2202,7 +2213,17 @@ export default function TeamBuilderPage() {
                           <p className="text-[10px] text-muted-foreground uppercase font-bold mb-2">{t('teamBuilder.typeDefenses')}</p>
                           <div className="grid grid-cols-6 gap-1">
                             {allTypes.map((type) => {
-                              const mult = getMatchup(type as PokemonType, activeTypes);
+                              let mult = getMatchup(type as PokemonType, activeTypes);
+                              const immuneType = getTypeImmunity(slotAbility);
+                              if (immuneType === type) {
+                                mult = 0;
+                              }
+                              if (ABILITY_RESISTS[slotAbility]?.includes(type)) {
+                                mult *= 0.5;
+                              }
+                              if (ABILITY_EXTRA_WEAK[slotAbility]?.includes(type)) {
+                                mult *= 2;
+                              }
                               let label = "";
                               let bg = "bg-gray-50 dark:bg-white/[0.03]";
                               let textColor = "text-gray-300 dark:text-gray-600";

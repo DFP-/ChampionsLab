@@ -2923,10 +2923,12 @@ export function simulateBattleWithLog(
               hitAnything = true;
             }
           } else if (mon.isFainted && dmg > 0) {
-            turnEvents.push(`${action.mon.pokemon.name} used ${action.moveName} on ${mon.pokemon.name} - KO!`);
+            const pbSuffix = action.mon.ability === "Parental Bond" && move && !isSpreadMove(move) ? " (2 hits)" : "";
+            turnEvents.push(`${action.mon.pokemon.name} used ${action.moveName} on ${mon.pokemon.name} - KO!${pbSuffix}`);
             hitAnything = true;
           } else if (dmg > 0) {
-            turnEvents.push(`${action.mon.pokemon.name} used ${action.moveName} on ${mon.pokemon.name} (${Math.round((dmg / mon.maxHP) * 100)}% damage)`);
+            const pbSuffix = action.mon.ability === "Parental Bond" && move && !isSpreadMove(move) ? " (2 hits)" : "";
+            turnEvents.push(`${action.mon.pokemon.name} used ${action.moveName} on ${mon.pokemon.name} (${Math.round((dmg / mon.maxHP) * 100)}% damage)${pbSuffix}`);
             hitAnything = true;
           } else if (isSpread && opponents.includes(mon) && !mon.isFainted) {
             // Spread move: check per-target miss/immune tracking
