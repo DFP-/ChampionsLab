@@ -26,6 +26,7 @@ Before starting any task, identify which domain it falls under and **read the co
 | **UI components**, shadcn/ui primitives, page components, styling, Tailwind, or Framer Motion | `COMPONENTS.md` |
 | **Translations**, adding a new language, i18n context, or locale files | `I18N.md` |
 | **Pokémon data**, roster updates, running scripts, sprite management, or data pipelines | `DATA_AND_SCRIPTS.md` |
+| **Tournament teams**, syncing Limitless data, or updating `CHAMPIONS_TOURNAMENT_TEAMS` | `TOURNAMENT_SYNC.md` |
 | **Sprites**, uploading new sprites to object storage, or sprite URL management | `SPRITES.md` |
 | **Architecture decisions**, directory structure, routing, data flow, state management, or security | `ARCHITECTURE.md` |
 | **Contributing** code, commit message conventions, or community processes | `CONTRIBUTING.md` |

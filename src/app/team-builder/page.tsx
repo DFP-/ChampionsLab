@@ -876,27 +876,39 @@ export default function TeamBuilderPage() {
     const newSlots = team.pokemonIds.map((id, idx) => {
       const pokemon = POKEMON_SEED.find(p => p.id === id);
       if (!pokemon) return createEmptySlot();
-      const isMegaName = team.pokemonNames[idx]?.startsWith("Mega ");
+      const tourSet = team.sets?.[idx];
       const usageSets = USAGE_DATA[pokemon.id] ?? [];
-      // Pick mega set if team lists a mega, otherwise first set
-      const set = isMegaName
-        ? usageSets.find(s => s.name?.toLowerCase().includes("mega") || isMegaItem(s.item)) || usageSets[0]
+
+      // Find best matching competitive set for nature/EVs fallback
+      const bestMatch = tourSet
+        ? (usageSets.find(s => s.ability === tourSet.ability && s.item === tourSet.item)
+          ?? usageSets.find(s => s.ability === tourSet.ability)
+          ?? usageSets.find(s => s.item === tourSet.item)
+          ?? usageSets[0])
         : usageSets[0];
-      let isMega = false;
+
+      const ability = tourSet?.ability ?? bestMatch?.ability ?? pokemon.abilities[0]?.name;
+      const item = tourSet?.item ?? bestMatch?.item;
+      const moves = tourSet?.moves ?? bestMatch?.moves ?? pokemon.moves.slice(0, 4).map(m => m.name);
+      const teraType = tourSet?.teraType ? (tourSet.teraType.toLowerCase() as PokemonType) : undefined;
+
+      // Detect mega from tournament item
+      const isMega = pokemon.hasMega && item ? isMegaItem(item) : false;
       let megaFormIndex = 0;
-      if (isMegaName && pokemon.hasMega) {
-        isMega = true;
+      if (isMega) {
         const megaForms = pokemon.forms?.filter(f => f.isMega && !f.hidden) ?? [];
-        const idx = set ? megaForms.findIndex(f => f.abilities.some(a => a.name === set.ability)) : -1;
-        megaFormIndex = idx >= 0 ? idx : 0;
+        const formIdx = megaForms.findIndex(f => f.abilities.some(a => a.name === ability));
+        megaFormIndex = formIdx >= 0 ? formIdx : 0;
       }
+
       return {
         pokemon,
-        ability: set?.ability ?? pokemon.abilities[0]?.name,
-        nature: set?.nature ?? "Adamant",
-        moves: set?.moves ?? pokemon.moves.slice(0, 4).map(m => m.name),
-        statPoints: set?.sp ? { ...set.sp } : { ...EMPTY_STAT_POINTS },
-        item: set?.item && isItemAvailable(set.item) ? set.item : undefined,
+        ability,
+        nature: bestMatch?.nature ?? "Adamant",
+        moves,
+        statPoints: bestMatch?.sp ? { ...bestMatch.sp } : { ...EMPTY_STAT_POINTS },
+        item: item && isItemAvailable(item) ? item : undefined,
+        teraType,
         isMega,
         megaFormIndex,
       } as TeamSlot;

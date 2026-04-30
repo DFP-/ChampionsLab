@@ -14,6 +14,12 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "🏆 Tournament Teams now load actual sets — clicking a tournament team in the Team Builder sidebar now loads the real moves, items, abilities and tera types from Limitless tournament data instead of auto-filling generic competitive sets. Nature and EVs still fall back to the best matching competitive preset",
+      ],
+    },
+    {
+      date: "30/04/2026",
+      items: [
         "📊 New Table view for Official Usage Stats — toggle between Cards and Table on the Meta → Pokémon Rankings page. The table shows Rank, Sprite, Name, Types, Abilities, Usage %, and all 6 Base Stats with color-coded pills (gold for 120+, green for 100+, gray for 80+) for instant competitive comparison",
         "🌳 Flowchart now branches horizontally — decision nodes (Fake Out reads, Protect vs setup, offense vs pivot) now split into side-by-side branches instead of stacking vertically, making it clear that these are alternative plays, not sequential steps",
         "🌳 Added Fake Out speed-tie branches — when both sides have Fake Out, the flowchart now branches on who outspeeds, showing the flinch scenario and the backup plan for each case",
