@@ -14,6 +14,8 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "🇩🇪 Fixed German Mega Evolution names — all 60+ Mega Pokémon now display correct German names (e.g. Mega-Glurak, Mega-Bisaflor, Mega-Krawell) instead of English names when language is set to Deutsch",
+        "🇩🇪 Fixed Crabominable German name — now correctly displays 'Krawell' in all German UI contexts",
         "🐛 Fixed mega evolution weather in strategy tree — Mega Charizard Y's Drought and other mega weather abilities are no longer incorrectly treated as entry abilities. Strategy flowchart now correctly shows sun overriding rain when Charizard mega evolves, instead of claiming the slower entry setter wins",
         "🧠 Strategy tree now distinguishes entry vs mega weather/terrain — field notes and weather war logic correctly account for whether weather comes from an entry ability (Drizzle, Drought) or a Mega Evolution ability, with proper timing labels ('on entry' vs 'on Turn 1 (Mega Evolution)')",
         "🐛 Fixed type-based status immunities in battle simulator — Fire-types can no longer be burned, Electric-types can no longer be paralyzed, Ice-types can no longer be frozen, and Poison/Steel-types can no longer be poisoned. This fixes Paldean Tauros (Blaze) being incorrectly burnable",

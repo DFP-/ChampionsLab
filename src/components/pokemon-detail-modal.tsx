@@ -896,7 +896,7 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
                     className="space-y-3"
                   >
                     <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">
-                      {currentForm?.isMega ? t('pokemonDetail.teamsWithMega', { name: currentForm.name }) : t('pokemonDetail.winningTeams')}
+                      {currentForm?.isMega ? t('pokemonDetail.teamsWithMega', { name: tp(currentForm.name) }) : t('pokemonDetail.winningTeams')}
                     </h3>
                     {(() => {
                       const allTeams = getTeamsForPokemon(pokemon.id);
@@ -907,7 +907,7 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
                         ? allTeams.filter(tm => tm.pokemon.some(m => m.pokemonId === pokemon.id && m.isMega))
                         : allTeams;
                       if (teams.length === 0) {
-                        return <p className="text-sm text-gray-400 italic">{isMegaView ? t('pokemonDetail.noMegaTeamsYet', { name: currentForm.name }) : t('pokemonDetail.noTeamsYet')}</p>;
+                        return <p className="text-sm text-gray-400 italic">{isMegaView ? t('pokemonDetail.noMegaTeamsYet', { name: tp(currentForm.name) }) : t('pokemonDetail.noTeamsYet')}</p>;
                       }
                       return teams.map((team) => (
                         <div
@@ -945,7 +945,7 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
                                 >
                                   <Image
                                     src={getMemberSprite(member)}
-                                    alt={getMemberDisplayName(member)}
+                                    alt={tp(getMemberDisplayName(member))}
                                     width={36}
                                     height={36}
                                     className="drop-shadow-sm"
@@ -959,7 +959,7 @@ export function PokemonDetailModal({ pokemon, onClose }: PokemonDetailModalProps
                                   "text-[9px] font-semibold tracking-tight text-center leading-tight max-w-[52px]",
                                   member.isMega ? "text-amber-600" : member.pokemonId === pokemon.id ? "text-violet-600" : "text-gray-400"
                                 )}>
-                                  {getMemberDisplayName(member)}
+                                  {tp(getMemberDisplayName(member))}
                                 </span>
                               </div>
                             ))}

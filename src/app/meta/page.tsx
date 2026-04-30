@@ -2946,10 +2946,10 @@ function TournamentTeamCard({ team, expanded, onToggle }: { team: TournamentTeam
             return (
               <div key={p.id} className="flex flex-col items-center">
                 <div className="relative">
-                  <Image src={isMega ? getMegaSprite(p) : p.sprite} alt={isMega ? getMegaName(p) : p.name} width={32} height={32} className="rounded" unoptimized />
+                  <Image src={isMega ? getMegaSprite(p) : p.sprite} alt={isMega ? tp(getMegaName(p)) : tp(p.name)} width={32} height={32} className="rounded" unoptimized />
                   {isMega && <span className="absolute -top-1 -right-1 px-0.5 text-[6px] font-bold bg-amber-500 text-white rounded shadow-sm">M</span>}
                 </div>
-                <span className={cn("text-[7px] mt-0.5 truncate w-10 text-center", isMega ? "text-amber-600 font-bold" : "text-muted-foreground")}>{isMega ? getMegaName(p) : p.name}</span>
+                <span className={cn("text-[7px] mt-0.5 truncate w-10 text-center", isMega ? "text-amber-600 font-bold" : "text-muted-foreground")}>{isMega ? tp(getMegaName(p)) : tp(p.name)}</span>
               </div>
             );
           })}
@@ -2975,11 +2975,11 @@ function TournamentTeamCard({ team, expanded, onToggle }: { team: TournamentTeam
                         <div key={p.id} className={cn("p-2 rounded-lg border", pIsMega ? "bg-amber-50/50 border-amber-200" : "bg-white/50 border-gray-100")}>
                           <div className="flex items-center gap-2">
                             <div className="relative">
-                              <Image src={pIsMega ? getMegaSprite(p) : p.sprite} alt={pIsMega ? getMegaName(p) : p.name} width={28} height={28} className="rounded" unoptimized />
+                              <Image src={pIsMega ? getMegaSprite(p) : p.sprite} alt={pIsMega ? tp(getMegaName(p)) : tp(p.name)} width={28} height={28} className="rounded" unoptimized />
                               {pIsMega && <span className="absolute -top-1 -right-1 px-0.5 text-[6px] font-bold bg-amber-500 text-white rounded shadow-sm">M</span>}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-xs font-semibold">{pIsMega ? getMegaName(p) : p.name}{pIsMega && <span className="ml-1 text-[8px] text-amber-600 font-bold">MEGA</span>}</p>
+                              <p className="text-xs font-semibold">{pIsMega ? tp(getMegaName(p)) : tp(p.name)}{pIsMega && <span className="ml-1 text-[8px] text-amber-600 font-bold">MEGA</span>}</p>
                               <div className="flex gap-0.5">{p.types.map(ty => <span key={ty} className="px-1 py-0.5 text-[7px] font-bold uppercase rounded text-white/90" style={{ backgroundColor: `${TYPE_COLORS[ty]}AA` }}>{tt(ty)}</span>)}</div>
                             </div>
                             <div className="text-right text-[10px]">
