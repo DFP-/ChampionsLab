@@ -2750,6 +2750,17 @@ export function simulateBattleWithLog(
         turnEvents.push(`${action.mon.pokemon.name} flinched!`);
         continue;
       }
+
+      // Armor Tail: block priority moves targeting the side with Armor Tail
+      if (!action.switchOut && action.priority > 0) {
+        const targetSide = action.sideIndex === 1 ? state.active2 : state.active1;
+        const armorTailMon = targetSide.find(p => p && !p.isFainted && p.ability === "Armor Tail");
+        if (armorTailMon) {
+          turnEvents.push(`${action.mon.pokemon.name} used ${action.moveName} - but ${armorTailMon.pokemon.name}'s Armor Tail blocked it!`);
+          continue;
+        }
+      }
+
       // Handle switch-out actions
       if (action.switchOut) {
         const active = action.sideIndex === 1 ? state.active1 : state.active2;

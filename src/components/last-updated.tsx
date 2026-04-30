@@ -14,6 +14,12 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "🛡️ Fixed Armor Tail blocking priority moves in battle simulator — Fake Out and other priority moves are now correctly blocked by Armor Tail (e.g. Farigiraf). Previously the log would incorrectly show the target flinching even though the move was blocked",
+      ],
+    },
+    {
+      date: "30/04/2026",
+      items: [
         "🏆 Tournament Teams now load actual sets — clicking a tournament team in the Team Builder sidebar now loads the real moves, items, abilities and tera types from Limitless tournament data instead of auto-filling generic competitive sets. Nature and EVs still fall back to the best matching competitive preset",
       ],
     },
