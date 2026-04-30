@@ -14,6 +14,7 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "🐛 Fixed type-based status immunities in battle simulator — Fire-types can no longer be burned, Electric-types can no longer be paralyzed, Ice-types can no longer be frozen, and Poison/Steel-types can no longer be poisoned. This fixes Paldean Tauros (Blaze) being incorrectly burnable",
         "👊 Parental Bond now hits twice in damage calculator — the calculator now correctly applies a second hit at 25% power and shows Parental Bond as an active modifier",
         "👊 Parental Bond battles now log '(2 hits)' — battle replay messages indicate when Parental Bond triggers on a move",
         "🐛 Fixed Huge Power / Pure Power damage calculation — the calculator now correctly doubles Attack for physical moves when a Pokémon has Huge Power or Pure Power (e.g. Mega Starmie)",

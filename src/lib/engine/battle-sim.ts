@@ -161,6 +161,18 @@ interface BattleState {
   winner: 1 | 2 | null;
 }
 
+/** Check if a Pokémon is immune to a status condition based on its type. */
+function isStatusImmune(mon: BattlePokemon, status: string): boolean {
+  switch (status) {
+    case "burn": return mon.types.includes("fire");
+    case "paralysis": return mon.types.includes("electric");
+    case "freeze": return mon.types.includes("ice");
+    case "poison":
+    case "badPoison": return mon.types.includes("poison") || mon.types.includes("steel");
+    default: return false;
+  }
+}
+
 // ── BATTLE POKEMON FACTORY ───────────────────────────────────────────────────
 
 function createBattlePokemon(pokemon: ChampionsPokemon, set: CommonSet, teamForIllusion?: { pokemon: ChampionsPokemon; set: CommonSet }[]): BattlePokemon {
@@ -1514,7 +1526,9 @@ function executeMove(
     if (move.secondary?.status && target && !target.isFainted && !target.status) {
       // Check accuracy
       if (move.accuracy > 0 && Math.random() * 100 > move.accuracy) return;
-      target.status = move.secondary.status;
+      if (!isStatusImmune(target, move.secondary.status)) {
+        target.status = move.secondary.status;
+      }
       return;
     }
     // Light Screen / Reflect
@@ -1792,7 +1806,7 @@ function executeMove(
 
     // Secondary effects
     if (move.secondary && Math.random() * 100 < move.secondary.chance) {
-      if (move.secondary.status && !t.status && t.currentHP > 0) {
+      if (move.secondary.status && !t.status && t.currentHP > 0 && !isStatusImmune(t, move.secondary.status)) {
         t.status = move.secondary.status;
       }
       if (move.secondary.volatileStatus === "flinch") {
@@ -1833,7 +1847,7 @@ function executeMove(
     }
     
     // Spicy Spray: burn the attacker when hit
-    if (t.ability === "Spicy Spray" && t.currentHP > 0 && !user.status && damage > 0) {
+    if (t.ability === "Spicy Spray" && t.currentHP > 0 && !user.status && damage > 0 && !isStatusImmune(user, "burn")) {
       user.status = "burn";
     }
     
