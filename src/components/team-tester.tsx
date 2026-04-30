@@ -2156,10 +2156,26 @@ function FlowNode({ node, onSpriteClick }: { node: StrategyNodeData; onSpriteCli
         )}
       </div>
 
-      {/* Children  -  nested but compact */}
-      {node.children.length > 0 && node.children.map(child => (
-        <FlowNode key={child.id} node={child} onSpriteClick={onSpriteClick} />
-      ))}
+      {/* Children  -  horizontal branch for decisions, vertical otherwise */}
+      {node.children.length > 0 && (
+        node.type === "decision" ? (
+          <div className="w-full flex flex-col items-center">
+            {/* Shared stem from decision card down to the fork */}
+            <div className="w-px h-3 bg-gray-300 dark:bg-gray-600" />
+            <div className="w-full max-w-lg mx-auto flex gap-2 justify-center items-start">
+              {node.children.map(child => (
+                <div key={child.id} className="flex-1 min-w-0 flex flex-col items-center">
+                  <FlowNode node={child} onSpriteClick={onSpriteClick} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          node.children.map(child => (
+            <FlowNode key={child.id} node={child} onSpriteClick={onSpriteClick} />
+          ))
+        )
+      )}
     </div>
   );
 }

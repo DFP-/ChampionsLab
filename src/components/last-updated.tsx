@@ -14,6 +14,10 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "🌳 Flowchart now branches horizontally — decision nodes (Fake Out reads, Protect vs setup, offense vs pivot) now split into side-by-side branches instead of stacking vertically, making it clear that these are alternative plays, not sequential steps",
+        "🌳 Added Fake Out speed-tie branches — when both sides have Fake Out, the flowchart now branches on who outspeeds, showing the flinch scenario and the backup plan for each case",
+        "🌳 Added 'Aggro' and 'Protect' branches when slower with no speed control — instead of a flat warning, the flowchart now shows actionable branches for surviving turn 1",
+        "🌳 Added 'Setup' branch to Turn 2 decisions — when a lead has an unused setup move, the 'Continue offense or pivot?' decision now includes a 'Setup' option alongside Offense and Pivot",
         "🇩🇪 Fixed German Mega Evolution names — all 60+ Mega Pokémon now display correct German names (e.g. Mega-Glurak, Mega-Bisaflor, Mega-Krawell) instead of English names when language is set to Deutsch",
         "🇩🇪 Fixed Crabominable German name — now correctly displays 'Krawell' in all German UI contexts",
         "🐛 Fixed mega evolution weather in strategy tree — Mega Charizard Y's Drought and other mega weather abilities are no longer incorrectly treated as entry abilities. Strategy flowchart now correctly shows sun overriding rain when Charizard mega evolves, instead of claiming the slower entry setter wins",
