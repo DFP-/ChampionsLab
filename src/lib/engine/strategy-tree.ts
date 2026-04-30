@@ -56,6 +56,32 @@ export interface StrategyTree {
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
 
+function isMegaStoneItem(item: string): boolean {
+  return item.endsWith("ite") || item.endsWith("ite X") || item.endsWith("ite Y") || item.endsWith("ite Z");
+}
+
+function resolveBaseAbility(pokemon: ChampionsPokemon, set: CommonSet): string {
+  if (!pokemon.hasMega || !pokemon.forms || !isMegaStoneItem(set.item)) {
+    return set.ability;
+  }
+  let megaForm = pokemon.forms.find(f => f.isMega);
+  if (set.item.endsWith("ite X")) {
+    megaForm = pokemon.forms.find(f => f.isMega && f.name.endsWith(" X")) ?? megaForm;
+  } else if (set.item.endsWith("ite Y")) {
+    megaForm = pokemon.forms.find(f => f.isMega && f.name.endsWith(" Y")) ?? megaForm;
+  } else if (set.item.endsWith("ite Z")) {
+    megaForm = pokemon.forms.find(f => f.isMega && f.name.endsWith(" Z")) ?? megaForm;
+  }
+  if (!megaForm) {
+    return set.ability;
+  }
+  const isMegaAbility = megaForm.abilities.some(a => a.name === set.ability);
+  if (isMegaAbility) {
+    return set.preMegaAbility ?? pokemon.abilities[0]?.name ?? set.ability;
+  }
+  return set.ability;
+}
+
 interface AnalyzedMon {
   pokemon: ChampionsPokemon;
   set: CommonSet;
@@ -73,6 +99,8 @@ interface AnalyzedMon {
   hasSpeedControl: boolean;
   weatherOnEntry?: string;
   terrainOnEntry?: string;
+  weatherOnMega?: string;
+  terrainOnMega?: string;
   isIntimidateUser: boolean;
 }
 
@@ -85,7 +113,9 @@ function analyzeMon(pokemon: ChampionsPokemon, set: CommonSet): AnalyzedMon {
     return { name: m, data, role: data ? getMoveRole(data) : "utility" };
   });
 
-  const abilityEffect = getAbilityEffect(set.ability);
+  const baseAbility = resolveBaseAbility(pokemon, set);
+  const baseAbilityEffect = getAbilityEffect(baseAbility);
+  const megaAbilityEffect = baseAbility !== set.ability ? getAbilityEffect(set.ability) : null;
 
   return {
     pokemon,
@@ -103,9 +133,11 @@ function analyzeMon(pokemon: ChampionsPokemon, set: CommonSet): AnalyzedMon {
     hasPriority: moves.some(m => m.data && m.data.priority > 0 && m.data.category !== "status"),
     hasSpeedControl: set.moves.includes("Tailwind") || set.moves.includes("Trick Room") ||
       set.moves.includes("Icy Wind") || set.moves.includes("Electroweb") || set.moves.includes("Thunder Wave"),
-    weatherOnEntry: abilityEffect?.setsWeather ?? undefined,
-    terrainOnEntry: abilityEffect?.setsTerrain ?? undefined,
-    isIntimidateUser: set.ability === "Intimidate",
+    weatherOnEntry: baseAbilityEffect?.setsWeather ?? undefined,
+    terrainOnEntry: baseAbilityEffect?.setsTerrain ?? undefined,
+    weatherOnMega: megaAbilityEffect?.setsWeather ?? undefined,
+    terrainOnMega: megaAbilityEffect?.setsTerrain ?? undefined,
+    isIntimidateUser: baseAbility === "Intimidate",
   };
 }
 
@@ -163,7 +195,7 @@ function predictOpponentLeads(
     if (opp.hasRedirection) score += 25;
     if (opp.hasTailwind || opp.hasTrickRoom) score += 25;
     if (opp.isIntimidateUser) score += 20;
-    if (opp.weatherOnEntry || opp.terrainOnEntry) score += 25;
+    if (opp.weatherOnEntry || opp.weatherOnMega || opp.terrainOnEntry || opp.terrainOnMega) score += 25;
     // High threat vs our leads
     score += threatScore(opp, myLead1) * 0.05;
     score += threatScore(opp, myLead2) * 0.05;
@@ -286,13 +318,9 @@ export function generateStrategyTree(
   const myArchetype = myArchetypes[0]?.archetype ?? "goodstuffs";
   const oppArchetype = oppArchetypes[0]?.archetype ?? "goodstuffs";
 
-  // Determine field state on entry
-  const entryWeather = lead1.weatherOnEntry || lead2.weatherOnEntry || null;
-  const entryTerrain = lead1.terrainOnEntry || lead2.terrainOnEntry || null;
-  const oppEntryWeather = oppTeam.find(o =>
-    o.pokemon.name === (predictOpponentLeads(oppTeam, lead1, lead2)[0]?.[0]?.pokemon.name) ||
-    o.pokemon.name === (predictOpponentLeads(oppTeam, lead1, lead2)[0]?.[1]?.pokemon.name)
-  )?.weatherOnEntry ?? null;
+  // Determine field state on entry (mega evolution abilities override entry abilities)
+  const effectiveWeather = lead1.weatherOnMega || lead2.weatherOnMega || lead1.weatherOnEntry || lead2.weatherOnEntry || null;
+  const effectiveTerrain = lead1.terrainOnMega || lead2.terrainOnMega || lead1.terrainOnEntry || lead2.terrainOnEntry || null;
 
   // Predict opponent leads
   const oppLeadPairs = predictOpponentLeads(oppTeam, lead1, lead2);
@@ -308,7 +336,7 @@ export function generateStrategyTree(
     .map(t => t.name);
 
   // Determine win condition
-  const winCondition = determineWinCondition(lead1, lead2, myArchetype, entryWeather, entryTerrain);
+  const winCondition = determineWinCondition(lead1, lead2, myArchetype, effectiveWeather, effectiveTerrain);
 
   // Build the tree
   const root = buildRootNode(lead1, lead2, bestLead, winRate);
@@ -324,7 +352,7 @@ export function generateStrategyTree(
     processedPairs.add(pairKey);
 
     const scenarioNode = buildScenarioBranch(
-      lead1, lead2, opp1, opp2, s, myArchetype, entryWeather, entryTerrain, myTeam, winRate,
+      lead1, lead2, opp1, opp2, s, myArchetype, effectiveWeather, effectiveTerrain, myTeam, winRate,
     );
     scenarioBranches.push(scenarioNode);
   }
@@ -352,8 +380,12 @@ function buildRootNode(
   const fieldNotes: string[] = [];
   if (lead1.weatherOnEntry) fieldNotes.push(`Sets ${lead1.weatherOnEntry}`);
   if (lead2.weatherOnEntry) fieldNotes.push(`Sets ${lead2.weatherOnEntry}`);
+  if (lead1.weatherOnMega) fieldNotes.push(`Sets ${lead1.weatherOnMega} (Mega)`);
+  if (lead2.weatherOnMega) fieldNotes.push(`Sets ${lead2.weatherOnMega} (Mega)`);
   if (lead1.terrainOnEntry) fieldNotes.push(`Sets ${lead1.terrainOnEntry} terrain`);
   if (lead2.terrainOnEntry) fieldNotes.push(`Sets ${lead2.terrainOnEntry} terrain`);
+  if (lead1.terrainOnMega) fieldNotes.push(`Sets ${lead1.terrainOnMega} terrain (Mega)`);
+  if (lead2.terrainOnMega) fieldNotes.push(`Sets ${lead2.terrainOnMega} terrain (Mega)`);
   if (lead1.isIntimidateUser || lead2.isIntimidateUser) fieldNotes.push("Intimidate on entry");
 
   return {
@@ -418,41 +450,93 @@ function buildScenarioBranch(
   const fieldState: StrategyNode["fieldState"] = {};
   if (myWeather) fieldState.weather = myWeather;
   if (myTerrain) fieldState.terrain = myTerrain;
-  const oppWeather = opp1.weatherOnEntry || opp2.weatherOnEntry;
+  const oppEffectiveWeather = opp1.weatherOnMega || opp2.weatherOnMega || opp1.weatherOnEntry || opp2.weatherOnEntry || null;
   const oppTerrain = opp1.terrainOnEntry || opp2.terrainOnEntry;
 
   // Weather war?
-  if (myWeather && oppWeather && myWeather !== oppWeather) {
-    // Slower ability sets weather last (wins)
-    const myWeatherSetter = lead1.weatherOnEntry ? lead1 : lead2;
-    const oppWeatherSetter = opp1.weatherOnEntry ? opp1 : opp2;
-    const weWinWeather = myWeatherSetter.speed < oppWeatherSetter.speed;
+  if (myWeather && oppEffectiveWeather && myWeather !== oppEffectiveWeather) {
+    const myHasMega = !!((lead1.weatherOnMega && myWeather === lead1.weatherOnMega) || (lead2.weatherOnMega && myWeather === lead2.weatherOnMega));
+    const oppHasMega = !!((opp1.weatherOnMega && oppEffectiveWeather === opp1.weatherOnMega) || (opp2.weatherOnMega && oppEffectiveWeather === opp2.weatherOnMega));
 
-    const weatherNode: StrategyNode = {
-      id: nextId(),
-      type: "field-state",
-      label: weWinWeather
-        ? `${myWeather.toUpperCase()} persists (${myWeatherSetter.pokemon.name} slower → sets last)`
-        : `${oppWeather.toUpperCase()} overrides (${oppWeatherSetter.pokemon.name} slower)`,
-      detail: weWinWeather
-        ? `Your ${myWeather} is active  -  5 turns`
-        : `Opponent's ${oppWeather} is active. Consider manual weather reset.`,
-      severity: weWinWeather ? "good" : "bad",
-      fieldState: { weather: weWinWeather ? myWeather : oppWeather },
-      children: [],
-    };
-    turn1Label.children.push(weatherNode);
-  } else if (myWeather || oppWeather) {
-    const activeWeather = myWeather || oppWeather;
-    const weatherSetter = myWeather
-      ? (lead1.weatherOnEntry ? lead1.pokemon.name : lead2.pokemon.name)
-      : (opp1.weatherOnEntry ? opp1.pokemon.name : opp2.pokemon.name);
+    if (myHasMega && oppHasMega) {
+      // Both have mega weather - compare speeds
+      const myMegaSetter = lead1.weatherOnMega ? lead1 : lead2;
+      const oppMegaSetter = opp1.weatherOnMega ? opp1 : opp2;
+      const weWinWeather = myMegaSetter.speed < oppMegaSetter.speed;
+      const weatherNode: StrategyNode = {
+        id: nextId(),
+        type: "field-state",
+        label: weWinWeather
+          ? `${myWeather.toUpperCase()} persists (${myMegaSetter.pokemon.name} slower → sets last)`
+          : `${oppEffectiveWeather.toUpperCase()} overrides (${oppMegaSetter.pokemon.name} slower)`,
+        detail: weWinWeather
+          ? `Your ${myWeather} is active  -  5 turns`
+          : `Opponent's ${oppEffectiveWeather} is active. Consider manual weather reset.`,
+        severity: weWinWeather ? "good" : "bad",
+        fieldState: { weather: weWinWeather ? myWeather : oppEffectiveWeather },
+        children: [],
+      };
+      turn1Label.children.push(weatherNode);
+    } else if (myHasMega && !oppHasMega) {
+      // My mega overrides opponent entry
+      const myMegaSetter = lead1.weatherOnMega ? lead1 : lead2;
+      const weatherNode: StrategyNode = {
+        id: nextId(),
+        type: "field-state",
+        label: `${myWeather.toUpperCase()}: Mega Evolution`,
+        detail: `Your ${myMegaSetter.pokemon.name} Mega Evolves and sets ${myWeather}, overriding opponent's entry ${oppEffectiveWeather}`,
+        severity: "good",
+        fieldState: { weather: myWeather },
+        children: [],
+      };
+      turn1Label.children.push(weatherNode);
+    } else if (!myHasMega && oppHasMega) {
+      // Opponent mega overrides my entry
+      const oppMegaSetter = opp1.weatherOnMega ? opp1 : opp2;
+      const weatherNode: StrategyNode = {
+        id: nextId(),
+        type: "field-state",
+        label: `${oppEffectiveWeather.toUpperCase()}: Opponent Mega Evolution`,
+        detail: `Opponent's ${oppMegaSetter.pokemon.name} Mega Evolves and sets ${oppEffectiveWeather}, overriding your entry ${myWeather}`,
+        severity: "bad",
+        fieldState: { weather: oppEffectiveWeather },
+        children: [],
+      };
+      turn1Label.children.push(weatherNode);
+    } else {
+      // Both entry - slower wins
+      const myWeatherSetter = lead1.weatherOnEntry ? lead1 : lead2;
+      const oppWeatherSetter = opp1.weatherOnEntry ? opp1 : opp2;
+      const weWinWeather = myWeatherSetter.speed < oppWeatherSetter.speed;
+      const weatherNode: StrategyNode = {
+        id: nextId(),
+        type: "field-state",
+        label: weWinWeather
+          ? `${myWeather.toUpperCase()} persists (${myWeatherSetter.pokemon.name} slower → sets last)`
+          : `${oppEffectiveWeather.toUpperCase()} overrides (${oppWeatherSetter.pokemon.name} slower)`,
+        detail: weWinWeather
+          ? `Your ${myWeather} is active  -  5 turns`
+          : `Opponent's ${oppEffectiveWeather} is active. Consider manual weather reset.`,
+        severity: weWinWeather ? "good" : "bad",
+        fieldState: { weather: weWinWeather ? myWeather : oppEffectiveWeather },
+        children: [],
+      };
+      turn1Label.children.push(weatherNode);
+    }
+  } else if (myWeather || oppEffectiveWeather) {
+    const activeWeather = myWeather || oppEffectiveWeather;
+    const isMyWeather = !!myWeather;
+    const setter = isMyWeather
+      ? (lead1.weatherOnMega === activeWeather ? lead1 : lead2.weatherOnMega === activeWeather ? lead2 : lead1.weatherOnEntry === activeWeather ? lead1 : lead2)
+      : (opp1.weatherOnMega === activeWeather ? opp1 : opp2.weatherOnMega === activeWeather ? opp2 : opp1.weatherOnEntry === activeWeather ? opp1 : opp2);
+    const isMega = (isMyWeather && (lead1.weatherOnMega === activeWeather || lead2.weatherOnMega === activeWeather)) ||
+                   (!isMyWeather && (opp1.weatherOnMega === activeWeather || opp2.weatherOnMega === activeWeather));
     const fieldStateNode: StrategyNode = {
       id: nextId(),
       type: "field-state",
       label: `${activeWeather!.toUpperCase()}: 5 Turns`,
-      detail: `Set by ${weatherSetter} on entry`,
-      severity: myWeather ? "good" : "neutral",
+      detail: isMega ? `Set by ${setter.pokemon.name} on Turn 1 (Mega Evolution)` : `Set by ${setter.pokemon.name} on entry`,
+      severity: isMyWeather ? "good" : "neutral",
       fieldState: { weather: activeWeather! },
       children: [],
     };
@@ -1395,7 +1479,7 @@ function generateBackupPlan(
   }
 
   // Weather counter
-  const backWeather = backMons.find(m => m.weatherOnEntry);
+  const backWeather = backMons.find(m => m.weatherOnEntry || m.weatherOnMega);
   if (backWeather) {
     return `Switch to ${backWeather.pokemon.name} to reset weather in your favor`;
   }
