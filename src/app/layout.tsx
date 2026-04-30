@@ -90,7 +90,7 @@ export default async function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('championslab-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}
+            __html: `try{var t=localStorage.getItem('championslab-theme');document.documentElement.style.colorScheme=t==='dark'?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}
 try{var l=localStorage.getItem('championslab-lang');if(l){document.cookie='cl-lang='+l+';path=/;max-age=31536000;SameSite=Lax'}}catch(e){}`,
           }}
         />
