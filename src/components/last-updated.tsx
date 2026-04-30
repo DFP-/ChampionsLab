@@ -14,6 +14,7 @@ interface ChangelogEntry {
     {
       date: "30/04/2026",
       items: [
+        "📊 New Table view for Official Usage Stats — toggle between Cards and Table on the Meta → Pokémon Rankings page. The table shows Rank, Sprite, Name, Types, Abilities, Usage %, and all 6 Base Stats with color-coded pills (gold for 120+, green for 100+, gray for 80+) for instant competitive comparison",
         "🌳 Flowchart now branches horizontally — decision nodes (Fake Out reads, Protect vs setup, offense vs pivot) now split into side-by-side branches instead of stacking vertically, making it clear that these are alternative plays, not sequential steps",
         "🌳 Added Fake Out speed-tie branches — when both sides have Fake Out, the flowchart now branches on who outspeeds, showing the flinch scenario and the backup plan for each case",
         "🌳 Added 'Aggro' and 'Protect' branches when slower with no speed control — instead of a flat warning, the flowchart now shows actionable branches for surviving turn 1",
