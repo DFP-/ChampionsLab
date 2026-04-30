@@ -28,7 +28,7 @@ const ids = [
   {name: 'Mega Absol Z', id: 10314},
   {name: 'Mega Lucario Z', id: 10315},
   {name: 'Mega Victreebel', id: 10400},
-  {name: 'Mega Floette', id: 10061},
+  {name: 'Eternal Floette', id: 10061},
   // Tatsugiri Home sprite
   {name: 'Tatsugiri (Home)', id: 978},
   // Also check showdown sprites as alternative

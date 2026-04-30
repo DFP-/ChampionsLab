@@ -81,7 +81,7 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     name: "VR Top Cut: Mega Floette",
     archetype: "Tailwind",
     description: "Pablo Rico's Victory Road Champions Arena Top Cut team. Mega Floette with Tailwind Aerodactyl, Adamant Aegislash, Scarf Rotom-Wash, and Incineroar.",
-    pokemonIds: [670, 142, 681, 10009, 727, 445],
+    pokemonIds: [10061, 142, 681, 10009, 727, 445],
     sets: [
       { name: "Mega Fairy Aura", nature: "Modest", ability: "Fairy Aura", item: "Floettite", moves: ["Protect", "Moonblast", "Dazzling Gleam", "Light of Ruin"], sp: { hp: 16, attack: 0, defense: 22, spAtk: 5, spDef: 1, speed: 22 }, preMegaAbility: "Flower Veil" },
       { name: "Tailwind Lead", nature: "Jolly", ability: "Unnerve", item: "Focus Sash", moves: ["Protect", "Rock Slide", "Dual Wingbeat", "Tailwind"], sp: { hp: 6, attack: 27, defense: 0, spAtk: 0, spDef: 1, speed: 32 } },
@@ -117,7 +117,7 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     name: "Rank 1 Global: Floette Froslass",
     archetype: "Hyper Offense",
     description: "Spy_Anya's Rank 1 Global team. Mega Floette + Mega Froslass dual mega option with Garchomp, Defiant Kingambit, Adaptability Basculegion, and Sneasler.",
-    pokemonIds: [670, 445, 983, 902, 903, 478],
+    pokemonIds: [10061, 445, 983, 902, 903, 478],
     sets: [
       { name: "Mega Fairy Nuke", nature: "Modest", ability: "Fairy Aura", item: "Floettite", moves: ["Moonblast", "Dazzling Gleam", "Light of Ruin", "Protect"], sp: { hp: 14, attack: 0, defense: 0, spAtk: 20, spDef: 0, speed: 32 }, preMegaAbility: "Flower Veil" },
       { name: "Haban Berry Ground", nature: "Adamant", ability: "Rough Skin", item: "Haban Berry", moves: ["Dragon Claw", "Earthquake", "Rock Slide", "Protect"], sp: { hp: 32, attack: 7, defense: 1, spAtk: 0, spDef: 1, speed: 25 } },
@@ -207,7 +207,7 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
     name: "Mega Floette HO",
     archetype: "Hyper Offense",
     description: "Mega Floette + Sneasler Fake Out lead with Tailwind Dragonite, Scarf Excadrill, and bulky Rotom-Wash. By Illiterate Duck.",
-    pokemonIds: [670, 903, 727, 530, 149, 10009],
+    pokemonIds: [10061, 903, 727, 530, 149, 10009],
     sets: [
       { name: "Mega Fairy Nuke", nature: "Timid", ability: "Fairy Aura", item: "Floettite", moves: ["Dazzling Gleam", "Moonblast", "Psychic", "Protect"], sp: { hp: 0, attack: 0, defense: 1, spAtk: 32, spDef: 1, speed: 32 }, preMegaAbility: "Flower Veil" },
       { name: "Unburden Lead", nature: "Jolly", ability: "Unburden", item: "Focus Sash", moves: ["Close Combat", "Dire Claw", "Fake Out", "Rock Slide"], sp: { hp: 0, attack: 32, defense: 1, spAtk: 0, spDef: 1, speed: 32 } },
@@ -783,7 +783,7 @@ export const PREBUILT_TEAMS: PrebuiltTeam[] = [
   {
     id: "pre-43", name: "Mega Floette Fairy", archetype: "Fairy Core",
     description: "Mega Floette spamming Fairy damage with Grimmsnarl support",
-    pokemonIds: [670, 861, 911, 473, 706, 547],
+    pokemonIds: [10061, 861, 911, 473, 706, 547],
     sets: [
       {"name":"Mega Eternal Bloom","nature":"Timid","ability":"Eternal Bloom","item":"Floettite","moves":["Moonblast","Dazzling Gleam","Psychic","Protect"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
       {"name":"Screens Lead","nature":"Careful","ability":"Prankster","item":"Light Clay","moves":["Reflect","Light Screen","Spirit Break","Fake Out"],"sp":{"hp":32,"attack":0,"defense":2,"spAtk":0,"spDef":32,"speed":0}},

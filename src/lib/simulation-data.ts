@@ -8676,8 +8676,8 @@ export const SIM_POKEMON: Record<string, SimPokemonData> = {
     ],
     "bestSets": []
   },
-  "670-mega": {
-    "id": 670,
+  "10061-mega": {
+    "id": 10061,
     "name": "Mega Floette",
     "isMega": true,
     "elo": 7998,

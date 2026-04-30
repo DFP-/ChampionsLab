@@ -12,6 +12,14 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
+      date: "30/04/2026",
+      items: [
+        "🌸 Added Eternal Floette — new standalone Pokémon entry (id: 10061) with correct base stats 74/65/67/125/128/92, following Pokémon Showdown data. Eternal Floette can Mega Evolve into Mega Floette (74/85/87/155/148/102)",
+        "🐛 Fixed Floette sprite references — corrected sprite IDs so Eternal Floette uses its official sprite and Mega Floette uses the custom official-artwork sprite",
+        "⚔️ Normal Floette can no longer Mega Evolve — only Eternal Floette can Mega Evolve into Mega Floette. All tournament teams, generated teams, and meta data updated to reflect this Showdown-accurate behavior",
+      ],
+    },
+    {
       date: "27/04/2026",
       items: [
         "🇵🇹 Partial Portuguese translation — website UI, PokéSchool, and move/ability/item descriptions (Pokémon names, types, attacks, abilities, items, natures remain in English)",

@@ -42,6 +42,17 @@ yarn-error.log*
 # agent context (local only)
 AGENT-CONTEXT.md
 
+# LLM/agent documentation (local reference only)
+AGENTS.md
+API_AND_BACKEND.md
+ARCHITECTURE.md
+COMPONENTS.md
+DATA_AND_SCRIPTS.md
+DEPLOYMENT.md
+I18N.md
+PROJECT.md
+SPRITES.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
