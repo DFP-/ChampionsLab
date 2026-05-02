@@ -531,7 +531,8 @@
       "noSpeedControlThreat": "Nessun controllo velocità - aggiungi Ventoincoda o Trick Room",
       "noIntimidateThreat": "Nessuna Intimidazione - considera di aggiungere un Intimidatore",
       "poorCoverage": "Scarsa copertura - nessun colpo superefficace contro {types}"
-    }
+    },
+    "spLimitReached": "No more Stat Points available! Reduce another stat first."
   },
   "battleBot": {
     "title": "Simulatore di Battaglia",

@@ -531,7 +531,8 @@
       "noSpeedControlThreat": "Sem speed control - adiciona Tailwind ou Trick Room",
       "noIntimidateThreat": "Sem Intimidate - considera adicionar um utilizador de Intimidate",
       "poorCoverage": "Cobertura fraca - sem acertos super efetivos contra {types}"
-    }
+    },
+    "spLimitReached": "No more Stat Points available! Reduce another stat first."
   },
   "battleBot": {
     "title": "Battle Bot",

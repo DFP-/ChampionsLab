@@ -12,6 +12,19 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
+      date: "02/05/2026",
+      items: [
+        "⚡ Dynamic Speed Tiers in Team Builder — click the lightning bolt next to the Speed slider to open a live speed tier comparison modal. See exactly where your Pokémon ranks against the full roster, with real-time updates as you adjust SP, nature, item, or moves",
+        "⚡ Speed tier modal shows multiple speed scenarios — Base speed, with Choice Scarf, with weather abilities (Swift Swim, Sand Rush, etc.), and after setup moves (Dragon Dance, Agility, Shell Smash) all displayed as clickable chips",
+        "⚡ SP-to-outspeed calculator — for every threat you don't outspeed, the modal shows exactly how many additional Stat Points you need to invest to surpass their max speed",
+        "⚡ Weather toggle for speed abilities — toggle rain/sun/sand/snow on/off to see your speed with weather-based abilities activated",
+        "⚡ Nearby filter and search — filter to show only Pokémon near your current rank, or search for specific threats by name",
+        "⚡ Fully responsive on mobile — the speed tier modal adapts to full-screen on phones and tablet-friendly on larger screens",
+        "🐛 Fixed SP limit toast message not displaying correctly in all languages",
+        "🐛 Speed tier list now auto-scrolls to keep your Pokémon in view when speed changes",
+      ],
+    },
+    {
       date: "30/04/2026",
       items: [
         "🛡️ Fixed Armor Tail blocking priority moves in battle simulator — Fake Out and other priority moves are now correctly blocked by Armor Tail (e.g. Farigiraf). Previously the log would incorrectly show the target flinching even though the move was blocked",

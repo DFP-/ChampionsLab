@@ -15,6 +15,7 @@ import {
   ChampionsPokemon, TeamSlot, PokemonType, TYPE_COLORS, StatPoints,
 } from "@/lib/types";
 import { PokemonDetailModal } from "@/components/pokemon-detail-modal";
+import { SpeedTierPanel } from "@/components/speed-tier-panel";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { USAGE_DATA } from "@/lib/usage-data";
@@ -231,6 +232,9 @@ export default function TeamBuilderPage() {
   const [shuffledTeams, setShuffledTeams] = useState<PrebuiltTeam[]>([]);
   const [showShare, setShowShare] = useState(false);
   const [shareImageUrl, setShareImageUrl] = useState<string | null>(null);
+  const [speedTierMode, setSpeedTierMode] = useState(false);
+  const [spToast, setSpToast] = useState<string | null>(null);
+
   const [shareLinkError, setShareLinkError] = useState<string | null>(null);
   const [showMoreTournament, setShowMoreTournament] = useState(false);
   const [showMoreCurated, setShowMoreCurated] = useState(false);
@@ -239,6 +243,8 @@ export default function TeamBuilderPage() {
   const [pasteHideItem, setPasteHideItem] = useState(false);
   const [pasteHideAbility, setPasteHideAbility] = useState(false);
   const [pasteLinkCopied, setPasteLinkCopied] = useState(false);
+
+
 
   // Tournament teams filtered to active roster, sorted by placement
   const tournamentTeams = useMemo(() => {
@@ -995,7 +1001,11 @@ export default function TeamBuilderPage() {
     const total = Object.values(sp).reduce((a, b) => a + b, 0);
     const newValue = Math.max(0, Math.min(MAX_PER_STAT, current + delta));
     const newTotal = total - current + newValue;
-    if (newTotal > MAX_TOTAL_POINTS) return;
+    if (newTotal > MAX_TOTAL_POINTS) {
+      setSpToast(t("teamBuilder.spLimitReached"));
+      setTimeout(() => setSpToast(null), 2000);
+      return;
+    }
     sp[stat] = newValue;
     updateSlot(slotIndex, { statPoints: sp });
   };
@@ -1004,6 +1014,10 @@ export default function TeamBuilderPage() {
     const sp = { ...slots[slotIndex].statPoints };
     const total = Object.values(sp).reduce((a, b) => a + b, 0);
     const remaining = MAX_TOTAL_POINTS - (total - sp[stat]);
+    if (value > remaining && remaining < MAX_PER_STAT) {
+      setSpToast(t("teamBuilder.spLimitReached"));
+      setTimeout(() => setSpToast(null), 2000);
+    }
     const clamped = Math.max(0, Math.min(MAX_PER_STAT, remaining, value));
     sp[stat] = clamped;
     updateSlot(slotIndex, { statPoints: sp });
@@ -1846,11 +1860,25 @@ export default function TeamBuilderPage() {
                         </div>
                       );
                     })()}
-                    <button onClick={() => setSelectedSlotIndex(null)} className="p-1.5 rounded-lg hover:bg-gray-100"><X className="w-4 h-4" /></button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => setSpeedTierMode((v) => !v)}
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-colors",
+                          speedTierMode
+                            ? "bg-pink-100 text-pink-700 dark:bg-pink-500/20 dark:text-pink-300 hover:bg-pink-200"
+                            : "bg-gray-100 text-muted-foreground hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10"
+                        )}
+                      >
+                        <Zap className="w-4 h-4" />
+                        <span>Dynamic Speed Tier</span>
+                      </button>
+                      <button onClick={() => setSelectedSlotIndex(null)} className="p-1.5 rounded-lg hover:bg-gray-100"><X className="w-4 h-4" /></button>
+                    </div>
                   </div>
 
                   {/* Auto-Fill + Quick Apply Sets */}
-                  <div className="mb-4">
+                  {!speedTierMode && <div className="mb-4">
                     <p className="text-[10px] text-muted-foreground uppercase font-bold mb-2">{t('teamBuilder.quickApply')}</p>
                     <div className="flex flex-wrap gap-2">
                       {(() => {
@@ -1900,11 +1928,11 @@ export default function TeamBuilderPage() {
                         ));
                       })()}
                       </div>
-                    </div>
+                    </div>}
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
+                  <div className={cn("grid gap-5 items-start", speedTierMode ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-3")}>
                     {/* Col 1: Moves */}
-                    <div>
+                    {!speedTierMode && <div>
                       <p className="text-[10px] text-muted-foreground uppercase font-bold mb-2">{t('teamBuilder.moves')}</p>
                       <div className="space-y-2">
                         {[0, 1, 2, 3].map((moveIdx) => {
@@ -2003,11 +2031,11 @@ export default function TeamBuilderPage() {
                           </div>
                         );
                       })()}
-                    </div>
+                    </div>}
 
                     {/* Col 2: Ability + Nature + Item */}
                     <div className="space-y-3">
-                      <div>
+                      {!speedTierMode && <div>
                         <p className="text-[10px] text-muted-foreground uppercase font-bold mb-2">{editSlotData.isMega ? t('teamBuilder.preMegaAbility') : t('teamBuilder.ability')}</p>
                         <div className="space-y-1.5">
                           {(() => {
@@ -2096,7 +2124,7 @@ export default function TeamBuilderPage() {
                             );
                           })()}
                         </div>
-                      </div>
+                      </div>}
                       <div>
                         <p className="text-[10px] text-muted-foreground uppercase font-bold mb-1">{t('teamBuilder.nature')}</p>
                         <SearchSelect
@@ -2139,10 +2167,10 @@ export default function TeamBuilderPage() {
                     {/* Col 3: SP Distribution */}
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <p className="text-[10px] text-muted-foreground uppercase font-bold">{t('teamBuilder.statPoints')}</p>
-                        <span className={cn("text-[11px] font-bold", Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0) >= MAX_TOTAL_POINTS ? "text-red-500" : "text-muted-foreground")}>{Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0)}/{MAX_TOTAL_POINTS}</span>
+                        <p className="text-[10px] text-muted-foreground uppercase font-bold">{speedTierMode ? "Speed" : t('teamBuilder.statPoints')}</p>
+                        {!speedTierMode && <span className={cn("text-[11px] font-bold", Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0) >= MAX_TOTAL_POINTS ? "text-red-500" : "text-muted-foreground")}>{Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0)}/{MAX_TOTAL_POINTS}</span>}
                       </div>
-                      <div className="flex items-center gap-1.5 mb-1">
+                      {!speedTierMode && <div className="flex items-center gap-1.5 mb-1">
                         <span className="w-7" />
                         <span className="text-[8px] text-muted-foreground uppercase w-6 text-right">{t('teamBuilder.baseLabel')}</span>
                         <span className="w-5" />
@@ -2150,8 +2178,8 @@ export default function TeamBuilderPage() {
                         <span className="w-5" />
                         <span className="w-8" />
                         <span className="text-[8px] text-muted-foreground uppercase w-7 text-right">{t('teamBuilder.totalLabel')}</span>
-                      </div>
-                      <div className="space-y-1.5">
+                      </div>}
+                      <div className={cn("space-y-1.5", speedTierMode && "py-2 px-3 rounded-lg bg-pink-500/[0.04] border border-pink-200/40")}>
                         {(() => {
                           const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
                           const activeBase = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
@@ -2160,7 +2188,8 @@ export default function TeamBuilderPage() {
                           const nature = (editSlotData.nature || "Hardy") as NatureName;
                           const finalStats = calculateStats(activeBase, editSlotData.statPoints, nature);
                           const nat = NATURES[nature];
-                          return STAT_KEYS.map((stat) => {
+                          const keysToShow = speedTierMode ? (["speed"] as const) : STAT_KEYS;
+                          return keysToShow.map((stat) => {
                             const value = editSlotData.statPoints[stat];
                             const base = activeBase[stat];
                             const final_ = finalStats[stat];
@@ -2180,7 +2209,7 @@ export default function TeamBuilderPage() {
                           });
                         })()}
                       </div>
-                      <div className="mt-2">
+                      {!speedTierMode && <div className="mt-2">
                         <p className="text-[10px] text-muted-foreground uppercase font-bold mb-1">{t('teamBuilder.presets')}</p>
                         <div className="flex flex-wrap gap-1">
                           {Object.entries(STAT_PRESETS).map(([name, sp]) => (
@@ -2188,12 +2217,39 @@ export default function TeamBuilderPage() {
                           ))}
                           {slotSuggestion && <button onClick={() => updateSlot(selectedSlotIndex, { statPoints: { ...slotSuggestion.suggestedSP.sp } })} className="px-2 py-0.5 text-[9px] rounded bg-emerald-50 border border-emerald-200 text-emerald-700 hover:bg-emerald-100 transition-colors font-medium">{t('teamBuilder.suggestedPreset')}</button>}
                         </div>
-                      </div>
+                      </div>}
                     </div>
                   </div>
 
+                  {/* Inline Speed Tier Panel */}
+                  {speedTierMode && (() => {
+                    const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
+                    const activeBase = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
+                      ? megaForms[editSlotData.megaFormIndex ?? 0].baseStats
+                      : editPkm.baseStats;
+                    return (
+                      <>
+                        <SpeedTierPanel
+                          userPokemon={editPkm}
+                          userBaseStats={activeBase}
+                          userSP={editSlotData.statPoints}
+                          userNature={(editSlotData.nature || "Hardy") as NatureName}
+                          userItem={editSlotData.item}
+                          userAbility={editSlotData.ability}
+                          userMoves={editSlotData.moves}
+                          onSpeedChange={(value) => setSPDirect(selectedSlotIndex, "speed", value)}
+                        />
+                        {spToast && (
+                          <div className="mt-2 px-3 py-2 rounded-lg bg-white dark:bg-gray-900 border border-pink-200 dark:border-pink-500/30 text-pink-600 dark:text-pink-400 text-xs font-medium shadow-sm text-center animate-in fade-in slide-in-from-bottom-1">
+                            {spToast}
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
+
                   {/* Type Defenses & Coverage */}
-                  {(() => {
+                  {!speedTierMode && (() => {
                     const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
                     const activeTypes = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
                       ? megaForms[editSlotData.megaFormIndex ?? 0].types
@@ -2865,6 +2921,8 @@ export default function TeamBuilderPage() {
         pokemon={selectedPokemonDetail}
         onClose={() => setSelectedPokemonDetail(null)}
       />
+
+
     </div>
   );
 }

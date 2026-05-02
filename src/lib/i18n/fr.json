@@ -531,7 +531,8 @@
       "noSpeedControlThreat": "Pas de contrôle de vitesse – ajoutez Vent Arrière ou Distorsion",
       "noIntimidateThreat": "Pas d'Intimidation – envisagez un utilisateur d'Intimidation",
       "poorCoverage": "Couverture insuffisante – pas de coups super efficaces contre {types}"
-    }
+    },
+    "spLimitReached": "Plus de Points de Stat disponibles ! Réduisez d'abord un autre stat."
   },
   "battleBot": {
     "title": "Simulateur de Combat",
@@ -1273,6 +1274,31 @@
     "ruleNoDupeItemsDesc": "Chaque objet tenu ne peut être utilisé qu'une fois par équipe. Connue sous le nom de Clause d'Objet — oblige à diversifier les choix d'objets.",
     "ruleTimer": "Chrono de 20 min",
     "ruleTimerDesc": "Chaque combat a une limite de temps de 20 minutes. Si le temps expire, le joueur avec le plus de Pokémon restants gagne. Empêche le stalling et garde les combats dynamiques."
+  },
+  "speedTiers": {
+    "title": "Speed Tiers",
+    "subtitle": "Rang #{rank} sur {total}",
+    "base": "Base",
+    "ability": "Talent",
+    "afterSetup": "Après Setup",
+    "itemSetup": "Objet + Setup",
+    "weatherOn": "Météo active",
+    "weatherOff": "Activer météo",
+    "searchPlaceholder": "Rechercher un Pokémon…",
+    "nearby": "Proches",
+    "pokemon": "Pokémon",
+    "max": "Max",
+    "vsYou": "vs Vous",
+    "you": "VOUS",
+    "needSp": "+{sp} SP pour dépasser",
+    "needSp0": "Changez nature pour dépasser",
+    "outspeedBy": "+{diff} plus rapide",
+    "outspeed": "Vous dépassez",
+    "outspedBy": "On vous dépasse",
+    "ties": "Égalités",
+    "total": "Total",
+    "noResults": "Aucun Pokémon trouvé",
+    "openTooltip": "Ouvrir la comparaison de speed tiers"
   },
   "paste": {
     "noTeam": "Aucune donnée d'équipe trouvée. Utilisez le bouton Partager dans le Team Builder pour générer un lien paste.",

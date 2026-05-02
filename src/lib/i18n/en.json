@@ -531,7 +531,8 @@
       "noSpeedControlThreat": "No speed control - add Tailwind or Trick Room user",
       "noIntimidateThreat": "No Intimidate - consider adding an Intimidate user",
       "poorCoverage": "Poor coverage - no super effective hits vs {types}"
-    }
+    },
+    "spLimitReached": "No more Stat Points available! Reduce another stat first."
   },
   "battleBot": {
     "title": "Battle Bot",
@@ -1273,6 +1274,31 @@
     "ruleNoDupeItemsDesc": "Each held item can only be used once per team. Known as the Item Clause - forces diverse item choices and prevents stacking powerful items like Leftovers or Choice Scarf.",
     "ruleTimer": "20-min timer",
     "ruleTimerDesc": "Each game has a 20-minute time limit. If time runs out, the player with more remaining Pokémon wins. Prevents stalling and keeps games fast-paced."
+  },
+  "speedTiers": {
+    "title": "Speed Tiers",
+    "subtitle": "Rank #{rank} of {total}",
+    "base": "Base",
+    "ability": "Ability",
+    "afterSetup": "After Setup",
+    "itemSetup": "Item + Setup",
+    "weatherOn": "Weather active",
+    "weatherOff": "Toggle weather",
+    "searchPlaceholder": "Search Pokémon…",
+    "nearby": "Nearby",
+    "pokemon": "Pokémon",
+    "max": "Max",
+    "vsYou": "vs You",
+    "you": "YOU",
+    "needSp": "+{sp} SP to outspeed",
+    "needSp0": "Change nature to outspeed",
+    "outspeedBy": "+{diff} faster",
+    "outspeed": "Outspeed",
+    "outspedBy": "Outsped by",
+    "ties": "Ties",
+    "total": "Total",
+    "noResults": "No Pokémon found",
+    "openTooltip": "Open speed tier comparison"
   },
   "paste": {
     "noTeam": "No team data found. Use the Share button in the Team Builder to generate a paste link.",

@@ -64,6 +64,24 @@ export {
   classifyStatProfile,
 } from "./stat-calc";
 
+// Speed Tiers
+export {
+  buildSpeedTiers,
+  compareUserSpeed,
+  calcUserSpeed,
+  calcThreatSpeed,
+  spNeededToOutspeed,
+  spNeededWithNatureChange,
+  speedComparisonLabel,
+  getSpeedBoostFromMoves,
+  hasSpeedBoostMove,
+  SPEED_BOOST_MOVES_PLUS_1,
+  SPEED_BOOST_MOVES_PLUS_2,
+  type SpeedTierEntry,
+  type UserSpeedInfo,
+  type SpeedComparisonResult,
+} from "./speed-tiers";
+
 // Damage Calculator
 export {
   calculateDamage,

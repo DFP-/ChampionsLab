@@ -531,7 +531,8 @@
       "noSpeedControlThreat": "Sin control de velocidad - añade Viento Afín o Cuarto Trucado",
       "noIntimidateThreat": "Sin Intimidación - considera añadir un Intimidador",
       "poorCoverage": "Mala cobertura - sin golpes supereficaces contra {types}"
-    }
+    },
+    "spLimitReached": "¡No hay más Puntos de Stat disponibles! Reduce otro stat primero."
   },
   "battleBot": {
     "title": "Bot de Combate",
@@ -1273,6 +1274,31 @@
     "ruleNoDupeItemsDesc": "Cada objeto equipado solo puede usarse una vez por equipo. Conocida como Item Clause - fuerza diversidad y evita apilar objetos potentes como Restos o Pañuelo Elegido.",
     "ruleTimer": "Temporizador de 20 min",
     "ruleTimerDesc": "Cada partida tiene un límite de 20 minutos. Si el tiempo se acaba, gana el jugador con más Pokémon restantes. Evita el stalling y mantiene las partidas ágiles."
+  },
+  "speedTiers": {
+    "title": "Speed Tiers",
+    "subtitle": "Rango #{rank} de {total}",
+    "base": "Base",
+    "ability": "Habilidad",
+    "afterSetup": "Tras Setup",
+    "itemSetup": "Objeto + Setup",
+    "weatherOn": "Clima activo",
+    "weatherOff": "Activar clima",
+    "searchPlaceholder": "Buscar Pokémon…",
+    "nearby": "Cercanos",
+    "pokemon": "Pokémon",
+    "max": "Máx",
+    "vsYou": "vs Tú",
+    "you": "TÚ",
+    "needSp": "+{sp} SP para superar",
+    "needSp0": "Cambia naturaleza para superar",
+    "outspeedBy": "+{diff} más rápido",
+    "outspeed": "Superas",
+    "outspedBy": "Te superan",
+    "ties": "Empates",
+    "total": "Total",
+    "noResults": "No se encontró ningún Pokémon",
+    "openTooltip": "Abrir comparación de speed tiers"
   },
   "paste": {
     "noTeam": "No se encontraron datos de equipo. Usa el botón Compartir en el Creador de Equipos para generar un enlace paste.",

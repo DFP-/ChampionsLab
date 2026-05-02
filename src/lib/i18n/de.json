@@ -531,7 +531,8 @@
       "noSpeedControlThreat": "Keine Initiativkontrolle - füge Rückenwind- oder Trick-Room-Nutzer hinzu",
       "noIntimidateThreat": "Kein Intimidate - erwäge, einen Intimidate-Nutzer hinzuzufügen",
       "poorCoverage": "Schlechte Abdeckung - keine sehr effektiven Treffer gegen {types}"
-    }
+    },
+    "spLimitReached": "No more Stat Points available! Reduce another stat first."
   },
   "battleBot": {
     "title": "Kampf-Bot",
