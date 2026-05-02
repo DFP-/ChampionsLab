@@ -1839,7 +1839,7 @@ export default function TeamBuilderPage() {
                   exit={{ opacity: 0, y: -10 }}
                   className="glass rounded-2xl p-5 border border-emerald-200/60"
                 >
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                     {(() => {
                       const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
                       const activeMega = editSlotData.isMega ? megaForms[editSlotData.megaFormIndex ?? 0] : null;
