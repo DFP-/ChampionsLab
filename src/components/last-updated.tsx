@@ -14,6 +14,12 @@ interface ChangelogEntry {
     {
       date: "02/05/2026",
       items: [
+        "🛍️ New Shop button in navbar — divided support button now includes a direct link to the Champions Lab merch store alongside Support Us",
+      ],
+    },
+    {
+      date: "02/05/2026",
+      items: [
         "🛡️ Survival Calculator — smart SP auto-optimizer finds the minimum bulk needed to survive a hit and dumps everything else into offense (Speed → Attack → SpAtk). No more over-invested bulk",
         "⚔️ Damage Calculator — user side now shows your actual 4 team-builder moves instead of the full movepool. Enemy side loads the 4 moves from their competitive set, with a selector to swap any move",
         "🔧 Fixed SearchSelect dropdown positioning — dropdown now stays perfectly glued to the trigger input when scrolling page or modal. Rewrote positioning engine for frame-perfect sync",

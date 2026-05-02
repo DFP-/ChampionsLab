@@ -7,6 +7,8 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { LazyParticles } from "@/components/lazy-particles";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeInit } from "@/components/theme-init";
+import { MobileNavInit } from "@/components/mobile-nav-init";
 import { I18nProvider } from "@/lib/i18n";
 
 const inter = Inter({
@@ -80,21 +82,17 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const initialLocale = cookieStore.get("cl-lang")?.value ?? "en";
+  const themeCookie = cookieStore.get("cl-theme")?.value;
+  const isDark = themeCookie === "dark";
 
   return (
     <html
       lang={initialLocale.split("-")[0]}
-      className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased ${isDark ? "dark" : ""}`}
+      style={{ colorScheme: isDark ? "dark" : "light" }}
       suppressHydrationWarning
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem('championslab-theme');document.documentElement.style.colorScheme=t==='dark'?'dark':'light';if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}
-try{var l=localStorage.getItem('championslab-lang');if(l){document.cookie='cl-lang='+l+';path=/;max-age=31536000;SameSite=Lax'}}catch(e){}`,
-          }}
-        />
-
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NVYVM8YJZN"
           strategy="afterInteractive"
@@ -125,11 +123,8 @@ try{var l=localStorage.getItem('championslab-lang');if(l){document.cookie='cl-la
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var b=document.getElementById('mobile-nav-toggle');if(b)b.addEventListener('click',function(){document.body.classList.toggle('mobile-open')});document.addEventListener('click',function(e){if(document.body.classList.contains('mobile-open')&&e.target.closest('.mobile-nav-panel a'))document.body.classList.remove('mobile-open')})})()`,
-          }}
-        />
+        <MobileNavInit />
+        <ThemeInit />
         <Navbar />
         <Suspense>
           <main className="flex-1 relative z-10">{children}</main>
