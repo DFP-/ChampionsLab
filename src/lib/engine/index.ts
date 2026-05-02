@@ -82,6 +82,19 @@ export {
   type SpeedComparisonResult,
 } from "./speed-tiers";
 
+// Survival Calculator
+export {
+  calcSurvivalScenario,
+  suggestSurvivalInvestments,
+  loadThreat,
+  getTopThreats,
+  getThreatDamagingMoves,
+  getBestOffensiveMove,
+  type ThreatSet,
+  type SurvivalScenario,
+  type SurvivalSuggestion,
+} from "./survival-calc";
+
 // Damage Calculator
 export {
   calculateDamage,

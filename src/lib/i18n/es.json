@@ -534,6 +534,23 @@
     },
     "spLimitReached": "¡No hay más Puntos de Stat disponibles! Reduce otro stat primero."
   },
+  "survivalCalc": {
+    "title": "Cálculo de Supervivencia",
+    "selectThreat": "Selecciona una amenaza meta para probar tu resistencia",
+    "searchPlaceholder": "Buscar amenazas…",
+    "modeOHKO": "OHKO",
+    "mode2HKO": "2HKO",
+    "selectMove": "Seleccionar movimiento…",
+    "incomingDamage": "Daño Entrante",
+    "suggestions": "Sugerencias de Supervivencia",
+    "cannotSurvive": "No puede sobrevivir ni con inversión máxima en resistencia",
+    "returnDamage": "Tu Daño de Retorno",
+    "survives": "¡Tu Pokémon sobrevive!",
+    "survives2HKO": "¡Sobrevive 2 golpes!",
+    "rollDependent": "La supervivencia depende del roll",
+    "faints": "¡Tu Pokémon se debilita!",
+    "remainingHP": "HP restante"
+  },
   "battleBot": {
     "title": "Bot de Combate",
     "description": "Motor entrenado con más de 2M de combates · Rankings ELO · Matrices de ratio de victorias · Enfrentamientos de arquetipos",
@@ -810,7 +827,9 @@
     "corePairs": "Core Pairs",
     "corePairAnalysis": "Análisis de Core Pairs",
     "archetypes": "Enfrentamientos de Arquetipos",
-    "antiMeta": "Rankings Anti-Meta",
+    "antiMeta": {
+      "strategy": "Construido en torno a {name} (puntuación anti-meta {score}). Cuenta a {c1} y {c2}."
+    },
     "antiMetaPokemon": "Ranking de Pokémon Anti-Meta",
     "antiMetaTeams": "Equipos Anti-Meta",
     "tournamentTeams": "Equipos de Torneo",
@@ -959,9 +978,6 @@
       "topMega": "Top Mega Pokémon:",
       "overrated": "Pokémon sobrevalorados (alto uso, bajo WR):",
       "bestArchetypes": "Mejores arquetipos:"
-    },
-    "antiMeta": {
-      "strategy": "Construido en torno a {name} (puntuación anti-meta {score}). Cuenta a {c1} y {c2}."
     }
   },
   "learn": {
@@ -1138,7 +1154,10 @@
     "descCrit": "con golpe crítico",
     "descWeather": "con {weather}",
     "descTerrain": "en campo {terrain}",
-    "berryActivated": "{item} redujo el daño"
+    "berryActivated": "{item} redujo el daño",
+    "selectDefender": "Select opponent to test matchup",
+    "changeMove": "Cambiar movimiento",
+    "selectMove": "Seleccionar movimiento"
   },
   "teamTester": {
     "team1": "Equipo 1",

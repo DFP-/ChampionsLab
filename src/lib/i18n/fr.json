@@ -534,6 +534,23 @@
     },
     "spLimitReached": "Plus de Points de Stat disponibles ! Réduisez d'abord un autre stat."
   },
+  "survivalCalc": {
+    "title": "Calc de Survie",
+    "selectThreat": "Sélectionnez une menace méta pour tester votre résistance",
+    "searchPlaceholder": "Rechercher des menaces…",
+    "modeOHKO": "OHKO",
+    "mode2HKO": "2HKO",
+    "selectMove": "Sélectionner une attaque…",
+    "incomingDamage": "Dégâts Entrants",
+    "suggestions": "Suggestions de Survie",
+    "cannotSurvive": "Impossible de survivre même avec un investissement max en résistance",
+    "returnDamage": "Vos Dégâts en Retour",
+    "survives": "Votre Pokémon survit !",
+    "survives2HKO": "Survit à 2 coups !",
+    "rollDependent": "La survie dépend du roll",
+    "faints": "Votre Pokémon est K.O. !",
+    "remainingHP": "PV restants"
+  },
   "battleBot": {
     "title": "Simulateur de Combat",
     "description": "Moteur entraîné sur 2M+ résultats de combat · Classements ELO · Matrices de victoire · Matchups d'archétypes",
@@ -810,7 +827,9 @@
     "corePairs": "Paires Clés",
     "corePairAnalysis": "Analyse des Paires Clés",
     "archetypes": "Matchups d'Archétypes",
-    "antiMeta": "Classement Anti-Méta",
+    "antiMeta": {
+      "strategy": "Construit autour de {name} ({score} score anti-méta). Contre {c1} et {c2}."
+    },
     "antiMetaPokemon": "Classement Pokémon Anti-Méta",
     "antiMetaTeams": "Équipes Anti-Méta",
     "tournamentTeams": "Équipes de Tournoi",
@@ -959,9 +978,6 @@
       "topMega": "Top Méga-Pokémon :",
       "overrated": "Pokémon surévalués (usage élevé, faible TV) :",
       "bestArchetypes": "Meilleurs archétypes :"
-    },
-    "antiMeta": {
-      "strategy": "Construit autour de {name} ({score} score anti-méta). Contre {c1} et {c2}."
     }
   },
   "learn": {
@@ -1138,7 +1154,10 @@
     "descCrit": "sur un coup critique",
     "descWeather": "sous {weather}",
     "descTerrain": "sur terrain {terrain}",
-    "berryActivated": "{item} a réduit les dégâts"
+    "berryActivated": "{item} a réduit les dégâts",
+    "selectDefender": "Select opponent to test matchup",
+    "changeMove": "Changer d'attaque",
+    "selectMove": "Sélectionner une attaque"
   },
   "teamTester": {
     "team1": "Équipe 1",

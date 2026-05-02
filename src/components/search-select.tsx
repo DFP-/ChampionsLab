@@ -9,17 +9,11 @@ import { cn } from "@/lib/utils";
 export interface SearchSelectOption {
   value: string;
   label: string;
-  /** Optional secondary text (e.g. type, power) */
   sub?: string;
-  /** Optional badge color (hex) */
   badgeColor?: string;
-  /** Optional badge text (e.g. "FIR") */
   badge?: string;
-  /** True if this option is engine-suggested */
   suggested?: boolean;
-  /** Group header (options with the same group are grouped) */
   group?: string;
-  /** Optional full description shown on info toggle */
   description?: string;
 }
 
@@ -30,9 +24,7 @@ interface SearchSelectProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
-  /** Show type badge on the trigger button */
   triggerBadge?: { text: string; color: string } | null;
-  /** If true, dropdown prefers to open above the trigger */
   preferUp?: boolean;
 }
 
@@ -49,42 +41,78 @@ export function SearchSelect({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [highlightIdx, setHighlightIdx] = useState(0);
-  const [pos, setPos] = useState<{ top?: number; bottom?: number; left: number; width: number; maxH: number } | null>(null);
+
+  // ── Positioning: direct DOM mutation, zero React lag ──
+  useEffect(() => {
+    if (!open) return;
+
+    const position = () => {
+      const trigger = triggerRef.current;
+      const wrapper = wrapperRef.current;
+      if (!trigger || !wrapper) return;
+
+      const rect = trigger.getBoundingClientRect();
+      const width = Math.max(rect.width, 280);
+      const leftOffset = (width - rect.width) / 2;
+      let left = rect.left - leftOffset;
+      if (left < 8) left = 8;
+      if (left + width > window.innerWidth - 8)
+        left = window.innerWidth - 8 - width;
+
+      const spaceBelow = window.innerHeight - rect.bottom - 8;
+      const spaceAbove = rect.top - 8;
+      const openAbove = preferUp
+        ? spaceAbove > 100
+        : spaceBelow < 200 && spaceAbove > spaceBelow;
+      const maxH = Math.min(280, openAbove ? spaceAbove : spaceBelow);
+
+      wrapper.style.position = "fixed";
+      wrapper.style.zIndex = "9999";
+      wrapper.style.left = `${left}px`;
+      wrapper.style.width = `${width}px`;
+      wrapper.style.height = `${maxH}px`;
+      wrapper.style.overflow = "hidden";
+
+      if (openAbove) {
+        wrapper.style.top = "auto";
+        wrapper.style.bottom = `${window.innerHeight - rect.top + 4}px`;
+      } else {
+        wrapper.style.bottom = "auto";
+        wrapper.style.top = `${rect.bottom + 4}px`;
+      }
+    };
+
+    // Position immediately, then keep synced via rAF on scroll/resize
+    position();
+
+    let rafId = 0;
+    const onScrollResize = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(position);
+    };
+
+    window.addEventListener("scroll", onScrollResize, true);
+    window.addEventListener("resize", onScrollResize);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScrollResize, true);
+      window.removeEventListener("resize", onScrollResize);
+    };
+  }, [open, preferUp]);
 
   // Filter options
   const filtered = search
-    ? options.filter(o =>
-        o.label.toLowerCase().includes(search.toLowerCase()) ||
-        (o.sub && o.sub.toLowerCase().includes(search.toLowerCase())) ||
-        (o.badge && o.badge.toLowerCase().includes(search.toLowerCase()))
+    ? options.filter(
+        (o) =>
+          o.label.toLowerCase().includes(search.toLowerCase()) ||
+          (o.sub && o.sub.toLowerCase().includes(search.toLowerCase())) ||
+          (o.badge && o.badge.toLowerCase().includes(search.toLowerCase()))
       )
     : options;
-
-  // Calculate position from trigger button
-  useEffect(() => {
-    if (!open || !triggerRef.current) return;
-    const rect = triggerRef.current.getBoundingClientRect();
-    const dropdownWidth = Math.max(rect.width, 280);
-    const leftOffset = (dropdownWidth - rect.width) / 2;
-    let left = rect.left - leftOffset;
-    if (left < 8) left = 8;
-    if (left + dropdownWidth > window.innerWidth - 8) left = window.innerWidth - 8 - dropdownWidth;
-
-    const spaceBelow = window.innerHeight - rect.bottom - 8;
-    const spaceAbove = rect.top - 8;
-    const openAbove = preferUp ? spaceAbove > 100 : (spaceBelow < 200 && spaceAbove > spaceBelow);
-    const maxH = Math.min(420, openAbove ? spaceAbove : spaceBelow);
-
-    if (openAbove) {
-      setPos({ bottom: window.innerHeight - rect.top + 4, left, width: dropdownWidth, maxH });
-    } else {
-      setPos({ top: rect.bottom + 4, left, width: dropdownWidth, maxH });
-    }
-  }, [open]);
 
   // Close on click outside
   useEffect(() => {
@@ -92,8 +120,10 @@ export function SearchSelect({
     const handler = (e: MouseEvent | TouchEvent) => {
       const target = e.target as Node;
       if (
-        triggerRef.current && !triggerRef.current.contains(target) &&
-        dropdownRef.current && !dropdownRef.current.contains(target)
+        triggerRef.current &&
+        !triggerRef.current.contains(target) &&
+        wrapperRef.current &&
+        !wrapperRef.current.contains(target)
       ) {
         setOpen(false);
       }
@@ -106,25 +136,14 @@ export function SearchSelect({
     };
   }, [open]);
 
-  // Close on scroll of parent containers (modal scroll)  -  but NOT when scrolling inside the dropdown
-  // On mobile, keyboard appearance triggers scroll/resize events, so add a grace period
+  // Close on Escape
   useEffect(() => {
     if (!open) return;
-    let armed = false;
-    const armTimeout = setTimeout(() => { armed = true; }, 300);
-    const handler = (e: Event) => {
-      if (!armed) return;
-      // Don't close if scrolling inside the dropdown itself
-      if (dropdownRef.current && dropdownRef.current.contains(e.target as Node)) return;
-      // Don't close if the search input is focused (mobile keyboard may cause scroll)
-      if (inputRef.current && document.activeElement === inputRef.current) return;
-      setOpen(false);
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
     };
-    window.addEventListener("scroll", handler, true);
-    return () => {
-      clearTimeout(armTimeout);
-      window.removeEventListener("scroll", handler, true);
-    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
   }, [open]);
 
   // Focus input on open
@@ -147,10 +166,10 @@ export function SearchSelect({
     (e: React.KeyboardEvent) => {
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        setHighlightIdx(i => Math.min(i + 1, filtered.length - 1));
+        setHighlightIdx((i) => Math.min(i + 1, filtered.length - 1));
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        setHighlightIdx(i => Math.max(i - 1, 0));
+        setHighlightIdx((i) => Math.max(i - 1, 0));
       } else if (e.key === "Enter") {
         e.preventDefault();
         if (filtered[highlightIdx]) {
@@ -164,7 +183,7 @@ export function SearchSelect({
     [filtered, highlightIdx, onChange]
   );
 
-  const selected = options.find(o => o.value === value);
+  const selected = options.find((o) => o.value === value);
 
   return (
     <div className={cn("relative", className)}>
@@ -183,7 +202,12 @@ export function SearchSelect({
           !value && !disabled && "border-dashed border-gray-300"
         )}
       >
-        <span className={cn("flex-1 truncate", !selected && "text-muted-foreground")}>
+        <span
+          className={cn(
+            "flex-1 truncate",
+            !selected && "text-muted-foreground"
+          )}
+        >
           {selected ? selected.label : placeholder}
         </span>
         {triggerBadge && (
@@ -194,136 +218,173 @@ export function SearchSelect({
             {triggerBadge.text}
           </span>
         )}
-        <ChevronDown className={cn("w-3.5 h-3.5 text-muted-foreground shrink-0 transition-transform", open && "rotate-180")} />
+        <ChevronDown
+          className={cn(
+            "w-3.5 h-3.5 text-muted-foreground shrink-0 transition-transform",
+            open && "rotate-180"
+          )}
+        />
       </button>
 
-      {/* Portal dropdown  -  renders at document root to escape modal overflow */}
-      {typeof document !== "undefined" && createPortal(
-        <AnimatePresence>
-          {open && pos && (
-            <motion.div
-              ref={dropdownRef}
-              initial={{ opacity: 0, y: -4, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -4, scale: 0.98 }}
-              transition={{ duration: 0.15 }}
-              className="fixed z-[9999] bg-white rounded-xl border border-gray-200 shadow-2xl shadow-black/20 overflow-hidden flex flex-col"
-              style={{
-                ...(pos.top != null ? { top: pos.top } : {}),
-                ...(pos.bottom != null ? { bottom: pos.bottom } : {}),
-                left: pos.left,
-                width: pos.width,
-                maxHeight: pos.maxH,
-              }}
-            >
-              {/* Search input */}
-              <div className="sticky top-0 bg-white border-b border-gray-100 p-2.5">
-                <div className="relative">
-                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={search}
-                    onChange={e => { setSearch(e.target.value); setHighlightIdx(0); }}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Search…"
-                    className="w-full pl-9 pr-8 py-2 text-sm rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-1 focus:ring-violet-300 focus:border-violet-300"
-                  />
-                  {search && (
-                    <button onClick={() => { setSearch(""); inputRef.current?.focus(); }} className="absolute right-2.5 top-1/2 -translate-y-1/2">
-                      <X className="w-3.5 h-3.5 text-muted-foreground hover:text-gray-600" />
-                    </button>
-                  )}
-                </div>
-                {search && (
-                  <p className="text-[10px] text-muted-foreground mt-1.5 px-1">
-                    {filtered.length} result{filtered.length !== 1 ? "s" : ""}
-                  </p>
-                )}
-              </div>
-
-              {/* Options list */}
-              <div ref={listRef} className="overflow-y-auto flex-1 min-h-0">
-                {filtered.length === 0 ? (
-                  <p className="text-center text-xs text-muted-foreground py-8">No matches</p>
-                ) : (
-                  filtered.map((opt, i) => {
-                    const isSelected = opt.value === value;
-                    const isHighlighted = i === highlightIdx;
-                    return (
-                      <div key={opt.value}>
+      {/* Portal dropdown — renders at document root to escape modal overflow */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <div ref={wrapperRef}>
+                <motion.div
+                  initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
+                  className="bg-white rounded-xl border border-gray-200 shadow-2xl shadow-black/20 overflow-hidden flex flex-col w-full h-full"
+                  onKeyDown={handleKeyDown}
+                >
+                  {/* Search input */}
+                  <div className="sticky top-0 bg-white border-b border-gray-100 p-2.5">
+                    <div className="relative">
+                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={search}
+                        onChange={(e) => {
+                          setSearch(e.target.value);
+                          setHighlightIdx(0);
+                        }}
+                        onKeyDown={handleKeyDown}
+                        placeholder="Search…"
+                        className="w-full pl-9 pr-8 py-2 text-sm rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-1 focus:ring-violet-300 focus:border-violet-300"
+                      />
+                      {search && (
                         <button
-                          type="button"
-                          onMouseEnter={() => setHighlightIdx(i)}
                           onClick={() => {
-                            onChange(opt.value);
-                            setOpen(false);
+                            setSearch("");
+                            inputRef.current?.focus();
                           }}
-                          className={cn(
-                            "w-full flex items-center gap-2.5 px-3 py-2.5 text-left text-sm transition-colors",
-                            isHighlighted && "bg-violet-50",
-                            isSelected && "bg-violet-100/70 font-semibold"
-                          )}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2"
                         >
-                          {/* Checkmark */}
-                          <div className="w-4 shrink-0">
-                            {isSelected && <Check className="w-4 h-4 text-violet-600" />}
-                          </div>
-
-                          {/* Badge */}
-                          {opt.badge && (
-                            <span
-                              className="px-1.5 py-0.5 text-[9px] font-bold uppercase rounded text-white/90 shrink-0"
-                              style={{ backgroundColor: opt.badgeColor || "#888" }}
-                            >
-                              {opt.badge}
-                            </span>
-                          )}
-
-                          {/* Label + sub + description */}
-                          <div className="flex-1 min-w-0">
-                            <span className="truncate block">{opt.label}</span>
-                            {opt.sub && (
-                              <span className="flex flex-wrap items-center gap-1 mt-0.5">
-                                {opt.sub.split(" · ").map((token, ti) => {
-                                  const lower = token.toLowerCase();
-                                  if (lower === "physical") return (
-                                    <span key={ti} className="text-[9px] font-extrabold text-orange-500">⚔ Phys</span>
-                                  );
-                                  if (lower === "special") return (
-                                    <span key={ti} className="text-[9px] font-extrabold text-indigo-500">✦ Spec</span>
-                                  );
-                                  if (lower === "status") return (
-                                    <span key={ti} className="text-[9px] font-extrabold text-gray-400">◇ Status</span>
-                                  );
-                                  return (
-                                    <span key={ti} className="text-[9px] text-muted-foreground">{token}</span>
-                                  );
-                                })}
-                              </span>
-                            )}
-                            {opt.description && (
-                              <p className="text-[10px] leading-snug font-medium italic text-muted-foreground mt-1 pb-0.5 border-b border-dashed border-gray-200 dark:border-white/10">
-                                {opt.description}
-                              </p>
-                            )}
-                          </div>
-
-                          {/* Suggested star */}
-                          {opt.suggested && (
-                            <span className="text-[10px] text-amber-500 font-bold shrink-0">★</span>
-                          )}
+                          <X className="w-3.5 h-3.5 text-muted-foreground hover:text-gray-600" />
                         </button>
-                      </div>
-                    );
-                  })
-                )}
+                      )}
+                    </div>
+                    {search && (
+                      <p className="text-[10px] text-muted-foreground mt-1.5 px-1">
+                        {filtered.length} result
+                        {filtered.length !== 1 ? "s" : ""}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Options list */}
+                  <div ref={listRef} className="overflow-y-auto flex-1 min-h-0">
+                    {filtered.length === 0 ? (
+                      <p className="text-center text-xs text-muted-foreground py-8">
+                        No matches
+                      </p>
+                    ) : (
+                      filtered.map((opt, i) => {
+                        const isSelected = opt.value === value;
+                        const isHighlighted = i === highlightIdx;
+                        return (
+                          <div key={opt.value}>
+                            <button
+                              type="button"
+                              onMouseEnter={() => setHighlightIdx(i)}
+                              onClick={() => {
+                                onChange(opt.value);
+                                setOpen(false);
+                              }}
+                              className={cn(
+                                "w-full flex items-center gap-2.5 px-3 py-2.5 text-left text-sm transition-colors",
+                                isHighlighted && "bg-violet-50",
+                                isSelected && "bg-violet-100/70 font-semibold"
+                              )}
+                            >
+                              <div className="w-4 shrink-0">
+                                {isSelected && (
+                                  <Check className="w-4 h-4 text-violet-600" />
+                                )}
+                              </div>
+                              {opt.badge && (
+                                <span
+                                  className="px-1.5 py-0.5 text-[9px] font-bold uppercase rounded text-white/90 shrink-0"
+                                  style={{
+                                    backgroundColor: opt.badgeColor || "#888",
+                                  }}
+                                >
+                                  {opt.badge}
+                                </span>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <span className="truncate block">
+                                  {opt.label}
+                                </span>
+                                {opt.sub && (
+                                  <span className="flex flex-wrap items-center gap-1 mt-0.5">
+                                    {opt.sub.split(" · ").map((token, ti) => {
+                                      const lower = token.toLowerCase();
+                                      if (lower === "physical")
+                                        return (
+                                          <span
+                                            key={ti}
+                                            className="text-[9px] font-extrabold text-orange-500"
+                                          >
+                                            ⚔ Phys
+                                          </span>
+                                        );
+                                      if (lower === "special")
+                                        return (
+                                          <span
+                                            key={ti}
+                                            className="text-[9px] font-extrabold text-indigo-500"
+                                          >
+                                            ✦ Spec
+                                          </span>
+                                        );
+                                      if (lower === "status")
+                                        return (
+                                          <span
+                                            key={ti}
+                                            className="text-[9px] font-extrabold text-gray-400"
+                                          >
+                                            ◇ Status
+                                          </span>
+                                        );
+                                      return (
+                                        <span
+                                          key={ti}
+                                          className="text-[9px] text-muted-foreground"
+                                        >
+                                          {token}
+                                        </span>
+                                      );
+                                    })}
+                                  </span>
+                                )}
+                                {opt.description && (
+                                  <p className="text-[10px] leading-snug font-medium italic text-muted-foreground mt-1 pb-0.5 border-b border-dashed border-gray-200 dark:border-white/10">
+                                    {opt.description}
+                                  </p>
+                                )}
+                              </div>
+                              {opt.suggested && (
+                                <span className="text-[10px] text-amber-500 font-bold shrink-0">
+                                  ★
+                                </span>
+                              )}
+                            </button>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body
-      )}
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </div>
   );
 }

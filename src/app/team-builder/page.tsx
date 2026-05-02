@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "@/lib/motion";
 import Image from "next/image";
 import { LastUpdated } from "@/components/last-updated";
 import {
-  Plus, X, Download, Upload, Copy, Trash2, Shield, Zap,
+  Plus, X, Download, Upload, Copy, Trash2, Shield, Zap, Swords,
   ChevronDown, ChevronUp, Check, AlertTriangle, Sparkles, Star,
   Users, Brain, Target, Award, Minus, Settings2,
   Save, FolderOpen, Share2, SlidersHorizontal, ExternalLink,
@@ -16,6 +16,9 @@ import {
 } from "@/lib/types";
 import { PokemonDetailModal } from "@/components/pokemon-detail-modal";
 import { SpeedTierPanel } from "@/components/speed-tier-panel";
+import { SurvivalPanel } from "@/components/survival-panel";
+import { CompactDamageCalc } from "@/components/compact-damage-calc";
+import { StatSlider } from "@/components/stat-slider";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { USAGE_DATA } from "@/lib/usage-data";
@@ -232,7 +235,7 @@ export default function TeamBuilderPage() {
   const [shuffledTeams, setShuffledTeams] = useState<PrebuiltTeam[]>([]);
   const [showShare, setShowShare] = useState(false);
   const [shareImageUrl, setShareImageUrl] = useState<string | null>(null);
-  const [speedTierMode, setSpeedTierMode] = useState(false);
+  const [editMode, setEditMode] = useState<"normal" | "speed" | "survival" | "damage">("normal");
   const [spToast, setSpToast] = useState<string | null>(null);
 
   const [shareLinkError, setShareLinkError] = useState<string | null>(null);
@@ -1862,23 +1865,47 @@ export default function TeamBuilderPage() {
                     })()}
                     <div className="flex items-center gap-1">
                       <button
-                        onClick={() => setSpeedTierMode((v) => !v)}
+                        onClick={() => setEditMode(m => m === "speed" ? "normal" : "speed")}
                         className={cn(
-                          "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-colors",
-                          speedTierMode
+                          "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-colors",
+                          editMode === "speed"
                             ? "bg-pink-100 text-pink-700 dark:bg-pink-500/20 dark:text-pink-300 hover:bg-pink-200"
                             : "bg-gray-100 text-muted-foreground hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10"
                         )}
                       >
                         <Zap className="w-4 h-4" />
-                        <span>Dynamic Speed Tier</span>
+                        <span>Speed Tier</span>
+                      </button>
+                      <button
+                        onClick={() => setEditMode(m => m === "survival" ? "normal" : "survival")}
+                        className={cn(
+                          "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-colors",
+                          editMode === "survival"
+                            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 hover:bg-emerald-200"
+                            : "bg-gray-100 text-muted-foreground hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10"
+                        )}
+                      >
+                        <Shield className="w-4 h-4" />
+                        <span>Survival</span>
+                      </button>
+                      <button
+                        onClick={() => setEditMode(m => m === "damage" ? "normal" : "damage")}
+                        className={cn(
+                          "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-colors",
+                          editMode === "damage"
+                            ? "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300 hover:bg-amber-200"
+                            : "bg-gray-100 text-muted-foreground hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10"
+                        )}
+                      >
+                        <Swords className="w-4 h-4" />
+                        <span>Damage</span>
                       </button>
                       <button onClick={() => setSelectedSlotIndex(null)} className="p-1.5 rounded-lg hover:bg-gray-100"><X className="w-4 h-4" /></button>
                     </div>
                   </div>
 
                   {/* Auto-Fill + Quick Apply Sets */}
-                  {!speedTierMode && <div className="mb-4">
+                  {editMode === "normal" && <div className="mb-4">
                     <p className="text-[10px] text-muted-foreground uppercase font-bold mb-2">{t('teamBuilder.quickApply')}</p>
                     <div className="flex flex-wrap gap-2">
                       {(() => {
@@ -1930,9 +1957,9 @@ export default function TeamBuilderPage() {
                       </div>
                     </div>}
 
-                  <div className={cn("grid gap-5 items-start", speedTierMode ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-3")}>
+                  <div className={cn("grid gap-5 items-start", editMode !== "normal" ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-3")}>
                     {/* Col 1: Moves */}
-                    {!speedTierMode && <div>
+                    {editMode === "normal" && <div>
                       <p className="text-[10px] text-muted-foreground uppercase font-bold mb-2">{t('teamBuilder.moves')}</p>
                       <div className="space-y-2">
                         {[0, 1, 2, 3].map((moveIdx) => {
@@ -2035,7 +2062,7 @@ export default function TeamBuilderPage() {
 
                     {/* Col 2: Ability + Nature + Item */}
                     <div className="space-y-3">
-                      {!speedTierMode && <div>
+                      {editMode === "normal" && <div>
                         <p className="text-[10px] text-muted-foreground uppercase font-bold mb-2">{editSlotData.isMega ? t('teamBuilder.preMegaAbility') : t('teamBuilder.ability')}</p>
                         <div className="space-y-1.5">
                           {(() => {
@@ -2167,10 +2194,10 @@ export default function TeamBuilderPage() {
                     {/* Col 3: SP Distribution */}
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <p className="text-[10px] text-muted-foreground uppercase font-bold">{speedTierMode ? "Speed" : t('teamBuilder.statPoints')}</p>
-                        {!speedTierMode && <span className={cn("text-[11px] font-bold", Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0) >= MAX_TOTAL_POINTS ? "text-red-500" : "text-muted-foreground")}>{Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0)}/{MAX_TOTAL_POINTS}</span>}
+                        <p className="text-[10px] text-muted-foreground uppercase font-bold">{editMode === "speed" ? "Speed" : t('teamBuilder.statPoints')}</p>
+                        {editMode === "normal" && <span className={cn("text-[11px] font-bold", Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0) >= MAX_TOTAL_POINTS ? "text-red-500" : "text-muted-foreground")}>{Object.values(editSlotData.statPoints).reduce((a, b) => a + b, 0)}/{MAX_TOTAL_POINTS}</span>}
                       </div>
-                      {!speedTierMode && <div className="flex items-center gap-1.5 mb-1">
+                      {editMode === "normal" && <div className="flex items-center gap-1.5 mb-1">
                         <span className="w-7" />
                         <span className="text-[8px] text-muted-foreground uppercase w-6 text-right">{t('teamBuilder.baseLabel')}</span>
                         <span className="w-5" />
@@ -2179,7 +2206,7 @@ export default function TeamBuilderPage() {
                         <span className="w-8" />
                         <span className="text-[8px] text-muted-foreground uppercase w-7 text-right">{t('teamBuilder.totalLabel')}</span>
                       </div>}
-                      <div className={cn("space-y-1.5", speedTierMode && "py-2 px-3 rounded-lg bg-pink-500/[0.04] border border-pink-200/40")}>
+                      <div className={cn("space-y-1.5", editMode === "speed" && "py-2 px-3 rounded-lg bg-pink-500/[0.04] border border-pink-200/40", editMode === "survival" && "py-2 px-3 rounded-lg bg-emerald-500/[0.04] border border-emerald-200/40")}>
                         {(() => {
                           const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
                           const activeBase = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
@@ -2188,7 +2215,7 @@ export default function TeamBuilderPage() {
                           const nature = (editSlotData.nature || "Hardy") as NatureName;
                           const finalStats = calculateStats(activeBase, editSlotData.statPoints, nature);
                           const nat = NATURES[nature];
-                          const keysToShow = speedTierMode ? (["speed"] as const) : STAT_KEYS;
+                          const keysToShow = editMode === "speed" ? (["speed"] as const) : editMode === "survival" ? (["hp", "defense", "spDef"] as const) : editMode === "damage" ? (["hp", "attack", "defense", "spAtk", "spDef", "speed"] as const) : STAT_KEYS;
                           return keysToShow.map((stat) => {
                             const value = editSlotData.statPoints[stat];
                             const base = activeBase[stat];
@@ -2200,7 +2227,7 @@ export default function TeamBuilderPage() {
                                 <span className={cn("text-[10px] font-medium w-7", isPlus ? "text-red-500" : isMinus ? "text-blue-500" : "text-muted-foreground")}>{ts(stat)}</span>
                                 <span className="text-[10px] font-bold text-muted-foreground w-6 text-right tabular-nums">{base}</span>
                                 <button onClick={() => updateSP(selectedSlotIndex, stat, -2)} className="w-5 h-5 rounded bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"><Minus className="w-2.5 h-2.5" /></button>
-                                <input type="range" min={0} max={MAX_PER_STAT} step={2} value={value} onChange={(e) => setSPDirect(selectedSlotIndex, stat, parseInt(e.target.value) || 0)} className="sp-slider flex-1 h-2 appearance-none rounded-full cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-grab [&::-webkit-slider-thumb]:active:cursor-grabbing [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:shadow-md [&::-moz-range-thumb]:cursor-grab [&::-moz-range-track]:rounded-full" style={{ background: `linear-gradient(to right, #10b981 ${(value / MAX_PER_STAT) * 100}%, #f3f4f6 ${(value / MAX_PER_STAT) * 100}%)`, "--sp-thumb-border": value === 0 ? "#d1d5db" : "#10b981" } as React.CSSProperties} />
+                                <StatSlider value={value} max={MAX_PER_STAT} step={2} onChange={(v) => setSPDirect(selectedSlotIndex, stat, v)} />
                                 <button onClick={() => updateSP(selectedSlotIndex, stat, 2)} className="w-5 h-5 rounded bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"><Plus className="w-2.5 h-2.5" /></button>
                                 <input type="number" min={0} max={MAX_PER_STAT} value={value} onChange={(e) => setSPDirect(selectedSlotIndex, stat, parseInt(e.target.value) || 0)} className="w-8 text-center text-[10px] font-medium rounded bg-gray-50 border border-gray-200 focus:outline-none focus:ring-1 focus:ring-emerald-300 py-0.5" />
                                 <span className={cn("text-[11px] font-bold w-7 text-right tabular-nums", isPlus ? "text-red-500" : isMinus ? "text-blue-500" : "text-foreground")}>{final_}</span>
@@ -2209,7 +2236,7 @@ export default function TeamBuilderPage() {
                           });
                         })()}
                       </div>
-                      {!speedTierMode && <div className="mt-2">
+                      {editMode === "normal" && <div className="mt-2">
                         <p className="text-[10px] text-muted-foreground uppercase font-bold mb-1">{t('teamBuilder.presets')}</p>
                         <div className="flex flex-wrap gap-1">
                           {Object.entries(STAT_PRESETS).map(([name, sp]) => (
@@ -2222,7 +2249,7 @@ export default function TeamBuilderPage() {
                   </div>
 
                   {/* Inline Speed Tier Panel */}
-                  {speedTierMode && (() => {
+                  {editMode === "speed" && (() => {
                     const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
                     const activeBase = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
                       ? megaForms[editSlotData.megaFormIndex ?? 0].baseStats
@@ -2248,8 +2275,61 @@ export default function TeamBuilderPage() {
                     );
                   })()}
 
+                  {/* Inline Survival Panel */}
+                  {editMode === "survival" && (() => {
+                    const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
+                    const activeBase = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
+                      ? megaForms[editSlotData.megaFormIndex ?? 0].baseStats
+                      : editPkm.baseStats;
+                    return (
+                      <>
+                        <SurvivalPanel
+                          userPokemon={editPkm}
+                          userBaseStats={activeBase}
+                          userSP={editSlotData.statPoints}
+                          userNature={(editSlotData.nature || "Hardy") as NatureName}
+                          userItem={editSlotData.item}
+                          userAbility={editSlotData.ability}
+                          userMoves={editSlotData.moves}
+                          onSPChange={(sp) => updateSlot(selectedSlotIndex, { statPoints: sp })}
+                        />
+                        {spToast && (
+                          <div className="mt-2 px-3 py-2 rounded-lg bg-white dark:bg-gray-900 border border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-medium shadow-sm text-center animate-in fade-in slide-in-from-bottom-1">
+                            {spToast}
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
+
+                  {/* Inline Compact Damage Calculator */}
+                  {editMode === "damage" && (() => {
+                    const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
+                    const activeBase = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
+                      ? megaForms[editSlotData.megaFormIndex ?? 0].baseStats
+                      : editPkm.baseStats;
+                    return (
+                      <>
+                        <CompactDamageCalc
+                          userPokemon={editPkm}
+                          userBaseStats={activeBase}
+                          userSP={editSlotData.statPoints}
+                          userNature={(editSlotData.nature || "Hardy") as NatureName}
+                          userItem={editSlotData.item}
+                          userAbility={editSlotData.ability}
+                          userMoves={editSlotData.moves}
+                        />
+                        {spToast && (
+                          <div className="mt-2 px-3 py-2 rounded-lg bg-white dark:bg-gray-900 border border-amber-200 dark:border-amber-500/30 text-amber-600 dark:text-amber-400 text-xs font-medium shadow-sm text-center animate-in fade-in slide-in-from-bottom-1">
+                            {spToast}
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
+
                   {/* Type Defenses & Coverage */}
-                  {!speedTierMode && (() => {
+                  {editMode === "normal" && (() => {
                     const megaForms = editPkm.forms?.filter(f => f.isMega && !f.hidden) ?? [];
                     const activeTypes = editSlotData.isMega && megaForms[editSlotData.megaFormIndex ?? 0]
                       ? megaForms[editSlotData.megaFormIndex ?? 0].types

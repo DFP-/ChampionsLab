@@ -14,6 +14,24 @@ interface ChangelogEntry {
     {
       date: "02/05/2026",
       items: [
+        "🛡️ Survival Calculator — smart SP auto-optimizer finds the minimum bulk needed to survive a hit and dumps everything else into offense (Speed → Attack → SpAtk). No more over-invested bulk",
+        "⚔️ Damage Calculator — user side now shows your actual 4 team-builder moves instead of the full movepool. Enemy side loads the 4 moves from their competitive set, with a selector to swap any move",
+        "🔧 Fixed SearchSelect dropdown positioning — dropdown now stays perfectly glued to the trigger input when scrolling page or modal. Rewrote positioning engine for frame-perfect sync",
+      ],
+    },
+    {
+      date: "02/05/2026",
+      items: [
+        "⚔️ Compact Damage Calculator in Team Builder — new mode with your Pokémon auto-loaded. Pick any opponent from the full roster, select moves for both sides, and see damage both ways with KO chances. Includes weather and crit toggles",
+        "🛡️ Survival Calculator — full roster threat selector (all Pokémon, not just meta top 30). All damaging moves from each Pokémon's full movepool available",
+        "🛡️ Survival Calculator — fixed health bar showing remaining HP after hit (green = safe, amber = low, red = dead). Clear survival messaging: \"Your Pokémon survives!\" / \"Your Pokémon faints!\" / \"Depends on damage roll\"",
+        "🛡️ Survival Calculator — animated stat pills that bounce when SP changes. Shows current HP/Def/SpD values live",
+        "🛡️ Survival suggestions — one-click apply bulk investments or smart reallocations from Speed/Attack. Up to 5 suggestions shown",
+      ],
+    },
+    {
+      date: "02/05/2026",
+      items: [
         "⚡ Dynamic Speed Tiers in Team Builder — click the lightning bolt next to the Speed slider to open a live speed tier comparison modal. See exactly where your Pokémon ranks against the full roster, with real-time updates as you adjust SP, nature, item, or moves",
         "⚡ Speed tier modal shows multiple speed scenarios — Base speed, with Choice Scarf, with weather abilities (Swift Swim, Sand Rush, etc.), and after setup moves (Dragon Dance, Agility, Shell Smash) all displayed as clickable chips",
         "⚡ SP-to-outspeed calculator — for every threat you don't outspeed, the modal shows exactly how many additional Stat Points you need to invest to surpass their max speed",

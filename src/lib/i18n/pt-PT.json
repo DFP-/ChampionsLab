@@ -534,6 +534,23 @@
     },
     "spLimitReached": "No more Stat Points available! Reduce another stat first."
   },
+  "survivalCalc": {
+    "title": "Survival Calc",
+    "selectThreat": "Select a meta threat to test your bulk against",
+    "searchPlaceholder": "Search threats…",
+    "modeOHKO": "OHKO",
+    "mode2HKO": "2HKO",
+    "selectMove": "Select move…",
+    "incomingDamage": "Incoming Damage",
+    "suggestions": "Survival Suggestions",
+    "cannotSurvive": "Cannot survive even with max bulk investment",
+    "returnDamage": "Your Return Damage",
+    "survives": "Your Pokémon survives!",
+    "survives2HKO": "Survives 2 hits!",
+    "rollDependent": "Survival depends on damage roll",
+    "faints": "Your Pokémon faints!",
+    "remainingHP": "Remaining HP"
+  },
   "battleBot": {
     "title": "Battle Bot",
     "description": "Motor continuamente treinado com 2M+ resultados de batalhas · Rankings ELO · Matrizes de win-rate · Matchups de arquétipos",
@@ -810,7 +827,9 @@
     "corePairs": "Core Pairs",
     "corePairAnalysis": "Análise de Core Pair",
     "archetypes": "Matchups de Arquétipos",
-    "antiMeta": "Rankings Anti-Meta",
+    "antiMeta": {
+      "strategy": "Construído em torno de {name} (pontuação anti-meta {score}). Counters {c1} e {c2}."
+    },
     "antiMetaPokemon": "Ranking Anti-Meta de Pokémon",
     "antiMetaTeams": "Equipas Anti-Meta",
     "tournamentTeams": "Equipas de Torneio",
@@ -959,9 +978,6 @@
       "topMega": "Top Pokémon Mega:",
       "overrated": "Pokémon overrated (uso alto, WR baixo):",
       "bestArchetypes": "Melhores arquétipos:"
-    },
-    "antiMeta": {
-      "strategy": "Construído em torno de {name} (pontuação anti-meta {score}). Counters {c1} e {c2}."
     }
   },
   "learn": {
@@ -1138,7 +1154,10 @@
     "descCrit": "num critical hit",
     "descWeather": "em {weather}",
     "descTerrain": "no terrain {terrain}",
-    "berryActivated": "{item} reduziu o dano"
+    "berryActivated": "{item} reduziu o dano",
+    "selectDefender": "Select opponent to test matchup",
+    "changeMove": "Mudar ataque",
+    "selectMove": "Selecionar ataque"
   },
   "teamTester": {
     "team1": "Equipa 1",
