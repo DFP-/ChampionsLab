@@ -3,6 +3,7 @@
     "pokedex": "Pokédex",
     "teamBuilder": "Team Builder",
     "battleBot": "Battle Bot",
+    "assist": "Assist",
     "meta": "Meta",
     "tournaments": "Torneios",
     "pokeSchool": "Aprender",
@@ -1303,5 +1304,27 @@
     "copyPaste": "Copiar Paste",
     "footer": "Construído com Champions Lab",
     "openInBuilder": "Abrir no Team Builder"
+  },
+  "assist": {
+    "title": "Assist",
+    "runAnalysis": "Executar Análise Assist",
+    "analyzing": "A analisar...",
+    "rerunAnalysis": "Re-executar Análise",
+    "noTeamError": "Nenhuma equipa encontrada. Cria primeiro uma equipa no Team Builder.",
+    "noTeamFound": "Nenhuma equipa encontrada. Verifica o link de partilha.",
+    "emptySlotWarning": "Nenhuma equipa carregada. Certifica-te de ter selecionado pelo menos um Pokémon.",
+    "speedTiers": "Faixas de Velocidade (dentro de ±50)",
+    "yourSpe": "A tua Vel",
+    "scarf": "BAND. VEL",
+    "keyKOs": "Limites KO Chave",
+    "threatsKOYou": "Ameaças que te K.O.",
+    "youKOThreats": "Tu KOas ameaças",
+    "survivesThreatens": "Sobrevive + ameaça de volta",
+    "noSpeedThreats": "Nenhuma ameaça meta relevante dentro de ±50 velocidade.",
+    "addMoreSets": "Adiciona mais sets comuns ao USAGE_DATA para análise mais profunda.",
+    "analysisSummary": "Análise contra as top {count} ameaças meta",
+    "withSpeedThreats": "{count} Pokémon com ameaças de velocidade",
+    "withDefensiveConcerns": "{count} Pokémon com preocupações defensivas",
+    "sharedTeam": "Equipa Partilhada"
   }
 }

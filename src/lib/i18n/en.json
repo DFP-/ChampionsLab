@@ -3,6 +3,7 @@
     "pokedex": "Pokédex",
     "teamBuilder": "Team Builder",
     "battleBot": "Battle Bot",
+    "assist": "Assist",
     "meta": "Meta",
     "tournaments": "Tournaments",
     "pokeSchool": "Learn",
@@ -1328,5 +1329,27 @@
     "copyPaste": "Copy Paste",
     "footer": "Built with Champions Lab",
     "openInBuilder": "Open in Team Builder"
+  },
+  "assist": {
+    "title": "Assist",
+    "runAnalysis": "Run Assist Analysis",
+    "analyzing": "Analyzing...",
+    "rerunAnalysis": "Re-run Analysis",
+    "noTeamError": "No team found. Build a team in the Team Builder first, then click \"Run Assist Analysis\".",
+    "noTeamFound": "No team found. Check the share link and try again.",
+    "emptySlotWarning": "No team loaded. Make sure you have at least one Pokemon selected.",
+    "speedTiers": "Speed Tiers (within ±50)",
+    "yourSpe": "Your Spe",
+    "scarf": "SCARF",
+    "keyKOs": "Key KO Thresholds",
+    "threatsKOYou": "Threats that KO you",
+    "youKOThreats": "You KO threats",
+    "survivesThreatens": "Survives + threatens back",
+    "noSpeedThreats": "No relevant meta threats within ±50 speed points.",
+    "addMoreSets": "Add more common sets to USAGE_DATA for deeper analysis.",
+    "analysisSummary": "Analysis against top {count} meta threats",
+    "withSpeedThreats": "{count} Pokemon with speed threats",
+    "withDefensiveConcerns": "{count} Pokemon with defensive concerns",
+    "sharedTeam": "Shared Team"
   }
 }

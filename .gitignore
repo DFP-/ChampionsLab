@@ -52,7 +52,17 @@ DEPLOYMENT.md
 I18N.md
 PROJECT.md
 SPRITES.md
+TOURNAMENT_SYNC.md
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tooling (not synced)
+/.tools/
+
+# local agent workspace
+/.opencode/
+
+# logs
+/logs/

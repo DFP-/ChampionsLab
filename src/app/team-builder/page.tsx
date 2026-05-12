@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "@/lib/motion";
 import Image from "next/image";
 import { LastUpdated } from "@/components/last-updated";
@@ -19,6 +20,7 @@ import { SpeedTierPanel } from "@/components/speed-tier-panel";
 import { SurvivalPanel } from "@/components/survival-panel";
 import { CompactDamageCalc } from "@/components/compact-damage-calc";
 import { StatSlider } from "@/components/stat-slider";
+import { AssistPanel } from "@/components/assist-panel";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { USAGE_DATA } from "@/lib/usage-data";
@@ -128,6 +130,7 @@ const ALL_TYPES: PokemonType[] = [
 ];
 
 export default function TeamBuilderPage() {
+  const router = useRouter();
   const { locale, t, tp, tm, ta, ti, tn, ts, tt, tad, tid, tmd } = useI18n();
 
   // ── Analysis text translators ──
@@ -236,6 +239,7 @@ export default function TeamBuilderPage() {
   const [showShare, setShowShare] = useState(false);
   const [shareImageUrl, setShareImageUrl] = useState<string | null>(null);
   const [editMode, setEditMode] = useState<"normal" | "speed" | "survival" | "damage">("normal");
+  const [showAssist, setShowAssist] = useState(false);
   const [spToast, setSpToast] = useState<string | null>(null);
 
   const [shareLinkError, setShareLinkError] = useState<string | null>(null);
@@ -1900,9 +1904,33 @@ export default function TeamBuilderPage() {
                         <Swords className="w-4 h-4" />
                         <span>Damage</span>
                       </button>
+<<<<<<< HEAD
+=======
+                      <button
+                        onClick={() => setShowAssist(!showAssist)}
+                        className={cn(
+                          "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-colors",
+                          showAssist
+                            ? "bg-pink-200 text-pink-800 dark:bg-pink-500/20 dark:text-pink-200"
+                            : "bg-pink-100 text-pink-700 hover:bg-pink-200 dark:bg-pink-500/10 dark:text-pink-300 dark:hover:bg-pink-500/20"
+                        )}
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        <span>Assist</span>
+                      </button>
+>>>>>>> feature/assist-tab
                       <button onClick={() => setSelectedSlotIndex(null)} className="p-1.5 rounded-lg hover:bg-gray-100"><X className="w-4 h-4" /></button>
                     </div>
                   </div>
+
+                  {/* Assist Panel */}
+                  {showAssist && selectedSlotIndex !== null && editMode === "normal" && (
+                    <AssistPanel
+                      slot={editSlotData}
+                      teamPokemon={teamPokemon}
+                      onApplySet={(patch) => applySet(selectedSlotIndex, patch)}
+                    />
+                  )}
 
                   {/* Auto-Fill + Quick Apply Sets */}
                   {editMode === "normal" && <div className="mb-4">

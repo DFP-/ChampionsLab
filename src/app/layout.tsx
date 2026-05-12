@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   description:
     "The ultimate competitive companion for Pokémon Champions. Season tracking, team builder, battle simulator, and deep Pokémon data - all in one immersive hub.",
   keywords: ["Pokemon Champions", "VGC", "team builder", "battle simulator", "competitive Pokemon", "Pokemon Champions 2026", "VGC team builder", "Pokemon meta"],
-  metadataBase: new URL("https://championslab.xyz"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://championslab.xyz"),
   icons: {
     icon: [
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
@@ -83,6 +83,7 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const initialLocale = cookieStore.get("cl-lang")?.value ?? "en";
   const themeCookie = cookieStore.get("cl-theme")?.value;
+  // Only set dark if explicitly saved; otherwise let system preference handle it via CSS media query
   const isDark = themeCookie === "dark";
 
   return (

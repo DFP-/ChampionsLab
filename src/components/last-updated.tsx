@@ -12,6 +12,12 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
+      date: "04/05/2026",
+      items: [
+        "✨ New Assist tab — automated damage calculations and speed tier analysis against top 30 meta threats. Shows which threats KO you, which you KO back, and survival scenarios. Accessible from Team Builder or standalone at /assist",
+      ],
+    },
+    {
       date: "02/05/2026",
       items: [
         "🛍️ New Shop button in navbar — divided support button now includes a direct link to the Champions Lab merch store alongside Support Us",
