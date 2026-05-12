@@ -14,7 +14,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "1st Place",
     event: "Champions Online #1 (Limitless)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 903, name: "Sneasler" },
@@ -82,7 +82,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
       { pokemonId: 530, name: "Excadrill" },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 727, name: "Incineroar" },
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 903, name: "Sneasler" },
     ],
     archetype: "Sand",
@@ -142,7 +142,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top 4",
     event: "Champions Online #2 (Limitless)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
@@ -211,7 +211,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
       { pokemonId: 823, name: "Corviknight" },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 727, name: "Incineroar" },
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
     ],
     archetype: "Sand",
   },
@@ -372,7 +372,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 445, name: "Garchomp" },
@@ -436,7 +436,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 445, name: "Garchomp" },
       { pokemonId: 1013, name: "Sinistcha" },
@@ -452,7 +452,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 142, name: "Aerodactyl" },
       { pokemonId: 902, name: "Basculegion-M" },
@@ -516,7 +516,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 279, name: "Pelipper" },
       { pokemonId: 902, name: "Basculegion-M" },
@@ -599,7 +599,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
@@ -679,7 +679,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 902, name: "Basculegion-M" },
       { pokemonId: 903, name: "Sneasler" },
@@ -842,7 +842,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 130, name: "Gyarados" },
       { pokemonId: 445, name: "Garchomp" },
       { pokemonId: 903, name: "Sneasler" },
@@ -906,7 +906,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 445, name: "Garchomp" },
@@ -986,7 +986,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 142, name: "Aerodactyl" },
       { pokemonId: 903, name: "Sneasler" },
       { pokemonId: 1013, name: "Sinistcha" },
@@ -1034,7 +1034,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 902, name: "Basculegion-M" },
       { pokemonId: 903, name: "Sneasler" },
@@ -1279,7 +1279,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 142, name: "Aerodactyl" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
@@ -1346,7 +1346,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
       { pokemonId: 1018, name: "Archaludon" },
@@ -1394,7 +1394,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
@@ -1426,7 +1426,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 1013, name: "Sinistcha" },
       { pokemonId: 903, name: "Sneasler" },
       { pokemonId: 445, name: "Garchomp" },
@@ -1506,7 +1506,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 902, name: "Basculegion-M" },
       { pokemonId: 903, name: "Sneasler" },
       { pokemonId: 727, name: "Incineroar" },
@@ -1978,7 +1978,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 130, name: "Gyarados" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
@@ -2109,7 +2109,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 248, name: "Tyranitar" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
@@ -2141,7 +2141,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 130, name: "Gyarados" },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 903, name: "Sneasler" },
@@ -2189,7 +2189,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 983, name: "Kingambit" },
       { pokemonId: 903, name: "Sneasler" },
       { pokemonId: 1013, name: "Sinistcha" },
@@ -2269,7 +2269,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Ranked Ladder (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 902, name: "Basculegion-M" },
       { pokemonId: 903, name: "Sneasler" },
       { pokemonId: 727, name: "Incineroar" },
@@ -2497,7 +2497,7 @@ export const WINNING_TEAMS: WinningTeam[] = [
     placement: "Top Cut",
     event: "Champions Tournament (April 2026)",
     pokemon: [
-      { pokemonId: 670, name: "Floette", isMega: true },
+      { pokemonId: 10061, name: "Eternal Floette", isMega: true },
       { pokemonId: 727, name: "Incineroar" },
       { pokemonId: 902, name: "Basculegion-M" },
       { pokemonId: 903, name: "Sneasler" },

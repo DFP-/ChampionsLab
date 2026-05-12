@@ -12,6 +12,83 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
+      date: "04/05/2026",
+      items: [
+        "✨ New Assist tab — automated damage calculations and speed tier analysis against top 30 meta threats. Shows which threats KO you, which you KO back, and survival scenarios. Accessible from Team Builder or standalone at /assist",
+      ],
+    },
+    {
+      date: "02/05/2026",
+      items: [
+        "🛍️ New Shop button in navbar — divided support button now includes a direct link to the Champions Lab merch store alongside Support Us",
+      ],
+    },
+    {
+      date: "02/05/2026",
+      items: [
+        "🛡️ Survival Calculator — smart SP auto-optimizer finds the minimum bulk needed to survive a hit and dumps everything else into offense (Speed → Attack → SpAtk). No more over-invested bulk",
+        "⚔️ Damage Calculator — user side now shows your actual 4 team-builder moves instead of the full movepool. Enemy side loads the 4 moves from their competitive set, with a selector to swap any move",
+        "🔧 Fixed SearchSelect dropdown positioning — dropdown now stays perfectly glued to the trigger input when scrolling page or modal. Rewrote positioning engine for frame-perfect sync",
+      ],
+    },
+    {
+      date: "02/05/2026",
+      items: [
+        "⚔️ Compact Damage Calculator in Team Builder — new mode with your Pokémon auto-loaded. Pick any opponent from the full roster, select moves for both sides, and see damage both ways with KO chances. Includes weather and crit toggles",
+        "🛡️ Survival Calculator — full roster threat selector (all Pokémon, not just meta top 30). All damaging moves from each Pokémon's full movepool available",
+        "🛡️ Survival Calculator — fixed health bar showing remaining HP after hit (green = safe, amber = low, red = dead). Clear survival messaging: \"Your Pokémon survives!\" / \"Your Pokémon faints!\" / \"Depends on damage roll\"",
+        "🛡️ Survival Calculator — animated stat pills that bounce when SP changes. Shows current HP/Def/SpD values live",
+        "🛡️ Survival suggestions — one-click apply bulk investments or smart reallocations from Speed/Attack. Up to 5 suggestions shown",
+      ],
+    },
+    {
+      date: "02/05/2026",
+      items: [
+        "⚡ Dynamic Speed Tiers in Team Builder — click the lightning bolt next to the Speed slider to open a live speed tier comparison modal. See exactly where your Pokémon ranks against the full roster, with real-time updates as you adjust SP, nature, item, or moves",
+        "⚡ Speed tier modal shows multiple speed scenarios — Base speed, with Choice Scarf, with weather abilities (Swift Swim, Sand Rush, etc.), and after setup moves (Dragon Dance, Agility, Shell Smash) all displayed as clickable chips",
+        "⚡ SP-to-outspeed calculator — for every threat you don't outspeed, the modal shows exactly how many additional Stat Points you need to invest to surpass their max speed",
+        "⚡ Weather toggle for speed abilities — toggle rain/sun/sand/snow on/off to see your speed with weather-based abilities activated",
+        "⚡ Nearby filter and search — filter to show only Pokémon near your current rank, or search for specific threats by name",
+        "⚡ Fully responsive on mobile — the speed tier modal adapts to full-screen on phones and tablet-friendly on larger screens",
+        "🐛 Fixed SP limit toast message not displaying correctly in all languages",
+        "🐛 Speed tier list now auto-scrolls to keep your Pokémon in view when speed changes",
+      ],
+    },
+    {
+      date: "30/04/2026",
+      items: [
+        "🛡️ Fixed Armor Tail blocking priority moves in battle simulator — Fake Out and other priority moves are now correctly blocked by Armor Tail (e.g. Farigiraf). Previously the log would incorrectly show the target flinching even though the move was blocked",
+      ],
+    },
+    {
+      date: "30/04/2026",
+      items: [
+        "🏆 Tournament Teams now load actual sets — clicking a tournament team in the Team Builder sidebar now loads the real moves, items, abilities and tera types from Limitless tournament data instead of auto-filling generic competitive sets. Nature and EVs still fall back to the best matching competitive preset",
+      ],
+    },
+    {
+      date: "30/04/2026",
+      items: [
+        "📊 New Table view for Official Usage Stats — toggle between Cards and Table on the Meta → Pokémon Rankings page. The table shows Rank, Sprite, Name, Types, Abilities, Usage %, and all 6 Base Stats with color-coded pills (gold for 120+, green for 100+, gray for 80+) for instant competitive comparison",
+        "🌳 Flowchart now branches horizontally — decision nodes (Fake Out reads, Protect vs setup, offense vs pivot) now split into side-by-side branches instead of stacking vertically, making it clear that these are alternative plays, not sequential steps",
+        "🌳 Added Fake Out speed-tie branches — when both sides have Fake Out, the flowchart now branches on who outspeeds, showing the flinch scenario and the backup plan for each case",
+        "🌳 Added 'Aggro' and 'Protect' branches when slower with no speed control — instead of a flat warning, the flowchart now shows actionable branches for surviving turn 1",
+        "🌳 Added 'Setup' branch to Turn 2 decisions — when a lead has an unused setup move, the 'Continue offense or pivot?' decision now includes a 'Setup' option alongside Offense and Pivot",
+        "🇩🇪 Fixed German Mega Evolution names — all 60+ Mega Pokémon now display correct German names (e.g. Mega-Glurak, Mega-Bisaflor, Mega-Krawell) instead of English names when language is set to Deutsch",
+        "🇩🇪 Fixed Crabominable German name — now correctly displays 'Krawell' in all German UI contexts",
+        "🐛 Fixed mega evolution weather in strategy tree — Mega Charizard Y's Drought and other mega weather abilities are no longer incorrectly treated as entry abilities. Strategy flowchart now correctly shows sun overriding rain when Charizard mega evolves, instead of claiming the slower entry setter wins",
+        "🧠 Strategy tree now distinguishes entry vs mega weather/terrain — field notes and weather war logic correctly account for whether weather comes from an entry ability (Drizzle, Drought) or a Mega Evolution ability, with proper timing labels ('on entry' vs 'on Turn 1 (Mega Evolution)')",
+        "🐛 Fixed type-based status immunities in battle simulator — Fire-types can no longer be burned, Electric-types can no longer be paralyzed, Ice-types can no longer be frozen, and Poison/Steel-types can no longer be poisoned. This fixes Paldean Tauros (Blaze) being incorrectly burnable",
+        "👊 Parental Bond now hits twice in damage calculator — the calculator now correctly applies a second hit at 25% power and shows Parental Bond as an active modifier",
+        "👊 Parental Bond battles now log '(2 hits)' — battle replay messages indicate when Parental Bond triggers on a move",
+        "🐛 Fixed Huge Power / Pure Power damage calculation — the calculator now correctly doubles Attack for physical moves when a Pokémon has Huge Power or Pure Power (e.g. Mega Starmie)",
+        "🐛 Fixed Flash Fire immunity display in Teambuilder — type defenses grid now correctly shows 0× for Fire when a Pokémon has Flash Fire selected (also applies to Levitate, Water Absorb, Volt Absorb, and other ability-based immunities)",
+        "🌸 Added Eternal Floette — new standalone Pokémon entry (id: 10061) with correct base stats 74/65/67/125/128/92, following Pokémon Showdown data. Eternal Floette can Mega Evolve into Mega Floette (74/85/87/155/148/102)",
+        "🐛 Fixed Floette sprite references — corrected sprite IDs so Eternal Floette uses its official sprite and Mega Floette uses the custom official-artwork sprite",
+        "⚔️ Normal Floette can no longer Mega Evolve — only Eternal Floette can Mega Evolve into Mega Floette. All tournament teams, generated teams, and meta data updated to reflect this Showdown-accurate behavior",
+      ],
+    },
+    {
       date: "27/04/2026",
       items: [
         "🇵🇹 Partial Portuguese translation — website UI, PokéSchool, and move/ability/item descriptions (Pokémon names, types, attacks, abilities, items, natures remain in English)",

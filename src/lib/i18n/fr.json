@@ -3,11 +3,13 @@
     "pokedex": "Pokédex",
     "teamBuilder": "Team Builder",
     "battleBot": "Battle Bot",
+    "assist": "Assist",
     "meta": "Méta",
     "tournaments": "Tournois",
-    "pokeSchool": "PokéÉcole",
+    "pokeSchool": "Apprendre",
     "about": "À propos",
     "supportUs": "Nous soutenir",
+    "shop": "Boutique",
     "language": "Langue",
     "subtitle": "Votre avantage compétitif commence ici"
   },
@@ -419,7 +421,7 @@
     "pickMoves": "(choisir des capacités)",
     "roles": "Rôles :",
     "tournamentTeams": "Équipes de Tournoi",
-    "tournamentTeamsDesc": "Vraies équipes de tournois Champions. Cliquez pour charger avec les sets compétitifs.",
+    "tournamentTeamsDesc": "Vraies équipes de tournois Champions. Cliquez pour charger avec les attaques, objets et talents réels.",
     "curatedTeams": "Équipes Sélectionnées",
     "myTeam": "Mon Équipe",
     "savedTeams": "Équipes Sauvegardées",
@@ -531,7 +533,25 @@
       "noSpeedControlThreat": "Pas de contrôle de vitesse – ajoutez Vent Arrière ou Distorsion",
       "noIntimidateThreat": "Pas d'Intimidation – envisagez un utilisateur d'Intimidation",
       "poorCoverage": "Couverture insuffisante – pas de coups super efficaces contre {types}"
-    }
+    },
+    "spLimitReached": "Plus de Points de Stat disponibles ! Réduisez d'abord un autre stat."
+  },
+  "survivalCalc": {
+    "title": "Calc de Survie",
+    "selectThreat": "Sélectionnez une menace méta pour tester votre résistance",
+    "searchPlaceholder": "Rechercher des menaces…",
+    "modeOHKO": "OHKO",
+    "mode2HKO": "2HKO",
+    "selectMove": "Sélectionner une attaque…",
+    "incomingDamage": "Dégâts Entrants",
+    "suggestions": "Suggestions de Survie",
+    "cannotSurvive": "Impossible de survivre même avec un investissement max en résistance",
+    "returnDamage": "Vos Dégâts en Retour",
+    "survives": "Votre Pokémon survit !",
+    "survives2HKO": "Survit à 2 coups !",
+    "rollDependent": "La survie dépend du roll",
+    "faints": "Votre Pokémon est K.O. !",
+    "remainingHP": "PV restants"
   },
   "battleBot": {
     "title": "Simulateur de Combat",
@@ -809,7 +829,9 @@
     "corePairs": "Paires Clés",
     "corePairAnalysis": "Analyse des Paires Clés",
     "archetypes": "Matchups d'Archétypes",
-    "antiMeta": "Classement Anti-Méta",
+    "antiMeta": {
+      "strategy": "Construit autour de {name} ({score} score anti-méta). Contre {c1} et {c2}."
+    },
     "antiMetaPokemon": "Classement Pokémon Anti-Méta",
     "antiMetaTeams": "Équipes Anti-Méta",
     "tournamentTeams": "Équipes de Tournoi",
@@ -958,9 +980,6 @@
       "topMega": "Top Méga-Pokémon :",
       "overrated": "Pokémon surévalués (usage élevé, faible TV) :",
       "bestArchetypes": "Meilleurs archétypes :"
-    },
-    "antiMeta": {
-      "strategy": "Construit autour de {name} ({score} score anti-méta). Contre {c1} et {c2}."
     }
   },
   "learn": {
@@ -1137,7 +1156,10 @@
     "descCrit": "sur un coup critique",
     "descWeather": "sous {weather}",
     "descTerrain": "sur terrain {terrain}",
-    "berryActivated": "{item} a réduit les dégâts"
+    "berryActivated": "{item} a réduit les dégâts",
+    "selectDefender": "Select opponent to test matchup",
+    "changeMove": "Changer d'attaque",
+    "selectMove": "Sélectionner une attaque"
   },
   "teamTester": {
     "team1": "Équipe 1",
@@ -1274,6 +1296,31 @@
     "ruleTimer": "Chrono de 20 min",
     "ruleTimerDesc": "Chaque combat a une limite de temps de 20 minutes. Si le temps expire, le joueur avec le plus de Pokémon restants gagne. Empêche le stalling et garde les combats dynamiques."
   },
+  "speedTiers": {
+    "title": "Speed Tiers",
+    "subtitle": "Rang #{rank} sur {total}",
+    "base": "Base",
+    "ability": "Talent",
+    "afterSetup": "Après Setup",
+    "itemSetup": "Objet + Setup",
+    "weatherOn": "Météo active",
+    "weatherOff": "Activer météo",
+    "searchPlaceholder": "Rechercher un Pokémon…",
+    "nearby": "Proches",
+    "pokemon": "Pokémon",
+    "max": "Max",
+    "vsYou": "vs Vous",
+    "you": "VOUS",
+    "needSp": "+{sp} SP pour dépasser",
+    "needSp0": "Changez nature pour dépasser",
+    "outspeedBy": "+{diff} plus rapide",
+    "outspeed": "Vous dépassez",
+    "outspedBy": "On vous dépasse",
+    "ties": "Égalités",
+    "total": "Total",
+    "noResults": "Aucun Pokémon trouvé",
+    "openTooltip": "Ouvrir la comparaison de speed tiers"
+  },
   "paste": {
     "noTeam": "Aucune donnée d'équipe trouvée. Utilisez le bouton Partager dans le Team Builder pour générer un lien paste.",
     "pageDesc": "Une équipe partagée depuis Champions Lab — le compagnon ultime du Pokémon compétitif.",
@@ -1282,5 +1329,27 @@
     "copyPaste": "Copier le Paste",
     "footer": "Créé avec Champions Lab",
     "openInBuilder": "Ouvrir dans le Team Builder"
+  },
+  "assist": {
+    "title": "Assist",
+    "runAnalysis": "Lancer l'Analyse Assist",
+    "analyzing": "Analyse en cours...",
+    "rerunAnalysis": "Relancer l'Analyse",
+    "noTeamError": "Aucune équipe trouvée. Construisez d'abord une équipe dans le Team Builder.",
+    "noTeamFound": "Aucune équipe trouvée. Vérifiez le lien de partage.",
+    "emptySlotWarning": "Aucune équipe chargée. Assurez-vous d'avoir sélectionné au moins un Pokémon.",
+    "speedTiers": "Paliers de Vitesse (dans ±50)",
+    "yourSpe": "Votre Vit",
+    "scarf": "BAND. VITESSE",
+    "keyKOs": "Seuils KO Clés",
+    "threatsKOYou": "Menaces qui vous K.O.",
+    "youKOThreats": "Vous K.O. les menaces",
+    "survivesThreatens": "Survit + menace en retour",
+    "noSpeedThreats": "Aucune menace méta pertinente dans ±50 vitesse.",
+    "addMoreSets": "Ajoutez plus de sets courants à USAGE_DATA pour une analyse plus profonde.",
+    "analysisSummary": "Analyse contre les top {count} menaces méta",
+    "withSpeedThreats": "{count} Pokémon avec menaces de vitesse",
+    "withDefensiveConcerns": "{count} Pokémon avec des soucis défensifs",
+    "sharedTeam": "Équipe Partagée"
   }
 }

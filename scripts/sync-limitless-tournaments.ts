@@ -211,6 +211,13 @@ interface LimitlessPokemon {
 }
 
 // ─── Types for output ────────────────────────────────────────────────
+interface TournamentSet {
+  ability: string;
+  item: string;
+  moves: string[];
+  teraType?: string;
+}
+
 interface TournamentTeam {
   id: string;
   tournament: string;
@@ -221,6 +228,7 @@ interface TournamentTeam {
   losses: number;
   pokemonIds: number[];
   pokemonNames: string[];
+  sets: TournamentSet[];
 }
 
 interface TournamentUsage {
@@ -347,12 +355,19 @@ async function main() {
     for (const standing of topCut) {
       const pokemonIds: number[] = [];
       const pokemonNames: string[] = [];
+      const sets: TournamentSet[] = [];
 
       for (const mon of standing.decklist!) {
         const resolved = resolveSlug(mon.id);
         if (resolved) {
           pokemonIds.push(resolved.id);
           pokemonNames.push(resolved.name);
+          sets.push({
+            ability: mon.ability,
+            item: mon.item,
+            moves: mon.attacks,
+            teraType: mon.tera ?? undefined,
+          });
         }
       }
 
@@ -367,6 +382,7 @@ async function main() {
           losses: standing.record.losses,
           pokemonIds,
           pokemonNames,
+          sets,
         });
       }
     }
@@ -463,9 +479,12 @@ function updateSimulationData(
   );
 
   // Replace CHAMPIONS_TOURNAMENT_TEAMS array
-  const teamsStr = teams.map(t =>
-    `  { id: "${t.id}", tournament: ${JSON.stringify(t.tournament)}, players: ${t.players}, placement: ${t.placement}, player: ${JSON.stringify(t.player)}, wins: ${t.wins}, losses: ${t.losses}, pokemonIds: [${t.pokemonIds.join(", ")}], pokemonNames: [${t.pokemonNames.map(n => `"${n}"`).join(", ")}] },`
-  ).join("\n");
+  const teamsStr = teams.map(t => {
+    const setsStr = t.sets.map(s =>
+      `    { ability: ${JSON.stringify(s.ability)}, item: ${JSON.stringify(s.item)}, moves: [${s.moves.map(m => JSON.stringify(m)).join(", ")}]${s.teraType ? `, teraType: ${JSON.stringify(s.teraType)}` : ""} }`
+    ).join(",\n");
+    return `  { id: "${t.id}", tournament: ${JSON.stringify(t.tournament)}, players: ${t.players}, placement: ${t.placement}, player: ${JSON.stringify(t.player)}, wins: ${t.wins}, losses: ${t.losses}, pokemonIds: [${t.pokemonIds.join(", ")}], pokemonNames: [${t.pokemonNames.map(n => `"${n}"`).join(", ")}], sets: [\n${setsStr}\n  ] }`;
+  }).join(",\n");
 
   content = content.replace(
     /export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam\[\] = \[[\s\S]*?\n\];/,

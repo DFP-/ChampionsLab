@@ -1246,11 +1246,19 @@ export const USAGE_DATA: Record<number, CommonSet[]> = {
     {"name":"Choice Specs","nature":"Modest","ability":"Flash Fire","item":"Choice Specs","moves":["Heat Wave","Shadow Ball","Overheat","Energy Ball"],"sp":{"hp":0,"attack":0,"defense":2,"spAtk":32,"spDef":0,"speed":32}},
     {"name":"WoW Support","nature":"Timid","ability":"Flash Fire","item":"Sitrus Berry","moves":["Shadow Ball","Will-O-Wisp","Heat Wave","Protect"],"sp":{"hp":20,"attack":0,"defense":14,"spAtk":0,"spDef":0,"speed":32}},
   ],
-  // Floette (id: 670) – Pikalytics Champions Tournaments real data
+  // Floette (id: 670) – base form, no Mega Evolution
   670: [
+    { name: "Calm Mind", nature: "Bold", ability: "Flower Veil", item: "Sitrus Berry", moves: ["Calm Mind", "Moonblast", "Dazzling Gleam", "Protect"], sp: { hp: 32, attack: 0, defense: 20, spAtk: 12, spDef: 2, speed: 0 } },
+    { name: "Offensive", nature: "Modest", ability: "Flower Veil", item: "Life Orb", moves: ["Moonblast", "Dazzling Gleam", "Psychic", "Protect"], sp: { hp: 0, attack: 0, defense: 4, spAtk: 32, spDef: 2, speed: 8 } },
+    { name: "Support", nature: "Bold", ability: "Flower Veil", item: "Focus Sash", moves: ["Moonblast", "Helping Hand", "Charm", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 0, spDef: 2, speed: 0 } },
+  ],
+
+  // Eternal Floette (id: 10061) – can Mega Evolve
+  10061: [
     { name: "Mega Calm Mind", nature: "Bold", ability: "Flower Veil", item: "Floettite", moves: ["Calm Mind", "Moonblast", "Dazzling Gleam", "Protect"], sp: { hp: 32, attack: 0, defense: 20, spAtk: 12, spDef: 2, speed: 0 } },
     { name: "Mega Offensive", nature: "Modest", ability: "Flower Veil", item: "Floettite", moves: ["Moonblast", "Dazzling Gleam", "Calm Mind", "Protect"], sp: { hp: 20, attack: 0, defense: 4, spAtk: 32, spDef: 2, speed: 8 } },
     { name: "Mega Draining Kiss", nature: "Bold", ability: "Flower Veil", item: "Floettite", moves: ["Calm Mind", "Draining Kiss", "Dazzling Gleam", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 0, spDef: 2, speed: 0 } },
+    { name: "Mega Fast Support", nature: "Timid", ability: "Flower Veil", item: "Floettite", moves: ["Moonblast", "Dazzling Gleam", "Helping Hand", "Protect"], sp: { hp: 0, attack: 0, defense: 4, spAtk: 32, spDef: 2, speed: 30 } },
   ],
 
   // Goodra (id: 706)

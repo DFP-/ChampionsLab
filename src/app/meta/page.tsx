@@ -8,6 +8,7 @@ import {
   TrendingUp, TrendingDown, Award, Shield, Zap, Target, Brain,
   ChevronDown, ChevronUp, X, Swords, Users, Star, Crown, Flame,
   BarChart3, ArrowRight, Sparkles, Timer, Search, Info, Filter, Trophy,
+  LayoutGrid, Table as TableIcon,
 } from "lucide-react";
 import { POKEMON_SEED } from "@/lib/pokemon-data";
 import { TYPE_COLORS, type PokemonType } from "@/lib/types";
@@ -290,6 +291,9 @@ export default function MetaPage() {
 
   // ── Official Usage "Show More" state ──────────────────────────
   const [showAllOfficial, setShowAllOfficial] = useState(false);
+
+  // ── Official Usage view mode ──────────────────────────────────
+  const [officialViewMode, setOfficialViewMode] = useState<"grid" | "table">("grid");
 
   // ── Teams tab "Show More" states ───────────────────────────────
   const [showAllTournament, setShowAllTournament] = useState(false);
@@ -958,10 +962,28 @@ export default function MetaPage() {
               </h2>
               <span className="px-3 py-1 text-[10px] font-bold uppercase rounded-full bg-amber-100 text-amber-700 border border-amber-200">{t('meta.inGameRankedData')}</span>
             </div>
-            <p className="text-sm text-muted-foreground mb-5">
-              {t('meta.officialUsageDesc')}
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="flex items-center justify-between mb-5 gap-4">
+              <p className="text-sm text-muted-foreground">
+                {t('meta.officialUsageDesc')}
+              </p>
+              {/* View Toggle */}
+              <div className="hidden md:flex items-center gap-1 bg-gray-100 dark:bg-white/[0.06] rounded-lg p-0.5 shrink-0">
+                <button
+                  onClick={() => setOfficialViewMode("grid")}
+                  className={cn("flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all", officialViewMode === "grid" ? "bg-white dark:bg-white/10 shadow-sm text-amber-700 dark:text-amber-400" : "text-muted-foreground hover:text-foreground")}
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" /> Cards
+                </button>
+                <button
+                  onClick={() => setOfficialViewMode("table")}
+                  className={cn("flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all", officialViewMode === "table" ? "bg-white dark:bg-white/10 shadow-sm text-amber-700 dark:text-amber-400" : "text-muted-foreground hover:text-foreground")}
+                >
+                  <TableIcon className="w-3.5 h-3.5" /> Table
+                </button>
+              </div>
+            </div>
+            {/* Card View — always visible on mobile, or when selected on desktop */}
+            <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3", officialViewMode === "table" && "md:hidden")}>
               {_VALID_TOURNAMENT_USAGE
                 .sort((a, b) => b.usageRate - a.usageRate)
                 .slice(0, showAllOfficial ? 207 : 15)
@@ -997,6 +1019,108 @@ export default function MetaPage() {
                   );
                 })}
             </div>
+
+            {/* Table View — desktop only */}
+            {officialViewMode === "table" && (
+              <div className="hidden md:block">
+                <div className="overflow-x-auto -mx-2 px-2">
+                  <div className="border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden w-full">
+                    {/* Table Header */}
+                    <div className="grid grid-cols-[2rem_2.5rem_2fr_1.5fr_repeat(6,1fr)] gap-x-3 gap-y-0 px-4 py-2.5 bg-gray-50/80 dark:bg-white/[0.04] border-b border-gray-200 dark:border-white/10 text-[10px] font-bold uppercase text-muted-foreground">
+                      <span className="text-center">#</span>
+                      <span></span>
+                      <span>Pokémon</span>
+                      <span className="text-right">Usage</span>
+                      <span className="text-center">HP</span>
+                      <span className="text-center">Atk</span>
+                      <span className="text-center">Def</span>
+                      <span className="text-center">SpA</span>
+                      <span className="text-center">SpD</span>
+                      <span className="text-center">Spe</span>
+                    </div>
+                    {/* Table Rows */}
+                    {_VALID_TOURNAMENT_USAGE
+                      .sort((a, b) => b.usageRate - a.usageRate)
+                      .slice(0, showAllOfficial ? 207 : 15)
+                      .map((p, i) => {
+                        const pokemon = POKEMON_SEED.find(pk => pk.id === p.pokemonId);
+                        const maxUsage = _VALID_TOURNAMENT_USAGE[0]?.usageRate ?? 53;
+                        const types = getTypesForName(p.name) ?? pokemon?.types ?? [];
+                        const stats = pokemon?.baseStats;
+                        return (
+                          <div
+                            key={p.pokemonId}
+                            className={cn(
+                              "grid grid-cols-[2rem_2.5rem_2fr_1.5fr_repeat(6,1fr)] gap-x-3 gap-y-0 px-4 py-2.5 items-center border-b border-gray-100 dark:border-white/[0.06] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-colors cursor-pointer",
+                              i < 3 ? "bg-amber-50/40 dark:bg-amber-500/[0.05]" : i < 15 ? "bg-white/50 dark:bg-transparent" : "bg-gray-50/30 dark:bg-white/[0.02]"
+                            )}
+                            onClick={() => setModal({ kind: "pokemon", name: p.name })}
+                          >
+                            {/* Rank */}
+                            <span className={cn("text-center text-xs font-extrabold tabular-nums", i < 3 ? "text-amber-600 dark:text-amber-400" : i < 10 ? "text-gray-600 dark:text-gray-300" : "text-gray-400 dark:text-gray-400")}>{i + 1}</span>
+                            {/* Sprite */}
+                            <div className="flex justify-center">
+                              {pokemon && <Image src={pokemon.sprite} alt={p.name} width={28} height={28} className="drop-shadow-sm" unoptimized />}
+                            </div>
+                            {/* Name + Types + Abilities */}
+                            <div className="min-w-0">
+                              <span className="text-sm font-bold truncate block">{tp(p.name)}</span>
+                              <div className="flex gap-1 mt-0.5">
+                                {types.map(ty => (
+                                  <span key={ty} className="px-1 py-0 text-[8px] font-bold uppercase rounded text-white leading-3" style={{ backgroundColor: TYPE_COLORS[ty as PokemonType] }}>{tty(ty as PokemonType)}</span>
+                                ))}
+                              </div>
+                              {pokemon && (
+                                <p className="text-[10px] text-muted-foreground dark:text-gray-400 truncate mt-0.5">
+                                  {pokemon.abilities.filter(a => !a.isHidden).map(a => a.name).join(", ")}
+                                  {pokemon.abilities.some(a => a.isHidden) && (
+                                    <span className="text-gray-400 dark:text-gray-400 ml-1">({pokemon.abilities.filter(a => a.isHidden).map(a => a.name).join(", ")})</span>
+                                  )}
+                                </p>
+                              )}
+                            </div>
+                            {/* Usage */}
+                            <div className="text-right">
+                              <span className="text-xs font-bold text-amber-700 dark:text-amber-400 tabular-nums">{p.usageRate}%</span>
+                              <div className="h-1 bg-gray-200 dark:bg-white/10 rounded-full mt-0.5 overflow-hidden">
+                                <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-400" style={{ width: `${Math.min(100, (p.usageRate / maxUsage) * 100)}%` }} />
+                              </div>
+                            </div>
+                            {/* Stats */}
+                            {stats ? (
+                              <>
+                                {[
+                                  { val: stats.hp, label: "HP" },
+                                  { val: stats.attack, label: "Atk" },
+                                  { val: stats.defense, label: "Def" },
+                                  { val: stats.spAtk, label: "SpA" },
+                                  { val: stats.spDef, label: "SpD" },
+                                  { val: stats.speed, label: "Spe" },
+                                ].map(stat => (
+                                  <div key={stat.label} className="text-center">
+                                    <span className={cn("text-[10px] font-bold tabular-nums px-1.5 py-0.5 rounded",
+                                      stat.val >= 120 ? "bg-amber-100 text-amber-700 dark:bg-amber-500/30 dark:text-white" :
+                                      stat.val >= 100 ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/25 dark:text-white" :
+                                      stat.val >= 80 ? "bg-gray-100 text-gray-600 dark:bg-white/10 dark:text-white" :
+                                      "text-gray-400 dark:bg-white/[0.06] dark:text-white"
+                                    )}>{stat.val}</span>
+                                  </div>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {["HP", "Atk", "Def", "SpA", "SpD", "Spe"].map(l => (
+                                  <div key={l} className="text-center"><span className="text-xs text-gray-300">-</span></div>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              </div>
+            )}
             {!showAllOfficial && (
               <button
                 onClick={() => setShowAllOfficial(true)}
@@ -2946,10 +3070,10 @@ function TournamentTeamCard({ team, expanded, onToggle }: { team: TournamentTeam
             return (
               <div key={p.id} className="flex flex-col items-center">
                 <div className="relative">
-                  <Image src={isMega ? getMegaSprite(p) : p.sprite} alt={isMega ? getMegaName(p) : p.name} width={32} height={32} className="rounded" unoptimized />
+                  <Image src={isMega ? getMegaSprite(p) : p.sprite} alt={isMega ? tp(getMegaName(p)) : tp(p.name)} width={32} height={32} className="rounded" unoptimized />
                   {isMega && <span className="absolute -top-1 -right-1 px-0.5 text-[6px] font-bold bg-amber-500 text-white rounded shadow-sm">M</span>}
                 </div>
-                <span className={cn("text-[7px] mt-0.5 truncate w-10 text-center", isMega ? "text-amber-600 font-bold" : "text-muted-foreground")}>{isMega ? getMegaName(p) : p.name}</span>
+                <span className={cn("text-[7px] mt-0.5 truncate w-10 text-center", isMega ? "text-amber-600 font-bold" : "text-muted-foreground")}>{isMega ? tp(getMegaName(p)) : tp(p.name)}</span>
               </div>
             );
           })}
@@ -2975,11 +3099,11 @@ function TournamentTeamCard({ team, expanded, onToggle }: { team: TournamentTeam
                         <div key={p.id} className={cn("p-2 rounded-lg border", pIsMega ? "bg-amber-50/50 border-amber-200" : "bg-white/50 border-gray-100")}>
                           <div className="flex items-center gap-2">
                             <div className="relative">
-                              <Image src={pIsMega ? getMegaSprite(p) : p.sprite} alt={pIsMega ? getMegaName(p) : p.name} width={28} height={28} className="rounded" unoptimized />
+                              <Image src={pIsMega ? getMegaSprite(p) : p.sprite} alt={pIsMega ? tp(getMegaName(p)) : tp(p.name)} width={28} height={28} className="rounded" unoptimized />
                               {pIsMega && <span className="absolute -top-1 -right-1 px-0.5 text-[6px] font-bold bg-amber-500 text-white rounded shadow-sm">M</span>}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-xs font-semibold">{pIsMega ? getMegaName(p) : p.name}{pIsMega && <span className="ml-1 text-[8px] text-amber-600 font-bold">MEGA</span>}</p>
+                              <p className="text-xs font-semibold">{pIsMega ? tp(getMegaName(p)) : tp(p.name)}{pIsMega && <span className="ml-1 text-[8px] text-amber-600 font-bold">MEGA</span>}</p>
                               <div className="flex gap-0.5">{p.types.map(ty => <span key={ty} className="px-1 py-0.5 text-[7px] font-bold uppercase rounded text-white/90" style={{ backgroundColor: `${TYPE_COLORS[ty]}AA` }}>{tt(ty)}</span>)}</div>
                             </div>
                             <div className="text-right text-[10px]">

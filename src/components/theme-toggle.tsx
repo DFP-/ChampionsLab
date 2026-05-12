@@ -1,29 +1,42 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "@/lib/motion";
 import { Sun, Moon } from "lucide-react";
 
-export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
+const THEME_CHANGE_EVENT = "theme-change";
 
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
-    setMounted(true);
-  }, []);
+const getThemeSnapshot = () =>
+  typeof document !== "undefined" &&
+  document.documentElement.classList.contains("dark");
+
+const getServerThemeSnapshot = () => false;
+
+const subscribeToTheme = (onStoreChange: () => void) => {
+  window.addEventListener(THEME_CHANGE_EVENT, onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+
+  return () => {
+    window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
+};
+
+export function ThemeToggle() {
+  const dark = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
 
   const toggle = () => {
-    const next = !dark;
-    setDark(next);
-    // Add transition class for smooth color change
-    document.documentElement.classList.add("transitioning");
+    const next = !document.documentElement.classList.contains("dark");
     document.documentElement.classList.toggle("dark", next);
+    document.documentElement.style.colorScheme = next ? "dark" : "light";
     localStorage.setItem("championslab-theme", next ? "dark" : "light");
-    setTimeout(() => document.documentElement.classList.remove("transitioning"), 350);
+    document.cookie = `cl-theme=${next ? "dark" : "light"};path=/;max-age=31536000;SameSite=Lax`;
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   };
-
-  if (!mounted) return null;
 
   return (
     <motion.button

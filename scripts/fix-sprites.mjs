@@ -52,7 +52,7 @@ const artworkOnlyIds = [
   10313, // Mega Garchomp Z
   10314, // Mega Absol Z
   10315, // Mega Lucario Z
-  10061, // Mega Floette
+  // 10061 is Eternal Floette (official form, has Home sprite)
 ];
 
 for (const id of artworkOnlyIds) {

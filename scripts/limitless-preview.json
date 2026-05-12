@@ -2,200 +2,510 @@
   "teams": [
     {
       "id": "ct-1",
-      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
-      "players": 30,
+      "tournament": "Pokémon CHAMPIONS Mi Dulce Japón Tournament #3",
+      "players": 8,
       "placement": 1,
-      "player": "drkekoVGC",
-      "wins": 8,
+      "player": "Franco1989",
+      "wins": 3,
       "losses": 1,
       "pokemonIds": [
         6,
-        10009,
-        727,
+        350,
+        3,
         445,
-        681,
-        3
+        727,
+        903
       ],
       "pokemonNames": [
         "Charizard",
-        "Wash Rotom",
-        "Incineroar",
+        "Milotic",
+        "Venusaur",
         "Garchomp",
-        "Aegislash",
-        "Venusaur"
+        "Incineroar",
+        "Sneasler"
+      ],
+      "sets": [
+        {
+          "ability": "Blaze",
+          "item": "Charizardite Y",
+          "moves": [
+            "Heat Wave",
+            "Weather Ball",
+            "Solar Beam",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Competitive",
+          "item": "Leftovers",
+          "moves": [
+            "Ice Beam",
+            "Coil",
+            "Hypnosis",
+            "Recover"
+          ]
+        },
+        {
+          "ability": "Chlorophyll",
+          "item": "Focus Sash",
+          "moves": [
+            "Energy Ball",
+            "Weather Ball",
+            "Sludge Bomb",
+            "Sleep Powder"
+          ]
+        },
+        {
+          "ability": "Rough Skin",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Dragon Claw",
+            "Earthquake",
+            "Avalanche",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Intimidate",
+          "item": "Chople Berry",
+          "moves": [
+            "Facade",
+            "Parting Shot",
+            "Eruption",
+            "Throat Chop"
+          ]
+        },
+        {
+          "ability": "Unburden",
+          "item": "White Herb",
+          "moves": [
+            "Close Combat",
+            "Protect",
+            "Dire Claw",
+            "Fake Out"
+          ]
+        }
       ]
     },
     {
       "id": "ct-2",
-      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
-      "players": 30,
+      "tournament": "Pokémon CHAMPIONS Mi Dulce Japón Tournament #3",
+      "players": 8,
       "placement": 2,
-      "player": "Nehzzy",
-      "wins": 7,
-      "losses": 2,
+      "player": "flownixx",
+      "wins": 3,
+      "losses": 1,
       "pokemonIds": [
-        670,
+        981,
         1013,
-        727,
-        445,
-        902,
-        903
+        937,
+        959,
+        730,
+        740
       ],
       "pokemonNames": [
-        "Floette",
+        "Farigiraf",
         "Sinistcha",
-        "Incineroar",
-        "Garchomp",
-        "Basculegion-M",
-        "Sneasler"
+        "Ceruledge",
+        "Tinkaton",
+        "Primarina",
+        "Crabominable"
+      ],
+      "sets": [
+        {
+          "ability": "Armor Tail",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Protect",
+            "Trick Room",
+            "Twin Beam",
+            "Helping Hand"
+          ]
+        },
+        {
+          "ability": "Hospitality",
+          "item": "Miracle Seed",
+          "moves": [
+            "Trick Room",
+            "Matcha Gotcha",
+            "Shadow Ball",
+            "Rage Powder"
+          ]
+        },
+        {
+          "ability": "Flash Fire",
+          "item": "Focus Sash",
+          "moves": [
+            "Protect",
+            "Shadow Sneak",
+            "Bitter Blade",
+            "Taunt"
+          ]
+        },
+        {
+          "ability": "Own Tempo",
+          "item": "Lum Berry",
+          "moves": [
+            "Fake Out",
+            "Protect",
+            "Play Rough",
+            "Gigaton Hammer"
+          ]
+        },
+        {
+          "ability": "Liquid Voice",
+          "item": "Leftovers",
+          "moves": [
+            "Protect",
+            "Moonblast",
+            "Hyper Voice",
+            "Calm Mind"
+          ]
+        },
+        {
+          "ability": "Hyper Cutter",
+          "item": "Crabominite",
+          "moves": [
+            "Protect",
+            "Ice Hammer",
+            "Drain Punch",
+            "Mach Punch"
+          ]
+        }
       ]
     },
     {
       "id": "ct-3",
-      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
-      "players": 30,
+      "tournament": "Pokémon CHAMPIONS Mi Dulce Japón Tournament #3",
+      "players": 8,
       "placement": 3,
-      "player": "LovelyLuna",
-      "wins": 6,
-      "losses": 2,
+      "player": "ItzChable",
+      "wins": 3,
+      "losses": 1,
       "pokemonIds": [
-        149,
-        279,
-        902,
-        903,
-        727,
-        983
+        428,
+        461,
+        655,
+        10340,
+        784,
+        302
       ],
       "pokemonNames": [
-        "Dragonite",
-        "Pelipper",
-        "Basculegion-M",
-        "Sneasler",
-        "Incineroar",
-        "Kingambit"
+        "Lopunny",
+        "Weavile",
+        "Delphox",
+        "Hisuian Zoroark",
+        "Kommo-o",
+        "Sableye"
+      ],
+      "sets": [
+        {
+          "ability": "Limber",
+          "item": "Lopunnite",
+          "moves": [
+            "Fake Out",
+            "Close Combat",
+            "Thunder Punch",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Pickpocket",
+          "item": "King's Rock",
+          "moves": [
+            "Fake Out",
+            "Low Kick",
+            "Taunt",
+            "Fling"
+          ]
+        },
+        {
+          "ability": "Magician",
+          "item": "Delphoxite",
+          "moves": [
+            "Heat Wave",
+            "Psyshock",
+            "Nasty Plot",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Illusion",
+          "item": "Silk Scarf",
+          "moves": [
+            "Hyper Voice",
+            "Shadow Ball",
+            "Icy Wind",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Soundproof",
+          "item": "Dragon Fang",
+          "moves": [
+            "Clanging Scales",
+            "Clangorous Soul",
+            "Flash Cannon",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Prankster",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Fake Out",
+            "Disable",
+            "Helping Hand",
+            "Encore"
+          ]
+        }
       ]
     },
     {
       "id": "ct-4",
-      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
-      "players": 30,
+      "tournament": "Pokémon CHAMPIONS Mi Dulce Japón Tournament #3",
+      "players": 8,
       "placement": 4,
-      "player": "Lucks_001",
-      "wins": 6,
-      "losses": 2,
+      "player": "MarioMass89",
+      "wins": 3,
+      "losses": 1,
       "pokemonIds": [
-        970,
-        279,
-        1018,
-        547,
-        902,
-        727
+        306,
+        903,
+        1013,
+        10009,
+        248,
+        981
       ],
       "pokemonNames": [
-        "Glimmora",
-        "Pelipper",
-        "Archaludon",
-        "Whimsicott",
-        "Basculegion-M",
-        "Incineroar"
+        "Aggron",
+        "Sneasler",
+        "Sinistcha",
+        "Wash Rotom",
+        "Tyranitar",
+        "Farigiraf"
+      ],
+      "sets": [
+        {
+          "ability": "Sturdy",
+          "item": "Aggronite",
+          "moves": [
+            "Heavy Slam",
+            "Iron Defense",
+            "Protect",
+            "Body Press"
+          ]
+        },
+        {
+          "ability": "Unburden",
+          "item": "White Herb",
+          "moves": [
+            "Dire Claw",
+            "Close Combat",
+            "Fake Out",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Hospitality",
+          "item": "Leftovers",
+          "moves": [
+            "Matcha Gotcha",
+            "Rage Powder",
+            "Trick Room",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Levitate",
+          "item": "Mystic Water",
+          "moves": [
+            "Hydro Pump",
+            "Will-O-Wisp",
+            "Thunderbolt",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Sand Stream",
+          "item": "Chople Berry",
+          "moves": [
+            "Rock Slide",
+            "Ice Punch",
+            "Knock Off",
+            "Protect"
+          ]
+        },
+        {
+          "ability": "Armor Tail",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Psychic",
+            "Protect",
+            "Trick Room",
+            "Hyper Voice"
+          ]
+        }
       ]
     },
     {
       "id": "ct-5",
-      "tournament": "biffpipp’s Battle Frontier - CHAMPS M-A TOUR #1",
-      "players": 30,
+      "tournament": "Pokémon CHAMPIONS Mi Dulce Japón Tournament #3",
+      "players": 8,
       "placement": 5,
-      "player": "KiloElite",
-      "wins": 5,
+      "player": "xCalsi",
+      "wins": 2,
       "losses": 2,
       "pokemonIds": [
-        10009,
-        154,
-        981,
-        727,
+        478,
+        903,
+        902,
         445,
+        142,
         983
       ],
       "pokemonNames": [
-        "Wash Rotom",
-        "Meganium",
-        "Farigiraf",
-        "Incineroar",
+        "Froslass",
+        "Sneasler",
+        "Basculegion-M",
         "Garchomp",
+        "Aerodactyl",
         "Kingambit"
+      ],
+      "sets": [
+        {
+          "ability": "Cursed Body",
+          "item": "Froslassite",
+          "moves": [
+            "Aurora Veil",
+            "Blizzard",
+            "Protect",
+            "Shadow Ball"
+          ]
+        },
+        {
+          "ability": "Unburden",
+          "item": "Mental Herb",
+          "moves": [
+            "Close Combat",
+            "Fake Out",
+            "Protect",
+            "Dire Claw"
+          ]
+        },
+        {
+          "ability": "Adaptability",
+          "item": "Focus Sash",
+          "moves": [
+            "Protect",
+            "Aqua Jet",
+            "Liquidation",
+            "Last Respects"
+          ]
+        },
+        {
+          "ability": "Rough Skin",
+          "item": "Sitrus Berry",
+          "moves": [
+            "Earthquake",
+            "Protect",
+            "Dragon Claw",
+            "Rock Slide"
+          ]
+        },
+        {
+          "ability": "Unnerve",
+          "item": "Aerodactylite",
+          "moves": [
+            "Tailwind",
+            "Rock Slide",
+            "Protect",
+            "Dual Wingbeat"
+          ]
+        },
+        {
+          "ability": "Defiant",
+          "item": "Chople Berry",
+          "moves": [
+            "Low Kick",
+            "Sucker Punch",
+            "Iron Head",
+            "Kowtow Cleave"
+          ]
+        }
       ]
     }
   ],
   "usage": [
     {
       "rank": 1,
-      "name": "Incineroar",
-      "count": 1203,
-      "usagePct": 50.8,
-      "top8Count": 168
+      "name": "Sneasler",
+      "count": 6240,
+      "usagePct": 50.5,
+      "top8Count": 570
     },
     {
       "rank": 2,
-      "name": "Sneasler",
-      "count": 1108,
-      "usagePct": 46.8,
-      "top8Count": 195
+      "name": "Incineroar",
+      "count": 5063,
+      "usagePct": 41,
+      "top8Count": 390
     },
     {
       "rank": 3,
       "name": "Garchomp",
-      "count": 885,
-      "usagePct": 37.4,
-      "top8Count": 137
+      "count": 4994,
+      "usagePct": 40.4,
+      "top8Count": 442
     },
     {
       "rank": 4,
-      "name": "Sinistcha",
-      "count": 722,
-      "usagePct": 30.5,
-      "top8Count": 111
+      "name": "Kingambit",
+      "count": 3818,
+      "usagePct": 30.9,
+      "top8Count": 414
     },
     {
       "rank": 5,
-      "name": "Kingambit",
-      "count": 652,
-      "usagePct": 27.5,
-      "top8Count": 135
+      "name": "Sinistcha",
+      "count": 3373,
+      "usagePct": 27.3,
+      "top8Count": 287
     },
     {
       "rank": 6,
       "name": "Basculegion-M",
-      "count": 559,
-      "usagePct": 23.6,
-      "top8Count": 103
+      "count": 3373,
+      "usagePct": 27.3,
+      "top8Count": 344
     },
     {
       "rank": 7,
-      "name": "Whimsicott",
-      "count": 455,
-      "usagePct": 19.2,
-      "top8Count": 49
+      "name": "Aerodactyl",
+      "count": 2849,
+      "usagePct": 23.1,
+      "top8Count": 273
     },
     {
       "rank": 8,
       "name": "Charizard",
-      "count": 449,
+      "count": 2349,
       "usagePct": 19,
-      "top8Count": 52
+      "top8Count": 175
     },
     {
       "rank": 9,
       "name": "Wash Rotom",
-      "count": 392,
-      "usagePct": 16.6,
-      "top8Count": 64
+      "count": 2196,
+      "usagePct": 17.8,
+      "top8Count": 175
     },
     {
       "rank": 10,
       "name": "Floette",
-      "count": 380,
-      "usagePct": 16,
-      "top8Count": 74
+      "count": 2047,
+      "usagePct": 16.6,
+      "top8Count": 226
     }
   ]
 }

@@ -29,7 +29,7 @@ const customMegas = [
   { name: 'Mega Absol Z', formId: 10314, baseId: 359 },
   { name: 'Mega Lucario Z', formId: 10315, baseId: 448 },
   { name: 'Mega Victreebel', formId: 10400, baseId: 71 },
-  { name: 'Mega Floette', formId: 10061, baseId: 669 },
+  // 10061 is Eternal Floette (official PokeAPI form, not a custom mega)
 ];
 
 // Also check real megas that should have correct IDs

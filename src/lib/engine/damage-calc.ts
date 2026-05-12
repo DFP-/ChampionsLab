@@ -286,6 +286,11 @@ export function calculateDamage(
     atkStat = isPhysical ? atkStats.attack : atkStats.spAtk;
   }
 
+  // Huge Power / Pure Power: doubles Attack stat for physical moves
+  if (isPhysical && (attacker.ability === "Huge Power" || attacker.ability === "Pure Power")) {
+    atkStat = Math.floor(atkStat * 2);
+  }
+
   defStat = useDefense ? defStats.defense : defStats.spDef;
 
   // Snow: +50% Defense for Ice types
@@ -570,6 +575,16 @@ export function calculateDamage(
   for (let i = 0; i < 16; i++) {
     rolls.push(Math.max(1, Math.floor(baseDamage * modifiers * (85 + i) / 100)));
   }
+
+  // Parental Bond: hit twice (second hit at 25% power)
+  const hasParentalBond = attacker.ability === "Parental Bond" && !isSpreadMove(moveCalc);
+  if (hasParentalBond) {
+    for (let i = 0; i < rolls.length; i++) {
+      const secondHit = Math.max(1, Math.floor(rolls[i] * 0.25));
+      rolls[i] += secondHit;
+    }
+  }
+
   const minDamage = rolls[0];
   const maxDamage = rolls[15];
 
@@ -607,6 +622,7 @@ export function calculateDamage(
   if (helpingHandMult !== 1) activeModifiers.push({ name: "Helping Hand", multiplier: helpingHandMult });
   if (friendGuardMult !== 1) activeModifiers.push({ name: "Friend Guard", multiplier: friendGuardMult });
   if (defenderItemMult !== 1) activeModifiers.push({ name: "Resist Berry", multiplier: defenderItemMult });
+  if (hasParentalBond) activeModifiers.push({ name: "Parental Bond", multiplier: 1.25 });
 
   return {
     damage: [minDamage, maxDamage],

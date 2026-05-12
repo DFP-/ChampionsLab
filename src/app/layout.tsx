@@ -7,6 +7,8 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { LazyParticles } from "@/components/lazy-particles";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeInit } from "@/components/theme-init";
+import { MobileNavInit } from "@/components/mobile-nav-init";
 import { I18nProvider } from "@/lib/i18n";
 
 const inter = Inter({
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
   description:
     "The ultimate competitive companion for Pokémon Champions. Season tracking, team builder, battle simulator, and deep Pokémon data - all in one immersive hub.",
   keywords: ["Pokemon Champions", "VGC", "team builder", "battle simulator", "competitive Pokemon", "Pokemon Champions 2026", "VGC team builder", "Pokemon meta"],
-  metadataBase: new URL("https://championslab.xyz"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://championslab.xyz"),
   icons: {
     icon: [
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
@@ -80,21 +82,18 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const initialLocale = cookieStore.get("cl-lang")?.value ?? "en";
+  const themeCookie = cookieStore.get("cl-theme")?.value;
+  // Only set dark if explicitly saved; otherwise let system preference handle it via CSS media query
+  const isDark = themeCookie === "dark";
 
   return (
     <html
       lang={initialLocale.split("-")[0]}
-      className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} h-full antialiased ${isDark ? "dark" : ""}`}
+      style={{ colorScheme: isDark ? "dark" : "light" }}
       suppressHydrationWarning
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('championslab-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}
-try{var l=localStorage.getItem('championslab-lang');if(l){document.cookie='cl-lang='+l+';path=/;max-age=31536000;SameSite=Lax'}}catch(e){}`,
-          }}
-        />
-
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NVYVM8YJZN"
           strategy="afterInteractive"
@@ -125,11 +124,8 @@ try{var l=localStorage.getItem('championslab-lang');if(l){document.cookie='cl-la
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var b=document.getElementById('mobile-nav-toggle');if(b)b.addEventListener('click',function(){document.body.classList.toggle('mobile-open')});document.addEventListener('click',function(e){if(document.body.classList.contains('mobile-open')&&e.target.closest('.mobile-nav-panel a'))document.body.classList.remove('mobile-open')})})()`,
-          }}
-        />
+        <MobileNavInit />
+        <ThemeInit />
         <Navbar />
         <Suspense>
           <main className="flex-1 relative z-10">{children}</main>

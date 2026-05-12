@@ -513,9 +513,23 @@ const NEW_POKEMON = [
     ],
     moveNames: ["Moonblast","Dazzling Gleam","Psychic","Energy Ball","Calm Mind","Protect","Helping Hand","Floral Healing","Light Screen","Wish"],
     hasMega: true,
-    mega: { name:"Mega Floette", sprite:SPRITE(10061), types:["fairy"],
-      stats:{hp:74,attack:65,defense:67,spAtk:125,spDef:128,speed:92},
-      abilities:[ab("Flower Power","Fairy and Grass-type moves gain 30% power. Allies' Sp. Def boosted by 10%.",false,true)]
+    mega: { name:"Mega Floette", sprite:"/sprites/oa-10296.png", types:["fairy"],
+      stats:{hp:74,attack:85,defense:87,spAtk:155,spDef:148,speed:102},
+      abilities:[ab("Fairy Aura","Powers up each Pokémon's Fairy-type moves.",false,false)]
+    },
+  },
+  {
+    id: 10061, name: "Eternal Floette", types: ["fairy"], gen: 6, tier: "S",
+    stats: { hp:74, attack:65, defense:67, spAtk:125, spDef:128, speed:92 },
+    abilities: [
+      ab("Flower Veil", "Protects Grass-type allies from stat reduction and status."),
+      ab("Symbiosis", "Passes held item to an ally that uses theirs.", true),
+    ],
+    moveNames: ["Moonblast","Dazzling Gleam","Psychic","Energy Ball","Calm Mind","Protect","Helping Hand","Floral Healing","Light Screen","Wish"],
+    hasMega: true,
+    mega: { name:"Mega Floette", sprite:"/sprites/oa-10296.png", types:["fairy"],
+      stats:{hp:74,attack:85,defense:87,spAtk:155,spDef:148,speed:102},
+      abilities:[ab("Fairy Aura","Powers up each Pokémon's Fairy-type moves.",false,false)]
     },
   },
   {

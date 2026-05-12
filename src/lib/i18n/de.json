@@ -3,11 +3,13 @@
     "pokedex": "Pokédex",
     "teamBuilder": "Team-Builder",
     "battleBot": "Kampf-Bot",
+    "assist": "Assist",
     "meta": "Meta",
     "tournaments": "Turniere",
-    "pokeSchool": "PokéSchool",
+    "pokeSchool": "Lernen",
     "about": "Info",
     "supportUs": "Unterstütze uns",
+    "shop": "Shop",
     "language": "Sprache",
     "subtitle": "Werde Champion"
   },
@@ -419,7 +421,7 @@
     "pickMoves": "(Attacken wählen)",
     "roles": "Rollen:",
     "tournamentTeams": "Turnierteams",
-    "tournamentTeamsDesc": "Echte Teams aus Champions-Turnieren. Klicke, um mit Wettbewerbssets zu laden.",
+    "tournamentTeamsDesc": "Echte Teams aus Champions-Turnieren. Klicke, um mit echten Attacken, Items und Fähigkeiten zu laden.",
     "curatedTeams": "Kuratierte Teams",
     "myTeam": "Mein Team",
     "savedTeams": "Gespeicherte Teams",
@@ -531,7 +533,25 @@
       "noSpeedControlThreat": "Keine Initiativkontrolle - füge Rückenwind- oder Trick-Room-Nutzer hinzu",
       "noIntimidateThreat": "Kein Intimidate - erwäge, einen Intimidate-Nutzer hinzuzufügen",
       "poorCoverage": "Schlechte Abdeckung - keine sehr effektiven Treffer gegen {types}"
-    }
+    },
+    "spLimitReached": "No more Stat Points available! Reduce another stat first."
+  },
+  "survivalCalc": {
+    "title": "Survival Calc",
+    "selectThreat": "Select a meta threat to test your bulk against",
+    "searchPlaceholder": "Search threats…",
+    "modeOHKO": "OHKO",
+    "mode2HKO": "2HKO",
+    "selectMove": "Select move…",
+    "incomingDamage": "Incoming Damage",
+    "suggestions": "Survival Suggestions",
+    "cannotSurvive": "Cannot survive even with max bulk investment",
+    "returnDamage": "Your Return Damage",
+    "survives": "Your Pokémon survives!",
+    "survives2HKO": "Survives 2 hits!",
+    "rollDependent": "Survival depends on damage roll",
+    "faints": "Your Pokémon faints!",
+    "remainingHP": "Remaining HP"
   },
   "battleBot": {
     "title": "Kampf-Bot",
@@ -809,7 +829,9 @@
     "corePairs": "Core-Paare",
     "corePairAnalysis": "Core-Paar-Analyse",
     "archetypes": "Archetyp-Matchups",
-    "antiMeta": "Anti-Meta-Rankings",
+    "antiMeta": {
+      "strategy": "Aufgebaut um {name} ({score} Anti-Meta-Score). Kontert {c1} und {c2}."
+    },
     "antiMetaPokemon": "Anti-Meta-Pokémon-Ranking",
     "antiMetaTeams": "Anti-Meta-Teams",
     "tournamentTeams": "Turnierteams",
@@ -958,9 +980,6 @@
       "topMega": "Top-Mega-Pokémon:",
       "overrated": "Überschätzte Pokémon (hohe Nutzung, niedrige GR):",
       "bestArchetypes": "Beste Archetypen:"
-    },
-    "antiMeta": {
-      "strategy": "Aufgebaut um {name} ({score} Anti-Meta-Score). Kontert {c1} und {c2}."
     }
   },
   "learn": {
@@ -1137,7 +1156,10 @@
     "descCrit": "bei einem Volltreffer",
     "descWeather": "bei {weather}",
     "descTerrain": "auf {terrain}-Terrain",
-    "berryActivated": "{item} reduziert Schaden"
+    "berryActivated": "{item} reduziert Schaden",
+    "selectDefender": "Select opponent to test matchup",
+    "changeMove": "Attacke wechseln",
+    "selectMove": "Attacke auswählen"
   },
   "teamTester": {
     "team1": "Team 1",
@@ -1282,5 +1304,27 @@
     "copyPaste": "Paste kopieren",
     "footer": "Erstellt mit Champions Lab",
     "openInBuilder": "Im Team-Builder öffnen"
+  },
+  "assist": {
+    "title": "Assist",
+    "runAnalysis": "Assist-Analyse starten",
+    "analyzing": "Analysiere...",
+    "rerunAnalysis": "Analyse wiederholen",
+    "noTeamError": "Kein Team gefunden. Baue zuerst ein Team im Team-Builder.",
+    "noTeamFound": "Kein Team gefunden. Überprüfe den Share-Link.",
+    "emptySlotWarning": "Kein Team geladen. Stelle sicher, dass du mindestens einen Pokémon ausgewählt hast.",
+    "speedTiers": "Geschwindigkeitsstufen (innerhalb ±50)",
+    "yourSpe": "Dein GGS",
+    "scarf": "WAHL-SCARF",
+    "keyKOs": "Wichtige KO-Schwellen",
+    "threatsKOYou": "Bedrohungen, die dich ausmachen",
+    "youKOThreats": "Du machst Bedrohungen aus",
+    "survivesThreatens": "Überlebt + bedroht zurück",
+    "noSpeedThreats": "Keine relevanten Meta-Bedrohungen innerhalb ±50 Geschwindigkeit.",
+    "addMoreSets": "Füge mehr gängige Sets zu USAGE_DATA hinzu für tiefere Analyse.",
+    "analysisSummary": "Analyse gegen die Top {count} Meta-Bedrohungen",
+    "withSpeedThreats": "{count} Pokémon mit Geschwindigkeitsbedrohungen",
+    "withDefensiveConcerns": "{count} Pokémon mit defensiven Bedenken",
+    "sharedTeam": "Geteiltes Team"
   }
 }

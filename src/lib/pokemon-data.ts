@@ -27688,6 +27688,91 @@ export const POKEMON_SEED: ChampionsPokemon[] = [
     "sprite": "/sprites/670.png",
     "officialArt": "/sprites/670.png",
     "generation": 6,
+        "hasMega": false,
+    "season": 1,
+    "tier": "S",
+    "recruitmentCost": null,
+    "homeCompatible": true,
+    "homeSource": [
+      "Scarlet/Violet",
+      "Legends Z-A"
+    ],
+    "usageRate": 18.75,
+  },
+  {
+    "id": 10061,
+    "name": "Eternal Floette",
+    "showdownName": "Floette-Eternal",
+    "dexNumber": 670,
+    "types": [
+      "fairy"
+    ],
+    "baseStats": {
+      "hp": 74,
+      "attack": 65,
+      "defense": 67,
+      "spAtk": 125,
+      "spDef": 128,
+      "speed": 92
+    },
+    "abilities": [
+      {
+        "name": "Flower Veil",
+        "description": "Ally Grass-type Pokémon are protected from status conditions and stat decreases.",
+        "isHidden": false
+      },
+      {
+        "name": "Symbiosis",
+        "description": "Passes the Pokémon's held item to an ally when that ally uses its item.",
+        "isHidden": true
+      }
+    ],
+    "moves": [
+        {"name":"Alluring Voice","type":"fairy","category":"special","power":80,"accuracy":100,"pp":15,"description":"Confuses the target if its stats were boosted during the turn this move is used."},
+        {"name":"Baton Pass","type":"normal","category":"status","power":null,"accuracy":null,"pp":20,"description":"The user switches out of battle to be replaced by another party Pokémon. If the user had any stat changes a substitute or other such effects they will be passed on to the Pokémon switching in."},
+        {"name":"Calm Mind","type":"psychic","category":"status","power":null,"accuracy":null,"pp":20,"description":"The user quietly focuses its mind and calms its spirit to boost its Sp. Atk and Sp. Def stats."},
+        {"name":"Charm","type":"fairy","category":"status","power":null,"accuracy":100,"pp":20,"description":"The user gazes at the target rather charmingly, making it less wary. This harshly lowers the target's Attack stat."},
+        {"name":"Chilling Water","type":"water","category":"special","power":50,"accuracy":100,"pp":20,"description":"Lowers the target's Attack stat by 1 stage."},
+        {"name":"Copycat","type":"normal","category":"status","power":null,"accuracy":null,"pp":20,"description":"The user mimics the move that was last used. This move fails if no other move has been used yet."},
+        {"name":"Dazzling Gleam","type":"fairy","category":"special","power":80,"accuracy":100,"pp":10,"description":"The user damages opposing Pokémon by emitting a powerful flash."},
+        {"name":"Draining Kiss","type":"fairy","category":"special","power":50,"accuracy":100,"pp":10,"description":"The user steals the target's HP with a kiss. The user's HP is restored by over half the damage taken by the target."},
+        {"name":"Endeavor","type":"normal","category":"physical","power":null,"accuracy":100,"pp":20,"description":"Deals damage to the target equal to its remaining HP minus the user's remaining HP. This move fails if the target's HP is the same as or lower than the user's."},
+        {"name":"Endure","type":"normal","category":"status","power":null,"accuracy":null,"pp":10,"description":"The user endures any attack with at least 1 HP. This move's chance of failing rises if used in succession."},
+        {"name":"Energy Ball","type":"grass","category":"special","power":90,"accuracy":100,"pp":10,"description":"The user draws power from nature and fires it at the target. This may also lower the target's Sp. Def stat."},
+        {"name":"Facade","type":"normal","category":"physical","power":70,"accuracy":100,"pp":15,"description":"This move's power is doubled if the user is poisoned badly poisoned burned or paralyzed. Although this move is a physical move the damage it deals is not halved when the user is burned."},
+        {"name":"Giga Drain","type":"grass","category":"special","power":75,"accuracy":100,"pp":10,"description":"A nutrient-draining attack. The user's HP is restored by up to half the damage taken by the target."},
+        {"name":"Grass Knot","type":"grass","category":"special","power":null,"accuracy":100,"pp":20,"description":"The heavier the target the greater this move's power (ranging between 20 and 120)."},
+        {"name":"Grassy Terrain","type":"grass","category":"status","power":null,"accuracy":null,"pp":20,"description":"Turns the entire field into Grassy Terrain for 5 turns."},
+        {"name":"Helping Hand","type":"normal","category":"status","power":null,"accuracy":null,"pp":20,"description":"The user assists an ally by boosting the power of that ally's attack."},
+        {"name":"Hyper Beam","type":"normal","category":"special","power":150,"accuracy":90,"pp":5,"description":"The user gains the Recharging status on the turn after this move is used."},
+        {"name":"Light of Ruin","type":"fairy","category":"special","power":140,"accuracy":90,"pp":5,"description":"The user attacks by drawing power from the Eternal Flower to fire off a powerful beam of light. The user also takes some recoil damage."},
+        {"name":"Light Screen","type":"psychic","category":"status","power":null,"accuracy":null,"pp":30,"description":"A wondrous wall of light is put up to reduce damage from special moves for five turns."},
+        {"name":"Misty Terrain","type":"fairy","category":"status","power":null,"accuracy":null,"pp":20,"description":"Turns the entire field into Misty Terrain for 5 turns."},
+        {"name":"Moonblast","type":"fairy","category":"special","power":95,"accuracy":100,"pp":16,"description":"Borrowing the power of the moon, the user attacks the target. This may also lower the target's Sp. Atk stat."},
+        {"name":"Petal Blizzard","type":"grass","category":"physical","power":90,"accuracy":100,"pp":10,"description":"The user stirs up a violent petal blizzard and damages everything around it."},
+        {"name":"Petal Dance","type":"grass","category":"special","power":120,"accuracy":100,"pp":5,"description":"The user gains the Rampaging status."},
+        {"name":"Pollen Puff","type":"bug","category":"special","power":90,"accuracy":100,"pp":10,"description":"When used on an ally this move restores 1/2 of its max HP instead of dealing damage."},
+        {"name":"Protect","type":"normal","category":"status","power":null,"accuracy":null,"pp":10,"description":"This move enables the user to protect itself from all attacks. Its chance of failing rises if it is used in succession."},
+        {"name":"Psychic","type":"psychic","category":"special","power":90,"accuracy":100,"pp":10,"description":"The target is hit by a strong telekinetic force. This may also lower the target's Sp. Def stat."},
+        {"name":"Rain Dance","type":"water","category":"status","power":null,"accuracy":null,"pp":20,"description":"Summons rain for 5 turns."},
+        {"name":"Rest","type":"psychic","category":"status","power":null,"accuracy":null,"pp":20,"description":"Fully restores the user's HP and cures any status conditions. The user falls asleep for 2 turns. This move fails if the user's HP is full."},
+        {"name":"Safeguard","type":"normal","category":"status","power":null,"accuracy":null,"pp":25,"description":"The user creates a protective field that prevents status conditions for five turns."},
+        {"name":"Seed Bomb","type":"grass","category":"physical","power":80,"accuracy":100,"pp":15,"description":"The user attacks by slamming a barrage of hard-shelled seeds down on the target from above."},
+        {"name":"Skill Swap","type":"psychic","category":"status","power":null,"accuracy":null,"pp":20,"description":"The user and the target swap their Abilities."},
+        {"name":"Sleep Talk","type":"normal","category":"status","power":null,"accuracy":null,"pp":20,"description":"Can be used only if the user is asleep. The user uses one of the other moves it knows at random."},
+        {"name":"Solar Beam","type":"grass","category":"special","power":120,"accuracy":100,"pp":10,"description":"The user gathers light on the first turn, then blasts a bundled beam on the next turn."},
+        {"name":"Stored Power","type":"psychic","category":"special","power":20,"accuracy":100,"pp":20,"description":"This move's power is increased by 20 for each stage that the user's stats have been boosted."},
+        {"name":"Substitute","type":"normal","category":"status","power":null,"accuracy":null,"pp":10,"description":"The user creates a substitute for itself using some of its own HP. The substitute serves as the user's decoy."},
+        {"name":"Sunny Day","type":"fire","category":"status","power":null,"accuracy":null,"pp":20,"description":"Summons harsh sunlight for 5 turns."},
+        {"name":"Synthesis","type":"grass","category":"status","power":null,"accuracy":null,"pp":5,"description":"The user restores its own HP. The amount of HP regained varies with the weather."},
+        {"name":"Tearful Look","type":"normal","category":"status","power":null,"accuracy":null,"pp":20,"description":"Lowers the target's Attack and Sp. Atk stats by 1 stage. This move ignores the target's evasiveness and can hit a target using a move such as Protect."},
+        {"name":"Trailblaze","type":"grass","category":"physical","power":50,"accuracy":100,"pp":20,"description":"Boosts the user's Speed stat by 1 stage."},
+        {"name":"Trick","type":"psychic","category":"status","power":null,"accuracy":100,"pp":20,"description":"The user and the target swap their held items."},
+        {"name":"Wish","type":"normal","category":"status","power":null,"accuracy":null,"pp":10,"description":"One turn after this move is used, the user's or its replacement's HP is restored by half the user's max HP."}
+      ],
+    "sprite": "https://champions-lab-sprites.nbg1.your-objectstorage.com/sprites/10061.png",
+    "officialArt": "https://champions-lab-sprites.nbg1.your-objectstorage.com/sprites/10061.png",
+    "generation": 6,
     "forms": [
       {
         "name": "Mega Floette",
@@ -27722,7 +27807,7 @@ export const POKEMON_SEED: ChampionsPokemon[] = [
       "Scarlet/Violet",
       "Legends Z-A"
     ],
-    "usageRate": 18.75,
+    "usageRate": null
   },
   {
     "id": 706,
