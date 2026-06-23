@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>PORT</key>
+		<string>3333</string>
+	</dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>com.championslab</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/opt/homebrew/bin/npm</string>
+		<string>start</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/Users/dfp/Code/ChampionsLab/logs/npm-err.log</string>
+	<key>StandardOutPath</key>
+	<string>/Users/dfp/Code/ChampionsLab/logs/npm-out.log</string>
+	<key>WorkingDirectory</key>
+	<string>/Users/dfp/Code/ChampionsLab</string>
+</dict>
+</plist>

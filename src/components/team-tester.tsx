@@ -53,6 +53,9 @@ import {
   getSavedTeams, deserializeTeam,
   type SavedTeam,
 } from "@/lib/storage";
+import {
+  getSavedTeams as getServerTeams,
+} from "@/lib/storage/server";
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 
@@ -264,7 +267,12 @@ export default function TeamTester() {
     return s;
   }, [locale, t, tp, tm, ta]);
 
-  useEffect(() => { setSavedTeams(getSavedTeams()); }, []);
+  useEffect(() => {
+    const load = async () => {
+      setSavedTeams(await getServerTeams());
+    };
+    load();
+  }, []);
 
   useEffect(() => {
     if (replayPlaying && result?.sampleBattle) {

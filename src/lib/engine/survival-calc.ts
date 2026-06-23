@@ -114,11 +114,6 @@ export function loadThreat(pokemonId: number, isMega = false): ThreatSet | null 
   if (!pokemon) return null;
 
   const usage = USAGE_DATA[pokemonId];
-  const hasProtect = pokemon.moves.some(m => m.name === "Protect");
-  const damaging = pokemon.moves.filter(m => m.category !== "status").map(m => m.name);
-  const fallbackMoves: string[] = [];
-  if (hasProtect) fallbackMoves.push("Protect");
-  fallbackMoves.push(...damaging.slice(0, 4 - fallbackMoves.length));
   const set = usage && usage.length > 0
     ? usage[0]
     : {
@@ -126,7 +121,7 @@ export function loadThreat(pokemonId: number, isMega = false): ThreatSet | null 
         nature: (pokemon.baseStats.spAtk > pokemon.baseStats.attack ? "Modest" : "Adamant") as NatureName,
         ability: pokemon.abilities[0]?.name ?? "",
         item: "Life Orb",
-        moves: fallbackMoves,
+        moves: pokemon.moves.filter(m => m.category !== "status").slice(0, 4).map(m => m.name),
         sp: { hp: 2, attack: pokemon.baseStats.spAtk > pokemon.baseStats.attack ? 0 : 32, defense: 0, spAtk: pokemon.baseStats.spAtk > pokemon.baseStats.attack ? 32 : 0, spDef: 0, speed: 32 },
       };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "@/lib/motion";
 import Image from "next/image";
 import { LastUpdated } from "@/components/last-updated";
@@ -19,6 +20,7 @@ import { SpeedTierPanel } from "@/components/speed-tier-panel";
 import { SurvivalPanel } from "@/components/survival-panel";
 import { CompactDamageCalc } from "@/components/compact-damage-calc";
 import { StatSlider } from "@/components/stat-slider";
+import { AssistPanel } from "@/components/assist-panel";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
 import { USAGE_DATA } from "@/lib/usage-data";
@@ -52,6 +54,11 @@ import {
   serializeTeam,
   type SavedTeam, type SavedTeamSlot,
 } from "@/lib/storage";
+import {
+  getSavedTeams as getServerTeams,
+  saveTeam as saveServerTeam,
+  deleteTeam as deleteServerTeam,
+} from "@/lib/storage/server";
 import {
   CHAMPIONS_TOURNAMENT_TEAMS,
   type ChampionsTournamentTeam,
@@ -128,6 +135,7 @@ const ALL_TYPES: PokemonType[] = [
 ];
 
 export default function TeamBuilderPage() {
+  const router = useRouter();
   const { locale, t, tp, tm, ta, ti, tn, ts, tt, tad, tid, tmd } = useI18n();
 
   // ── Analysis text translators ──
@@ -236,6 +244,7 @@ export default function TeamBuilderPage() {
   const [showShare, setShowShare] = useState(false);
   const [shareImageUrl, setShareImageUrl] = useState<string | null>(null);
   const [editMode, setEditMode] = useState<"normal" | "speed" | "survival" | "damage">("normal");
+  const [showAssist, setShowAssist] = useState(false);
   const [spToast, setSpToast] = useState<string | null>(null);
 
   const [shareLinkError, setShareLinkError] = useState<string | null>(null);
@@ -301,7 +310,10 @@ export default function TeamBuilderPage() {
 
   // Load saved teams on mount + restore last team if available OR load from share URL
   useEffect(() => {
-    setSavedTeams(getSavedTeams());
+    const loadTeams = async () => {
+      setSavedTeams(await getServerTeams());
+    };
+    loadTeams();
 
     // Check for shared team URL first
     const params = new URLSearchParams(window.location.search);
@@ -401,12 +413,16 @@ export default function TeamBuilderPage() {
     }
   }, [slots, teamName, currentTeamId, validationErrors.length]);
 
-  const handleSaveTeam = () => {
+  const handleSaveTeam = async () => {
     if (validationErrors.length > 0) return;
     trackEvent("save_team", "team_builder", teamName, filledSlots.length);
-    const team = saveTeam(teamName, slots, currentTeamId);
+    const serialized = serializeTeam(slots);
+    let team: SavedTeam;
+
+    team = await saveServerTeam(teamName, serialized, currentTeamId);
+
     setCurrentTeamId(team.id);
-    setSavedTeams(getSavedTeams());
+    setSavedTeams(await getServerTeams());
     setSaveConfirm(true);
     setTimeout(() => setSaveConfirm(false), 2000);
   };
@@ -420,10 +436,10 @@ export default function TeamBuilderPage() {
     setShowSavedTeams(false);
   };
 
-  const handleDeleteSavedTeam = (id: string) => {
+  const handleDeleteSavedTeam = async (id: string) => {
     trackEvent("delete_saved_team", "team_builder");
-    deleteTeam(id);
-    setSavedTeams(getSavedTeams());
+    await deleteServerTeam(id);
+    setSavedTeams(await getServerTeams());
     if (currentTeamId === id) setCurrentTeamId(undefined);
   };
 
@@ -1900,9 +1916,30 @@ export default function TeamBuilderPage() {
                         <Swords className="w-4 h-4" />
                         <span>Damage</span>
                       </button>
+                      <button
+                        onClick={() => setShowAssist(!showAssist)}
+                        className={cn(
+                          "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-colors",
+                          showAssist
+                            ? "bg-pink-200 text-pink-800 dark:bg-pink-500/20 dark:text-pink-200"
+                            : "bg-pink-100 text-pink-700 hover:bg-pink-200 dark:bg-pink-500/10 dark:text-pink-300 dark:hover:bg-pink-500/20"
+                        )}
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        <span>Assist</span>
+                      </button>
                       <button onClick={() => setSelectedSlotIndex(null)} className="p-1.5 rounded-lg hover:bg-gray-100"><X className="w-4 h-4" /></button>
                     </div>
                   </div>
+
+                  {/* Assist Panel */}
+                  {showAssist && selectedSlotIndex !== null && editMode === "normal" && (
+                    <AssistPanel
+                      slot={editSlotData}
+                      teamPokemon={teamPokemon}
+                      onApplySet={(patch) => applySet(selectedSlotIndex, patch)}
+                    />
+                  )}
 
                   {/* Auto-Fill + Quick Apply Sets */}
                   {editMode === "normal" && <div className="mb-4">
@@ -2004,20 +2041,9 @@ export default function TeamBuilderPage() {
                           const form = megaForms[formIndex];
                           if (!form) return undefined;
                           const sets = USAGE_DATA[editPkm.id] ?? [];
-                          const suffix = form.name.endsWith(" X") ? " X" : form.name.endsWith(" Y") ? " Y" : form.name.endsWith(" Z") ? " Z" : "";
-                          // Prefer usage sets whose mega-stone suffix matches the form suffix
-                          const suffixSet = sets.find(s => isMegaItem(s.item) && (suffix ? s.item.endsWith(suffix) : !s.item.match(/ite [XYZ]$/)));
-                          if (suffixSet) return suffixSet.item;
                           const megaSet = sets.find(s => isMegaItem(s.item) && s.ability === form.abilities[0]?.name);
                           if (megaSet) return megaSet.item;
-                          const anySet = sets.find(s => isMegaItem(s.item))?.item;
-                          if (anySet) return anySet;
-                          // Fallback to item definition for new/uncatalogued megas
-                          const baseName = editPkm.name.replace(/-M$|-F$/, "");
-                          const candidates = Object.values(ITEMS).filter(i => i.isMegaStone && (i.forPokemon === editPkm.name || i.forPokemon === baseName));
-                          if (candidates.length === 0) return undefined;
-                          if (candidates.length === 1) return candidates[0].name;
-                          return candidates.find(i => suffix ? i.name.endsWith(suffix) : !i.name.match(/ite [XYZ]$/))?.name ?? candidates[0].name;
+                          return sets.find(s => isMegaItem(s.item))?.item;
                         };
                         return (
                           <div className="mt-4 pt-3 border-t border-gray-100">
@@ -2091,18 +2117,7 @@ export default function TeamBuilderPage() {
                               const form = megaForms[fi];
                               if (!form) return undefined;
                               const sets = USAGE_DATA[editPkm.id] ?? [];
-                              const suffix = form.name.endsWith(" X") ? " X" : form.name.endsWith(" Y") ? " Y" : form.name.endsWith(" Z") ? " Z" : "";
-                              // Prefer usage sets whose mega-stone suffix matches the form suffix
-                              const suffixSet = sets.find(s => isMegaItem(s.item) && (suffix ? s.item.endsWith(suffix) : !s.item.match(/ite [XYZ]$/)))?.item;
-                              if (suffixSet) return suffixSet;
-                              const set = sets.find(s => isMegaItem(s.item) && s.ability === form.abilities[0]?.name)?.item ?? sets.find(s => isMegaItem(s.item))?.item;
-                              if (set) return set;
-                              // Fallback to item definition for new/uncatalogued megas
-                              const baseName = editPkm.name.replace(/-M$|-F$/, "");
-                              const candidates = Object.values(ITEMS).filter(i => i.isMegaStone && (i.forPokemon === editPkm.name || i.forPokemon === baseName));
-                              if (candidates.length === 0) return undefined;
-                              if (candidates.length === 1) return candidates[0].name;
-                              return candidates.find(i => suffix ? i.name.endsWith(suffix) : !i.name.match(/ite [XYZ]$/))?.name ?? candidates[0].name;
+                              return sets.find(s => isMegaItem(s.item) && s.ability === form.abilities[0]?.name)?.item ?? sets.find(s => isMegaItem(s.item))?.item;
                             };
                             return (
                               <>
