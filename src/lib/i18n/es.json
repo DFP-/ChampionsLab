@@ -168,7 +168,8 @@
       "intimidate-user": "Intimidación",
       "setup-sweeper": "Barredor con Setup",
       "lead": "Inicial",
-      "restricted": "Restringido"
+      "restricted": "Restringido",
+      "contrary-abuser": "Abusador Respondón"
     },
     "suggestions": {
       "greatDefSynergy": "Gran sinergia defensiva de tipo",
@@ -507,7 +508,8 @@
       "goodstuffs": "Good Stuffs",
       "semi-trick-room": "Semi Cuarto Trucado",
       "beat-up": "Paliza",
-      "perish-trap": "Trampa Mortal"
+      "perish-trap": "Trampa Mortal",
+      "contrary": "Respondón"
     },
     "insights": {
       "excellentCoverage": "Excelente cobertura ofensiva de tipo",
@@ -515,6 +517,7 @@
       "hasSpeedControl": "Tiene opciones de control de velocidad",
       "intimidateSupport": "Cuenta con apoyo de Intimidación",
       "hasRedirection": "Tiene apoyo de redirección",
+      "contraryBoosts": "Respondón convierte las bajas de stats en subidas",
       "priorityMoves": "Movimientos de prioridad para el final",
       "clearGamePlan": "Plan de juego claro de {archetype}",
       "weakToType": "{count} Pokémon débiles al tipo {type}",

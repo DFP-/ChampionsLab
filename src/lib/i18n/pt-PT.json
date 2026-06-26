@@ -168,7 +168,8 @@
       "intimidate-user": "Intimidate",
       "setup-sweeper": "Setup Sweeper",
       "lead": "Lead",
-      "restricted": "Restricted"
+      "restricted": "Restricted",
+      "contrary-abuser": "Contrary Abuser"
     },
     "suggestions": {
       "greatDefSynergy": "Excelente sinergia defensiva de tipos",
@@ -507,7 +508,8 @@
       "goodstuffs": "Good Stuffs",
       "semi-trick-room": "Semi Trick Room",
       "beat-up": "Beat Up",
-      "perish-trap": "Perish Trap"
+      "perish-trap": "Perish Trap",
+      "contrary": "Contrary"
     },
     "insights": {
       "excellentCoverage": "Excelente cobertura ofensiva de tipos",
@@ -515,6 +517,7 @@
       "hasSpeedControl": "Tem opções de speed control",
       "intimidateSupport": "Suporte de Intimidate disponível",
       "hasRedirection": "Tem suporte de redirection",
+      "contraryBoosts": "Contrary inverte quedas de stats em aumentos",
       "priorityMoves": "Moves priority para o endgame",
       "clearGamePlan": "Plano de jogo {archetype} claro",
       "weakToType": "{count} Pokémon fracos a {type}",

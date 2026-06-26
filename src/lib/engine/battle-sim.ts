@@ -173,6 +173,79 @@ function isStatusImmune(mon: BattlePokemon, status: string): boolean {
   }
 }
 
+/** Check if a move lowers the user's own stats (reversed into a boost by Contrary). */
+function hasNegativeSelfBoost(move: EngineMove): boolean {
+  if (!move.selfBoost) return false;
+  return Object.values(move.selfBoost).some(stages => stages < 0);
+}
+
+/** Compute the total "boost value" of negative self-boosts (for Contrary scoring). */
+function contraryBoostValue(move: EngineMove): number {
+  if (!move.selfBoost) return 0;
+  let value = 0;
+  for (const stages of Object.values(move.selfBoost)) {
+    if (stages < 0) value += Math.abs(stages);
+  }
+  return value;
+}
+
+/** Check whether an opponent is likely to click a spread move this turn.
+ *  Rage Powder / Follow Me only redirect single-target moves, so redirect
+ *  support loses value when the opponent's best play is a spread attack.
+ */
+function opponentLikelyToUseSpreadMove(
+  opp: BattlePokemon,
+  ourSide: (BattlePokemon | null)[],
+  field: FieldState,
+  oppSide: 1 | 2
+): boolean {
+  const spreadMoves = opp.set.moves.filter(mn => {
+    const mv = getMove(mn);
+    return mv && isSpreadMove(mv);
+  });
+  if (spreadMoves.length === 0) return false;
+
+  // If any spread move deals meaningful damage to at least one of our mons,
+  // assume the opponent may choose it.
+  for (const mvName of spreadMoves) {
+    const mv = getMove(mvName);
+    if (!mv || mv.category === "status") continue;
+    for (const target of ourSide) {
+      if (!target || target.isFainted) continue;
+      const attacker: DamageCalcPokemon = {
+        baseStats: opp.effectiveBaseStats, sp: opp.set.sp,
+        nature: opp.set.nature as NatureName, types: opp.types,
+        ability: opp.ability, item: opp.item,
+        atkStages: opp.boosts.attack, spAtkStages: opp.boosts.spAtk,
+        isBurned: opp.status === "burn",
+        currentHPPercent: (opp.currentHP / opp.maxHP) * 100,
+      };
+      const defender: DamageCalcTarget = {
+        baseStats: target.effectiveBaseStats, sp: target.set.sp,
+        nature: target.set.nature as NatureName, types: target.types,
+        ability: target.ability, item: target.item,
+        defStages: target.boosts.defense, spDefStages: target.boosts.spDef,
+        currentHPPercent: (target.currentHP / target.maxHP) * 100,
+      };
+      const options: DamageCalcOptions = {
+        weather: field.weather as DamageCalcOptions["weather"],
+        terrain: isGrounded(opp) ? (field.terrain as DamageCalcOptions["terrain"]) : undefined,
+        isDoubles: true,
+        reflect: (oppSide === 1 ? field.side2 : field.side1).reflect > 0,
+        lightScreen: (oppSide === 1 ? field.side2 : field.side1).lightScreen > 0,
+      };
+      const result = calculateDamage(attacker, defender, mvName, options);
+      if (result.percentHP[0] >= 25) return true;
+    }
+  }
+  return false;
+}
+
+/** True if the Pokémon is (or will become) a Mega Evolution this battle. */
+function isMegaRelevant(mon: BattlePokemon): boolean {
+  return mon.hasMegaEvolved || mon.canMegaEvolve;
+}
+
 // ── BATTLE POKEMON FACTORY ───────────────────────────────────────────────────
 
 function createBattlePokemon(pokemon: ChampionsPokemon, set: CommonSet, teamForIllusion?: { pokemon: ChampionsPokemon; set: CommonSet }[]): BattlePokemon {
@@ -576,6 +649,13 @@ function evaluateMoveOption(
       // Protect when low HP and threatened
       if (user.currentHP < user.maxHP * 0.4 && maxIncomingThreat >= 40) score += 15;
       
+      // Protect our Mega Evolution: megas are win conditions and must survive
+      if (isMegaRelevant(user) && maxIncomingThreat >= 35) {
+        score += 18;
+        // Even stronger if the mega is at low HP or is being doubled
+        if (user.currentHP < user.maxHP * 0.5 || beingDoubled) score += 12;
+      }
+      
       // Protect when ally can KO a threat this turn (coordinate)
       const ally = allies.find(a => a && !a.isFainted);
       if (ally) {
@@ -694,14 +774,38 @@ function evaluateMoveOption(
       if (ally) {
         score = 40;
         // High value if ally is setting up (TR, Tailwind, boosts)
-        if (ally.set.moves.some(m => ["Trick Room", "Tailwind", "Swords Dance", "Calm Mind", "Dragon Dance", "Nasty Plot", "Shell Smash"].includes(m))) score += 30;
+        const setupMoves = ["Trick Room", "Tailwind", "Swords Dance", "Calm Mind", "Dragon Dance", "Nasty Plot", "Shell Smash", "Quiver Dance", "Bulk Up"];
+        if (ally.set.moves.some(m => setupMoves.includes(m))) score += 30;
+        // Huge value if ally is our win condition (mega / restricted)
+        if (isMegaRelevant(ally)) score += 25;
         // High value if ally is threatened
         const allyThreat = Math.max(...targets.filter(Boolean).map(t => estimateThreatLevel(t!, ally, field, oppSide)));
         if (allyThreat >= 80) score += 20;
+        else if (allyThreat >= 50) score += 10;
+
+        // Rage Powder / Follow Me only redirect single-target moves. If the
+        // opponent's best play is a spread move (Heat Wave, Eruption, Earthquake,
+        // etc.), redirecting does nothing useful.
+        const myActive = userSide === 1 ? [state.active1[0], state.active1[1]] : [state.active2[0], state.active2[1]];
+        let spreadLikelyCount = 0;
+        for (const opp of targets) {
+          if (!opp || opp.isFainted) continue;
+          if (opponentLikelyToUseSpreadMove(opp, myActive, field, oppSide)) spreadLikelyCount++;
+        }
+        if (spreadLikelyCount >= 2) score -= 55; // Likely wastes the turn
+        else if (spreadLikelyCount === 1) score -= 20;
+
+        // Don't redirect if the user itself is too frail to take the redirected hits
+        const userThreat = Math.max(...targets.filter(Boolean).map(t => estimateThreatLevel(t!, user, field, oppSide)));
+        if (user.currentHP < user.maxHP * 0.35 && userThreat >= 50) score -= 25;
+
+        // Rage Powder is powder-based: Grass types and Overcoat ignore it.
+        // Follow Me redirects all single-target moves, so it is slightly better.
+        if (moveName === "Follow Me") score += 5;
       } else {
         score = 5;
       }
-      choices.push({ moveIndex: 0, moveName, targetSlot: -1, score });
+      choices.push({ moveIndex: 0, moveName, targetSlot: -1, score: Math.max(score, -10) });
       return choices;
     }
     
@@ -922,7 +1026,16 @@ function evaluateMoveOption(
     // Super effective bonus (shows good attack selection)
     if (result.effectiveness >= 2) score += 12;
     if (result.effectiveness >= 4) score += 8; // 4x SE extra bonus
-    
+
+    // Contrary + self-dropping moves (Close Combat, Leaf Storm, Overheat, etc.)
+    // turn a drawback into a stat boost, so value them even higher.
+    if (user.ability === "Contrary" && hasNegativeSelfBoost(move)) {
+      const boostValue = contraryBoostValue(move);
+      if (boostValue > 0) {
+        score += 10 + boostValue * 8; // +18 for Close Combat (-1 Def/-1 SpD), +26 for Draco/Leaf/Overheat
+      }
+    }
+
     // Immune = never use
     if (result.effectiveness === 0) score = -10;
     
@@ -1020,7 +1133,16 @@ function aiChooseAction(
       // Palafin in Zero Form is USELESS (70 Atk). Switch out immediately.
       switchScore = 150; // Higher than any move score - this is mandatory VGC play
     }
-    
+
+    // Mega Evolved Pokemon: strong incentive to stay in (they're powerful win conditions)
+    if (mon.hasMegaEvolved) {
+      switchScore -= 45; // Don't bench your mega unless absolutely necessary
+    }
+    // Mega stone holder that hasn't evolved yet: also protect it so it can mega
+    if (mon.canMegaEvolve && !mon.hasMegaEvolved) {
+      switchScore -= 30;
+    }
+
     // Tactical switching: evaluate matchup quality
     // Skip switching logic for very low HP mons  -  they're already doomed,
     // better to let them attack and get value before going down (Focus Sash, Endure, etc.)

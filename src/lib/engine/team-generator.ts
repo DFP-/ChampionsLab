@@ -175,6 +175,13 @@ const ARCHETYPE_TEMPLATES: ArchetypeTemplate[] = [
     flexPool: [681, 1018, 149, 36, 445, 547, 983, 282],
     preferredRoles: ["speed-control", "physical-sweeper", "special-sweeper"],
   },
+  {
+    name: "Contrary Mega Staraptor",
+    description: "Mega Staraptor turns Close Combat drops into defenses with redirect support",
+    coreIds: [10919], // Staraptor (Mega)
+    flexPool: [36, 547, 858, 727, 681, 149, 887, 983],
+    preferredRoles: ["redirector", "speed-control", "support"],
+  },
 ];
 
 // ── POKEMON LOOKUP ───────────────────────────────────────────────────────────

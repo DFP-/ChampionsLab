@@ -168,7 +168,8 @@
       "intimidate-user": "Intimidazione",
       "setup-sweeper": "Sweeper Setup",
       "lead": "Lead",
-      "restricted": "Limitato"
+      "restricted": "Limitato",
+      "contrary-abuser": "Abuser Inversione"
     },
     "suggestions": {
       "greatDefSynergy": "Ottima sinergia difensiva di tipo",
@@ -507,7 +508,8 @@
       "goodstuffs": "Good Stuffs",
       "semi-trick-room": "Semi Trick Room",
       "beat-up": "Beat Up",
-      "perish-trap": "Perish Trap"
+      "perish-trap": "Perish Trap",
+      "contrary": "Inversione"
     },
     "insights": {
       "excellentCoverage": "Eccellente copertura offensiva di tipo",
@@ -515,6 +517,7 @@
       "hasSpeedControl": "Ha opzioni di controllo velocità",
       "intimidateSupport": "Supporto Intimidazione disponibile",
       "hasRedirection": "Ha supporto di redirezione",
+      "contraryBoosts": "Inversione trasforma le riduzioni di statistiche in aumenti",
       "priorityMoves": "Mosse priorità per la fine partita",
       "clearGamePlan": "Piano di gioco chiaro per {archetype}",
       "weakToType": "{count} Pokémon deboli al tipo {type}",

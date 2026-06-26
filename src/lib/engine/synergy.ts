@@ -20,7 +20,7 @@ export type TeamArchetype =
   | "rain"           // Drizzle + Swift Swim sweepers
   | "sun"            // Drought + Chlorophyll sweepers
   | "sand"           // Sand Stream + Sand Rush/Force sweepers
-  | "snow"           // Snow Warning + Slush Rush  
+  | "snow"           // Snow Warning + Slush Rush
   | "trick-room"     // Trick Room setter + slow powerhouses
   | "tailwind"       // Tailwind setter + moderate speed attackers
   | "hyper-offense"  // Max offense, Fake Out + setup
@@ -30,7 +30,8 @@ export type TeamArchetype =
   | "goodstuffs"     // Top-tier individual Pokémon with general synergy
   | "semi-trick-room"// Flexible mode with TR option
   | "beat-up"        // Beat Up + Justified/Weakness Policy combo
-  | "perish-trap";   // Perish Song + Shadow Tag/trapping
+  | "perish-trap"    // Perish Song + Shadow Tag/trapping
+  | "contrary";      // Contrary ability + self-stat-drop moves
 
 export interface ArchetypeProfile {
   archetype: TeamArchetype;
@@ -58,7 +59,8 @@ export type TeamRole =
   | "intimidate-user"
   | "setup-sweeper"
   | "lead"
-  | "restricted";       // Mega / Legendary
+  | "restricted"       // Mega / Legendary
+  | "contrary-abuser"; // Contrary + self-drop moves
 
 export interface PokemonRole {
   pokemonName: string;
@@ -142,6 +144,12 @@ export function identifyRoles(pokemon: ChampionsPokemon): PokemonRole {
   );
   if (hasSetup) roles.push("setup-sweeper");
 
+  // Contrary abuser: self-stat-drop moves become boosts
+  const SELF_DROP_MOVES = ["Close Combat", "Superpower", "Leaf Storm", "Overheat", "Draco Meteor"];
+  if (abilities.includes("Contrary") && moveNames.some(m => SELF_DROP_MOVES.includes(m))) {
+    roles.push("contrary-abuser");
+  }
+
   // Weather sweeper
   if (abilities.some(a => ["Swift Swim", "Chlorophyll", "Sand Rush", "Slush Rush"].includes(a))) {
     roles.push("weather-sweeper");
@@ -175,7 +183,7 @@ export function identifyRoles(pokemon: ChampionsPokemon): PokemonRole {
   // Determine primary role
   const rolePriority: TeamRole[] = [
     "weather-setter", "trick-room-setter", "redirector", "intimidate-user",
-    "speed-control", "support", "weather-sweeper", "setup-sweeper",
+    "speed-control", "support", "weather-sweeper", "setup-sweeper", "contrary-abuser",
     "physical-sweeper", "special-sweeper", "mixed-attacker",
     "physical-wall", "special-wall", "pivot", "lead", "trick-room-abuser", "restricted",
   ];
@@ -384,6 +392,22 @@ export function detectArchetypes(pokemon: ChampionsPokemon[]): ArchetypeProfile[
     });
   }
 
+  // Contrary: self-stat-drop moves become boosts
+  const SELF_DROP_MOVES = ["Close Combat", "Superpower", "Leaf Storm", "Overheat", "Draco Meteor"];
+  const contraryUsers = pokemon.filter(p =>
+    p.abilities.some(a => a.name === "Contrary") &&
+    p.moves.some(m => SELF_DROP_MOVES.includes(m.name))
+  );
+  if (contraryUsers.length >= 1) {
+    const hasRedirect = allMoves.includes("Follow Me") || allMoves.includes("Rage Powder");
+    archetypes.push({
+      archetype: "contrary",
+      confidence: hasRedirect ? 0.90 : 0.80,
+      description: "Contrary ability turns self-stat-drop moves into boosts.",
+      keyPokemon: contraryUsers.map(p => p.name),
+    });
+  }
+
   return archetypes.sort((a, b) => b.confidence - a.confidence);
 }
 
@@ -589,6 +613,7 @@ export function analyzeTeamSynergy(pokemon: ChampionsPokemon[]): TeamSynergy {
   if (allRoles.has("intimidate-user")) strengths.push("Intimidate support available");
   if (allRoles.has("redirector")) strengths.push("Has redirection support");
   if (hasPriority) strengths.push("Priority moves for endgame");
+  if (allRoles.has("contrary-abuser")) strengths.push("Contrary turns stat drops into boosts");
   if (detectedArchetypes[0]?.confidence >= 0.8) {
     strengths.push(`Clear ${detectedArchetypes[0].archetype} game plan`);
   }

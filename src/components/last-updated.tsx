@@ -12,7 +12,14 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
-      date: "04/05/2026",
+      date: "24/06/2026",
+      items: [
+        "🤖 Battle bot AI overhaul: Rage Powder / Follow Me now checks for opponent spread moves (Heat Wave, Eruption, etc.), Mega Evolutions are protected more aggressively, and Contrary turns self-drop moves like Close Combat into real advantages",
+        "🧩 Team Builder now detects Contrary archetypes and highlights Contrary abusers, plus a new engine-generated Contrary Mega Staraptor template",
+      ],
+    },
+    {
+      date: "18/06/2026",
       items: [
         "✨ New Assist tab — automated damage calculations and speed tier analysis against top 30 meta threats. Shows which threats KO you, which you KO back, and survival scenarios. Accessible from Team Builder or standalone at /assist",
       ],

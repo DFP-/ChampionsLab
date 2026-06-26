@@ -154,6 +154,7 @@ export default function TeamBuilderPage() {
       "Has speed control options": "hasSpeedControl",
       "Intimidate support available": "intimidateSupport",
       "Has redirection support": "hasRedirection",
+      "Contrary turns stat drops into boosts": "contraryBoosts",
       "Priority moves for endgame": "priorityMoves",
       "No speed control - vulnerable to faster teams": "noSpeedControl",
       "Lacks fast options to pressure opponents": "lacksFast",

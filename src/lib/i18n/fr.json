@@ -168,7 +168,8 @@
       "intimidate-user": "Intimidation",
       "setup-sweeper": "Sweeper Setup",
       "lead": "Lead",
-      "restricted": "Restreint"
+      "restricted": "Restreint",
+      "contrary-abuser": "Abuseur Contestation"
     },
     "suggestions": {
       "greatDefSynergy": "Excellente synergie défensive",
@@ -507,7 +508,8 @@
       "goodstuffs": "Good Stuffs",
       "semi-trick-room": "Semi-Distorsion",
       "beat-up": "Beat Up",
-      "perish-trap": "Piège Requiem"
+      "perish-trap": "Piège Requiem",
+      "contrary": "Contestation"
     },
     "insights": {
       "excellentCoverage": "Excellente couverture de types offensive",
@@ -515,6 +517,7 @@
       "hasSpeedControl": "Options de contrôle de vitesse",
       "intimidateSupport": "Support Intimidation disponible",
       "hasRedirection": "Support de redirection disponible",
+      "contraryBoosts": "Contestation inverse les baisses de stats en augmentations",
       "priorityMoves": "Coups prioritaires pour le endgame",
       "clearGamePlan": "Plan de jeu {archetype} bien défini",
       "weakToType": "{count} Pokémon faibles face au type {type}",

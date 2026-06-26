@@ -168,7 +168,8 @@
       "intimidate-user": "Intimidate",
       "setup-sweeper": "Setup-Sweeper",
       "lead": "Lead",
-      "restricted": "Restricted"
+      "restricted": "Restricted",
+      "contrary-abuser": "Umkehrung-Nutzer"
     },
     "suggestions": {
       "greatDefSynergy": "Starke defensive Typ-Synergie",
@@ -507,7 +508,8 @@
       "goodstuffs": "Good Stuffs",
       "semi-trick-room": "Semi Trick Room",
       "beat-up": "Beat Up",
-      "perish-trap": "Perish Trap"
+      "perish-trap": "Perish Trap",
+      "contrary": "Umkehrung"
     },
     "insights": {
       "excellentCoverage": "Exzellente offensive Typ-Abdeckung",
@@ -515,6 +517,7 @@
       "hasSpeedControl": "Hat Initiativkontroll-Optionen",
       "intimidateSupport": "Intimidate-Unterstützung verfügbar",
       "hasRedirection": "Hat Redirect-Unterstützung",
+      "contraryBoosts": "Umkehrung verwandelt Statussenkungen in Erhöhungen",
       "priorityMoves": "Prioritätsattacken für das Endgame",
       "clearGamePlan": "Klarer {archetype}-Spielplan",
       "weakToType": "{count} Pokémon schwach gegen {type}",
