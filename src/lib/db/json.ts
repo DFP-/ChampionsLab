@@ -10,6 +10,7 @@ interface StoredTeam {
   slots: string;
   created_at: number;
   updated_at: number;
+  is_active?: boolean;
 }
 
 function ensureDir() {
@@ -40,6 +41,7 @@ export interface TeamRow {
   slots: string;
   created_at: number;
   updated_at: number;
+  is_active?: boolean;
 }
 
 export function getAllTeams(): TeamRow[] {
@@ -50,6 +52,21 @@ export function getAllTeams(): TeamRow[] {
 export function getTeam(id: string): TeamRow | undefined {
   const teams = readTeams();
   return teams.find((t) => t.id === id);
+}
+
+export function getActiveTeam(): TeamRow | undefined {
+  const teams = readTeams();
+  return teams.find((t) => t.is_active === true);
+}
+
+function setActiveFlag(teams: StoredTeam[], id: string, active: boolean): void {
+  for (const team of teams) {
+    if (active && team.id === id) {
+      team.is_active = true;
+    } else if (team.id === id) {
+      team.is_active = false;
+    }
+  }
 }
 
 export function saveTeam(data: {
@@ -84,4 +101,14 @@ export function deleteTeam(id: string): boolean {
   if (filtered.length === teams.length) return false;
   writeTeams(filtered);
   return true;
+}
+
+export function setActiveTeam(id: string): TeamRow | null {
+  const teams = readTeams();
+  const target = teams.find((t) => t.id === id);
+  if (!target) return null;
+
+  setActiveFlag(teams, id, true);
+  writeTeams(teams);
+  return teams.find((t) => t.id === id)!;
 }

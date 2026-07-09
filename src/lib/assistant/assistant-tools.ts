@@ -483,6 +483,40 @@ export const META_TOOLS: ChampionTool[] = [
   },
 ];
 
+// ── TEAM MANAGEMENT TOOLS (2) ───────────────────────────────────────────────
+// Manage saved teams for the MCP server. The active team is automatically
+// loaded as context for all team-dependent tools.
+
+export const TEAM_MANAGEMENT_TOOLS: ChampionTool[] = [
+  {
+    name: "list_saved_teams",
+    description:
+      "List all saved teams with their IDs, names, active status, and last modified dates. Call this first when you need to work with a saved team — it shows which team is currently active (marked with is_active: true).",
+    parameters: {
+      type: "object",
+      properties: {},
+      required: [],
+    },
+    requiresTeam: false,
+  },
+  {
+    name: "set_active_team",
+    description:
+      "Set a saved team as the active team. The active team is automatically loaded as context for all team-dependent tools (synergy analysis, suggestions, matchup analysis, etc.). Only one team can be active at a time — setting a new team automatically deactivates the previous one. Pass the team ID from list_saved_teams.",
+    parameters: {
+      type: "object",
+      properties: {
+        teamId: {
+          type: "string",
+          description: "ID of the team to activate (e.g., 'f06cca25-4677-40b1-b791-70c10f952dff')",
+        },
+      },
+      required: ["teamId"],
+    },
+    requiresTeam: false,
+  },
+];
+
 // ── TYPE CHART & COVERAGE TOOLS (8) ─────────────────────────────────────────
 // These tools are the SOURCE OF TRUTH for all type-related questions.
 // Models frequently hallucinate type matchups (e.g., assuming Dark is super effective against Fairy).
@@ -912,6 +946,7 @@ export const GENERATION_TOOLS: ChampionTool[] = [
 // TYPE_TOOLS listed first — models have recency bias and need type tools available consistently.
 
 export const ALL_TOOLS: ChampionTool[] = [
+  ...TEAM_MANAGEMENT_TOOLS,
   ...TYPE_TOOLS,
   ...TEAM_BUILDING_TOOLS,
   ...MATCHUP_TOOLS,

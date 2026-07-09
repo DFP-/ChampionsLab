@@ -76,6 +76,7 @@ import {
   getAllTypes,
 } from "@/lib/engine/type-chart";
 import { analyzeTeam } from "@/lib/engine/assist-analysis";
+import { getAllTeams, setActiveTeam } from "@/lib/db/json";
 import type { ChampionsPokemon, StatPoints, PokemonType } from "@/lib/types";
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -762,6 +763,35 @@ export async function executeAssistantTool(
         const teamTypes = team.map((p) => p.types as PokemonType[]);
         const result = teamTypeCoverage(teamTypes);
         return JSON.stringify({ coverage: result }, null, 2);
+      }
+
+      case "list_saved_teams": {
+        const teams = getAllTeams();
+        return JSON.stringify(
+          teams.map((t) => ({
+            id: t.id,
+            name: t.name,
+            is_active: t.is_active ?? false,
+            updatedAt: t.updated_at,
+            slotCount: JSON.parse(t.slots).length,
+          })),
+          null,
+          2,
+        );
+      }
+
+      case "set_active_team": {
+        const teamId = String(args.teamId);
+        const result = setActiveTeam(teamId);
+        if (!result) {
+          return `Error: Team with ID "${teamId}" not found.`;
+        }
+        return JSON.stringify({
+          message: `Team "${result.name}" is now active.`,
+          teamId: result.id,
+          name: result.name,
+          slotCount: JSON.parse(result.slots).length,
+        }, null, 2);
       }
 
       // ── Stats & Calculation ────────────────────────────────────────────
