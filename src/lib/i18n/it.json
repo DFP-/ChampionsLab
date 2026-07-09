@@ -3,7 +3,6 @@
     "pokedex": "Pokédex",
     "teamBuilder": "Team Builder",
     "battleBot": "Battle Bot",
-    "assist": "Assist",
     "meta": "Meta",
     "tournaments": "Tornei",
     "pokeSchool": "Impara",
@@ -11,7 +10,9 @@
     "supportUs": "Supportaci",
     "shop": "Negozio",
     "language": "Lingua",
-    "subtitle": "Diventa Campione"
+    "subtitle": "Diventa Campione",
+    "privacy": "Privacy",
+    "terms": "Terms"
   },
   "common": {
     "search": "Cerca",
@@ -1079,6 +1080,13 @@
       "networkError": "Errore di rete. Riprova.",
       "sending": "Invio in corso…",
       "send": "Invia Messaggio"
+    },
+    "legalTitle": "Legal & Disclaimers",
+    "legal": {
+      "unofficial": "<strong>Champions Lab is an unofficial fan project.</strong> It is not affiliated with, endorsed by, sponsored by, or approved by Nintendo, The Pokémon Company International, Game Freak Inc., or Creatures Inc.",
+      "ip": "Pokémon, Pokémon character names, Nintendo Switch, and related marks are trademarks of Nintendo, The Pokémon Company International, Game Freak Inc., and/or Creatures Inc. All rights to those marks and to Pokémon game data, sprites, artwork, and other materials belong to their respective owners.",
+      "noAffiliation": "This project is provided free of charge by fans, for fans. No revenue from Champions Lab is derived from the sale of Pokémon intellectual property.",
+      "privacyTerms": "For more information, please read our <a href=\"/privacy\" class=\"font-semibold text-amber-700 dark:text-amber-300 hover:underline\">Privacy Policy</a> and <a href=\"/terms\" class=\"font-semibold text-amber-700 dark:text-amber-300 hover:underline\">Terms of Service</a>."
     }
   },
   "events": {
@@ -1308,26 +1316,16 @@
     "footer": "Costruito con Champions Lab",
     "openInBuilder": "Apri nel Team Builder"
   },
-  "assist": {
-    "title": "Assist",
-    "runAnalysis": "Esegui Analisi Assist",
-    "analyzing": "Analisi in corso...",
-    "rerunAnalysis": "Ri-esegui Analisi",
-    "noTeamError": "Nessuna squadra trovata. Costruisci prima una squadra nel Team Builder.",
-    "noTeamFound": "Nessuna squadra trovata. Verifica il link di condivisione.",
-    "emptySlotWarning": "Nessuna squadra caricata. Assicurati di aver selezionato almeno un Pokémon.",
-    "speedTiers": "Fasce Velocità (entro ±50)",
-    "yourSpe": "La tua Vel",
-    "scarf": "BAND. VEL",
-    "keyKOs": "Soglie KO Chiave",
-    "threatsKOYou": "Minacce che ti K.O.",
-    "youKOThreats": "Tu KOi le minacce",
-    "survivesThreatens": "Sopravvive + minaccia ritorno",
-    "noSpeedThreats": "Nessuna minaccia meta rilevante entro ±50 velocità.",
-    "addMoreSets": "Aggiungi più set comuni a USAGE_DATA per un'analisi più approfondita.",
-    "analysisSummary": "Analisi contro le top {count} minacce meta",
-    "withSpeedThreats": "{count} Pokémon con minacce di velocità",
-    "withDefensiveConcerns": "{count} Pokémon con preoccupazioni difensive",
-    "sharedTeam": "Squadra Condivisa"
+  "footer": {
+    "disclaimer": "Champions Lab is an unofficial fan project and is not affiliated with, endorsed by, or sponsored by Nintendo, The Pokémon Company International, Game Freak Inc., or Creatures Inc. Pokémon and Pokémon character names are trademarks of Nintendo.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookieSettings": "Cookie Settings"
+  },
+  "cookieConsent": {
+    "title": "Cookie Consent",
+    "description": "We use cookies to remember your preferences and Google Analytics to understand how the site is used. You can accept or decline analytics cookies.",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }

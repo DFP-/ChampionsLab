@@ -514,7 +514,7 @@ export const ITEMS: Record<string, ItemEffect> = {
   "Chesnaughtite": { name: "Chesnaughtite", description: "Mega Evolves Chesnaught.", isMegaStone: true, forPokemon: "Chesnaught" },
   "Delphoxite": { name: "Delphoxite", description: "Mega Evolves Delphox.", isMegaStone: true, forPokemon: "Delphox" },
   "Greninjite": { name: "Greninjite", description: "Mega Evolves Greninja.", isMegaStone: true, forPokemon: "Greninja" },
-  "Floettite": { name: "Floettite", description: "Mega Evolves Eternal Floette.", isMegaStone: true, forPokemon: "Eternal Floette" },
+  "Floettite": { name: "Floettite", description: "Mega Evolves Floette.", isMegaStone: true, forPokemon: "Floette" },
   "Meowsticite": { name: "Meowsticite", description: "Mega Evolves Meowstic.", isMegaStone: true, forPokemon: "Meowstic" },
   "Hawluchite": { name: "Hawluchite", description: "Mega Evolves Hawlucha.", isMegaStone: true, forPokemon: "Hawlucha" },
   "Crabominite": { name: "Crabominite", description: "Mega Evolves Crabominable.", isMegaStone: true, forPokemon: "Crabominable" },

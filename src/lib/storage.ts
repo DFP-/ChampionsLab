@@ -139,11 +139,9 @@ export function deserializeTeam(saved: SavedTeamSlot[]): TeamSlot[] {
 
 /** Check if server-side storage is enabled */
 export function isServerStorageEnabled(): boolean {
-  // On server, check DATABASE_URL
   if (typeof process !== "undefined" && typeof process.env !== "undefined") {
     return !!process.env.DATABASE_URL;
   }
-  // On client, use NEXT_PUBLIC_USE_SERVER_STORAGE
   return !!process.env.NEXT_PUBLIC_USE_SERVER_STORAGE;
 }
 
@@ -155,7 +153,6 @@ export function generateTeamId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return (crypto as any).randomUUID();
   }
-  // Fallback: 16 random hex bytes formatted as UUID-like
   const h = () => Math.floor(Math.random() * 0x10000).toString(16).padStart(4, "0");
   return `${h()}${h()}-${h()}${h()}-4${h().slice(1)}-${h()}${h()}-${h()}${h()}${h()}${h()}`;
 }
@@ -181,7 +178,7 @@ export function saveTeam(name: string, slots: TeamSlot[], existingId?: string): 
   }
 
   const team: SavedTeam = {
-    id: generateTeamId(),
+    id: `team-${now}-${Math.random().toString(36).slice(2, 8)}`,
     name,
     slots: serialized,
     createdAt: now,

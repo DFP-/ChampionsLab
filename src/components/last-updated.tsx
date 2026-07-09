@@ -30,13 +30,130 @@ interface ChangelogEntry {
     {
       date: "18/06/2026",
       items: [
-        "✨ New Assist tab — automated damage calculations and speed tier analysis against top 30 meta threats. Shows which threats KO you, which you KO back, and survival scenarios. Accessible from Team Builder or standalone at /assist",
+        "🔧 Fixed Mega Raichu X/Y item auto-equip in Team Builder — selecting Y now correctly equips Raichunite Y instead of X; corrected Raichu mega abilities in usage sets to Electric Surge / No Guard",
       ],
     },
     {
-      date: "04/05/2026",
+      date: "18/06/2026",
       items: [
-        "✨ New Assist tab — automated damage calculations and speed tier analysis against top 30 meta threats. Shows which threats KO you, which you KO back, and survival scenarios. Accessible from Team Builder or standalone at /assist",
+        "💎 Added missing mega stones for new megas: Blazikenite, Swampertite, Sceptilite, Scolipedite, Malamarite, Dragalgite, Eelektrossite, Barbaraclite, Falinksite, Scraftite, Staraptite, Pyroarite, and Meowsticite",
+      ],
+    },
+    {
+      date: "18/06/2026",
+      items: [
+        "⚔️ Battle engine fixes: Solar Beam now fires instantly in harsh sunlight and charges otherwise; Hyper Beam now correctly forces a recharge turn",
+      ],
+    },
+    {
+      date: "18/06/2026",
+      items: [
+        "🤖 Re-ran battle-bot training with corrected stats — 2,000,000 simulated battles, 861 teams, 272 Pokémon, refreshed ELO rankings, counters, and archetype insights",
+      ],
+    },
+    {
+      date: "18/06/2026",
+      items: [
+        "✅ Validated every active Pokémon/Form base stat against Serebii's Pokémon Champions section — fixed 33 incorrect stat spreads including Mega Eelektross, Mega Delphox, all Mega Raichu forms, and Floette (now Eternal Floette)",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🤖 Refreshed battle-bot training data — 2,000,000 simulated battles, 853 teams, 271 Pokémon, updated ELO rankings, synergies, counters, and archetype insights",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🔧 Fixed mega stone auto-equip in Team Builder for new megas — enabling Mega Mawile / Mega Metagross now correctly sets Mawilite / Metagrossite",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "💎 Added missing Mawilite mega stone to the item list",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🐾 Unhid Grimmsnarl, Metagross, and Mega Metagross — they now appear in the Pokédex and Team Builder for Regulation M-B",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🏆 Refreshed tournament data from Limitless TCG — synced 470 Regulation M-A tournaments (~21,800 teams), updated meta usage rankings and top-cut teams through mid-June 2026",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🌐 Added Monthly Challenge Series June 2026 online competition — Regulation M-B Single Battle, June 26–29, rewards Tyranitar, 100 Quick Coupons, and the MCS 06/2026 Challenger title for 3+ battles",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🖼️ Uploaded all missing sprites to Hetzner Object Storage — 59 new sprite files including the 22 Regulation M-B base Pokémon, 34 Champions mega forms, 4 official mega forms, and Mega Meowstic official art",
+        "🛡️ Fixed ability descriptions and flags across the full roster — every ability now has a proper description pulled from the battle engine and the correct Champions/existing flag (Mega Raichu X/Y, Mega Clefable, etc. no longer show empty text)",
+        "➕ Added 18 missing battle-engine abilities used by mega forms: Electric Surge, Aerilate, Pixilate, Refrigerate, Huge Power, Pure Power, Speed Boost, Skill Link, No Guard, Filter, Magic Bounce, Shadow Tag, Berserk, Trace, Infiltrator, Stalwart, Innards Out, and Healer",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🗓️ Added Season M-3 / Regulation M-B — active from June 17th through July 8th, with the Regulation running until September 2nd",
+        "✅ Validated all 38 Regulation M-B roster additions against Serebii's Regulation M-B page — including Mega Raichu X/Y, Vileplume, Sceptile/Blaziken/Swampert/Mawile mega lines, and the new Champions megas",
+        "➕ Added missing official Mega forms for Sceptile, Blaziken, Swampert, and Mawile to complete their Regulation M-B entries",
+        "🔧 Regulation end date is now stored per-season and displayed dynamically in the season info card",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "🐾 Restored 22 missing base Pokémon to the Season 1 roster — Annihilape, Barbaracle, Blaziken, Dragalge, Eelektross, Falinks, Gholdengo, Houndstone, Malamar, Mawile, Musharna, Overqwil, Qwilfish, Sceptile, Scolipede, Scrafty, Staraptor, Swampert, Vileplume, Pyroar, Basculegion, and Meowstic are back with full stats, abilities, and learnsets",
+        "✨ Added 34 Mega Evolution forms from Serebii's Champions mega abilities list — including new megas for Raichu X/Y, Clefable, Victreebel, Starmie, Meganium, Feraligatr, Skarmory, Chimecho, Froslass, Emboar, Excadrill, Scolipede, Scrafty, Eelektross, Chandelure, Golurk, Chesnaught, Delphox, Greninja, Pyroar, Floette, Meowstic, Malamar, Barbaracle, Dragalge, Hawlucha, Crabominable, Drampa, Falinks, Scovillain, and Glimmora",
+        "🛡️ Updated Champions-exclusive ability descriptions for Mega Sol, Piercing Drill, and Spicy Spray to match Serebii's latest ability text",
+      ],
+    },
+    {
+      date: "17/06/2026",
+      items: [
+        "📦 Added 205 missing competitive moves to the Battle Engine — every move on Serebii's Pokémon Champions available-moves list now has a complete entry in MOVE_DATA with type, category, power, accuracy, targeting, flags, and effects",
+      ],
+    },
+    {
+      date: "13/06/2026",
+      items: [
+        "🛡️ Added Privacy Policy and Terms of Service pages — legal pages now linked in the footer and About page",
+        "🍪 Added cookie consent banner — EU/UK/California visitors are now asked for consent before loading Google Analytics; everyone can manage consent via the footer",
+        "⚠️ Added official unofficial fan-project disclaimers — About page and footer now clearly state that Champions Lab is not affiliated with Nintendo, The Pokémon Company, Game Freak, or Creatures Inc.",
+      ],
+    },
+    {
+      date: "07/06/2026",
+      items: [
+        "🛡️ Fixed Armor Tail blocking ALL priority moves — now only blocks moves that actually target the Armor Tail side (single-target opponent moves, spread moves, foeSide, and all-field moves). Self-targeting, ally-targeting, and own-side moves like Helping Hand, Follow Me, Rage Powder, Tailwind, Protect, and Quick Guard are no longer incorrectly blocked",
+        "🤖 AI no longer wastes turns on priority moves blocked by Armor Tail — the battle sim AI now filters out doomed priority choices (Fake Out, Aqua Jet, Sucker Punch, Prankster status moves, etc.) when the target has Armor Tail or the move is a spread move hitting an Armor Tail side",
+        "🏆 Refreshed tournament data from Limitless TCG — synced 354 tournaments (20,344 teams, 2,816 top-8 teams). Meta now reflects the latest Regulation M-A tournament results through early June 2026",
+      ],
+    },
+    {
+      date: "27/05/2026",
+      items: [
+        "😈 Fixed Mega Absol 'never attacking' — increased smart-pick priority for Mega Evolution Pokémon (+18 up from +10) so they're less likely to be benched. Added penalty for switching out megas (−22). Battle Bot replay now shows ALL 6 selected Pokémon with benched ones dimmed and crossed out, so you can see which mons didn't make the cut",
+        "🌬️ Improved AI Tailwind decision-making — Prankster users now strongly prefer to set Tailwind themselves (+20 score). Non-Prankster setters get penalized when their ally has Prankster + Tailwind (−25), and slow setters get penalized when all opponents outspeed them (−18). No more Aerodactyl using Tailwind while Whimsicott sits there with Prankster",
+        "🛡️ Fixed Protect missing from fallback movesets — Team Tester, Damage Calculator, and Survival Calculator now include Protect (and other key status moves) when building default sets for Pokémon without usage data. Previously all status moves were stripped, causing the battle sim AI to never use Protect even when the Pokémon learns it",
+        "👊 Fixed Fake Out interactions — Armor Tail now completely blocks Fake Out (and all priority moves), Inner Focus prevents the flinch, and the AI correctly avoids targeting both. Removed incorrect flinch immunity from Shield Dust and Own Tempo. Incoming threat estimation also ignores neutralized Fake Out",
+        "🌱 Fixed terrain damage boosts in Damage Calculator — Psychic Terrain (+30% Psychic), Electric Terrain (+30% Electric), Grassy Terrain (+30% Grass), and Misty Terrain (−50% Dragon) are now correctly applied. Mega Alakazam's Expanding Force under Psychic Terrain finally hits as hard as it should",
+        "🎯 Fixed battle engine turn skipping — added 10 missing moves to the simulation database including Struggle (fallback), Life Dew, Strength Sap, Silk Trap, Burning Bulwark, and 5 others. Pokémon no longer silently skip turns when their chosen move was unknown to the engine",
+        "⚡ Fixed Tailwind speed boost application — Tailwind now instantly doubles Speed for the remainder of the turn it's used. Your Pokémon no longer get outsped by slower opponents after your Prankster Tailwind setter goes first",
+        "🛡️ Fixed Damage Calculator SP auto-fill bug — selecting a Pokémon no longer locks stats with full preset SP. Both attacker and defender now start with 0 SP so you can freely build any damage-test scenario without hitting the 66-cap wall",
+        "🔄 Fixed Showdown bidirectional copy/paste for all regional variants — Tauros-Paldea-Aqua/Blaze, Samurott-Hisui, Ninetales-Alola, Slowbro-Galar, and 10 others now import/export correctly in PokePaste format",
+        "🏆 Synced tournament teams from Limitless TCG — 287 Regulation M-A tournaments, 18,338 teams, 2,282 top-8 teams with full sets (ability, item, moves, tera). Meta → Teams tab now shows fresh real winning teams",
+        "📊 Updated Meta Analysis usage rankings — refreshed Tournament Usage data with 198 Pokémon ranked by Regulation M-A meta usage, win rates, and bring rates",
       ],
     },
     {

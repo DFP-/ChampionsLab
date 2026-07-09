@@ -61,8 +61,8 @@ export function getActiveTeam(): TeamRow | undefined {
 
 function setActiveFlag(teams: StoredTeam[], id: string, active: boolean): void {
   for (const team of teams) {
-    if (active && team.id === id) {
-      team.is_active = true;
+    if (active) {
+      team.is_active = team.id === id;
     } else if (team.id === id) {
       team.is_active = false;
     }
