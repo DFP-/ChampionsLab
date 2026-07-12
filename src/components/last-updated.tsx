@@ -12,6 +12,13 @@ interface ChangelogEntry {
 
   const SHARED_ENTRIES: ChangelogEntry[] = [
     {
+      date: "12/07/2026",
+      items: [
+        "🏆 Refreshed doubles tournament data from Limitless TCG — 442 events, 22,824 teams, 3,509 top-8 teams (updated through 12 Jul 2026)",
+        "🔄 Made the Limitless sync script resumable — caches per-tournament details/standings so timeouts no longer lose progress",
+      ],
+    },
+    {
       date: "27/06/2026",
       items: [
         "🇰🇷 Added full Korean language support",
