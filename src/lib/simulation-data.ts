@@ -11960,7 +11960,7 @@ export interface ChampionsTournamentUsage {
 }
 
 export const CHAMPIONS_TOURNAMENT_TOTAL_TEAMS = 22824;
-export const CHAMPIONS_TOURNAMENT_DATE = "2026-07-12";
+export const CHAMPIONS_TOURNAMENT_DATE = "2026-07-14";
 
 export const CHAMPIONS_TOURNAMENT_USAGE: ChampionsTournamentUsage[] = [
   { rank: 1, name: "Sneasler", count: 9713, usagePct: 42.6, top8Count: 1357 },
@@ -12045,21 +12045,21 @@ export const CHAMPIONS_TOURNAMENT_USAGE: ChampionsTournamentUsage[] = [
   { rank: 80, name: "Arcanine", count: 170, usagePct: 0.7, top8Count: 28 },
   { rank: 81, name: "Mamoswine", count: 167, usagePct: 0.7, top8Count: 23 },
   { rank: 82, name: "Chandelure", count: 166, usagePct: 0.7, top8Count: 26 },
-  { rank: 83, name: "Lycanroc", count: 163, usagePct: 0.7, top8Count: 33 },
-  { rank: 84, name: "Greninja", count: 162, usagePct: 0.7, top8Count: 12 },
-  { rank: 85, name: "Metagross", count: 161, usagePct: 0.7, top8Count: 20 },
-  { rank: 86, name: "Empoleon", count: 159, usagePct: 0.7, top8Count: 15 },
-  { rank: 87, name: "Feraligatr", count: 158, usagePct: 0.7, top8Count: 17 },
-  { rank: 88, name: "Espathra", count: 156, usagePct: 0.7, top8Count: 29 },
-  { rank: 89, name: "Frost Rotom", count: 147, usagePct: 0.6, top8Count: 10 },
-  { rank: 90, name: "Meowstic-M", count: 142, usagePct: 0.6, top8Count: 13 },
-  { rank: 91, name: "Hawlucha", count: 141, usagePct: 0.6, top8Count: 18 },
-  { rank: 92, name: "Conkeldurr", count: 128, usagePct: 0.6, top8Count: 16 },
-  { rank: 93, name: "Hisuian Samurott", count: 127, usagePct: 0.6, top8Count: 36 },
-  { rank: 94, name: "Mow Rotom", count: 125, usagePct: 0.5, top8Count: 27 },
-  { rank: 95, name: "Swampert", count: 124, usagePct: 0.5, top8Count: 29 },
-  { rank: 96, name: "Heliolisk", count: 124, usagePct: 0.5, top8Count: 11 },
-  { rank: 97, name: "Gholdengo", count: 116, usagePct: 0.5, top8Count: 23 },
+  { rank: 83, name: "Greninja", count: 162, usagePct: 0.7, top8Count: 12 },
+  { rank: 84, name: "Metagross", count: 161, usagePct: 0.7, top8Count: 20 },
+  { rank: 85, name: "Empoleon", count: 159, usagePct: 0.7, top8Count: 15 },
+  { rank: 86, name: "Feraligatr", count: 158, usagePct: 0.7, top8Count: 17 },
+  { rank: 87, name: "Espathra", count: 156, usagePct: 0.7, top8Count: 29 },
+  { rank: 88, name: "Frost Rotom", count: 147, usagePct: 0.6, top8Count: 10 },
+  { rank: 89, name: "Meowstic-M", count: 142, usagePct: 0.6, top8Count: 13 },
+  { rank: 90, name: "Hawlucha", count: 141, usagePct: 0.6, top8Count: 18 },
+  { rank: 91, name: "Conkeldurr", count: 128, usagePct: 0.6, top8Count: 16 },
+  { rank: 92, name: "Hisuian Samurott", count: 127, usagePct: 0.6, top8Count: 36 },
+  { rank: 93, name: "Mow Rotom", count: 125, usagePct: 0.5, top8Count: 27 },
+  { rank: 94, name: "Swampert", count: 124, usagePct: 0.5, top8Count: 29 },
+  { rank: 95, name: "Heliolisk", count: 124, usagePct: 0.5, top8Count: 11 },
+  { rank: 96, name: "Gholdengo", count: 116, usagePct: 0.5, top8Count: 23 },
+  { rank: 97, name: "Lycanroc-Dusk", count: 110, usagePct: 0.5, top8Count: 28 },
   { rank: 98, name: "Chesnaught", count: 107, usagePct: 0.5, top8Count: 12 },
   { rank: 99, name: "Klefki", count: 107, usagePct: 0.5, top8Count: 13 },
   { rank: 100, name: "Galarian Slowking", count: 102, usagePct: 0.4, top8Count: 15 },
@@ -12086,108 +12086,109 @@ export const CHAMPIONS_TOURNAMENT_USAGE: ChampionsTournamentUsage[] = [
   { rank: 121, name: "Rhyperior", count: 60, usagePct: 0.3, top8Count: 3 },
   { rank: 122, name: "Krookodile", count: 60, usagePct: 0.3, top8Count: 19 },
   { rank: 123, name: "Cofagrigus", count: 56, usagePct: 0.2, top8Count: 5 },
-  { rank: 124, name: "Serperior", count: 52, usagePct: 0.2, top8Count: 8 },
-  { rank: 125, name: "Annihilape", count: 51, usagePct: 0.2, top8Count: 6 },
-  { rank: 126, name: "Noivern", count: 51, usagePct: 0.2, top8Count: 11 },
-  { rank: 127, name: "Mawile", count: 50, usagePct: 0.2, top8Count: 14 },
-  { rank: 128, name: "Victreebel", count: 48, usagePct: 0.2, top8Count: 8 },
-  { rank: 129, name: "Quaquaval", count: 47, usagePct: 0.2, top8Count: 4 },
-  { rank: 130, name: "Machamp", count: 46, usagePct: 0.2, top8Count: 3 },
-  { rank: 131, name: "Medicham", count: 45, usagePct: 0.2, top8Count: 6 },
-  { rank: 132, name: "Toxicroak", count: 45, usagePct: 0.2, top8Count: 4 },
-  { rank: 133, name: "Hydrapple", count: 43, usagePct: 0.2, top8Count: 5 },
-  { rank: 134, name: "Mr. Rime", count: 43, usagePct: 0.2, top8Count: 0 },
-  { rank: 135, name: "Sharpedo", count: 42, usagePct: 0.2, top8Count: 3 },
-  { rank: 136, name: "Ditto", count: 41, usagePct: 0.2, top8Count: 2 },
-  { rank: 137, name: "Gliscor", count: 40, usagePct: 0.2, top8Count: 2 },
-  { rank: 138, name: "Ninetales", count: 39, usagePct: 0.2, top8Count: 5 },
-  { rank: 139, name: "Galarian Slowbro", count: 39, usagePct: 0.2, top8Count: 2 },
-  { rank: 140, name: "Slowking", count: 39, usagePct: 0.2, top8Count: 2 },
-  { rank: 141, name: "Mudsdale", count: 38, usagePct: 0.2, top8Count: 6 },
-  { rank: 142, name: "Hippowdon", count: 37, usagePct: 0.2, top8Count: 7 },
-  { rank: 143, name: "Garganacl", count: 37, usagePct: 0.2, top8Count: 1 },
-  { rank: 144, name: "Emboar", count: 35, usagePct: 0.2, top8Count: 6 },
-  { rank: 145, name: "Ariados", count: 35, usagePct: 0.2, top8Count: 8 },
-  { rank: 146, name: "Wyrdeer", count: 35, usagePct: 0.2, top8Count: 3 },
-  { rank: 147, name: "Banette", count: 35, usagePct: 0.2, top8Count: 5 },
-  { rank: 148, name: "Vaporeon", count: 32, usagePct: 0.1, top8Count: 3 },
-  { rank: 149, name: "Luxray", count: 32, usagePct: 0.1, top8Count: 7 },
-  { rank: 150, name: "Beedrill", count: 32, usagePct: 0.1, top8Count: 2 },
-  { rank: 151, name: "Alcremie", count: 32, usagePct: 0.1, top8Count: 2 },
-  { rank: 152, name: "Infernape", count: 31, usagePct: 0.1, top8Count: 7 },
-  { rank: 153, name: "Spiritomb", count: 30, usagePct: 0.1, top8Count: 4 },
-  { rank: 154, name: "Torterra", count: 30, usagePct: 0.1, top8Count: 3 },
-  { rank: 155, name: "Scrafty", count: 29, usagePct: 0.1, top8Count: 5 },
-  { rank: 156, name: "Clawitzer", count: 29, usagePct: 0.1, top8Count: 2 },
-  { rank: 157, name: "Blaziken", count: 28, usagePct: 0.1, top8Count: 8 },
-  { rank: 158, name: "Leafeon", count: 28, usagePct: 0.1, top8Count: 2 },
-  { rank: 159, name: "Tyrantrum", count: 27, usagePct: 0.1, top8Count: 4 },
-  { rank: 160, name: "Aurorus", count: 27, usagePct: 0.1, top8Count: 1 },
-  { rank: 161, name: "Eelektross", count: 26, usagePct: 0.1, top8Count: 4 },
-  { rank: 162, name: "Houndoom", count: 25, usagePct: 0.1, top8Count: 3 },
-  { rank: 163, name: "Pyroar", count: 24, usagePct: 0.1, top8Count: 4 },
-  { rank: 164, name: "Sceptile", count: 24, usagePct: 0.1, top8Count: 4 },
-  { rank: 165, name: "Liepard", count: 24, usagePct: 0.1, top8Count: 2 },
-  { rank: 166, name: "Pidgeot", count: 24, usagePct: 0.1, top8Count: 6 },
-  { rank: 167, name: "Goodra", count: 24, usagePct: 0.1, top8Count: 2 },
-  { rank: 168, name: "Salazzle", count: 23, usagePct: 0.1, top8Count: 5 },
-  { rank: 169, name: "Runerigus", count: 22, usagePct: 0.1, top8Count: 3 },
-  { rank: 170, name: "Espeon", count: 21, usagePct: 0.1, top8Count: 1 },
-  { rank: 171, name: "Typhlosion", count: 21, usagePct: 0.1, top8Count: 2 },
-  { rank: 172, name: "Audino", count: 20, usagePct: 0.1, top8Count: 2 },
-  { rank: 173, name: "Meowstic-F", count: 19, usagePct: 0.1, top8Count: 2 },
-  { rank: 174, name: "Absol", count: 19, usagePct: 0.1, top8Count: 0 },
-  { rank: 175, name: "Aromatisse", count: 18, usagePct: 0.1, top8Count: 3 },
-  { rank: 176, name: "Alolan Raichu", count: 18, usagePct: 0.1, top8Count: 4 },
-  { rank: 177, name: "Morpeko", count: 17, usagePct: 0.1, top8Count: 2 },
-  { rank: 178, name: "Rampardos", count: 17, usagePct: 0.1, top8Count: 2 },
-  { rank: 179, name: "Bastiodon", count: 16, usagePct: 0.1, top8Count: 2 },
-  { rank: 180, name: "Roserade", count: 15, usagePct: 0.1, top8Count: 1 },
-  { rank: 181, name: "Gourgeist", count: 15, usagePct: 0.1, top8Count: 2 },
-  { rank: 182, name: "Reuniclus", count: 15, usagePct: 0.1, top8Count: 1 },
-  { rank: 183, name: "Dragalge", count: 14, usagePct: 0.1, top8Count: 0 },
-  { rank: 184, name: "Beartic", count: 14, usagePct: 0.1, top8Count: 4 },
-  { rank: 185, name: "Zoroark", count: 14, usagePct: 0.1, top8Count: 0 },
-  { rank: 186, name: "Pinsir", count: 14, usagePct: 0.1, top8Count: 3 },
-  { rank: 187, name: "Sandaconda", count: 13, usagePct: 0.1, top8Count: 1 },
-  { rank: 188, name: "Trevenant", count: 13, usagePct: 0.1, top8Count: 3 },
-  { rank: 189, name: "Vileplume", count: 12, usagePct: 0.1, top8Count: 5 },
-  { rank: 190, name: "Flapple", count: 12, usagePct: 0.1, top8Count: 0 },
-  { rank: 191, name: "Diggersby", count: 12, usagePct: 0.1, top8Count: 2 },
-  { rank: 192, name: "Rotom", count: 12, usagePct: 0.1, top8Count: 3 },
-  { rank: 193, name: "Toucannon", count: 11, usagePct: 0, top8Count: 0 },
-  { rank: 194, name: "Simipour", count: 11, usagePct: 0, top8Count: 2 },
-  { rank: 195, name: "Overqwil", count: 10, usagePct: 0, top8Count: 1 },
-  { rank: 196, name: "Appletun", count: 10, usagePct: 0, top8Count: 0 },
-  { rank: 197, name: "Pangoro", count: 10, usagePct: 0, top8Count: 3 },
-  { rank: 198, name: "Glalie", count: 10, usagePct: 0, top8Count: 2 },
-  { rank: 199, name: "Arbok", count: 10, usagePct: 0, top8Count: 1 },
-  { rank: 200, name: "Passimian", count: 9, usagePct: 0, top8Count: 1 },
-  { rank: 201, name: "Decidueye", count: 9, usagePct: 0, top8Count: 0 },
-  { rank: 202, name: "Emolga", count: 7, usagePct: 0, top8Count: 0 },
-  { rank: 203, name: "Scolipede", count: 6, usagePct: 0, top8Count: 1 },
-  { rank: 204, name: "Florges", count: 6, usagePct: 0, top8Count: 1 },
-  { rank: 205, name: "Garbodor", count: 6, usagePct: 0, top8Count: 0 },
-  { rank: 206, name: "Hisuian Avalugg", count: 6, usagePct: 0, top8Count: 2 },
-  { rank: 207, name: "Slurpuff", count: 5, usagePct: 0, top8Count: 1 },
-  { rank: 208, name: "Polteageist", count: 5, usagePct: 0, top8Count: 1 },
-  { rank: 209, name: "Castform", count: 5, usagePct: 0, top8Count: 0 },
-  { rank: 210, name: "Falinks", count: 4, usagePct: 0, top8Count: 0 },
-  { rank: 211, name: "Simisage", count: 4, usagePct: 0, top8Count: 0 },
-  { rank: 212, name: "Stunfisk", count: 4, usagePct: 0, top8Count: 0 },
-  { rank: 213, name: "Simisear", count: 4, usagePct: 0, top8Count: 0 },
-  { rank: 214, name: "Houndstone", count: 3, usagePct: 0, top8Count: 2 },
-  { rank: 215, name: "Furfrou", count: 3, usagePct: 0, top8Count: 0 },
-  { rank: 216, name: "Flareon", count: 3, usagePct: 0, top8Count: 0 },
-  { rank: 217, name: "Dedenne", count: 3, usagePct: 0, top8Count: 0 },
-  { rank: 218, name: "Forretress", count: 3, usagePct: 0, top8Count: 1 },
-  { rank: 219, name: "Samurott", count: 3, usagePct: 0, top8Count: 0 },
-  { rank: 220, name: "Avalugg", count: 3, usagePct: 0, top8Count: 0 },
-  { rank: 221, name: "Malamar", count: 2, usagePct: 0, top8Count: 0 },
-  { rank: 222, name: "Musharna", count: 2, usagePct: 0, top8Count: 0 },
-  { rank: 223, name: "Fan Rotom", count: 2, usagePct: 0, top8Count: 0 },
-  { rank: 224, name: "Barbaracle", count: 1, usagePct: 0, top8Count: 0 },
-  { rank: 225, name: "Watchog", count: 1, usagePct: 0, top8Count: 0 },
+  { rank: 124, name: "Lycanroc", count: 53, usagePct: 0.2, top8Count: 5 },
+  { rank: 125, name: "Serperior", count: 52, usagePct: 0.2, top8Count: 8 },
+  { rank: 126, name: "Annihilape", count: 51, usagePct: 0.2, top8Count: 6 },
+  { rank: 127, name: "Noivern", count: 51, usagePct: 0.2, top8Count: 11 },
+  { rank: 128, name: "Mawile", count: 50, usagePct: 0.2, top8Count: 14 },
+  { rank: 129, name: "Victreebel", count: 48, usagePct: 0.2, top8Count: 8 },
+  { rank: 130, name: "Quaquaval", count: 47, usagePct: 0.2, top8Count: 4 },
+  { rank: 131, name: "Machamp", count: 46, usagePct: 0.2, top8Count: 3 },
+  { rank: 132, name: "Medicham", count: 45, usagePct: 0.2, top8Count: 6 },
+  { rank: 133, name: "Toxicroak", count: 45, usagePct: 0.2, top8Count: 4 },
+  { rank: 134, name: "Hydrapple", count: 43, usagePct: 0.2, top8Count: 5 },
+  { rank: 135, name: "Mr. Rime", count: 43, usagePct: 0.2, top8Count: 0 },
+  { rank: 136, name: "Sharpedo", count: 42, usagePct: 0.2, top8Count: 3 },
+  { rank: 137, name: "Ditto", count: 41, usagePct: 0.2, top8Count: 2 },
+  { rank: 138, name: "Gliscor", count: 40, usagePct: 0.2, top8Count: 2 },
+  { rank: 139, name: "Ninetales", count: 39, usagePct: 0.2, top8Count: 5 },
+  { rank: 140, name: "Galarian Slowbro", count: 39, usagePct: 0.2, top8Count: 2 },
+  { rank: 141, name: "Slowking", count: 39, usagePct: 0.2, top8Count: 2 },
+  { rank: 142, name: "Mudsdale", count: 38, usagePct: 0.2, top8Count: 6 },
+  { rank: 143, name: "Hippowdon", count: 37, usagePct: 0.2, top8Count: 7 },
+  { rank: 144, name: "Garganacl", count: 37, usagePct: 0.2, top8Count: 1 },
+  { rank: 145, name: "Emboar", count: 35, usagePct: 0.2, top8Count: 6 },
+  { rank: 146, name: "Ariados", count: 35, usagePct: 0.2, top8Count: 8 },
+  { rank: 147, name: "Wyrdeer", count: 35, usagePct: 0.2, top8Count: 3 },
+  { rank: 148, name: "Banette", count: 35, usagePct: 0.2, top8Count: 5 },
+  { rank: 149, name: "Vaporeon", count: 32, usagePct: 0.1, top8Count: 3 },
+  { rank: 150, name: "Luxray", count: 32, usagePct: 0.1, top8Count: 7 },
+  { rank: 151, name: "Beedrill", count: 32, usagePct: 0.1, top8Count: 2 },
+  { rank: 152, name: "Alcremie", count: 32, usagePct: 0.1, top8Count: 2 },
+  { rank: 153, name: "Infernape", count: 31, usagePct: 0.1, top8Count: 7 },
+  { rank: 154, name: "Spiritomb", count: 30, usagePct: 0.1, top8Count: 4 },
+  { rank: 155, name: "Torterra", count: 30, usagePct: 0.1, top8Count: 3 },
+  { rank: 156, name: "Scrafty", count: 29, usagePct: 0.1, top8Count: 5 },
+  { rank: 157, name: "Clawitzer", count: 29, usagePct: 0.1, top8Count: 2 },
+  { rank: 158, name: "Blaziken", count: 28, usagePct: 0.1, top8Count: 8 },
+  { rank: 159, name: "Leafeon", count: 28, usagePct: 0.1, top8Count: 2 },
+  { rank: 160, name: "Tyrantrum", count: 27, usagePct: 0.1, top8Count: 4 },
+  { rank: 161, name: "Aurorus", count: 27, usagePct: 0.1, top8Count: 1 },
+  { rank: 162, name: "Eelektross", count: 26, usagePct: 0.1, top8Count: 4 },
+  { rank: 163, name: "Houndoom", count: 25, usagePct: 0.1, top8Count: 3 },
+  { rank: 164, name: "Pyroar", count: 24, usagePct: 0.1, top8Count: 4 },
+  { rank: 165, name: "Sceptile", count: 24, usagePct: 0.1, top8Count: 4 },
+  { rank: 166, name: "Liepard", count: 24, usagePct: 0.1, top8Count: 2 },
+  { rank: 167, name: "Pidgeot", count: 24, usagePct: 0.1, top8Count: 6 },
+  { rank: 168, name: "Goodra", count: 24, usagePct: 0.1, top8Count: 2 },
+  { rank: 169, name: "Salazzle", count: 23, usagePct: 0.1, top8Count: 5 },
+  { rank: 170, name: "Runerigus", count: 22, usagePct: 0.1, top8Count: 3 },
+  { rank: 171, name: "Espeon", count: 21, usagePct: 0.1, top8Count: 1 },
+  { rank: 172, name: "Typhlosion", count: 21, usagePct: 0.1, top8Count: 2 },
+  { rank: 173, name: "Audino", count: 20, usagePct: 0.1, top8Count: 2 },
+  { rank: 174, name: "Meowstic-F", count: 19, usagePct: 0.1, top8Count: 2 },
+  { rank: 175, name: "Absol", count: 19, usagePct: 0.1, top8Count: 0 },
+  { rank: 176, name: "Aromatisse", count: 18, usagePct: 0.1, top8Count: 3 },
+  { rank: 177, name: "Alolan Raichu", count: 18, usagePct: 0.1, top8Count: 4 },
+  { rank: 178, name: "Morpeko", count: 17, usagePct: 0.1, top8Count: 2 },
+  { rank: 179, name: "Rampardos", count: 17, usagePct: 0.1, top8Count: 2 },
+  { rank: 180, name: "Bastiodon", count: 16, usagePct: 0.1, top8Count: 2 },
+  { rank: 181, name: "Roserade", count: 15, usagePct: 0.1, top8Count: 1 },
+  { rank: 182, name: "Gourgeist", count: 15, usagePct: 0.1, top8Count: 2 },
+  { rank: 183, name: "Reuniclus", count: 15, usagePct: 0.1, top8Count: 1 },
+  { rank: 184, name: "Dragalge", count: 14, usagePct: 0.1, top8Count: 0 },
+  { rank: 185, name: "Beartic", count: 14, usagePct: 0.1, top8Count: 4 },
+  { rank: 186, name: "Zoroark", count: 14, usagePct: 0.1, top8Count: 0 },
+  { rank: 187, name: "Pinsir", count: 14, usagePct: 0.1, top8Count: 3 },
+  { rank: 188, name: "Sandaconda", count: 13, usagePct: 0.1, top8Count: 1 },
+  { rank: 189, name: "Trevenant", count: 13, usagePct: 0.1, top8Count: 3 },
+  { rank: 190, name: "Vileplume", count: 12, usagePct: 0.1, top8Count: 5 },
+  { rank: 191, name: "Flapple", count: 12, usagePct: 0.1, top8Count: 0 },
+  { rank: 192, name: "Diggersby", count: 12, usagePct: 0.1, top8Count: 2 },
+  { rank: 193, name: "Rotom", count: 12, usagePct: 0.1, top8Count: 3 },
+  { rank: 194, name: "Toucannon", count: 11, usagePct: 0, top8Count: 0 },
+  { rank: 195, name: "Simipour", count: 11, usagePct: 0, top8Count: 2 },
+  { rank: 196, name: "Overqwil", count: 10, usagePct: 0, top8Count: 1 },
+  { rank: 197, name: "Appletun", count: 10, usagePct: 0, top8Count: 0 },
+  { rank: 198, name: "Pangoro", count: 10, usagePct: 0, top8Count: 3 },
+  { rank: 199, name: "Glalie", count: 10, usagePct: 0, top8Count: 2 },
+  { rank: 200, name: "Arbok", count: 10, usagePct: 0, top8Count: 1 },
+  { rank: 201, name: "Passimian", count: 9, usagePct: 0, top8Count: 1 },
+  { rank: 202, name: "Decidueye", count: 9, usagePct: 0, top8Count: 0 },
+  { rank: 203, name: "Emolga", count: 7, usagePct: 0, top8Count: 0 },
+  { rank: 204, name: "Scolipede", count: 6, usagePct: 0, top8Count: 1 },
+  { rank: 205, name: "Florges", count: 6, usagePct: 0, top8Count: 1 },
+  { rank: 206, name: "Garbodor", count: 6, usagePct: 0, top8Count: 0 },
+  { rank: 207, name: "Hisuian Avalugg", count: 6, usagePct: 0, top8Count: 2 },
+  { rank: 208, name: "Slurpuff", count: 5, usagePct: 0, top8Count: 1 },
+  { rank: 209, name: "Polteageist", count: 5, usagePct: 0, top8Count: 1 },
+  { rank: 210, name: "Castform", count: 5, usagePct: 0, top8Count: 0 },
+  { rank: 211, name: "Falinks", count: 4, usagePct: 0, top8Count: 0 },
+  { rank: 212, name: "Simisage", count: 4, usagePct: 0, top8Count: 0 },
+  { rank: 213, name: "Stunfisk", count: 4, usagePct: 0, top8Count: 0 },
+  { rank: 214, name: "Simisear", count: 4, usagePct: 0, top8Count: 0 },
+  { rank: 215, name: "Houndstone", count: 3, usagePct: 0, top8Count: 2 },
+  { rank: 216, name: "Furfrou", count: 3, usagePct: 0, top8Count: 0 },
+  { rank: 217, name: "Flareon", count: 3, usagePct: 0, top8Count: 0 },
+  { rank: 218, name: "Dedenne", count: 3, usagePct: 0, top8Count: 0 },
+  { rank: 219, name: "Forretress", count: 3, usagePct: 0, top8Count: 1 },
+  { rank: 220, name: "Samurott", count: 3, usagePct: 0, top8Count: 0 },
+  { rank: 221, name: "Avalugg", count: 3, usagePct: 0, top8Count: 0 },
+  { rank: 222, name: "Malamar", count: 2, usagePct: 0, top8Count: 0 },
+  { rank: 223, name: "Musharna", count: 2, usagePct: 0, top8Count: 0 },
+  { rank: 224, name: "Fan Rotom", count: 2, usagePct: 0, top8Count: 0 },
+  { rank: 225, name: "Barbaracle", count: 1, usagePct: 0, top8Count: 0 },
+  { rank: 226, name: "Watchog", count: 1, usagePct: 0, top8Count: 0 },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -12784,7 +12785,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Pixilate", item: "Fairy Feather", moves: ["Hyper Voice", "Hyper Beam", "Quick Attack", "Detect"] },
     { ability: "Armor Tail", item: "Sitrus Berry", moves: ["Psychic", "Trick Room", "Helping Hand", "Protect"] }
   ] },
-  { id: "ct-72", tournament: "Friday Fight Night #61 Reg M-B Bo3", players: 68, placement: 8, player: "Light7", wins: 4, losses: 3, pokemonIds: [952, 478, 745, 902, 983, 903], pokemonNames: ["Scovillain", "Froslass", "Lycanroc", "Basculegion-M", "Kingambit", "Sneasler"], sets: [
+  { id: "ct-72", tournament: "Friday Fight Night #61 Reg M-B Bo3", players: 68, placement: 8, player: "Light7", wins: 4, losses: 3, pokemonIds: [952, 478, 10152, 902, 983, 903], pokemonNames: ["Scovillain", "Froslass", "Lycanroc-Dusk", "Basculegion-M", "Kingambit", "Sneasler"], sets: [
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Leech Seed", "Protect", "Rage Powder"] },
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Accelerock", "Rock Slide", "Close Combat", "Protect"] },
@@ -13768,7 +13769,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Swords Dance", "Sucker Punch", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Protect", "Aqua Jet"] }
   ] },
-  { id: "ct-195", tournament: "Champions Tour LEPE #8", players: 17, placement: 3, player: "VanilllaIce", wins: 5, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 745], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc"], sets: [
+  { id: "ct-195", tournament: "Champions Tour LEPE #8", players: 17, placement: 3, player: "VanilllaIce", wins: 5, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 10152], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc-Dusk"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Giga Drain", "Overheat", "Rage Powder", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"] },
@@ -13792,7 +13793,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Prankster", item: "Roseli Berry", moves: ["Rain Dance", "Will-O-Wisp", "Reflect", "Light Screen"] },
     { ability: "Oblivious", item: "Focus Sash", moves: ["Protect", "Icicle Spear", "Ice Shard", "High Horsepower"] }
   ] },
-  { id: "ct-198", tournament: "Champions Tour LEPE #8", players: 17, placement: 6, player: "NightX", wins: 3, losses: 3, pokemonIds: [745, 350, 887, 823, 6, 670], pokemonNames: ["Lycanroc", "Milotic", "Dragapult", "Corviknight", "Charizard", "Floette"], sets: [
+  { id: "ct-198", tournament: "Champions Tour LEPE #8", players: 17, placement: 6, player: "NightX", wins: 3, losses: 3, pokemonIds: [10152, 350, 887, 823, 6, 670], pokemonNames: ["Lycanroc-Dusk", "Milotic", "Dragapult", "Corviknight", "Charizard", "Floette"], sets: [
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Accelerock", "Close Combat", "Protect", "Rock Slide"] },
     { ability: "Competitive", item: "Leftovers", moves: ["Protect", "Icy Wind", "Scald", "Life Dew"] },
     { ability: "Clear Body", item: "Choice Scarf", moves: ["Dragon Darts", "U-turn", "Sucker Punch", "Phantom Force"] },
@@ -14032,7 +14033,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Hospitality", item: "Kasib Berry", moves: ["Matcha Gotcha", "Life Dew", "Rage Powder", "Trick Room"] },
     { ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Sucker Punch", "Iron Head", "Protect"] }
   ] },
-  { id: "ct-228", tournament: "Pokepal Smackdown #145 (Champions) (Reg M-A)", players: 25, placement: 7, player: "Nate_5776", wins: 3, losses: 2, pokemonIds: [478, 983, 903, 936, 908, 745], pokemonNames: ["Froslass", "Kingambit", "Sneasler", "Armarouge", "Meowscarada", "Lycanroc"], sets: [
+  { id: "ct-228", tournament: "Pokepal Smackdown #145 (Champions) (Reg M-A)", players: 25, placement: 7, player: "Nate_5776", wins: 3, losses: 2, pokemonIds: [478, 983, 903, 936, 908, 10152], pokemonNames: ["Froslass", "Kingambit", "Sneasler", "Armarouge", "Meowscarada", "Lycanroc-Dusk"], sets: [
     { ability: "Snow Cloak", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Protect", "Aurora Veil"] },
     { ability: "Defiant", item: "Chople Berry", moves: ["Low Kick", "Sucker Punch", "Kowtow Cleave", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Dire Claw", "Close Combat", "Fake Out", "Protect"] },
@@ -14072,7 +14073,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Oblivious", item: "Focus Sash", moves: ["Earthquake", "Icicle Crash", "Protect", "Ice Shard"] },
     { ability: "Stance Change", item: "Spell Tag", moves: ["Close Combat", "Shadow Sneak", "King's Shield", "Poltergeist"] }
   ] },
-  { id: "ct-233", tournament: "Intimidators Champions Challenge #18 REG M-A", players: 52, placement: 4, player: "NMR | Tom Baldwin", wins: 6, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 745], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc"], sets: [
+  { id: "ct-233", tournament: "Intimidators Champions Challenge #18 REG M-A", players: 52, placement: 4, player: "NMR | Tom Baldwin", wins: 6, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 10152], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc-Dusk"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Giga Drain", "Rage Powder", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"] },
@@ -14208,7 +14209,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Unnerve", item: "Aerodactylite", moves: ["Dual Wingbeat", "Rock Slide", "Tailwind", "Protect"] },
     { ability: "Levitate", item: "Haban Berry", moves: ["Dark Pulse", "Draco Meteor", "Flamethrower", "Protect"] }
   ] },
-  { id: "ct-250", tournament: "Palafin Pals Jet Punch Series Champions M-A", players: 12, placement: 5, player: "thenightsnexus", wins: 2, losses: 2, pokemonIds: [745, 902, 983, 903, 478, 655], pokemonNames: ["Lycanroc", "Basculegion-M", "Kingambit", "Sneasler", "Froslass", "Delphox"], sets: [
+  { id: "ct-250", tournament: "Palafin Pals Jet Punch Series Champions M-A", players: 12, placement: 5, player: "thenightsnexus", wins: 2, losses: 2, pokemonIds: [10152, 902, 983, 903, 478, 655], pokemonNames: ["Lycanroc-Dusk", "Basculegion-M", "Kingambit", "Sneasler", "Froslass", "Delphox"], sets: [
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Close Combat", "Accelerock", "Psychic Fangs", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"] },
     { ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Sucker Punch", "Iron Head", "Protect"] },
@@ -14240,7 +14241,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Defiant", item: "Chople Berry", moves: ["Protect", "Sucker Punch", "Kowtow Cleave", "Iron Head"] },
     { ability: "Competitive", item: "Leftovers", moves: ["Icy Wind", "Scald", "Life Dew", "Protect"] }
   ] },
-  { id: "ct-254", tournament: "Sketch Academy Pride Month x MMHM Qualifier 2", players: 46, placement: 1, player: "joniaco", wins: 7, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 745], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc"], sets: [
+  { id: "ct-254", tournament: "Sketch Academy Pride Month x MMHM Qualifier 2", players: 46, placement: 1, player: "joniaco", wins: 7, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 10152], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc-Dusk"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Giga Drain", "Overheat", "Rage Powder", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"] },
@@ -14304,7 +14305,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Rough Skin", item: "Sitrus Berry", moves: ["Earthquake", "Dragon Claw", "Rock Tomb", "Protect"] },
     { ability: "Adaptability", item: "Mystic Water", moves: ["Protect", "Last Respects", "Aqua Jet", "Wave Crash"] }
   ] },
-  { id: "ct-262", tournament: "MMHM X CHAOS LEAGUE QUALIFIER #2", players: 34, placement: 1, player: "Pro4tomico", wins: 7, losses: 1, pokemonIds: [903, 902, 983, 478, 952, 745], pokemonNames: ["Sneasler", "Basculegion-M", "Kingambit", "Froslass", "Scovillain", "Lycanroc"], sets: [
+  { id: "ct-262", tournament: "MMHM X CHAOS LEAGUE QUALIFIER #2", players: 34, placement: 1, player: "Pro4tomico", wins: 7, losses: 1, pokemonIds: [903, 902, 983, 478, 952, 10152], pokemonNames: ["Sneasler", "Basculegion-M", "Kingambit", "Froslass", "Scovillain", "Lycanroc-Dusk"], sets: [
     { ability: "Unburden", item: "White Herb", moves: ["Fake Out", "Dire Claw", "Close Combat", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Last Respects", "Wave Crash", "Aqua Jet", "Protect"] },
     { ability: "Defiant", item: "Black Glasses", moves: ["Sucker Punch", "Kowtow Cleave", "Swords Dance", "Protect"] },
@@ -14376,7 +14377,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Prankster", item: "Coba Berry", moves: ["Protect", "Tailwind", "Encore", "Moonblast"] },
     { ability: "Sturdy", item: "Skarmorite", moves: ["Protect", "Rock Tomb", "Iron Head", "Brave Bird"] }
   ] },
-  { id: "ct-271", tournament: "★ Need PKPs? Champions Tournament ★", players: 11, placement: 2, player: "RobinKaos", wins: 5, losses: 1, pokemonIds: [745, 478, 902, 952, 903, 983], pokemonNames: ["Lycanroc", "Froslass", "Basculegion-M", "Scovillain", "Sneasler", "Kingambit"], sets: [
+  { id: "ct-271", tournament: "★ Need PKPs? Champions Tournament ★", players: 11, placement: 2, player: "RobinKaos", wins: 5, losses: 1, pokemonIds: [10152, 478, 902, 952, 903, 983], pokemonNames: ["Lycanroc-Dusk", "Froslass", "Basculegion-M", "Scovillain", "Sneasler", "Kingambit"], sets: [
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Protect", "Rock Slide", "Close Combat", "Accelerock"] },
     { ability: "Cursed Body", item: "Froslassite", moves: ["Protect", "Blizzard", "Shadow Ball", "Aurora Veil"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Protect", "Wave Crash", "Last Respects", "Aqua Jet"] },
@@ -14432,7 +14433,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Unnerve", item: "Aerodactylite", moves: ["Tailwind", "Dual Wingbeat", "Rock Slide", "Wide Guard"] },
     { ability: "Blaze", item: "Charizardite Y", moves: ["Protect", "Weather Ball", "Heat Wave", "Solar Beam"] }
   ] },
-  { id: "ct-278", tournament: "VGCA Battle Hall: Academy Ace Edition #3", players: 11, placement: 1, player: "rickinch", wins: 5, losses: 1, pokemonIds: [478, 952, 745, 983, 903, 902], pokemonNames: ["Froslass", "Scovillain", "Lycanroc", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
+  { id: "ct-278", tournament: "VGCA Battle Hall: Academy Ace Edition #3", players: 11, placement: 1, player: "rickinch", wins: 5, losses: 1, pokemonIds: [478, 952, 10152, 983, 903, 902], pokemonNames: ["Froslass", "Scovillain", "Lycanroc-Dusk", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Substitute", "Protect"] },
     { ability: "Insomnia", item: "Scovillainite", moves: ["Overheat", "Leech Seed", "Rage Powder", "Protect"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
@@ -14680,7 +14681,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Unburden", item: "White Herb", moves: ["Dire Claw", "Close Combat", "Fake Out", "Protect"] },
     { ability: "Intimidate", item: "Chople Berry", moves: ["Will-O-Wisp", "Darkest Lariat", "Parting Shot", "Fake Out"] }
   ] },
-  { id: "ct-309", tournament: "Cebulowy Krążek 🇵🇱 #1", players: 32, placement: 1, player: "Idczaq", wins: 7, losses: 1, pokemonIds: [745, 902, 983, 903, 478, 952], pokemonNames: ["Lycanroc", "Basculegion-M", "Kingambit", "Sneasler", "Froslass", "Scovillain"], sets: [
+  { id: "ct-309", tournament: "Cebulowy Krążek 🇵🇱 #1", players: 32, placement: 1, player: "Idczaq", wins: 7, losses: 1, pokemonIds: [10152, 902, 983, 903, 478, 952], pokemonNames: ["Lycanroc-Dusk", "Basculegion-M", "Kingambit", "Sneasler", "Froslass", "Scovillain"], sets: [
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"] },
     { ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Sucker Punch", "Swords Dance", "Protect"] },
@@ -14688,7 +14689,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Giga Drain", "Rage Powder", "Protect"] }
   ] },
-  { id: "ct-310", tournament: "Cebulowy Krążek 🇵🇱 #1", players: 32, placement: 2, player: "maciek415", wins: 6, losses: 2, pokemonIds: [952, 478, 745, 983, 903, 902], pokemonNames: ["Scovillain", "Froslass", "Lycanroc", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
+  { id: "ct-310", tournament: "Cebulowy Krążek 🇵🇱 #1", players: 32, placement: 2, player: "maciek415", wins: 6, losses: 2, pokemonIds: [952, 478, 10152, 983, 903, 902], pokemonNames: ["Scovillain", "Froslass", "Lycanroc-Dusk", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
     { ability: "Moody", item: "Scovillainite", moves: ["Protect", "Rage Powder", "Giga Drain", "Overheat"] },
     { ability: "Cursed Body", item: "Froslassite", moves: ["Protect", "Aurora Veil", "Blizzard", "Shadow Ball"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Protect", "Accelerock", "Rock Slide", "Close Combat"] },
@@ -14896,7 +14897,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Unburden", item: "Focus Sash", moves: ["Protect", "Fake Out", "Close Combat", "Dire Claw"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Protect", "Leech Seed", "Rage Powder", "Overheat"] }
   ] },
-  { id: "ct-336", tournament: "PWC - Battle in the Colosseum #15 - Pride Month", players: 12, placement: 4, player: "Peekachu", wins: 4, losses: 2, pokemonIds: [745, 903, 952, 902, 478, 983], pokemonNames: ["Lycanroc", "Sneasler", "Scovillain", "Basculegion-M", "Froslass", "Kingambit"], sets: [
+  { id: "ct-336", tournament: "PWC - Battle in the Colosseum #15 - Pride Month", players: 12, placement: 4, player: "Peekachu", wins: 4, losses: 2, pokemonIds: [10152, 903, 952, 902, 478, 983], pokemonNames: ["Lycanroc-Dusk", "Sneasler", "Scovillain", "Basculegion-M", "Froslass", "Kingambit"], sets: [
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Close Combat", "Dire Claw", "Fake Out", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Giga Drain", "Rage Powder", "Protect"] },
@@ -15240,7 +15241,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Hospitality", item: "Kasib Berry", moves: ["Matcha Gotcha", "Rage Powder", "Trick Room", "Protect"] },
     { ability: "Competitive", item: "Sitrus Berry", moves: ["Icy Wind", "Scald", "Protect", "Safeguard"] }
   ] },
-  { id: "ct-379", tournament: "Sky Pillar Saturday Showdown S8 #6", players: 22, placement: 1, player: "billt", wins: 7, losses: 1, pokemonIds: [478, 952, 745, 983, 903, 902], pokemonNames: ["Froslass", "Scovillain", "Lycanroc", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
+  { id: "ct-379", tournament: "Sky Pillar Saturday Showdown S8 #6", players: 22, placement: 1, player: "billt", wins: 7, losses: 1, pokemonIds: [478, 952, 10152, 983, 903, 902], pokemonNames: ["Froslass", "Scovillain", "Lycanroc-Dusk", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Giga Drain", "Rage Powder", "Protect"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
@@ -15296,7 +15297,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Drizzle", item: "Mystic Water", moves: ["Muddy Water", "Encore", "Psych Up", "Rain Dance"] },
     { ability: "Armor Tail", item: "Sitrus Berry", moves: ["Psychic", "Ally Switch", "Trick Room", "Helping Hand"] }
   ] },
-  { id: "ct-386", tournament: "Sky Pillar Saturday Showdown S8 #6", players: 22, placement: 8, player: "Koisaru", wins: 3, losses: 3, pokemonIds: [478, 952, 745, 983, 903, 902], pokemonNames: ["Froslass", "Scovillain", "Lycanroc", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
+  { id: "ct-386", tournament: "Sky Pillar Saturday Showdown S8 #6", players: 22, placement: 8, player: "Koisaru", wins: 3, losses: 3, pokemonIds: [478, 952, 10152, 983, 903, 902], pokemonNames: ["Froslass", "Scovillain", "Lycanroc-Dusk", "Kingambit", "Sneasler", "Basculegion-M"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Giga Drain", "Rage Powder", "Protect"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
@@ -15680,7 +15681,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Unburden", item: "White Herb", moves: ["Dire Claw", "Close Combat", "Fake Out", "Protect"] },
     { ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Sucker Punch", "Swords Dance", "Protect"] }
   ] },
-  { id: "ct-434", tournament: "Devils Den Tournaments #80", players: 35, placement: 8, player: "Nate_5776", wins: 4, losses: 3, pokemonIds: [478, 983, 903, 936, 908, 745], pokemonNames: ["Froslass", "Kingambit", "Sneasler", "Armarouge", "Meowscarada", "Lycanroc"], sets: [
+  { id: "ct-434", tournament: "Devils Den Tournaments #80", players: 35, placement: 8, player: "Nate_5776", wins: 4, losses: 3, pokemonIds: [478, 983, 903, 936, 908, 10152], pokemonNames: ["Froslass", "Kingambit", "Sneasler", "Armarouge", "Meowscarada", "Lycanroc-Dusk"], sets: [
     { ability: "Snow Cloak", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Protect", "Aurora Veil"] },
     { ability: "Defiant", item: "Chople Berry", moves: ["Low Kick", "Sucker Punch", "Kowtow Cleave", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Dire Claw", "Close Combat", "Fake Out", "Protect"] },
@@ -15688,7 +15689,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Protean", item: "Choice Scarf", moves: ["Flower Trick", "Throat Chop", "Triple Axel", "U-turn"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Accelerock", "Close Combat", "Sucker Punch", "Protect"] }
   ] },
-  { id: "ct-435", tournament: "CHAMPIONS REG. M-A |CROWN FIGHT Bo3 TOUR #72", players: 47, placement: 1, player: "FinnzVGC", wins: 7, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 745], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc"], sets: [
+  { id: "ct-435", tournament: "CHAMPIONS REG. M-A |CROWN FIGHT Bo3 TOUR #72", players: 47, placement: 1, player: "FinnzVGC", wins: 7, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 10152], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc-Dusk"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Giga Drain", "Overheat", "Rage Powder", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"] },
@@ -15792,7 +15793,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Technician", item: "Metal Coat", moves: ["Bullet Punch", "Bug Bite", "Dual Wingbeat", "Protect"] },
     { ability: "Hospitality", item: "Sitrus Berry", moves: ["Matcha Gotcha", "Trick Room", "Rage Powder", "Pain Split"] }
   ] },
-  { id: "ct-448", tournament: "Intimidators Champions Challenge #17 REG M-A", players: 17, placement: 6, player: "Victor Matheus", wins: 4, losses: 2, pokemonIds: [983, 903, 478, 952, 902, 745], pokemonNames: ["Kingambit", "Sneasler", "Froslass", "Scovillain", "Basculegion-M", "Lycanroc"], sets: [
+  { id: "ct-448", tournament: "Intimidators Champions Challenge #17 REG M-A", players: 17, placement: 6, player: "Victor Matheus", wins: 4, losses: 2, pokemonIds: [983, 903, 478, 952, 902, 10152], pokemonNames: ["Kingambit", "Sneasler", "Froslass", "Scovillain", "Basculegion-M", "Lycanroc-Dusk"], sets: [
     { ability: "Defiant", item: "Black Glasses", moves: ["Kowtow Cleave", "Sucker Punch", "Swords Dance", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Dire Claw", "Close Combat", "Fake Out", "Protect"] },
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Aurora Veil", "Shadow Ball", "Protect"] },
@@ -16128,7 +16129,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Flower Veil", item: "Floettite", moves: ["Calm Mind", "Dazzling Gleam", "Draining Kiss", "Protect"] },
     { ability: "Mirror Armor", item: "Leftovers", moves: ["Tailwind", "Iron Head", "Brave Bird", "Roost"] }
   ] },
-  { id: "ct-490", tournament: "Alpensee Tour (Reg M-A) #61 - ✨ for #1!", players: 73, placement: 2, player: "Teto2106VGC", wins: 9, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 745], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc"], sets: [
+  { id: "ct-490", tournament: "Alpensee Tour (Reg M-A) #61 - ✨ for #1!", players: 73, placement: 2, player: "Teto2106VGC", wins: 9, losses: 2, pokemonIds: [478, 952, 902, 983, 903, 10152], pokemonNames: ["Froslass", "Scovillain", "Basculegion-M", "Kingambit", "Sneasler", "Lycanroc-Dusk"], sets: [
     { ability: "Cursed Body", item: "Froslassite", moves: ["Blizzard", "Shadow Ball", "Aurora Veil", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Giga Drain", "Overheat", "Rage Powder", "Protect"] },
     { ability: "Adaptability", item: "Sitrus Berry", moves: ["Wave Crash", "Last Respects", "Aqua Jet", "Protect"] },
@@ -16632,7 +16633,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Levitate", item: "Leftovers", moves: ["Protect", "Will-O-Wisp", "Hydro Pump", "Thunderbolt"] },
     { ability: "trace", item: "Gardevoirite", moves: ["Protect", "Hyper Voice", "Psychic", "Trick Room"] }
   ] },
-  { id: "ct-553", tournament: "Intimidators Champions Challenge #16 REG M-A", players: 49, placement: 1, player: "JOAO", wins: 9, losses: 0, pokemonIds: [745, 903, 952, 902, 478, 983], pokemonNames: ["Lycanroc", "Sneasler", "Scovillain", "Basculegion-M", "Froslass", "Kingambit"], sets: [
+  { id: "ct-553", tournament: "Intimidators Champions Challenge #16 REG M-A", players: 49, placement: 1, player: "JOAO", wins: 9, losses: 0, pokemonIds: [10152, 903, 952, 902, 478, 983], pokemonNames: ["Lycanroc-Dusk", "Sneasler", "Scovillain", "Basculegion-M", "Froslass", "Kingambit"], sets: [
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Close Combat", "Dire Claw", "Fake Out", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Giga Drain", "Rage Powder", "Protect"] },
@@ -16776,7 +16777,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Blaze", item: "Delphoxite", moves: ["Heat Wave", "Psyshock", "Helping Hand", "Protect"] },
     { ability: "Levitate", item: "Sitrus Berry", moves: ["Hydro Pump", "Thunderbolt", "Will-O-Wisp", "Protect"] }
   ] },
-  { id: "ct-571", tournament: "Champions Tour LEPE #7", players: 17, placement: 3, player: "JuliiiHD", wins: 6, losses: 1, pokemonIds: [952, 478, 903, 983, 902, 745], pokemonNames: ["Scovillain", "Froslass", "Sneasler", "Kingambit", "Basculegion-M", "Lycanroc"], sets: [
+  { id: "ct-571", tournament: "Champions Tour LEPE #7", players: 17, placement: 3, player: "JuliiiHD", wins: 6, losses: 1, pokemonIds: [952, 478, 903, 983, 902, 10152], pokemonNames: ["Scovillain", "Froslass", "Sneasler", "Kingambit", "Basculegion-M", "Lycanroc-Dusk"], sets: [
     { ability: "Moody", item: "Scovillainite", moves: ["Protect", "Giga Drain", "Flamethrower", "Rage Powder"] },
     { ability: "Cursed Body", item: "Froslassite", moves: ["Protect", "Shadow Ball", "Blizzard", "Aurora Veil"] },
     { ability: "Unburden", item: "White Herb", moves: ["Protect", "Dire Claw", "Close Combat", "Fake Out"] },
@@ -17368,7 +17369,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Flower Veil", item: "Floettite", moves: ["Moonblast", "Dazzling Gleam", "Calm Mind", "Protect"] },
     { ability: "Bulletproof", item: "Dragon Fang", moves: ["Clanging Scales", "Clangorous Soul", "Drain Punch", "Protect"] }
   ] },
-  { id: "ct-645", tournament: "Spicy Spray Vgc Tournament", players: 18, placement: 8, player: "Syncher", wins: 2, losses: 3, pokemonIds: [983, 903, 478, 745, 964, 952], pokemonNames: ["Kingambit", "Sneasler", "Froslass", "Lycanroc", "Palafin", "Scovillain"], sets: [
+  { id: "ct-645", tournament: "Spicy Spray Vgc Tournament", players: 18, placement: 8, player: "Syncher", wins: 2, losses: 3, pokemonIds: [983, 903, 478, 10152, 964, 952], pokemonNames: ["Kingambit", "Sneasler", "Froslass", "Lycanroc-Dusk", "Palafin", "Scovillain"], sets: [
     { ability: "Defiant", item: "Black Glasses", moves: ["Protect", "Swords Dance", "Kowtow Cleave", "Sucker Punch"] },
     { ability: "Unburden", item: "White Herb", moves: ["Fake Out", "Close Combat", "Dire Claw", "Coaching"] },
     { ability: "Cursed Body", item: "Froslassite", moves: ["Protect", "Aurora Veil", "Blizzard", "Shadow Ball"] },
@@ -17400,7 +17401,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Levitate", item: "Choice Scarf", moves: ["Draco Meteor", "Dark Pulse", "Snarl", "Flamethrower"] },
     { ability: "Unburden", item: "White Herb", moves: ["Protect", "Dire Claw", "Close Combat", "Fake Out"] }
   ] },
-  { id: "ct-649", tournament: "Extreme Speed #6", players: 39, placement: 4, player: "JOAO", wins: 5, losses: 2, pokemonIds: [745, 903, 952, 902, 478, 983], pokemonNames: ["Lycanroc", "Sneasler", "Scovillain", "Basculegion-M", "Froslass", "Kingambit"], sets: [
+  { id: "ct-649", tournament: "Extreme Speed #6", players: 39, placement: 4, player: "JOAO", wins: 5, losses: 2, pokemonIds: [10152, 903, 952, 902, 478, 983], pokemonNames: ["Lycanroc-Dusk", "Sneasler", "Scovillain", "Basculegion-M", "Froslass", "Kingambit"], sets: [
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Close Combat", "Dire Claw", "Fake Out", "Protect"] },
     { ability: "Moody", item: "Scovillainite", moves: ["Overheat", "Giga Drain", "Rage Powder", "Protect"] },
@@ -20096,7 +20097,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Defiant", item: "Chople Berry", moves: ["Sucker Punch", "Kowtow Cleave", "Low Kick", "Protect"] },
     { ability: "Snow Warning", item: "Never-Melt Ice", moves: ["Blizzard", "Aurora Veil", "Encore", "Protect"] }
   ] },
-  { id: "ct-986", tournament: "VGCA Battle Hall: Academy Ace Edition #2", players: 18, placement: 5, player: "Cinndragon", wins: 4, losses: 2, pokemonIds: [547, 745, 445, 461, 448, 700], pokemonNames: ["Whimsicott", "Lycanroc", "Garchomp", "Weavile", "Lucario", "Sylveon"], sets: [
+  { id: "ct-986", tournament: "VGCA Battle Hall: Academy Ace Edition #2", players: 18, placement: 5, player: "Cinndragon", wins: 4, losses: 2, pokemonIds: [547, 10152, 445, 461, 448, 700], pokemonNames: ["Whimsicott", "Lycanroc-Dusk", "Garchomp", "Weavile", "Lucario", "Sylveon"], sets: [
     { ability: "Prankster", item: "Sitrus Berry", moves: ["Moonblast", "Tailwind", "Encore", "Protect"] },
     { ability: "Tough Claws", item: "Choice Scarf", moves: ["Rock Slide", "Rock Tomb", "Drill Run", "Throat Chop"] },
     { ability: "Rough Skin", item: "Focus Sash", moves: ["Rock Slide", "Dragon Claw", "Stomping Tantrum", "Protect"] },
@@ -27744,7 +27745,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Hospitality", item: "Sitrus Berry", moves: ["Matcha Gotcha", "Rage Powder", "Trick Room", "Protect"] },
     { ability: "Prankster", item: "Roseli Berry", moves: ["Thunder Wave", "Rain Dance", "Reflect", "Light Screen"] }
   ] },
-  { id: "ct-1942", tournament: "PWC - Battle in the Colosseum #10 - Reg M-A", players: 14, placement: 7, player: "Renario", wins: 2, losses: 3, pokemonIds: [908, 609, 903, 745, 350, 678], pokemonNames: ["Meowscarada", "Chandelure", "Sneasler", "Lycanroc", "Milotic", "Meowstic-M"], sets: [
+  { id: "ct-1942", tournament: "PWC - Battle in the Colosseum #10 - Reg M-A", players: 14, placement: 7, player: "Renario", wins: 2, losses: 3, pokemonIds: [908, 609, 903, 10152, 350, 678], pokemonNames: ["Meowscarada", "Chandelure", "Sneasler", "Lycanroc-Dusk", "Milotic", "Meowstic-M"], sets: [
     { ability: "Protean", item: "Choice Scarf", moves: ["Triple Axel", "Flower Trick", "U-turn", "Knock Off"] },
     { ability: "Flash Fire", item: "Chandelurite", moves: ["Calm Mind", "Shadow Ball", "Heat Wave", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Fake Out", "Close Combat", "Dire Claw", "Protect"] },
@@ -28576,7 +28577,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Inner Focus", item: "Dragoninite", moves: ["Draco Meteor", "Hurricane", "Tailwind", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Fake Out", "Dire Claw", "Close Combat", "Rock Slide"] }
   ] },
-  { id: "ct-2046", tournament: "Friday Fight Night #54 Reg M-A Bo3", players: 19, placement: 7, player: "Renario", wins: 2, losses: 2, pokemonIds: [908, 609, 903, 745, 350, 678], pokemonNames: ["Meowscarada", "Chandelure", "Sneasler", "Lycanroc", "Milotic", "Meowstic-M"], sets: [
+  { id: "ct-2046", tournament: "Friday Fight Night #54 Reg M-A Bo3", players: 19, placement: 7, player: "Renario", wins: 2, losses: 2, pokemonIds: [908, 609, 903, 10152, 350, 678], pokemonNames: ["Meowscarada", "Chandelure", "Sneasler", "Lycanroc-Dusk", "Milotic", "Meowstic-M"], sets: [
     { ability: "Protean", item: "Choice Scarf", moves: ["Triple Axel", "Flower Trick", "U-turn", "Knock Off"] },
     { ability: "Flash Fire", item: "Chandelurite", moves: ["Calm Mind", "Shadow Ball", "Heat Wave", "Protect"] },
     { ability: "Unburden", item: "White Herb", moves: ["Fake Out", "Close Combat", "Dire Claw", "Protect"] },
@@ -29080,7 +29081,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Rough Skin", item: "Dragon Fang", moves: ["Protect", "Stomping Tantrum", "Rock Slide", "Scale Shot"] },
     { ability: "Defiant", item: "Black Glasses", moves: ["Sucker Punch", "Low Kick", "Kowtow Cleave", "Protect"] }
   ] },
-  { id: "ct-2109", tournament: "WARTORTLE WEDNESDAYS #58 REG M-A BO3 SWISS", players: 18, placement: 8, player: "ShinyMacaroni1", wins: 2, losses: 4, pokemonIds: [663, 745, 1013, 461, 9, 10340], pokemonNames: ["Talonflame", "Lycanroc", "Sinistcha", "Weavile", "Blastoise", "Hisuian Zoroark"], sets: [
+  { id: "ct-2109", tournament: "WARTORTLE WEDNESDAYS #58 REG M-A BO3 SWISS", players: 18, placement: 8, player: "ShinyMacaroni1", wins: 2, losses: 4, pokemonIds: [663, 10152, 1013, 461, 9, 10340], pokemonNames: ["Talonflame", "Lycanroc-Dusk", "Sinistcha", "Weavile", "Blastoise", "Hisuian Zoroark"], sets: [
     { ability: "Gale Wings", item: "nothing", moves: ["Acrobatics", "Flare Blitz", "Tailwind", "Protect"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Accelerock", "Close Combat", "Sucker Punch", "Protect"] },
     { ability: "Hospitality", item: "Sitrus Berry", moves: ["Matcha Gotcha", "Life Dew", "Rage Powder", "Protect"] },
@@ -29208,7 +29209,7 @@ export const CHAMPIONS_TOURNAMENT_TEAMS: ChampionsTournamentTeam[] = [
     { ability: "Rough Skin", item: "Soft Sand", moves: ["Rock Slide", "Earthquake", "Stomping Tantrum", "Protect"] },
     { ability: "Stance Change", item: "Spell Tag", moves: ["Poltergeist", "Close Combat", "Shadow Sneak", "Wide Guard"] }
   ] },
-  { id: "ct-2125", tournament: "*Sitrus-Series*|Champions|#57", players: 67, placement: 8, player: "rRedl", wins: 5, losses: 3, pokemonIds: [248, 745, 445, 10008, 823, 1013], pokemonNames: ["Tyranitar", "Lycanroc", "Garchomp", "Heat Rotom", "Corviknight", "Sinistcha"], sets: [
+  { id: "ct-2125", tournament: "*Sitrus-Series*|Champions|#57", players: 67, placement: 8, player: "rRedl", wins: 5, losses: 3, pokemonIds: [248, 10152, 445, 10008, 823, 1013], pokemonNames: ["Tyranitar", "Lycanroc-Dusk", "Garchomp", "Heat Rotom", "Corviknight", "Sinistcha"], sets: [
     { ability: "Sand Stream", item: "Tyranitarite", moves: ["Rock Slide", "Knock Off", "Dragon Dance", "Protect"] },
     { ability: "Tough Claws", item: "Focus Sash", moves: ["Rock Slide", "Close Combat", "Accelerock", "Protect"] },
     { ability: "Sand Veil", item: "Bright Powder", moves: ["Dragon Claw", "Earthquake", "Liquidation", "Protect"] },

@@ -590,6 +590,13 @@ export const USAGE_DATA: Record<number, CommonSet[]> = {
     { name: "Counter Sash", nature: "Jolly", ability: "Steadfast", item: "Focus Sash", moves: ["Close Combat", "Accelerock", "Stone Edge", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 } },
   ],
 
+  // Lycanroc-Dusk (id: 10152)
+  10152: [
+    { name: "Focus Sash", nature: "Jolly", ability: "Tough Claws", item: "Focus Sash", moves: ["Accelerock", "Close Combat", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 }, teraType: "rock" },
+    { name: "Hard Stone", nature: "Jolly", ability: "Tough Claws", item: "Hard Stone", moves: ["Accelerock", "Close Combat", "Rock Slide", "Protect"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 }, teraType: "rock" },
+    { name: "Choice Scarf", nature: "Jolly", ability: "Tough Claws", item: "Choice Scarf", moves: ["Accelerock", "Close Combat", "Rock Slide", "Psychic Fangs"], sp: { hp: 0, attack: 32, defense: 2, spAtk: 0, spDef: 0, speed: 32 }, teraType: "rock" },
+  ],
+
   // Toxapex (id: 748)
   748: [
     { name: "Defensive Wall", nature: "Bold", ability: "Regenerator", item: "Rocky Helmet", moves: ["Surf", "Toxic", "Recover", "Protect"], sp: { hp: 32, attack: 0, defense: 32, spAtk: 0, spDef: 2, speed: 0 } },
