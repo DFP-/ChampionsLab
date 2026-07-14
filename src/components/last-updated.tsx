@@ -15,6 +15,7 @@ interface ChangelogEntry {
       date: "14/07/2026",
       items: [
         "🐺 Added Lycanroc-Dusk as a separate roster entry — tournament usage now correctly splits Lycanroc-Dusk (110 teams, Tough Claws/Focus Sash) from Midday Lycanroc (53 teams)",
+        "🌙 Added Lycanroc-Midnight as a separate roster entry — No Guard + Choice Scarf sets (3 tournament teams), correct movepool without Accelerock",
         "📊 Added Lycanroc-Dusk competitive sets (Focus Sash, Hard Stone, Choice Scarf) based on real tournament data",
       ],
     },
