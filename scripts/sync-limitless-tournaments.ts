@@ -240,21 +240,51 @@ interface TournamentUsage {
 }
 
 // ─── Cache ───────────────────────────────────────────────────────────
+interface CachedTournament {
+  name: string;
+  players: number;
+  decklists: boolean;
+  standings: LimitlessStanding[];
+  processedAt: string;
+}
+
 interface CacheData {
   lastFetch: string;
-  tournamentIds: string[];
+  tournaments: Record<string, CachedTournament>;
 }
 
 function loadCache(): CacheData {
   try {
-    return JSON.parse(fs.readFileSync(CACHE_PATH, "utf-8"));
+    const raw = JSON.parse(fs.readFileSync(CACHE_PATH, "utf-8")) as Partial<CacheData>;
+    // Defensive: old cache only had tournamentIds; ignore it.
+    if (!raw.tournaments || typeof raw.tournaments !== "object" || Array.isArray(raw.tournaments)) {
+      return { lastFetch: "", tournaments: {} };
+    }
+    return { lastFetch: raw.lastFetch || "", tournaments: raw.tournaments as Record<string, CachedTournament> };
   } catch {
-    return { lastFetch: "", tournamentIds: [] };
+    return { lastFetch: "", tournaments: {} };
   }
 }
 
 function saveCache(data: CacheData) {
   fs.writeFileSync(CACHE_PATH, JSON.stringify(data, null, 2));
+}
+
+/** Save one tournament into the cache and flush to disk. */
+async function cacheTournament(cache: CacheData, tournament: LimitlessTournament, decklists: boolean, standings: LimitlessStanding[]) {
+  cache.tournaments[tournament.id] = {
+    name: tournament.name,
+    players: tournament.players,
+    decklists,
+    standings,
+    processedAt: new Date().toISOString(),
+  };
+  saveCache(cache);
+}
+
+/** Sort standings by placement in place. */
+function sortByPlacement(standings: LimitlessStanding[]) {
+  standings.sort((a, b) => (a.placing ?? 999) - (b.placing ?? 999));
 }
 
 // ─── Main ────────────────────────────────────────────────────────────
@@ -264,6 +294,12 @@ async function main() {
   console.log("╚══════════════════════════════════════════════════════╝");
   console.log(`  Format: ${FORMAT} | Min players: ${MIN_PLAYERS} | Top cut: ${TOP_CUT}`);
   console.log(`  Dry run: ${DRY_RUN}\n`);
+
+  const cache = loadCache();
+  const cachedCount = Object.keys(cache.tournaments).length;
+  if (cachedCount > 0) {
+    console.log(`  📦 Loaded ${cachedCount} cached tournament(s)\n`);
+  }
 
   // 1. Fetch all M-A tournaments (paginate)
   let allTournaments: LimitlessTournament[] = [];
@@ -294,24 +330,42 @@ async function main() {
   const unmapped = new Map<string, number>();
 
   for (const tournament of eligible) {
-    await sleep(RATE_LIMIT_MS);
+    const cached = cache.tournaments[tournament.id];
+    let details: LimitlessTournamentDetails | null = null;
+    let standings: LimitlessStanding[] = [];
 
-    // Check details for decklists
-    const details = await fetchJSON<LimitlessTournamentDetails>(
-      `${API_BASE}/tournaments/${tournament.id}/details`
-    );
+    if (cached) {
+      // Use cached data; skip API calls entirely for this tournament.
+      if (!cached.decklists) {
+        console.log(`  ⊘ ${tournament.name.slice(0, 50)} (${tournament.players}p) — no team lists (cached)`);
+        continue;
+      }
+      standings = cached.standings;
+      console.log(`  ♻ ${tournament.name.slice(0, 50)} (${tournament.players}p) — using cache`);
+    } else {
+      await sleep(RATE_LIMIT_MS);
 
-    if (!details.decklists) {
-      console.log(`  ⊘ ${tournament.name.slice(0, 50)} (${tournament.players}p) — no team lists`);
-      continue;
+      // Check details for decklists
+      details = await fetchJSON<LimitlessTournamentDetails>(
+        `${API_BASE}/tournaments/${tournament.id}/details`
+      );
+
+      if (!details.decklists) {
+        console.log(`  ⊘ ${tournament.name.slice(0, 50)} (${tournament.players}p) — no team lists`);
+        await cacheTournament(cache, tournament, false, []);
+        continue;
+      }
+
+      await sleep(RATE_LIMIT_MS);
+
+      // Fetch standings
+      standings = await fetchJSON<LimitlessStanding[]>(
+        `${API_BASE}/tournaments/${tournament.id}/standings`
+      );
+
+      // Persist fetched data before processing, so a later crash doesn't lose it.
+      await cacheTournament(cache, tournament, true, standings);
     }
-
-    await sleep(RATE_LIMIT_MS);
-
-    // Fetch standings
-    const standings = await fetchJSON<LimitlessStanding[]>(
-      `${API_BASE}/tournaments/${tournament.id}/standings`
-    );
 
     // Filter to players with placements and decklists
     const withTeams = standings.filter(
@@ -327,7 +381,7 @@ async function main() {
     console.log(`  ✓ ${tournament.name.slice(0, 50)} (${tournament.players}p) — ${withTeams.length} teams`);
 
     // Sort by placement
-    withTeams.sort((a, b) => (a.placing ?? 999) - (b.placing ?? 999));
+    sortByPlacement(withTeams);
 
     // Count ALL teams for usage stats
     for (const standing of withTeams) {
@@ -431,7 +485,7 @@ async function main() {
     updateSimulationData(teams, usageArray, totalTeams, tournamentCount);
     saveCache({
       lastFetch: new Date().toISOString(),
-      tournamentIds: eligible.map(t => t.id),
+      tournaments: cache.tournaments,
     });
     console.log("\n  ✅ simulation-data.ts updated!");
     console.log("  ✅ Cache saved to limitless-cache.json");

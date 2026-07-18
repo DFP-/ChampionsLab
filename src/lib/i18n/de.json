@@ -12,7 +12,8 @@
     "language": "Sprache",
     "subtitle": "Werde Champion",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "assist": "Assist"
   },
   "common": {
     "search": "Suchen",
@@ -1327,5 +1328,27 @@
     "description": "We use cookies to remember your preferences and Google Analytics to understand how the site is used. You can accept or decline analytics cookies.",
     "accept": "Accept",
     "decline": "Decline"
+  },
+  "assist": {
+    "title": "Assist",
+    "runAnalysis": "Assist-Analyse starten",
+    "analyzing": "Analysiere...",
+    "rerunAnalysis": "Analyse wiederholen",
+    "noTeamError": "Kein Team gefunden. Baue zuerst ein Team im Team-Builder.",
+    "noTeamFound": "Kein Team gefunden. Überprüfe den Share-Link.",
+    "emptySlotWarning": "Kein Team geladen. Stelle sicher, dass du mindestens einen Pokémon ausgewählt hast.",
+    "speedTiers": "Geschwindigkeitsstufen (innerhalb ±50)",
+    "yourSpe": "Dein GGS",
+    "scarf": "WAHL-SCARF",
+    "keyKOs": "Wichtige KO-Schwellen",
+    "threatsKOYou": "Bedrohungen, die dich ausmachen",
+    "youKOThreats": "Du machst Bedrohungen aus",
+    "survivesThreatens": "Überlebt + bedroht zurück",
+    "noSpeedThreats": "Keine relevanten Meta-Bedrohungen innerhalb ±50 Geschwindigkeit.",
+    "addMoreSets": "Füge mehr gängige Sets zu USAGE_DATA hinzu für tiefere Analyse.",
+    "analysisSummary": "Analyse gegen die Top {count} Meta-Bedrohungen",
+    "withSpeedThreats": "{count} Pokémon mit Geschwindigkeitsbedrohungen",
+    "withDefensiveConcerns": "{count} Pokémon mit defensiven Bedenken",
+    "sharedTeam": "Geteiltes Team"
   }
 }

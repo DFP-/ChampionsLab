@@ -12,7 +12,8 @@
     "language": "언어",
     "subtitle": "당신의 승리가 시작되는 곳",
     "privacy": "개인정보",
-    "terms": "이용약관"
+    "terms": "이용약관",
+    "assist": "Assist"
   },
   "common": {
     "search": "검색",
@@ -1352,5 +1353,27 @@
     "description": "쿠키를 사용하여 설정을 기억하고 Google Analytics를 통해 사이트 사용 방식을 파악합니다. 분석 쿠키를 수락하거나 거부할 수 있습니다.",
     "accept": "수락",
     "decline": "거부"
+  },
+  "assist": {
+    "title": "Assist",
+    "runAnalysis": "Run Assist Analysis",
+    "analyzing": "Analyzing...",
+    "rerunAnalysis": "Re-run Analysis",
+    "noTeamError": "No team found. Build a team in the Team Builder first, then click \"Run Assist Analysis\".",
+    "noTeamFound": "No team found. Check the share link and try again.",
+    "emptySlotWarning": "No team loaded. Make sure you have at least one Pokemon selected.",
+    "speedTiers": "Speed Tiers (within ±50)",
+    "yourSpe": "Your Spe",
+    "scarf": "SCARF",
+    "keyKOs": "Key KO Thresholds",
+    "threatsKOYou": "Threats that KO you",
+    "youKOThreats": "You KO threats",
+    "survivesThreatens": "Survives + threatens back",
+    "noSpeedThreats": "No relevant meta threats within ±50 speed points.",
+    "addMoreSets": "Add more common sets to USAGE_DATA for deeper analysis.",
+    "analysisSummary": "Analysis against top {count} meta threats",
+    "withSpeedThreats": "{count} Pokemon with speed threats",
+    "withDefensiveConcerns": "{count} Pokemon with defensive concerns",
+    "sharedTeam": "Shared Team"
   }
 }

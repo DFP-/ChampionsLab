@@ -12,7 +12,8 @@
     "language": "Idioma",
     "subtitle": "Tu ventaja competitiva empieza aquí",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "assist": "Asistente"
   },
   "common": {
     "search": "Buscar",
@@ -1352,5 +1353,27 @@
     "description": "We use cookies to remember your preferences and Google Analytics to understand how the site is used. You can accept or decline analytics cookies.",
     "accept": "Accept",
     "decline": "Decline"
+  },
+  "assist": {
+    "title": "Asistente",
+    "runAnalysis": "Ejecutar Análisis Asistente",
+    "analyzing": "Analizando...",
+    "rerunAnalysis": "Re-ejecutar Análisis",
+    "noTeamError": "No se encontró equipo. Construye un equipo en el Creador de Equipos primero.",
+    "noTeamFound": "No se encontró equipo. Verifica el enlace compartido.",
+    "emptySlotWarning": "Ningún equipo cargado. Asegúrate de tener al menos un Pokémon seleccionado.",
+    "speedTiers": "Niveles de Velocidad (dentro de ±50)",
+    "yourSpe": "Tu Vel",
+    "scarf": "PAÑUELO",
+    "keyKOs": "UMBRALES KO CLAVE",
+    "threatsKOYou": "Amenazas que te K.O.",
+    "youKOThreats": "Tú KOeas amenazas",
+    "survivesThreatens": "Sobrevive + amenaza de vuelta",
+    "noSpeedThreats": "No hay amenazas meta relevantes dentro de ±50 velocidad.",
+    "addMoreSets": "Agrega más sets comunes a USAGE_DATA para un análisis más profundo.",
+    "analysisSummary": "Análisis contra las top {count} amenazas meta",
+    "withSpeedThreats": "{count} Pokémon con amenazas de velocidad",
+    "withDefensiveConcerns": "{count} Pokémon con preocupaciones defensivas",
+    "sharedTeam": "Equipo Compartido"
   }
 }

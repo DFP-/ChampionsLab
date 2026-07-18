@@ -12,7 +12,8 @@
     "language": "Lingua",
     "subtitle": "Diventa Campione",
     "privacy": "Privacy",
-    "terms": "Terms"
+    "terms": "Terms",
+    "assist": "Assist"
   },
   "common": {
     "search": "Cerca",
@@ -1327,5 +1328,27 @@
     "description": "We use cookies to remember your preferences and Google Analytics to understand how the site is used. You can accept or decline analytics cookies.",
     "accept": "Accept",
     "decline": "Decline"
+  },
+  "assist": {
+    "title": "Assist",
+    "runAnalysis": "Esegui Analisi Assist",
+    "analyzing": "Analisi in corso...",
+    "rerunAnalysis": "Ri-esegui Analisi",
+    "noTeamError": "Nessuna squadra trovata. Costruisci prima una squadra nel Team Builder.",
+    "noTeamFound": "Nessuna squadra trovata. Verifica il link di condivisione.",
+    "emptySlotWarning": "Nessuna squadra caricata. Assicurati di aver selezionato almeno un Pokémon.",
+    "speedTiers": "Fasce Velocità (entro ±50)",
+    "yourSpe": "La tua Vel",
+    "scarf": "BAND. VEL",
+    "keyKOs": "Soglie KO Chiave",
+    "threatsKOYou": "Minacce che ti K.O.",
+    "youKOThreats": "Tu KOi le minacce",
+    "survivesThreatens": "Sopravvive + minaccia ritorno",
+    "noSpeedThreats": "Nessuna minaccia meta rilevante entro ±50 velocità.",
+    "addMoreSets": "Aggiungi più set comuni a USAGE_DATA per un'analisi più approfondita.",
+    "analysisSummary": "Analisi contro le top {count} minacce meta",
+    "withSpeedThreats": "{count} Pokémon con minacce di velocità",
+    "withDefensiveConcerns": "{count} Pokémon con preoccupazioni difensive",
+    "sharedTeam": "Squadra Condivisa"
   }
 }
