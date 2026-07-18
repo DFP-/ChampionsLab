@@ -54,7 +54,7 @@ export const TEAM_BUILDING_TOOLS: ChampionTool[] = [
       properties: {
         pokemonId: {
           type: "number",
-          description: "Pokemon ID to get suggestions for",
+          description: "Pokemon ID (use search_pokemon first if unsure)",
         },
         teamPokemonIds: {
           type: "array",
@@ -67,17 +67,17 @@ export const TEAM_BUILDING_TOOLS: ChampionTool[] = [
     },
     requiresTeam: true,
   },
-  {
-    name: "suggest_sets",
-    description:
-      "Suggest the best competitive sets for a Pokemon given team context. Scores each set by how well it fits with existing teammates (weather synergy, trick room, etc.).",
-    parameters: {
-      type: "object",
-      properties: {
-        pokemonId: {
-          type: "number",
-          description: "Pokemon ID to suggest sets for",
-        },
+        {
+          name: "suggest_sets",
+          description:
+            "Suggest the best competitive sets for a Pokemon given team context. Scores each set by how well it fits with existing teammates (weather synergy, trick room, etc.).",
+          parameters: {
+            type: "object",
+            properties: {
+              pokemonId: {
+                type: "number",
+                description: "Pokemon ID (use search_pokemon first if unsure)",
+              },
         teamPokemonIds: {
           type: "array",
           items: { type: "number" },
@@ -95,10 +95,10 @@ export const TEAM_BUILDING_TOOLS: ChampionTool[] = [
     parameters: {
       type: "object",
       properties: {
-        pokemonId: {
-          type: "number",
-          description: "Pokemon ID to suggest moves for",
-        },
+              pokemonId: {
+                type: "number",
+                description: "Pokemon ID (use search_pokemon first if unsure)",
+              },
         teamPokemonIds: {
           type: "array",
           items: { type: "number" },
@@ -116,10 +116,10 @@ export const TEAM_BUILDING_TOOLS: ChampionTool[] = [
     parameters: {
       type: "object",
       properties: {
-        pokemonId: {
-          type: "number",
-          description: "Pokemon ID to suggest abilities for",
-        },
+              pokemonId: {
+                type: "number",
+                description: "Pokemon ID (use search_pokemon first if unsure)",
+              },
         teamPokemonIds: {
           type: "array",
           items: { type: "number" },
@@ -394,13 +394,29 @@ export const MATCHUP_TOOLS: ChampionTool[] = [
   },
 ];
 
-// ── META & THREAT DATA TOOLS (5) ────────────────────────────────────────────
+// ── META & THREAT DATA TOOLS (6) ────────────────────────────────────────────
 
 export const META_TOOLS: ChampionTool[] = [
   {
+    name: "search_pokemon",
+    description:
+      "Search for a Pokemon by name (partial match) or national dex number. Returns the Champions Lab custom ID, dex number, types, base stats, and abilities. Use this whenever you need to find a Pokemon's correct numeric ID for other tools — especially for Pokemon like Blaziken, Staraptor, Swampert, Sceptile, and other late-added species whose Champions Lab ID differs from their national dex number.",
+    parameters: {
+      type: "object",
+      properties: {
+        query: {
+          type: "string",
+          description: "Pokemon name (or partial name, case-insensitive) or national dex number as a string. E.g., 'Blaziken', 'Staraptor', '257'.",
+        },
+      },
+      required: ["query"],
+    },
+    requiresTeam: false,
+  },
+  {
     name: "get_top_threats",
     description:
-      "Get the top meta threats ranked by tournament bring rate. Returns Pokemon names, usage rates, win rates, and lead rates.",
+      "Get the top meta threats ranked by tournament bring rate. Returns Pokemon names, usage rates, win rates, and lead rates. Note: Usage data is from May 2026 and may not reflect the current competitive meta.",
     parameters: {
       type: "object",
       properties: {
@@ -419,7 +435,7 @@ export const META_TOOLS: ChampionTool[] = [
     parameters: {
       type: "object",
       properties: {
-        pokemonId: { type: "number", description: "Pokemon ID to load" },
+        pokemonId: { type: "number", description: "Pokemon ID (use search_pokemon first if unsure)" },
         isMega: {
           type: "boolean",
           description: "Whether this is a Mega evolution",
@@ -475,7 +491,7 @@ export const META_TOOLS: ChampionTool[] = [
     parameters: {
       type: "object",
       properties: {
-        pokemonId: { type: "number", description: "Pokemon ID to analyze" },
+        pokemonId: { type: "number", description: "Pokemon ID (use search_pokemon first if unsure)" },
       },
       required: ["pokemonId"],
     },
@@ -779,7 +795,7 @@ export const STAT_TOOLS: ChampionTool[] = [
     parameters: {
       type: "object",
       properties: {
-        pokemonId: { type: "number", description: "Pokemon ID" },
+        pokemonId: { type: "number", description: "Pokemon ID (use search_pokemon first if unsure)" },
         teamPokemonIds: {
           type: "array",
           items: { type: "number" },
@@ -913,7 +929,7 @@ export const GENERATION_TOOLS: ChampionTool[] = [
       properties: {
         pokemonId: {
           type: "number",
-          description: "Pokemon ID to include in teams",
+          description: "Pokemon ID (use search_pokemon first if unsure)",
         },
         count: {
           type: "number",

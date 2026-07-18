@@ -82,7 +82,7 @@ import type { ChampionsPokemon, StatPoints, PokemonType } from "@/lib/types";
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
 export function getPokemon(id: number): ChampionsPokemon | undefined {
-  return POKEMON_SEED.find((p) => p.id === id);
+  return POKEMON_SEED.find((p) => p.id === id) ?? POKEMON_SEED.find((p) => p.dexNumber === id);
 }
 
 function deserializeStatPoints(sp: Record<string, unknown>): StatPoints {
@@ -609,6 +609,29 @@ export async function executeAssistantTool(
       }
 
       // ── Meta & Threat Data ─────────────────────────────────────────────
+
+      case "search_pokemon": {
+        const query = String(args.query || "").trim();
+        if (!query) return JSON.stringify({ error: "No query provided." });
+        const numQuery = Number(query);
+        const results = POKEMON_SEED.filter(p => {
+          if (!isNaN(numQuery) && String(numQuery) === query) return p.id === numQuery || p.dexNumber === numQuery;
+          return p.name.toLowerCase().includes(query.toLowerCase());
+        }).slice(0, 10);
+        if (results.length === 0) return JSON.stringify({ error: `No Pokemon found matching "${query}".` });
+        return JSON.stringify(
+          results.map((p) => ({
+            id: p.id,
+            name: p.name,
+            dexNumber: p.dexNumber,
+            types: p.types,
+            baseStats: p.baseStats,
+            abilities: p.abilities.map((a) => ({ name: a.name, description: a.description, isHidden: a.isHidden })),
+          })),
+          null,
+          2,
+        );
+      }
 
       case "get_top_threats": {
         const limit = Number(args.limit) || 30;
