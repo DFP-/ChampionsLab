@@ -469,9 +469,12 @@ export interface TeamAnalysis {
   overallRating: string;
 }
 
-/** Analyze an in-progress team and provide actionable feedback */
+/** Analyze an in-progress team and provide actionable feedback.
+ *  When selectedMoves is provided, offensive coverage is computed from
+ *  those moves only instead of the full moveset. */
 export function analyzePartialTeam(
-  teamPokemon: ChampionsPokemon[]
+  teamPokemon: ChampionsPokemon[],
+  selectedMoves?: string[][],
 ): TeamAnalysis {
   if (teamPokemon.length === 0) {
     return {
@@ -489,7 +492,7 @@ export function analyzePartialTeam(
     };
   }
   
-  const synergy = analyzeTeamSynergy(teamPokemon);
+  const synergy = analyzeTeamSynergy(teamPokemon, selectedMoves);
   const suggestions = suggestTeammates(teamPokemon, 8);
   
   // Missing roles

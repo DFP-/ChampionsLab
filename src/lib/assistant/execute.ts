@@ -71,7 +71,7 @@ import {
   getImmunities,
   defensiveSynergy,
   offensiveCoverage,
-  teamTypeCoverage,
+  offensiveTypeCoverage,
   getMatchup,
   getAllTypes,
 } from "@/lib/engine/type-chart";
@@ -783,8 +783,13 @@ export async function executeAssistantTool(
         const team = teamIds
           .map(getPokemon)
           .filter((p): p is ChampionsPokemon => p !== undefined);
-        const teamTypes = team.map((p) => p.types as PokemonType[]);
-        const result = teamTypeCoverage(teamTypes);
+        // Extract move types from each Pokemon's full moveset (not their typing)
+        const teamMoveTypes = team.map((p) =>
+          p.moves
+            .filter((m) => m.category !== "status")
+            .map((m) => m.type as PokemonType)
+        );
+        const result = offensiveTypeCoverage(teamMoveTypes);
         return JSON.stringify({ coverage: result }, null, 2);
       }
 

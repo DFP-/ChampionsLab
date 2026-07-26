@@ -785,7 +785,10 @@ export default function TeamBuilderPage() {
 
   // Engine-powered analysis
   const teamAnalysis = useMemo<TeamAnalysis>(() => {
-    return analyzePartialTeam(teamPokemon);
+    return analyzePartialTeam(
+      teamPokemon,
+      filledSlots.map((s) => s.moves),
+    );
   }, [teamPokemon.map(p => p.id).join(",")]);
 
   const teammates = useMemo<TeammateSuggestion[]>(() => {
