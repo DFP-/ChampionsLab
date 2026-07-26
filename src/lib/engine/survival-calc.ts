@@ -8,6 +8,7 @@ import { POKEMON_SEED } from "@/lib/pokemon-data";
 import { USAGE_DATA } from "@/lib/usage-data";
 import { calculateStats } from "./stat-calc";
 import { calculateDamage, type DamageResult, type DamageCalcOptions } from "./damage-calc";
+import { getMove } from "./move-data";
 import { getTopUsagePokemon, type TournamentUsage } from "./vgc-data";
 import type { NatureName } from "./natures";
 
@@ -46,66 +47,69 @@ export interface SurvivalSuggestion {
 const MAX_TOTAL_SP = 66;
 const MAX_PER_STAT = 32;
 
-/** Build a DamageCalcPokemon for the attacker (threat) */
-function buildAttacker(threat: ThreatSet): {
+type DamageEntity = {
   baseStats: BaseStats;
   sp: StatPoints;
   nature: NatureName;
   types: PokemonType[];
   ability: string;
   item: string;
-} {
-  const { pokemon, set, isMega } = threat;
-  let baseStats = pokemon.baseStats;
-  let types = [...pokemon.types] as PokemonType[];
-  let ability = set.ability;
+};
 
-  if (isMega) {
-    const megaForm = pokemon.forms?.find(f => f.isMega);
-    if (megaForm) {
-      baseStats = megaForm.baseStats;
-      types = [...megaForm.types] as PokemonType[];
-      ability = megaForm.abilities[0]?.name ?? set.ability;
+/** Build a damage-calc entity. When isAttacker is true and the source is a
+ *  ThreatSet, apply offensive form handling (mega evolution, Aegislash Blade,
+ *  Palafin Hero). Raw user stats pass through unchanged. */
+function buildDamageEntity(
+  source: ThreatSet | DamageEntity,
+  isAttacker: boolean
+): DamageEntity {
+  if (isAttacker && "pokemon" in source) {
+    const { pokemon, set, isMega } = source;
+    let baseStats = pokemon.baseStats;
+    let types = [...pokemon.types] as PokemonType[];
+    let ability = set.ability;
+
+    if (isMega) {
+      const megaForm = pokemon.forms?.find(f => f.isMega);
+      if (megaForm) {
+        baseStats = megaForm.baseStats;
+        types = [...megaForm.types] as PokemonType[];
+        ability = megaForm.abilities[0]?.name ?? set.ability;
+      }
     }
+
+    // Aegislash attacking uses Blade Form
+    if (pokemon.name === "Aegislash" && ability === "Stance Change") {
+      baseStats = { hp: 60, attack: 140, defense: 50, spAtk: 140, spDef: 50, speed: 60 };
+    }
+
+    // Palafin assumes Hero Form
+    if (pokemon.name === "Palafin" && ability === "Zero To Hero") {
+      baseStats = { hp: 100, attack: 160, defense: 97, spAtk: 106, spDef: 87, speed: 100 };
+    }
+
+    return {
+      baseStats,
+      sp: set.sp,
+      nature: set.nature as NatureName,
+      types,
+      ability,
+      item: set.item,
+    };
   }
 
-  // Aegislash attacking uses Blade Form
-  if (pokemon.name === "Aegislash" && ability === "Stance Change") {
-    baseStats = { hp: 60, attack: 140, defense: 50, spAtk: 140, spDef: 50, speed: 60 };
+  // Defender or raw user stats — passthrough
+  if ("pokemon" in source) {
+    return {
+      baseStats: source.pokemon.baseStats,
+      sp: source.set.sp,
+      nature: source.set.nature as NatureName,
+      types: [...source.pokemon.types] as PokemonType[],
+      ability: source.set.ability,
+      item: source.set.item,
+    };
   }
-
-  // Palafin assumes Hero Form
-  if (pokemon.name === "Palafin" && ability === "Zero To Hero") {
-    baseStats = { hp: 100, attack: 160, defense: 97, spAtk: 106, spDef: 87, speed: 100 };
-  }
-
-  return {
-    baseStats,
-    sp: set.sp,
-    nature: set.nature as NatureName,
-    types,
-    ability,
-    item: set.item,
-  };
-}
-
-/** Build a DamageCalcTarget for the defender (user) */
-function buildDefender(
-  baseStats: BaseStats,
-  sp: StatPoints,
-  nature: NatureName,
-  types: PokemonType[],
-  ability: string,
-  item: string
-): {
-  baseStats: BaseStats;
-  sp: StatPoints;
-  nature: NatureName;
-  types: PokemonType[];
-  ability: string;
-  item: string;
-} {
-  return { baseStats, sp, nature, types, ability, item };
+  return source;
 }
 
 /** Load a threat Pokemon with its most common set */
@@ -158,8 +162,11 @@ export function calcSurvivalScenario(
   moveName: string,
   options: DamageCalcOptions = {}
 ): SurvivalScenario {
-  const attacker = buildAttacker(threat);
-  const defender = buildDefender(userBaseStats, userSP, userNature, userTypes, userAbility, userItem);
+  const attacker = buildDamageEntity(threat, true);
+  const defender = buildDamageEntity(
+    { baseStats: userBaseStats, sp: userSP, nature: userNature, types: userTypes, ability: userAbility, item: userItem },
+    false
+  );
 
   const damageResult = calculateDamage(
     attacker,
@@ -413,13 +420,16 @@ export function getBestOffensiveMove(
 ): { moveName: string; damageResult: DamageResult } | null {
   if (userMoves.length === 0) return null;
 
-  const attacker = buildDefender(userBaseStats, userSP, userNature, userTypes, userAbility, userItem);
-  const defender = buildAttacker(threat);
+  const attacker = buildDamageEntity(
+    { baseStats: userBaseStats, sp: userSP, nature: userNature, types: userTypes, ability: userAbility, item: userItem },
+    true
+  );
+  const defender = buildDamageEntity(threat, false);
 
   let best: { moveName: string; damageResult: DamageResult } | null = null;
 
   for (const moveName of userMoves) {
-    const move = threat.pokemon.moves.find(m => m.name === moveName);
+    const move = getMove(moveName);
     if (!move || move.category === "status" || (move.power ?? 0) <= 0) continue;
 
     const result = calculateDamage(
