@@ -1,0 +1,16 @@
+{
+  "name": "champions-mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --tsconfig ../../tsconfig.json src/mcp-server.ts",
+    "start:http": "tsx --tsconfig ../../tsconfig.json src/mcp-server-http.ts",
+    "test": "bash test-server.sh"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "tsx": "^4.21.0",
+    "zod": "^4.3.6"
+  }
+}

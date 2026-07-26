@@ -62,8 +62,9 @@ TOURNAMENT_SYNC.md
 *.tsbuildinfo
 next-env.d.ts
 
-# local tooling (not synced)
-/.tools/
+# local tooling (MCP server source tracked; logs/node_modules ignored)
+/.tools/mcp-server/logs/
+/.tools/mcp-server/node_modules/
 
 # local agent workspace
 /.opencode/
