@@ -430,7 +430,7 @@ export function getBestOffensiveMove(
 
   for (const moveName of userMoves) {
     const move = getMove(moveName);
-    if (!move || move.category === "status" || (move.power ?? 0) <= 0) continue;
+    if (!move || move.category === "status" || move.basePower <= 0) continue;
 
     const result = calculateDamage(
       {
