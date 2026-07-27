@@ -12,7 +12,7 @@ export {
   getImmunities,
   defensiveSynergy,
   offensiveCoverage,
-  teamTypeCoverage,
+  offensiveTypeCoverage,
 } from "./type-chart";
 
 // Natures

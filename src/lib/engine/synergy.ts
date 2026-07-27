@@ -11,7 +11,7 @@ import {
 } from "./type-chart";
 import { getBST, classifyStatProfile, calculateStats, getEffectiveSpeed } from "./stat-calc";
 import { getAbilityEffect, isWeatherSetter, isIntimidateImmune, getTypeImmunity } from "./ability-data";
-import { MOVE_DATA, getMoveRole } from "./move-data";
+import { MOVE_DATA, getMove, getMoveRole } from "./move-data";
 import type { NatureName } from "./natures";
 
 // ── TEAM ARCHETYPES ──────────────────────────────────────────────────────────
@@ -411,8 +411,15 @@ export function detectArchetypes(pokemon: ChampionsPokemon[]): ArchetypeProfile[
   return archetypes.sort((a, b) => b.confidence - a.confidence);
 }
 
-/** Calculate comprehensive team synergy */
-export function analyzeTeamSynergy(pokemon: ChampionsPokemon[]): TeamSynergy {
+/** Calculate comprehensive team synergy.
+ *  When selectedMoves is provided (per-Pokemon array of selected move names),
+ *  offensive coverage is computed from those moves only. When omitted, falls
+ *  back to the full moveset (used by MCP tools and scripts that only have
+ *  Pokemon IDs). */
+export function analyzeTeamSynergy(
+  pokemon: ChampionsPokemon[],
+  selectedMoves?: string[][],
+): TeamSynergy {
   if (pokemon.length === 0) {
     return {
       overallScore: 0, typeScore: 0, speedScore: 0, roleScore: 0, archetypeScore: 0,
@@ -486,11 +493,25 @@ export function analyzeTeamSynergy(pokemon: ChampionsPokemon[]): TeamSynergy {
     .sort((a, b) => b.count - a.count);
 
   // Offensive coverage (what types can we hit SE?)
+  // Use selected moves if provided (team-builder page), otherwise full moveset
   const moveTypes = new Set<PokemonType>();
-  for (const mon of pokemon) {
-    for (const move of mon.moves) {
-      if (move.category !== "status") {
-        moveTypes.add(move.type as PokemonType);
+  for (let i = 0; i < pokemon.length; i++) {
+    const mon = pokemon[i];
+    const selected = selectedMoves?.[i];
+    if (selected) {
+      // Selected moves path: look up each move's type via getMove()
+      for (const moveName of selected) {
+        const move = getMove(moveName);
+        if (move && move.category !== "status" && move.basePower > 0) {
+          moveTypes.add(move.type as PokemonType);
+        }
+      }
+    } else {
+      // Full moveset fallback (MCP tools, scripts, team generator)
+      for (const move of mon.moves) {
+        if (move.category !== "status") {
+          moveTypes.add(move.type as PokemonType);
+        }
       }
     }
   }

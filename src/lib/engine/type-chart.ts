@@ -114,12 +114,15 @@ export function getAllTypes(): PokemonType[] {
   return [...TYPE_INDEX];
 }
 
-/** Calculate type coverage matrix for an entire team */
-export function teamTypeCoverage(teamTypes: PokemonType[][]): Record<PokemonType, number> {
+/** Calculate offensive type coverage matrix for an entire team.
+ *  Takes an array of per-Pokémon move-type arrays (NOT Pokemon typings)
+ *  and returns the best effectiveness multiplier the team achieves against
+ *  each of the 18 defending types. */
+export function offensiveTypeCoverage(teamMoveTypes: PokemonType[][]): Record<PokemonType, number> {
   const coverage: Record<string, number> = {};
   for (const def of TYPE_INDEX) {
     let best = 1;
-    for (const atkTypes of teamTypes) {
+    for (const atkTypes of teamMoveTypes) {
       for (const atk of atkTypes) {
         const eff = getTypeEffectiveness(atk, def);
         if (eff > best) best = eff;
