@@ -65,6 +65,7 @@ If you want to improve or complete an existing translation:
 5. **Push** to your fork and **open a Pull Request**
 
 **Tips for updating:**
+
 - Look for `❌` markers in comments or check if recent English updates haven't been translated yet
 - Test on the actual website if possible to catch text overflow issues
 - If you're making a partial update, mention what you've improved in the PR description
@@ -81,6 +82,7 @@ If you want to improve or complete an existing translation:
 ### Example
 
 **en.json:**
+
 ```json
 {
   "meta": {
@@ -92,6 +94,7 @@ If you want to improve or complete an existing translation:
 ```
 
 **es.json (Spanish):**
+
 ```json
 {
   "meta": {
@@ -103,6 +106,7 @@ If you want to improve or complete an existing translation:
 ```
 
 **ko.json (Korean):**
+
 ```json
 {
   "meta": {
@@ -118,6 +122,7 @@ If you want to improve or complete an existing translation:
 ## 🐛 Reporting Bugs & Requesting Features
 
 ### Bug Reports
+
 1. Check if the bug has already been reported in [Issues](https://github.com/Andrew21P/ChampionsLab/issues)
 2. Open a new Issue with:
    - What you were doing when the bug occurred
@@ -126,6 +131,7 @@ If you want to improve or complete an existing translation:
    - Screenshots if helpful
 
 ### Feature Requests
+
 1. Open an Issue describing the feature
 2. Explain **why** it would be useful
 3. Include any mockups or examples if you have them
@@ -148,7 +154,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3333](http://localhost:3333)
 
 ### Making Changes
 
@@ -205,7 +211,7 @@ We hang out on Discord and through GitHub Discussions. If you have questions:
 
 ## 🗃️ Data Contributions
 
-If you are adding or updating Pokémon, moves, abilities, or items, read `DATA_AND_SCRIPTS.md` first. The most common mistake is adding data to the raw files without adding it to the **valid list** that the UI and engine actually use.
+If you are adding or updating Pokémon, moves, abilities, or items, read `AGENTS.md` first. The most common mistake is adding data to the raw files without adding it to the **valid list** that the UI and engine actually use.
 
 ### Quick rules
 

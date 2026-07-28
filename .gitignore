@@ -32,6 +32,10 @@ yarn-error.log*
 # data sync cache
 scripts/limitless-cache.json
 scripts/singles-cache.json
+scripts/move-data-cache.json
+scripts/serebii-moves.json
+scripts/fetch-log.txt
+scripts/limitless-preview.json
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
@@ -45,18 +49,7 @@ scripts/singles-cache.json
 
 # agent context (local only)
 AGENT-CONTEXT.md
-
-# LLM/agent documentation (local reference only)
 AGENTS.md
-API_AND_BACKEND.md
-ARCHITECTURE.md
-COMPONENTS.md
-DATA_AND_SCRIPTS.md
-DEPLOYMENT.md
-I18N.md
-PROJECT.md
-SPRITES.md
-TOURNAMENT_SYNC.md
 
 # typescript
 *.tsbuildinfo
