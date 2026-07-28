@@ -1,9 +1,24 @@
 // ========== Core Pokémon Types ==========
 
 export type PokemonType =
-  | "normal" | "fire" | "water" | "electric" | "grass" | "ice"
-  | "fighting" | "poison" | "ground" | "flying" | "psychic" | "bug"
-  | "rock" | "ghost" | "dragon" | "dark" | "steel" | "fairy";
+  | "normal"
+  | "fire"
+  | "water"
+  | "electric"
+  | "grass"
+  | "ice"
+  | "fighting"
+  | "poison"
+  | "ground"
+  | "flying"
+  | "psychic"
+  | "bug"
+  | "rock"
+  | "ghost"
+  | "dragon"
+  | "dark"
+  | "steel"
+  | "fairy";
 
 export interface BaseStats {
   hp: number;
@@ -111,6 +126,7 @@ export interface WinningTeam {
   placement: string;
   event: string;
   pokemon: WinningTeamMember[];
+  archetype?: string;
 }
 
 export interface Team {

@@ -20,6 +20,8 @@ import {
   getItemDamageMultiplier,
   getItemSpeedMultiplier,
   suggestItems,
+  getAllItems,
+  ITEMS,
 } from "@/lib/engine/items";
 import {
   suggestTeammates,
@@ -76,13 +78,24 @@ import {
   getAllTypes,
 } from "@/lib/engine/type-chart";
 import { analyzeTeam } from "@/lib/engine/assist-analysis";
+import { getMove } from "@/lib/engine/move-data";
+import { generateStrategyTree } from "@/lib/engine/strategy-tree";
+import { runTeamTestSimulation } from "@/lib/engine/battle-sim";
 import { getAllTeams, setActiveTeam } from "@/lib/db/json";
-import type { ChampionsPokemon, StatPoints, PokemonType } from "@/lib/types";
+import type {
+  ChampionsPokemon,
+  StatPoints,
+  PokemonType,
+  CommonSet,
+} from "@/lib/types";
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
 export function getPokemon(id: number): ChampionsPokemon | undefined {
-  return POKEMON_SEED.find((p) => p.id === id) ?? POKEMON_SEED.find((p) => p.dexNumber === id);
+  return (
+    POKEMON_SEED.find((p) => p.id === id) ??
+    POKEMON_SEED.find((p) => p.dexNumber === id)
+  );
 }
 
 function deserializeStatPoints(sp: Record<string, unknown>): StatPoints {
@@ -131,6 +144,156 @@ export async function executeAssistantTool(
 ): Promise<string> {
   try {
     switch (name) {
+      // ── Game Info & Data Lookup ────────────────────────────────────────
+
+      case "get_game_info": {
+        return JSON.stringify(
+          {
+            game: "Pokemon Champions",
+            format: "Level 50 Doubles VGC",
+            rosterSize: POKEMON_SEED.filter((p) => !p.hidden).length,
+            rosterNote:
+              "The Champions roster is a curated subset of ~235 Pokemon — this is the COMPLETE list, not a subset of a larger pool. Do not assume Pokemon are missing.",
+            statSystem: {
+              name: "Stat Points (SP)",
+              totalSP: 66,
+              maxPerStat: 32,
+              replacesEVs: true,
+              note: "32 SP in a stat is MAXIMUM investment (equivalent to 252 EVs in mainline games). A value of 32 does NOT mean minimal investment. 0 means no investment.",
+            },
+            items: {
+              count: getAllItems().length,
+              note: "The Champions item pool is a curated subset (~80 base items + mega stones). This is the FULL list. Items not in this pool are not available in the game.",
+            },
+            natures: {
+              count: 25,
+              mechanic: "+10% to one stat, -10% to another (or neutral)",
+            },
+            megaEvolution: "Some Pokemon can Mega Evolve once per battle",
+            keyMechanics: [
+              "Protect",
+              "Fake Out",
+              "Tailwind",
+              "Trick Room",
+              "Intimidate",
+              "Follow Me",
+            ],
+            teamFormat: "6 Pokemon on roster, pick 4 to battle",
+            weatherAbilities: [
+              "Drought (sun)",
+              "Drizzle (rain)",
+              "Sand Stream (sand)",
+              "Snow Warning (snow)",
+            ],
+            trickRoom: "Reverses speed order (slowest moves first) for 5 turns",
+            doublesNote:
+              "Both Pokemon attack simultaneously; many moves target both sides (spread moves do 75% damage in doubles)",
+          },
+          null,
+          2,
+        );
+      }
+
+      case "get_pokemon_details": {
+        const pokemonId = Number(args.pokemonId);
+        const pokemon = getPokemon(pokemonId);
+        if (!pokemon)
+          return `Error: Pokemon with ID ${pokemonId} not found. Use search_pokemon to find the correct ID.`;
+        return JSON.stringify(
+          {
+            id: pokemon.id,
+            name: pokemon.name,
+            dexNumber: pokemon.dexNumber,
+            types: pokemon.types,
+            baseStats: pokemon.baseStats,
+            abilities: pokemon.abilities.map((a) => ({
+              name: a.name,
+              description: a.description,
+              isHidden: a.isHidden,
+              isChampions: a.isChampions,
+            })),
+            moves: pokemon.moves.map((m) => ({
+              name: m.name,
+              type: m.type,
+              category: m.category,
+              power: m.power,
+              accuracy: m.accuracy,
+              pp: m.pp,
+              description: m.description,
+            })),
+            forms: pokemon.forms?.map((f) => ({
+              name: f.name,
+              types: f.types,
+              baseStats: f.baseStats,
+              isMega: f.isMega,
+            })),
+            hasMega: pokemon.hasMega,
+            tier: pokemon.tier,
+            usageRate: pokemon.usageRate,
+            generation: pokemon.generation,
+            season: pokemon.season,
+          },
+          null,
+          2,
+        );
+      }
+
+      case "list_available_items": {
+        const itemNames = getAllItems();
+        return JSON.stringify(
+          {
+            count: itemNames.length,
+            note: "This is the COMPLETE list of items available in Pokemon Champions. Items not listed here are not in the game.",
+            items: itemNames.map((name) => ({
+              name,
+              description: ITEMS[name]?.description ?? "Unknown effect",
+            })),
+          },
+          null,
+          2,
+        );
+      }
+
+      case "get_move_info": {
+        const moveName = String(args.moveName || "");
+        const move = getMove(moveName);
+        if (!move)
+          return `Error: Move "${moveName}" not found in the move database. Check the spelling or use get_pokemon_details to see a Pokemon's learnable moves.`;
+        return JSON.stringify(
+          {
+            name: move.name,
+            type: move.type,
+            category: move.category,
+            basePower: move.basePower,
+            accuracy: move.accuracy === 0 ? "Always hits" : move.accuracy,
+            pp: move.pp,
+            priority: move.priority,
+            target: move.target,
+            flags: move.flags,
+            secondaryEffect: move.secondary,
+            selfBoost: move.selfBoost,
+            fieldEffect: move.fieldEffect,
+            effect: move.effect,
+            multiHit: move.multiHit,
+            ignoresAbility: move.ignoresAbility,
+          },
+          null,
+          2,
+        );
+      }
+
+      case "list_available_archetypes": {
+        const names = getArchetypeNames();
+        return JSON.stringify(
+          {
+            count: names.length,
+            archetypes: names,
+          },
+          null,
+          2,
+        );
+      }
+
       // ── Team Building & Analysis ───────────────────────────────────────
 
       case "suggest_teammates": {
@@ -391,19 +554,164 @@ export async function executeAssistantTool(
       }
 
       case "generate_strategy_tree": {
-        const myTeamIds = args.myTeamPokemonIds as number[];
         const oppTeamIds = args.opponentTeamPokemonIds as number[];
+
+        // Build "my team" from the active team context
+        const myTeamSlots = context?.teamSlots ?? [];
+        if (myTeamSlots.length < 2) {
+          return JSON.stringify(
+            {
+              error:
+                "Strategy tree generation requires an active team with at least 2 Pokemon. Call set_active_team first, then call this tool.",
+            },
+            null,
+            2,
+          );
+        }
+
+        // Resolve my team Pokemon and sets from context
+        const myTeamPokemon: ChampionsPokemon[] = [];
+        const myTeamSets: CommonSet[] = [];
+        for (const slot of myTeamSlots) {
+          if (slot.pokemonId === undefined) continue;
+          const pokemon = getPokemon(slot.pokemonId);
+          if (!pokemon) continue;
+          myTeamPokemon.push(pokemon);
+          myTeamSets.push({
+            name: pokemon.name,
+            nature: slot.nature ?? "Hardy",
+            ability: slot.ability ?? "",
+            item: slot.item ?? "",
+            moves: slot.moves ?? [],
+            sp: (slot.statPoints as StatPoints) ?? {
+              hp: 0,
+              attack: 0,
+              defense: 0,
+              spAtk: 0,
+              spDef: 0,
+              speed: 0,
+            },
+          });
+        }
+
+        if (myTeamPokemon.length < 2) {
+          return JSON.stringify(
+            {
+              error:
+                "Active team has fewer than 2 valid Pokemon. Add more Pokemon to your team.",
+            },
+            null,
+            2,
+          );
+        }
+
+        // Resolve opponent team from threat data (competitive sets)
+        const oppTeamPokemon: ChampionsPokemon[] = [];
+        const oppTeamSets: CommonSet[] = [];
+        for (const oppId of oppTeamIds) {
+          const id = Number(oppId);
+          const threat = loadThreat(id);
+          if (threat) {
+            oppTeamPokemon.push(threat.pokemon);
+            oppTeamSets.push({
+              name: threat.pokemon.name,
+              nature: threat.set.nature,
+              ability: threat.set.ability,
+              item: threat.set.item,
+              moves: threat.set.moves,
+              sp: threat.set.sp,
+            });
+          } else {
+            const pokemon = getPokemon(id);
+            if (pokemon) {
+              oppTeamPokemon.push(pokemon);
+              oppTeamSets.push({
+                name: pokemon.name,
+                nature: "Hardy",
+                ability: pokemon.abilities[0]?.name ?? "",
+                item: "",
+                moves: pokemon.moves.slice(0, 4).map((m) => m.name),
+                sp: {
+                  hp: 0,
+                  attack: 0,
+                  defense: 0,
+                  spAtk: 0,
+                  spDef: 0,
+                  speed: 0,
+                },
+              });
+            }
+          }
+        }
+
+        if (oppTeamPokemon.length < 2) {
+          return JSON.stringify(
+            {
+              error:
+                "Opponent team has fewer than 2 valid Pokemon. Provide valid Pokemon IDs in opponentTeamPokemonIds.",
+            },
+            null,
+            2,
+          );
+        }
+
+        // Run simulation to get best lead combo + win rate
+        const simResult = runTeamTestSimulation(
+          myTeamPokemon,
+          myTeamSets,
+          oppTeamPokemon,
+          oppTeamSets,
+          200,
+        );
+
+        const bestLead = simResult.leadCombos[0];
+        if (!bestLead) {
+          return JSON.stringify(
+            {
+              error:
+                "Could not determine a best lead combination for this matchup.",
+              winRate: simResult.winRate,
+            },
+            null,
+            2,
+          );
+        }
+
+        // Generate the strategy tree
+        const tree = generateStrategyTree(
+          myTeamPokemon,
+          myTeamSets,
+          oppTeamPokemon,
+          oppTeamSets,
+          bestLead,
+          simResult.winRate,
+        );
+
+        if (!tree) {
+          return JSON.stringify(
+            {
+              error: "Strategy tree could not be generated for this matchup.",
+              bestLead: { lead1: bestLead.lead1, lead2: bestLead.lead2 },
+              winRate: simResult.winRate,
+            },
+            null,
+            2,
+          );
+        }
+
         return JSON.stringify(
           {
-            note: "Strategy tree generation requires full team slot data with competitive sets.",
-            myTeam: myTeamIds
-              .map(getPokemon)
-              .map((p) => p?.name)
-              .filter(Boolean),
-            opponentTeam: oppTeamIds
-              .map(getPokemon)
-              .map((p) => p?.name)
-              .filter(Boolean),
+            archetype: tree.archetype,
+            winCondition: tree.winCondition,
+            winRate: simResult.winRate,
+            bestLead: { lead1: bestLead.lead1, lead2: bestLead.lead2 },
+            myTeam: myTeamPokemon.map((p) => p.name),
+            opponentTeam: oppTeamPokemon.map((p) => p.name),
+            scenarios: tree.root.children.map((scenario) => ({
+              label: scenario.label,
+              detail: scenario.detail,
+              nodes: scenario.children,
+            })),
           },
           null,
           2,
@@ -614,11 +922,15 @@ export async function executeAssistantTool(
         const query = String(args.query || "").trim();
         if (!query) return JSON.stringify({ error: "No query provided." });
         const numQuery = Number(query);
-        const results = POKEMON_SEED.filter(p => {
-          if (!isNaN(numQuery) && String(numQuery) === query) return p.id === numQuery || p.dexNumber === numQuery;
+        const results = POKEMON_SEED.filter((p) => {
+          if (!isNaN(numQuery) && String(numQuery) === query)
+            return p.id === numQuery || p.dexNumber === numQuery;
           return p.name.toLowerCase().includes(query.toLowerCase());
         }).slice(0, 10);
-        if (results.length === 0) return JSON.stringify({ error: `No Pokemon found matching "${query}".` });
+        if (results.length === 0)
+          return JSON.stringify({
+            error: `No Pokemon found matching "${query}".`,
+          });
         return JSON.stringify(
           results.map((p) => ({
             id: p.id,
@@ -626,7 +938,11 @@ export async function executeAssistantTool(
             dexNumber: p.dexNumber,
             types: p.types,
             baseStats: p.baseStats,
-            abilities: p.abilities.map((a) => ({ name: a.name, description: a.description, isHidden: a.isHidden })),
+            abilities: p.abilities.map((a) => ({
+              name: a.name,
+              description: a.description,
+              isHidden: a.isHidden,
+            })),
           })),
           null,
           2,
@@ -637,14 +953,21 @@ export async function executeAssistantTool(
         const limit = Number(args.limit) || 30;
         const threats = getTopThreatsRaw(limit);
         return JSON.stringify(
-          threats.map((t) => ({
-            name: t.name,
-            pokemonId: t.pokemonId,
-            usageRate: t.usageRate,
-            winRate: t.winRate,
-            bringRate: t.bringRate,
-            leadRate: t.leadRate,
-          })),
+          {
+            dataDate: "2026-05-27",
+            source: "Pikalytics Champions Tournaments",
+            warning:
+              "Tournament data may be stale — verify with current sources before relying on meta rankings",
+            threatCount: threats.length,
+            threats: threats.map((t) => ({
+              name: t.name,
+              pokemonId: t.pokemonId,
+              usageRate: t.usageRate,
+              winRate: t.winRate,
+              bringRate: t.bringRate,
+              leadRate: t.leadRate,
+            })),
+          },
           null,
           2,
         );
@@ -787,7 +1110,7 @@ export async function executeAssistantTool(
         const teamMoveTypes = team.map((p) =>
           p.moves
             .filter((m) => m.category !== "status")
-            .map((m) => m.type as PokemonType)
+            .map((m) => m.type as PokemonType),
         );
         const result = offensiveTypeCoverage(teamMoveTypes);
         return JSON.stringify({ coverage: result }, null, 2);
@@ -814,12 +1137,16 @@ export async function executeAssistantTool(
         if (!result) {
           return `Error: Team with ID "${teamId}" not found.`;
         }
-        return JSON.stringify({
-          message: `Team "${result.name}" is now active.`,
-          teamId: result.id,
-          name: result.name,
-          slotCount: JSON.parse(result.slots).length,
-        }, null, 2);
+        return JSON.stringify(
+          {
+            message: `Team "${result.name}" is now active.`,
+            teamId: result.id,
+            name: result.name,
+            slotCount: JSON.parse(result.slots).length,
+          },
+          null,
+          2,
+        );
       }
 
       // ── Stats & Calculation ────────────────────────────────────────────
@@ -990,7 +1317,7 @@ export async function executeAssistantTool(
       }
 
       default:
-        return `Error: Unknown tool "${name}". Available tools: suggest_teammates, get_slot_suggestions, suggest_sets, suggest_moves, suggest_abilities, analyze_partial_team, analyze_team_synergy, detect_archetypes, calc_survival_scenario, suggest_survival_investments, get_best_offensive_move, optimize_sp_for_survival, get_effective_speed, get_top_threats, load_threat, get_threat_damaging_moves, get_speed_tier_report, identify_roles, get_weaknesses, get_resistances, get_immunities, get_matchup, defensive_synergy, offensive_coverage, team_type_coverage, calculate_stats, classify_stat_profile, get_nature_modifier, suggest_nature, suggest_sp_distribution, suggest_items, get_item_damage_multiplier, get_item_speed_multiplier, score_pokemon_fit, generate_teams, generate_teams_with_pokemon, generate_from_archetype`;
+        return `Error: Unknown tool "${name}". Available tools: get_game_info, get_pokemon_details, list_available_items, get_move_info, list_available_archetypes, search_pokemon, list_saved_teams, set_active_team, get_all_types, get_matchup, get_weaknesses, get_resistances, get_immunities, defensive_synergy, offensive_coverage, team_type_coverage, suggest_teammates, get_slot_suggestions, suggest_sets, suggest_moves, suggest_abilities, analyze_partial_team, analyze_team_synergy, detect_archetypes, analyze_team, generate_strategy_tree, calc_survival_scenario, suggest_survival_investments, get_best_offensive_move, optimize_sp_for_survival, get_effective_speed, get_top_threats, load_threat, get_threat_damaging_moves, get_speed_tier_report, identify_roles, calculate_stats, classify_stat_profile, get_nature_modifier, suggest_nature, suggest_sp_distribution, suggest_items, get_item_damage_multiplier, get_item_speed_multiplier, score_pokemon_fit, generate_teams, generate_teams_with_pokemon, generate_from_archetype`;
     }
   } catch (error) {
     return `Error executing tool "${name}": ${error instanceof Error ? error.message : String(error)}`;

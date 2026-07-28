@@ -4,7 +4,6 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
   useCallback,
   type ReactNode,
 } from "react";
@@ -64,11 +63,29 @@ import naturesIt from "./natures.it.json";
 import naturesDe from "./natures.de.json";
 
 /* ── Supported locales ── */
-export type Locale = "en" | "fr" | "es" | "es-419" | "pt-PT" | "pt-BR" | "it" | "de" | "th" | "ko";
+export type Locale =
+  | "en"
+  | "fr"
+  | "es"
+  | "es-419"
+  | "pt-PT"
+  | "pt-BR"
+  | "it"
+  | "de"
+  | "th"
+  | "ko";
 
 /* ── UI translation dictionaries ── */
 type Dict = typeof en;
-const UI_TRANSLATIONS: Record<string, Dict> = { en, fr, es: es as Dict, it: it as Dict, de: de as Dict, "pt-PT": ptPT as Dict, ko: ko as Dict };
+const UI_TRANSLATIONS: Record<string, Dict> = {
+  en,
+  fr,
+  es: es as Dict,
+  it: it as Dict,
+  de: de as Dict,
+  "pt-PT": ptPT as Dict,
+  ko: ko as Dict,
+};
 
 /* ── Pokémon name dictionaries (en → localised) ── */
 const POKEMON_NAMES: Record<string, Record<string, string>> = {
@@ -183,18 +200,20 @@ interface I18nContextValue {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 /* ── Provider ── */
-export function I18nProvider({ children, initialLocale = "en" }: { children: ReactNode; initialLocale?: string }) {
-  const [locale, setLocaleState] = useState<Locale>(initialLocale as Locale);
-
-  // Sync localStorage → state on mount (handles stale-cookie edge case)
-  useEffect(() => {
-    const stored = localStorage.getItem("championslab-lang") as Locale | null;
-    if (stored && stored !== locale) {
-      setLocaleState(stored);
-      document.cookie = `cl-lang=${stored};path=/;max-age=31536000;SameSite=Lax`;
-      document.documentElement.lang = stored.split("-")[0];
+export function I18nProvider({
+  children,
+  initialLocale = "en",
+}: {
+  children: ReactNode;
+  initialLocale?: string;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("championslab-lang") as Locale | null;
+      if (stored) return stored;
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    return initialLocale as Locale;
+  });
 
   const setLocale = useCallback((l: Locale) => {
     setLocaleState(l);
@@ -214,7 +233,7 @@ export function I18nProvider({ children, initialLocale = "en" }: { children: Rea
       }
       return value;
     },
-    [locale]
+    [locale],
   );
 
   const tp = useCallback(
@@ -222,7 +241,7 @@ export function I18nProvider({ children, initialLocale = "en" }: { children: Rea
       if (locale === "en") return englishName;
       return POKEMON_NAMES[locale]?.[englishName] ?? englishName;
     },
-    [locale]
+    [locale],
   );
 
   const tm = useCallback(
@@ -230,7 +249,7 @@ export function I18nProvider({ children, initialLocale = "en" }: { children: Rea
       if (locale === "en") return englishName;
       return MOVE_NAMES[locale]?.[englishName] ?? englishName;
     },
-    [locale]
+    [locale],
   );
 
   const ta = useCallback(
@@ -238,7 +257,7 @@ export function I18nProvider({ children, initialLocale = "en" }: { children: Rea
       if (locale === "en") return englishName;
       return ABILITY_NAMES[locale]?.[englishName] ?? englishName;
     },
-    [locale]
+    [locale],
   );
 
   const ti = useCallback(
@@ -246,7 +265,7 @@ export function I18nProvider({ children, initialLocale = "en" }: { children: Rea
       if (locale === "en") return englishName;
       return ITEM_NAMES[locale]?.[englishName] ?? englishName;
     },
-    [locale]
+    [locale],
   );
 
   const tn = useCallback(
@@ -254,58 +273,99 @@ export function I18nProvider({ children, initialLocale = "en" }: { children: Rea
       if (locale === "en") return englishName;
       return NATURE_NAMES[locale]?.[englishName] ?? englishName;
     },
-    [locale]
+    [locale],
   );
 
   const ts = useCallback(
     (statKey: string): string => {
       const dict = UI_TRANSLATIONS[locale] ?? UI_TRANSLATIONS.en;
-      return (dict as any).common?.stats?.[statKey] ?? (en as any).common?.stats?.[statKey] ?? statKey;
+      return (
+        getNestedValue(dict, `common.stats.${statKey}`) ??
+        getNestedValue(en, `common.stats.${statKey}`) ??
+        statKey
+      );
     },
-    [locale]
+    [locale],
   );
 
   const tt = useCallback(
     (typeName: string): string => {
       const key = typeName.toLowerCase();
       const dict = UI_TRANSLATIONS[locale] ?? UI_TRANSLATIONS.en;
-      return (dict as any).common?.typeShort?.[key] ?? (en as any).common?.typeShort?.[key] ?? typeName.slice(0, 3).toUpperCase();
+      return (
+        getNestedValue(dict, `common.typeShort.${key}`) ??
+        getNestedValue(en, `common.typeShort.${key}`) ??
+        typeName.slice(0, 3).toUpperCase()
+      );
     },
-    [locale]
+    [locale],
   );
 
   const tty = useCallback(
     (typeName: string): string => {
       const key = typeName.toLowerCase();
       const dict = UI_TRANSLATIONS[locale] ?? UI_TRANSLATIONS.en;
-      return (dict as any).common?.typeFull?.[key] ?? (en as any).common?.typeFull?.[key] ?? typeName;
+      return (
+        getNestedValue(dict, `common.typeFull.${key}`) ??
+        getNestedValue(en, `common.typeFull.${key}`) ??
+        typeName
+      );
     },
-    [locale]
+    [locale],
   );
 
   const tmd = useCallback(
     (englishMoveName: string, fallbackDesc: string): string => {
-      return MOVE_DESCRIPTIONS[locale]?.[englishMoveName] ?? MOVE_DESCRIPTIONS.en?.[englishMoveName] ?? fallbackDesc;
+      return (
+        MOVE_DESCRIPTIONS[locale]?.[englishMoveName] ??
+        MOVE_DESCRIPTIONS.en?.[englishMoveName] ??
+        fallbackDesc
+      );
     },
-    [locale]
+    [locale],
   );
 
   const tad = useCallback(
     (englishAbilityName: string, fallbackDesc: string): string => {
-      return ABILITY_DESCRIPTIONS[locale]?.[englishAbilityName] ?? ABILITY_DESCRIPTIONS.en?.[englishAbilityName] ?? fallbackDesc;
+      return (
+        ABILITY_DESCRIPTIONS[locale]?.[englishAbilityName] ??
+        ABILITY_DESCRIPTIONS.en?.[englishAbilityName] ??
+        fallbackDesc
+      );
     },
-    [locale]
+    [locale],
   );
 
   const tid = useCallback(
     (englishItemName: string, fallbackDesc: string): string => {
-      return ITEM_DESCRIPTIONS[locale]?.[englishItemName] ?? ITEM_DESCRIPTIONS.en?.[englishItemName] ?? fallbackDesc;
+      return (
+        ITEM_DESCRIPTIONS[locale]?.[englishItemName] ??
+        ITEM_DESCRIPTIONS.en?.[englishItemName] ??
+        fallbackDesc
+      );
     },
-    [locale]
+    [locale],
   );
 
   return (
-    <I18nContext.Provider value={{ locale, setLocale, t, tp, tm, ta, ti, tn, ts, tt, tty, tmd, tad, tid }}>
+    <I18nContext.Provider
+      value={{
+        locale,
+        setLocale,
+        t,
+        tp,
+        tm,
+        ta,
+        ti,
+        tn,
+        ts,
+        tt,
+        tty,
+        tmd,
+        tad,
+        tid,
+      }}
+    >
       {children}
     </I18nContext.Provider>
   );
